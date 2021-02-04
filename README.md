@@ -23,6 +23,6 @@ Cell-type submissions will be placed in a subdirectory called "../submissions/hi
 As a convenience for easy data inspection, CSV versions of the files are also created and placed in subdirectories "../submissions/hipc_gene_csv" and "../submissions/hipc_ctf_csv". 
 
 ### Log files
-An additional directory, "../logfiles" is created relative to the ./src directory.  After the script has run, this directory contains a number of files tracing the data transformations and final summary data.
+An additional directory, "../logfiles" is created relative to the ./src directory.  After the script has run, this directory contains a number of files tracing the data transformations and final summary data, as well as "recreated_template" files that represent the "HIPC Dashboard.xlsx" sheets after all transformations.
 
 
