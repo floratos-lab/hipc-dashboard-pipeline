@@ -1,0 +1,5 @@
+B cell & CD3-, CD19+, CD20+, CD27+, IgD-, IgM-
+CD4-positive, alpha-beta T cell & CD3+, CD28+
+CD4-positive, alpha-beta T cell & CD3+, pKI-67+
+CD8-positive, alpha-beta T cell & CD3+, CD28+
+CD8-positive, alpha-beta T cell & CD3+, pKI-67+

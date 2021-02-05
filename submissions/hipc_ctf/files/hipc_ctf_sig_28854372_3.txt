@@ -1,0 +1,4 @@
+myeloid dendritic cell & CD86-positive
+myeloid dendritic cell & CCR7+
+monocyte & CD40, CD86
+natural killer cell & CD38+, CD56-dim

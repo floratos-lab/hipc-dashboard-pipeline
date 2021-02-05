@@ -1,0 +1,4 @@
+plasmacytoid dendritic cell
+natural killer cell & CD14-, CD19-, CD3-, CD107a+, K562 cells
+natural killer cell & CD14-, CD19-, CD3-, IFNG+, K562 cells
+natural killer cell & CD14-, CD19-, CD3-, TNF-a+, K562 cells

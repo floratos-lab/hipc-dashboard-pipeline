@@ -1,0 +1,6 @@
+B cell
+CD4-positive, alpha-beta T cell
+CD16-positive, CD56-dim natural killer cell, human
+CD8-positive, alpha-beta T cell
+granulocyte
+lymphocyte
