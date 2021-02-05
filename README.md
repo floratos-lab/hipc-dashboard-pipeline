@@ -25,7 +25,7 @@ For easy inspection, CSV-formatted versions of the same files are also generated
 An additional directory (not checked-in to GitHub), "../logfiles" is created relative to the ./src directory.  After the script has run, this directory contains a number of files tracing the data transformations and final summary data, as well as "recreated_template" files that represent the "HIPC Dashboard.xlsx" sheets after all transformations.
 
 ### Reformatted data files
-Certain files from the "logfiles" directory are checked in to GitHub.  These are the "recreated_template" files in Excel, RDS and tab-delimited formats, as well as the response components for each signature in Broad GMT format.
+Certain files from the "logfiles" directory are checked in to GitHub in the "reformatted_data" directory.  These are the "recreated_template" files in Excel, RDS and tab-delimited formats, as well as the response components for each signature in Broad GMT format.
 
 
 
