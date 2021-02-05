@@ -62,6 +62,7 @@ source("write_submissions.R")
 source("msigdb_submission_utils.R")
 source("find_unique.R")
 
+#####<<<< START HERE >>>>#####
 ##### Choose a sheet type (from "HIPC Dashboard.xlsx") #####
 # Available sheet_type values are "GENE", "CELLTYPE_FREQUENCY"
 sheet_type <- "GENE"
@@ -353,8 +354,8 @@ df2$response_behavior_type <- tolower(df2$response_behavior_type)
 df2$response_behavior      <- tolower(df2$response_behavior)
 
 # check if  comment column has more than 255 character limit
-w <- sapply(df2$comments[1:10], function(x) {nchar(x) > 255}, USE.NAMES	= FALSE)
-if(any(!is.na(w)) && any(w)) {
+w <- sapply(df2$comments, function(x) {nchar(x) > 255}, USE.NAMES	= FALSE)
+if(any(w)) {
   stop(paste("comment too long for row(s)", paste(df2$row_key[w], collapse = ", ")))
 }
 
