@@ -1,6 +1,5 @@
 # File name: generate_HIPC_submissions.R
 # Author: Kenneth C. Smith
-# Last updated: February 2, 2021
 
 # Description:
 #  Starting with curated HIPC data, prepare Dashboard submission templates.
@@ -67,7 +66,6 @@ source("find_unique.R")
 # Available sheet_type values are "GENE", "CELLTYPE_FREQUENCY"
 sheet_type <- "GENE"
 
-# Note that Excel sheet names are embedded in actual code further below...
 # For the moment, assume executing interactively from the ./src directory
 source_data_dir <- "../source_data"
 submission_dir  <- "../submissions"
@@ -206,7 +204,7 @@ remove_cols <- c("spot_check",
 insub <- insub[!(colnames(insub) %in% remove_cols)]
 length(colnames(insub))
 
-vaccines_by_year <- read.xlsx2(file = paste(source_data_dir, "vaccine_years.xlsx", sep = "/"),
+vaccines_by_year <- read.xlsx2(file = paste(source_data_dir, vaccine_xlsx, sep = "/"),
                                sheetName = "ncbitax",
                                stringsAsFactors = FALSE)
 
@@ -274,12 +272,16 @@ insub$response_comp_orig_cnt[1:6]  <- c("", "label", "observed",   "", "", "resp
 insub$row_key[1:6]           <- c("", "label", "background", "", "", "row key")
 
 if (sheet_type == "CELLTYPE_FREQUENCY") {
-  ctf_fixes <- read.xlsx2(file = paste(source_data_dir, "cell_type_frequency-response_components_mapping.xlsx", sep = "/"),
+  ctf_fixes <- read.xlsx2(file = paste(source_data_dir, ctf_fixes_xlsx, sep = "/"),
                           sheetName = cell_mapping_sheet_name,
                           colIndex = 1:6,
                           stringsAsFactors = FALSE)
   # keep only relevant content
   ctf_fixes <- subset(ctf_fixes, original_annotation != "")
+  s <- strict_char_check(ctf_fixes, "\xa0")  # character 160.  Dashboard loader does not like it.
+  if(!is.null(s)) {
+    print(paste("for ctf_fixes, found problems in column (row numbers do not include any header)", s))
+  }
 }
 
 #########################################
@@ -435,7 +437,7 @@ df2$response_component_original <- as.character(df2$response_component_original)
 if (sheet_type == "GENE") {
   # Apply manual gene corrections
   rvl <- manual_gene_corrections(df2$response_component_original,
-                                 paste(source_data_dir, "manual_gene_symbol_corrections.txt", sep = "/"))
+                                 paste(source_data_dir, manual_gene_corrections_file, sep = "/"))
   genes <- rvl$genes
   summary_df <- rbind(summary_df, rvl$summary)
 
@@ -941,6 +943,12 @@ df2$response_behavior <- sub("negative", "negatively", df2$response_behavior, ig
 
 # Remove columns not needed for Dashboard.
 recreated_template_df <- recreated_template_df[!colnames(recreated_template_df) %in% c("short_comment", "process_note")]
+
+# do a final check for illegal characters in df2
+s <- strict_char_check(df2, "\xa0")  # character 160.  Dashboard loader does not like it.
+if(!is.null(s)) {
+  print(paste("for df2, found problems in column (row numbers do not include any header)", s))
+}
 
 if (sheet_type == "GENE") {
   write_submission_template(df2, header_rows, template_name, titles_and_dates_df,

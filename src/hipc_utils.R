@@ -128,4 +128,22 @@ abbreviate_time_unit <- function(time_unit) {
   return(time_unit)
 }
 
+# check each column of a data frame for the test character
+strict_char_check <- function(in_df, testchar) {
+  l_out <- lapply(colnames(in_df), function(x) {
+    w <- which(sapply(in_df[x], function(y) {grepl(testchar, y)}))
+    if(length(w) > 0){
+      return(paste(x, paste(w, collapse = ", ")))
+    } else {
+      return(NULL)
+    }
+  })
+  keep <- !sapply(l_out, is.null)
+  if(any(keep)) {
+    return(l_out[keep])
+  } else {
+    return(NULL)
+  }
+}
+
 
