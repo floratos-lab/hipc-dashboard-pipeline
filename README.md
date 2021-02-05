@@ -22,10 +22,10 @@ Cell-type submissions will be placed in a subdirectory called "../submissions/hi
 For easy inspection, CSV-formatted versions of the same files are also generated under "../submissions/hipc_gene_csv/" and "../submissions/hipc_ctf_csv/"
 
 ### Log files
-An additional directory (not checked-in to GitHub), "../logfiles" is created relative to the ./src directory.  After the script has run, this directory contains a number of files tracing the data transformations and final summary data, as well as "recreated_template" files that represent the "HIPC Dashboard.xlsx" sheets after all transformations.
+An additional directory (not checked-in to GitHub), "../logfiles" is created relative to the ./src directory.  After the script has run, this directory contains a number of files tracing the data transformations and final summary data, as well as "recreated_template" files that represent the "HIPC Dashboard.xlsx" sheets after all updates and transformations, in the same format as the original data.
 
 ### Reformatted data files
-Certain files from the "logfiles" directory are checked in to GitHub in the "reformatted_data" directory.  These are the "recreated_template" files in Excel, RDS and tab-delimited formats, as well as the response components for each signature in Broad GMT format.
+Certain files from the "logfiles" directory are checked in to GitHub in the "reformatted_data" directory.  These are the "recreated_template" files in Excel, RDS and tab-delimited formats, as well as the response components for each signature in Broad GMT format.  These files represent the data after all updates and transformations. The "recreated_template" files are in the same spreadsheet format as the original data.
 
 
 
