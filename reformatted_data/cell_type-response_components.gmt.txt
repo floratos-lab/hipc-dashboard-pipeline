@@ -94,16 +94,16 @@
 27436422_1_101	PMID 27436422 submission 1 row 101	leukocyte
 27436422_2_102	PMID 27436422 submission 2 row 102	lymphocyte
 28687661_1_103	PMID 28687661 submission 1 row 103	plasmacytoid dendritic cell	natural killer cell & CD14-, CD19-, CD3-, CD107a+, K562 cells	natural killer cell & CD14-, CD19-, CD3-, IFNG+, K562 cells	natural killer cell & CD14-, CD19-, CD3-, TNF-a+, K562 cells
-28687661_2_104	PMID 28687661 submission 2 row 104	natural killer cell & CD14-, CD20-, CD3-	NKGA2-positive natural killer cell & CD14-, CD20-, CD3-	natural killer cell & CD14-, CD20-, CD3-, NKG2-A/B-activating NK receptor+
+28687661_2_104	PMID 28687661 submission 2 row 104	natural killer cell & CD14-, CD20-, CD3-	natural killer cell & CD14-, CD20-, CD3-, NKGA2+	natural killer cell & CD14-, CD20-, CD3-, NKG2-A/B-activating NK receptor+
 28687661_3_105	PMID 28687661 submission 3 row 105	B cell & CD3-, CD19+, CD20+, CD27+, IgD-, IgM-	CD4-positive, alpha-beta T cell & CD3+, CD28+	CD4-positive, alpha-beta T cell & CD3+, pKI-67+	CD8-positive, alpha-beta T cell & CD3+, CD28+	CD8-positive, alpha-beta T cell & CD3+, pKI-67+
 28687661_4_106	PMID 28687661 submission 4 row 106	CD14-positive monocyte	natural killer cell & CD14-, CD20-, CD3-, NKG2-A/B-activating NK receptor+
 28687661_5_107	PMID 28687661 submission 5 row 107	CD4-positive, alpha-beta T cell & CD3+, pKI-67+	CD8-positive, alpha-beta T cell & CD3+, pKI-67+
 28687661_6_108	PMID 28687661 submission 6 row 108	plasmacytoid dendritic cell	B cell & CD3-, CD19+, CD20+	IgM memory B cell & CD3-, CD19+, CD20+, CD27+	CD4-positive, alpha-beta T cell & CD14-, CD3+, IL2+, ENV
-28687661_7_109	PMID 28687661 submission 7 row 109	natural killer cell & CD14-, CD20-, CD3-	NKGA2-positive natural killer cell & CD14-, CD20-, CD3-	natural killer cell & CD14-, CD20-, CD3-, NKG2-A/B-activating NK receptor+
+28687661_7_109	PMID 28687661 submission 7 row 109	natural killer cell & CD14-, CD20-, CD3-	natural killer cell & CD14-, CD20-, CD3-, NKGA2+	natural killer cell & CD14-, CD20-, CD3-, NKG2-A/B-activating NK receptor+
 28687661_8_110	PMID 28687661 submission 8 row 110	CD4-positive, alpha-beta T cell & CD3+, CD28+	CD4-positive, alpha-beta T cell & CD3+, pKI-67+	CD8-positive, alpha-beta T cell & CD3+, pKI-67+
 28687661_9_111	PMID 28687661 submission 9 row 111	dendritic cell & CD123+, NK-
 28687661_10_112	PMID 28687661 submission 10 row 112	B cell & CD3-, CD19+, CD20+	IgM memory B cell & CD3-, CD19+, CD20+, CD27+	B cell & CD3-, CD19+, CD20+, CD27+, IgD-, IgM-	CD4-positive, alpha-beta T cell & CD14-, CD3+, IL2+, NS1
-28687661_11_113	PMID 28687661 submission 11 row 113	natural killer cell & CD14-, CD20-, CD3-	NKGA2-positive natural killer cell & CD14-, CD20-, CD3-	natural killer cell & CD14-, CD20-, CD3-, NKG2-A/B-activating NK receptor+
+28687661_11_113	PMID 28687661 submission 11 row 113	natural killer cell & CD14-, CD20-, CD3-	natural killer cell & CD14-, CD20-, CD3-, NKGA2+	natural killer cell & CD14-, CD20-, CD3-, NKG2-A/B-activating NK receptor+
 28687661_12_114	PMID 28687661 submission 12 row 114	CD4-positive, alpha-beta T cell & CD3+, pKI-67+	CD8-positive, alpha-beta T cell & CD3+, pKI-67+
 28687661_13_115	PMID 28687661 submission 13 row 115	dendritic cell & CD11c+	plasmacytoid dendritic cell
 28687661_14_116	PMID 28687661 submission 14 row 116	B cell & CD3-, CD19+, CD20+
