@@ -65,7 +65,7 @@ source("find_unique.R")
 #####<<<< START HERE >>>>#####
 ##### Choose a sheet type (from "HIPC Dashboard.xlsx") #####
 # Available sheet_type values are "GENE", "CELLTYPE_FREQUENCY"
-sheet_type <- "GENE"
+sheet_type <- "CELLTYPE_FREQUENCY"
 
 # For the moment, assume executing interactively from the ./src directory
 source_data_dir <- "../source_data"
