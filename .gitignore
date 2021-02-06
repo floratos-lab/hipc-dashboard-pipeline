@@ -67,3 +67,6 @@ logfiles/cell_type-full_signatures_with_proterms.txt
 logfiles/cell_type-exposure_material_text.txt
 logfiles/cell_type-exposure_material.txt
 logfiles/cell_type-concatenated_cell_types.txt
+src/.Rhistory
+submissions/.Rhistory
+submissions/.Rhistory
