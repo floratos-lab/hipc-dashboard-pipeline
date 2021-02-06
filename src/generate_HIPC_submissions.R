@@ -65,7 +65,7 @@ source("find_unique.R")
 #####<<<< START HERE >>>>#####
 ##### Choose a sheet type (from "HIPC Dashboard.xlsx") #####
 # Available sheet_type values are "GENE", "CELLTYPE_FREQUENCY"
-sheet_type <- "CELLTYPE_FREQUENCY"
+sheet_type <- "GENE"
 
 # For the moment, assume executing interactively from the ./src directory
 source_data_dir <- "../source_data"
@@ -81,8 +81,7 @@ manual_gene_corrections_file <- "manual_gene_symbol_corrections.txt"
 ncbi_no_symbol <- c("BACH1-IT1")  # BACH1 Intronic Transcript 1 (uncategorized)
 
 # NCBI not using current HGNC symbol
-#   there are no current examples now, the line below is just for illustration
-# ncbi_fixes <- data.frame(ncbi = "TRNS1", hgnc = "MT-TS1")
+ncbi_fixes <- data.frame(ncbi = "TRNS1", hgnc = "MT-TS1")
 
 ##### Set runtime parameters #####
 # Download publication references again using PMIDs,
