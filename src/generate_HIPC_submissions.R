@@ -712,8 +712,8 @@ df2 <- as.data.frame(df2, stringsAsFactors = FALSE)
 
 # Substitute in actual virus components for influenza pathogens only.
 for (i in 1:nrow(df2)) {
-  if( (df2[i, "vaccine_year"] != "" ) || (df2[i, "exposure_material"] == "VO_0000410")) {
-    df2[i, "target_pathogen"] <- lookup_vaccine(as.character(df2[i, "vaccine_year"]), as.character(df2[i, "exposure_material"]))
+  if(df2[i, "vaccine_year"] != "" ) {
+    df2[i, "target_pathogen"] <- lookup_vaccine(as.character(df2[i, "vaccine_year"]))
   }
 }
 
