@@ -65,7 +65,7 @@ source("find_unique.R")
 #####<<<< START HERE >>>>#####
 ##### Choose a sheet type (from "HIPC Dashboard.xlsx") #####
 # Available sheet_type values are "GENE", "CELLTYPE_FREQUENCY"
-sheet_type <- "CELLTYPE_FREQUENCY"
+sheet_type <- "GENE"
 
 # For the moment, assume executing interactively from the ./src directory
 source_data_dir <- "../source_data"
@@ -343,10 +343,6 @@ df2$tissue_type[w] <- "blood"
 
 # Write list of pathogens before any substitutions
 write_unique_list(df2$target_pathogen, logdir, base_filename, "target_pathogens_before_fixes", do_split = TRUE)
-
-# Change the correct value to the synonym that the dashboard currently expects
-w <- grep("Mycobacterium tuberculosis variant bovis BCG", df2$target_pathogen)
-df2$target_pathogen[w] <- "Mycobacterium bovis BCG"
 
 # fix capitalization (should fix in source google sheet)
 df2$response_behavior_type <- tolower(df2$response_behavior_type)
