@@ -151,14 +151,14 @@ write_submission_template <- function(df2_cpy, header_rows, template_name, title
 
     # customized headers by type
     if (sheet_type == "GENE") {
-      dftmp$signature_file[1:6] <- c("", "file", "observed", "", "", "signature response component (genes) file")
+      dftmp$signature_file[1:6] <- c("", "file", "observed", "", "", "response component (genes) file")
 
       completeSignatureFilename <- paste0(paste(template_name, "sig_complete", pmid_local,
                                                 submission_identifier, sep = "_"), ".txt")
       dftmp$signature_file_complete <- completeSignatureFilename
-      dftmp$signature_file_complete[1:6] <- c("", "file", "observed", "", "", " signature response components including non-HGNC genes")
+      dftmp$signature_file_complete[1:6] <- c("", "file", "observed", "", "", " response components including non-HGNC genes")
     } else if (sheet_type == "CELLTYPE_FREQUENCY") {
-      dftmp$signature_file[1:6] <- c("", "file", "observed", "", "", "signature response component (cell types) file")
+      dftmp$signature_file[1:6] <- c("", "file", "observed", "", "", "response component (cell types) file")
     }
 
     # Add new columns for multiple exposure materials

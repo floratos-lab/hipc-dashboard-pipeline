@@ -332,6 +332,10 @@ if (any(w1 & w2)) {
 }
 
 df2$subgroup[df2$subgroup == ""] <- "none"
+# Currently only used for type GENE
+if(sheet_type == "GENE") {
+  df2$is_model[df2$is_model == ""] <- "N"
+}
 
 w <- grep("peripheral blood lymphocyte", df2$tissue_type, ignore.case = TRUE)
 df2$tissue_type[w] <- "peripheral blood mononuclear cell"
@@ -902,7 +906,7 @@ if (sheet_type == "GENE") {
   recreated_template_df <- recreated_template_df[!colnames(recreated_template_df) %in% del_cols]
 }
 
-del_cols <- c("submission_name", "submission_date", "template_name", "process_note")
+del_cols <- c("submission_name", "submission_date", "template_name", "short_comment", "process_note")
 recreated_template_df <- recreated_template_df[!colnames(recreated_template_df) %in% del_cols]
 
 # Write out the recreated upload template in tab-delimited format
@@ -947,7 +951,7 @@ if(!is.null(s)) {
 }
 
 # Remove columns not needed for Dashboard.
-del_cols <- c("short_comment", "process_note")
+del_cols <- c("exposure_material_text", "short_comment", "process_note")
 df2 <- df2[!colnames(df2) %in% del_cols]
 header_rows <- header_rows[!colnames(header_rows) %in% del_cols]
 
