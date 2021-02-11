@@ -364,12 +364,6 @@ if(any(w)) {
   stop(paste("comment has non-utf8 character in row(s)", paste(df2$row_key[w], collapse = ", ")))
 }
 
-# remove any period from end of comparison (so works in observation summaries)
-df2$comparison <- trimws(df2$comparison)
-if (any(grepl("\\.$", df2$comparison))) {
-  df2$comparison <- sub("\\.$", "", df2$comparison)
-}
-
 # We don't expect non-ascii characters in text version of signature_source
 w <- !stri_enc_isascii(df2$signature_source)
 if(any(w)) {
