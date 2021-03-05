@@ -88,21 +88,6 @@ resp_comps_by_pmid <- function(resp_components_annotated, pmids) {
   return(as.data.frame(rbindlist(l3)))
 }
 
-get_response_type <- function(response_behavior) {
-  if(grepl("up|down", response_behavior)) {
-    response_type <- UPDOWN
-  } else if (grepl("positive|negative|significant", response_behavior)) {
-    response_type <- CORRELATION
-  } else if (response_behavior == "predictive") {
-    response_type <- PREDICTIVESET
-  } else if (response_behavior == "enriched") {
-    response_type <- ENRICHED
-  } else {
-    print(paste("unexpected behavior value: ", response_behavior))
-    response_type <- ""
-  }
-  return(response_type)
-}
 
 abbreviate_route <- function(route) {
   route <- trimws(route)

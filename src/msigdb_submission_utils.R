@@ -46,26 +46,9 @@ msigdb_description_brief <- function(sheet_type,
     print("brief_description() only supports gene submissions")
     return("")
   }
-  response_type <- get_response_type(response_behavior)
 
-  if(response_type  == UPDOWN) {
-    obs_summary <- paste("Genes", paste0(response_behavior, "-regulated"))
-    obs_summary <- paste(obs_summary, "in", tissue_type)
-    obs_summary <- paste(obs_summary, comparison)
-  } else if (response_type  == CORRELATION) {
-    obs_summary <- paste("Genes", paste0(response_behavior, "ly"), comparison)
-    obs_summary <- paste(obs_summary, "in", tissue_type)
-  } else if (response_type  == PREDICTIVESET) {   # don't know if going to include these yet
-    obs_summary <- paste("Genes that are components of a model", response_behavior, "of response")
-    obs_summary <- paste(obs_summary, "in", tissue_type)
-    obs_summary <- paste(obs_summary, comparison)
-  } else if(response_type  == ENRICHED) {         # don't know if going to include these yet
-    obs_summary <- paste("Genes", response_behavior)
-    obs_summary <- paste(obs_summary, "in", tissue_type)
-    obs_summary <- paste(obs_summary, comparison)
-  } else {
-    stop("Unknown template requested")
-  }
+  obs_summary <- paste("Genes", response_behavior, comparison)
+  obs_summary <- paste(obs_summary, "in", tissue_type)
   obs_summary   <- paste(obs_summary, "in", cohort)
   if (subgroup != "none") {
     obs_summary <- paste(obs_summary, paste0("(", subgroup, ")"))
@@ -100,11 +83,6 @@ msigdb_standard_name <- function(author,
                                  short_comment) {
 
   tissue_type <- sub("peripheral blood mononuclear cell", "PBMC", tissue_type, ignore.case = TRUE)
-  response_type <- get_response_type(response_behavior)
-  response <- ifelse(response_type == UPDOWN, "",      # "expr"
-              ifelse(response_type == CORRELATION, "", # "corr"
-              ifelse(response_type == PREDICTIVESET, "model",
-              ifelse(response_type == ENRICHED, "enrich", ""))))
 
   exposure_material_text <- trimws(sub("\\.$", "", exposure_material_text))
   exposure_material_text <- trimws(gsub("; ", "/", exposure_material_text))
@@ -127,7 +105,7 @@ msigdb_standard_name <- function(author,
   route <- abbreviate_route(route)
   time_unit <- abbreviate_time_unit(time_unit)
 
-  p <- paste(author, response, tissue_type, exposure_material_text, comparison, cohort, subgroup, route,
+  p <- paste(author, tissue_type, exposure_material_text, comparison, cohort, subgroup, route,
              paste0(time_point, time_unit),
              short_comment, response_behavior, sep = "_" )
   p <- gsub("<=", "LTE", p)

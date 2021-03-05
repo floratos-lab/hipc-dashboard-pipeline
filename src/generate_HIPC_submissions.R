@@ -65,7 +65,7 @@ source("find_unique.R")
 #####<<<< START HERE >>>>#####
 ##### Choose a sheet type (from "HIPC Dashboard.xlsx") #####
 # Available sheet_type values are "GENE", "CELLTYPE_FREQUENCY"
-sheet_type <- "GENE"
+sheet_type <- "CELLTYPE_FREQUENCY"
 
 # For the moment, assume executing interactively from the ./src directory
 source_data_dir <- "../source_data"
@@ -88,7 +88,7 @@ ncbi_fixes <- data.frame(ncbi = "TRNS1", hgnc = "MT-TS1")
 #   set to FALSE to reuse existing file
 #   Run this every time new publications are added to the spreadsheet,
 #   for each response_component type.
-RENEW_PMIDS             <- TRUE
+RENEW_PMIDS             <- FALSE
 
 ## Please update gene files before each release
 ## These files will be overwritten if update is requested
@@ -964,11 +964,11 @@ header_rows <- header_rows[!colnames(header_rows) %in% del_cols]
 if (sheet_type == "GENE") {
   write_submission_template(df2, header_rows, template_name, titles_and_dates_df,
                             resp_components_collected, unmatched_symbols_map,
-                            sheet_type)
+                            sheet_type, project)
 } else if (sheet_type == "CELLTYPE_FREQUENCY") {
   write_submission_template(df2, header_rows, template_name, titles_and_dates_df,
                             resp_components_full_sig, unmatched_symbols_map = NULL,
-                            sheet_type)
+                            sheet_type, project)
 }
 
 ###########################################

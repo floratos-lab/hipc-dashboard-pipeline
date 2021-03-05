@@ -1,15 +1,12 @@
-# these variables are only used within this file
-UPDOWN        <- 1
-CORRELATION   <- 2
-PREDICTIVESET <- 3
-ENRICHED      <- 4
 
 submission_center      <- "HIPC-II Signatures Project"
 principal_investigator <- "HIPC-II Sigs: Steven H. Kleinstein, Ph.D."
 
 # NOTE - uses "GENE" and "CELLTYPE_FREQUENCY" definitions from main routine
-generate_observation_summary <- function(sheet_type, response_type,
-                                         use_subgroup, exposure_cnt, pathogen_cnt) {
+generate_observation_summary <- function(sheet_type,
+                                         use_subgroup,
+                                         exposure_cnt,
+                                         pathogen_cnt) {
 
   # generate a wild-card template, add index if multiple to match new columns in data
   gen_phrase <- function(cnt, phrase) {
@@ -26,52 +23,20 @@ generate_observation_summary <- function(sheet_type, response_type,
   }
   if (sheet_type == "GENE") {
     obs_summary     <- "In <tissue_type>, <response_component> <response_component_type>"
-    if(response_type  == UPDOWN) {
-      obs_summary   <- paste(obs_summary, "was significantly <response_behavior>-regulated in")
-      if (use_subgroup) {
-        obs_summary <- paste(obs_summary, "subgroup <subgroup> of")}
-      obs_summary   <- paste(obs_summary, "cohort <cohort>")
-      obs_summary   <- paste(obs_summary, "for the comparison <comparison>")
-    } else if (response_type  == CORRELATION) {
-      obs_summary   <- paste(obs_summary, "was significantly <response_behavior>")
-      obs_summary   <- paste(obs_summary, "<comparison> in")
-      if (use_subgroup) {
-        obs_summary <- paste(obs_summary, "subgroup <subgroup> of")}
-      obs_summary   <- paste(obs_summary, "cohort <cohort>")
-    } else if (response_type  == PREDICTIVESET) {
-      obs_summary   <- paste(obs_summary, "was a component of a model <response_behavior> of response")
-      obs_summary   <- paste(obs_summary, "for the comparison <comparison> in")
-      if (use_subgroup) {
-        obs_summary <- paste(obs_summary, "subgroup <subgroup> of")}
-      obs_summary   <- paste(obs_summary, "cohort <cohort>")
-    } else if(response_type  == ENRICHED) {
-      obs_summary   <- paste(obs_summary, "was significantly <response_behavior> in")
-      if (use_subgroup) {
-        obs_summary <- paste(obs_summary, "subgroup <subgroup> of")}
-      obs_summary   <- paste(obs_summary, "cohort <cohort>")
-      obs_summary   <- paste(obs_summary, "for the comparison <comparison>")
-    } else {
-      stop("Unknown template requested")
+    obs_summary   <- paste(obs_summary, "was <response_behavior>")
+    obs_summary   <- paste(obs_summary, "<comparison> in")
+    if (use_subgroup) {
+      obs_summary <- paste(obs_summary, "subgroup <subgroup> of")
     }
+    obs_summary   <- paste(obs_summary, "cohort <cohort>")
   } else if (sheet_type == "CELLTYPE_FREQUENCY") {
     obs_summary     <- "In <tissue_type>, <response_component><proterm_and_extra> frequency"
-    if(response_type  == UPDOWN) {
-      obs_summary   <- paste(obs_summary, "was significantly <response_behavior> in")
-      if (use_subgroup) {
-        obs_summary <- paste(obs_summary, "subgroup <subgroup> of")}
-      obs_summary   <- paste(obs_summary, "cohort <cohort>")
-      obs_summary   <- paste(obs_summary, "for the comparison <comparison>")
-    } else if (response_type  == CORRELATION) {
-      obs_summary   <- paste(obs_summary, "was significantly <response_behavior>")
-      obs_summary   <- paste(obs_summary, "<comparison> in")
-      if (use_subgroup) {
-        obs_summary <- paste(obs_summary, "subgroup <subgroup> of")}
-      obs_summary   <- paste(obs_summary, "cohort <cohort>")
-    } else if (response_type  == PREDICTIVESET) {
-      stop("not implemented")
-    } else if (response_type  == ENRICHED) {
-      stop("not implemented")
+    obs_summary   <- paste(obs_summary, "was <response_behavior>")
+    obs_summary   <- paste(obs_summary, "<comparison> in")
+    if (use_subgroup) {
+      obs_summary <- paste(obs_summary, "subgroup <subgroup> of")
     }
+    obs_summary   <- paste(obs_summary, "cohort <cohort>")
   }
   obs_summary <- paste(obs_summary, "after exposure to")
   obs_summary <- paste(obs_summary, gen_phrase(exposure_cnt, "exposure_material"))
@@ -83,10 +48,9 @@ generate_observation_summary <- function(sheet_type, response_type,
   return(obs_summary)
 }
 
-
 # Write out the submission templates
 write_submission_template <- function(df2_cpy, header_rows, template_name, titles_and_dates_df,
-                                      resp_components, unmatched_symbols_map = NULL, sheet_type) {
+                                      resp_components, unmatched_symbols_map = NULL, sheet_type, project) {
 
   # create template directory and its file subdirectory
   double_path <- paste(template_name, "files", sep = "/")
@@ -108,8 +72,6 @@ write_submission_template <- function(df2_cpy, header_rows, template_name, title
   # For each submission, i.e. uniq_obs_id (one signature)
   for (i in 1:length(uniq_ids_local)) {
     dftmp <- df2_cpy[df2_cpy$uniq_obs_id == uniq_ids_local[i], ]
-
-    response_type <- get_response_type(dftmp$response_behavior[1])
 
     # Despite best efforts, exposure_material was being treated as a factor.
     # Remember the data is still split at this point
@@ -135,8 +97,6 @@ write_submission_template <- function(df2_cpy, header_rows, template_name, title
     dftmp$submission_date <- date
 
     header_rows$publication_reference_url[6] <- title
-
-
 
     # Reattach the header rows to each submission in turn
     dftmp <- rbind(header_rows, dftmp)
@@ -263,13 +223,11 @@ write_submission_template <- function(df2_cpy, header_rows, template_name, title
       pathogen_cntOS <- pathogen_cnt
     }
 
-    observation_summary <- generate_observation_summary(sheet_type, response_type,
-                                                        use_subgroup, expMatCnt, pathogen_cntOS)
+    observation_summary <- generate_observation_summary(sheet_type,
+                                                        use_subgroup,
+                                                        expMatCnt,
+                                                        pathogen_cntOS)
 
-    projectTmp <- paste(project, ifelse(response_type == UPDOWN, "(up or down)",
-                                        ifelse(response_type == CORRELATION, "(correlation)",
-                                        ifelse(response_type == PREDICTIVESET, "(predictive model)",
-                                        "not defined"))))
     if (sheet_type == "GENE") {
       subm_type <- "gene"
     } else if (sheet_type == "CELLTYPE_FREQUENCY") {
@@ -283,7 +241,7 @@ write_submission_template <- function(df2_cpy, header_rows, template_name, title
                                story_title = "",
                                submission_name = submission_name,
                                submission_description = title,
-                               project = projectTmp,
+                               project = project,
                                submission_story = "false",
                                submission_story_rank = 0,
                                submission_center = submission_center,
