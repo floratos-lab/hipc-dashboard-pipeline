@@ -65,7 +65,7 @@ source("find_unique.R")
 #####<<<< START HERE >>>>#####
 ##### Choose a sheet type (from "HIPC Dashboard.xlsx") #####
 # Available sheet_type values are "GENE", "CELLTYPE_FREQUENCY"
-sheet_type <- "CELLTYPE_FREQUENCY"
+sheet_type <- "GENE"
 
 # For the moment, assume executing interactively from the ./src directory
 source_data_dir <- "../source_data"
@@ -143,12 +143,14 @@ summary_df <- data.frame()  # initialize summary log
 ##### Set up file and template name components #####
 # change sheet name spaces to underscores
 if (sheet_type == "GENE") {
+  sheet_file     <- "HIPC Dashboard - Gene Expression.tsv"
   sheet_name     <- "Gene Expression"
   sheet_name_out <- "gene_expression"
   base_filename  <- "gene_expression"
   template_name  <- "hipc_gene"
   project        <- "Gene expression response to vaccine exposure"
 } else if (sheet_type == "CELLTYPE_FREQUENCY") {
+  sheet_file     <- "HIPC Dashboard - Cell type Frequency.tsv"
   sheet_name     <- "Cell type Frequency"
   sheet_name_out <- "cell_type_frequency"
   base_filename  <- "cell_type"
@@ -164,28 +166,9 @@ pmid_file <- paste(source_data_dir,
                    paste(sheet_name_out, "titles_and_dates_df.RData", sep = "_"),
                    sep = "/")
 
-##### Read in data files #####
-# Note - When reading in a file using read.xlsx2, the warning
-#        "WARNING: An illegal reflective access operation has occurred"
-#        is actually a problem in the JDK, not in the xlsx package.
-#        There is extensive online discussion around this.
-#        This warning is still present in Java 10.0.2
-insub <- read.xlsx2(file =  paste(source_data_dir, dashboard_in_xlsx, sep = "/"),
-                    sheetName = sheet_name,
-                    stringsAsFactors = FALSE)
-dim(insub)
-# Get rid of blank rows (at end of sheet)
-# WARNING - This will throw off row references if there are any blank lines
-#           within the data (rather than at the end)
-w <- which(insub$response_component == "")
-w <- w[w > 6]  # don't remove header rows (first six rows)
-insub <- insub[-c(w), ]
-dim(insub)
+insub <- read.delim(file =  paste(source_data_dir, sheet_file, sep = "/"),
+                        stringsAsFactors = FALSE)
 
-# Remove empty columns read in at right side
-insub <- insub[-c(grep("X..[0-9]", colnames(insub) ))]
-
-length(colnames(insub))
 # Get rid of unused columns (empty in curated data) or those not meant to appear in the Dashboard.
 # target_pathogen_taxonid and tissue_type_term_id are not consistently filled in yet
 #  (added for only recent data),
@@ -204,6 +187,12 @@ remove_cols <- c("spot_check",
 insub <- insub[!(colnames(insub) %in% remove_cols)]
 length(colnames(insub))
 
+# FIXME - this works, but need to have no column name for final templates?
+# cSplit() changes split column values to NA if first column named "X"!
+# The column name of the first column is removed
+# before templates are written in write_submission_template()
+colnames(insub)[1] <- "donotuse"
+
 vaccines_by_year <- read.xlsx2(file = paste(source_data_dir, vaccine_xlsx, sep = "/"),
                                sheetName = "ncbitax",
                                stringsAsFactors = FALSE)
@@ -211,8 +200,7 @@ vaccines_by_year <- read.xlsx2(file = paste(source_data_dir, vaccine_xlsx, sep =
 ### Make any changes to headers right at the beginning,
 ### before separate headers and data
 # Save the original response_component values
-colnames(insub)[colnames(insub) == "response_component"] <-
-  "response_component_original"
+colnames(insub)[colnames(insub) == "response_component"] <- "response_component_original"
 
 # Create a new column for the corrected response_component values
 # and correct the headers for the response_component_original column
@@ -292,7 +280,7 @@ if (sheet_type == "CELLTYPE_FREQUENCY") {
 # In the original template there are 7 header lines, but here the first row is not counted,
 # as it taken as column headers.
 header_rows <- insub[1:6,]
-df2 <- insub[7:nrow(insub),]  # may include blank rows at end if less than 1000 data rows
+df2 <- insub[7:nrow(insub),]
 
 summary_df <- add_to_summary(summary_df, "Data rows in original sheet", nrow(df2))
 
@@ -315,30 +303,18 @@ df2$row_key <- paste(pmids, df2$subm_obs_id, df2$uniq_obs_id, sep = "_")
 ########################################################
 
 # Remove rows marked "skip"
+# FIXME - not being used anymore in HIPC Dashboard source
 skip <- grepl("^skip", df2$process_note, ignore.case = TRUE)
 df2 <- df2[!skip, ]
 
-# Stop and manually fix response_behavior to fit into wording of observation templates
-# specifically, up/down must be changed if the comparison is a correlation
-w1 <- grepl("up|down", df2$response_behavior, ignore.case = TRUE)
-w2 <- grepl("^correl", df2$comparison, ignore.case = TRUE)
-if (any(w1 & w2)) {
-  badlines <- which(w1 & w2)
-  summary_df <- add_to_summary(summary_df,
-                               "Rows that have mismatch in response_behavior and comparison",
-                               paste(df2$row_key[badlines], collapse = ", "))
-  stop(paste("Rows that have mismatch in response_behavior and comparison",
-             paste(df2$row_key[badlines], collapse = ", ")))
-}
-
 df2$subgroup[df2$subgroup == ""] <- "none"
+
+# FIXME - Most values are empty, not "Y" or "N".
+#         Empty is not the same as "N".
 # Currently only used for type GENE
 if(sheet_type == "GENE") {
   df2$is_model[df2$is_model == ""] <- "N"
 }
-
-w <- grep("peripheral blood lymphocyte", df2$tissue_type, ignore.case = TRUE)
-df2$tissue_type[w] <- "peripheral blood mononuclear cell"
 
 # "Blood" is the official UBERON name
 # this should also catch the variant "whole blood cell"

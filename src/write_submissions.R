@@ -100,7 +100,7 @@ write_submission_template <- function(df2_cpy, header_rows, template_name, title
 
     # Reattach the header rows to each submission in turn
     dftmp <- rbind(header_rows, dftmp)
-    colnames(dftmp)[1] <- ""  # get rid of "X." in first column
+    colnames(dftmp)[1] <- ""  # get rid of "X." or other name in first column
 
     # Now that header is reattached, add any needed new columns
     # Add a new column to hold the link to the signature file with all response component
