@@ -187,7 +187,6 @@ remove_cols <- c("spot_check",
 insub <- insub[!(colnames(insub) %in% remove_cols)]
 length(colnames(insub))
 
-# FIXME - this works, but need to have no column name for final templates?
 # cSplit() changes split column values to NA if first column named "X"!
 # The column name of the first column is removed
 # before templates are written in write_submission_template()
@@ -413,6 +412,15 @@ df2 <- as.data.frame(df2)
 # remove factors from df2$response component so that for genes, can alter values.
 # FIXME - any way to gain better control of this?
 df2$response_component_original <- as.character(df2$response_component_original)
+
+# check for lists of response components within one PMID that have a large overlap with one another.
+# This is intended to catch the case were one set was accidently appended to another.
+# (It happens!)
+ft <- check_response_components_overlap(df2, min_intersection = 10, min_overlap_fraction = 0.75, require_different_behaviors = TRUE, max_hits = 100)
+ft
+
+###### end #########
+
 
 # create original gene symbols "signature" list after applying manual corrections
 # FIXME - need better variable name than "signatures"

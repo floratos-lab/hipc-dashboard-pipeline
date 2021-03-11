@@ -131,4 +131,53 @@ strict_char_check <- function(in_df, testchar) {
   }
 }
 
+# check for lists of response components within one PMID that have a large overlap with one another.
+# This is intended to catch the case were one set was accidently appended to another.
+check_response_components_overlap <- function(df2, min_intersection, min_overlap_fraction, require_different_behaviors, max_hits) {
+
+  final_list <- vector(mode = "list", max_hits)
+  cnt <- 1
+  for(pmid in pmids) {
+    rows_for_pmid <- unique(df2$uniq_obs_id[df2$publication_reference == pmid])
+    for(i in 1:length(rows_for_pmid)) {
+      rco_i <- df2$response_component_original[df2$uniq_obs_id == rows_for_pmid[i]]
+      rb_i <- df2$response_behavior[df2$uniq_obs_id == rows_for_pmid[i]][1]
+      for(j in min(i + 1, length(rows_for_pmid)):length(rows_for_pmid)) {
+        if(i == j) {
+          next
+        }
+        rco_j <- df2$response_component_original[df2$uniq_obs_id == rows_for_pmid[j]]
+        rb_j <- df2$response_behavior[df2$uniq_obs_id == rows_for_pmid[j]][1]
+        inter_set <- intersect(rco_i, rco_j)
+        overlap_longer_fraction <- length(inter_set)/max(length(rco_i), length(rco_j))
+        overlap_shorter_fraction <- length(inter_set)/min(length(rco_i), length(rco_j))
+        if(length(inter_set) < min_intersection) {
+          next
+        }
+        if(overlap_shorter_fraction < min_overlap_fraction) {
+          next
+        }
+        if(require_different_behaviors && (rb_i == rb_j)) {
+          next
+        }
+        final_list[[cnt]] <- data.frame(pmid = pmid,
+                                        row1 = rows_for_pmid[i],
+                                        row2 = rows_for_pmid[j],
+                                        overlap_length = length(inter_set),
+                                        set1_count = length(rco_i),
+                                        set2_count = length(rco_j),
+                                        overlap_longer_fraction = overlap_longer_fraction,
+                                        overlap_shorter_fraction = overlap_shorter_fraction,
+                                        set1_resp_behav = rb_i,
+                                        set2_resp_behav = rb_j
+        )
+        cnt <- cnt + 1
+        if(cnt > max_hits) {
+          return(NULL)
+        }
+      }
+    }
+  }
+  ft <- rbindlist(final_list)
+}
 
