@@ -133,7 +133,7 @@ strict_char_check <- function(in_df, testchar) {
 
 # check for lists of response components within one PMID that have a large overlap with one another.
 # This is intended to catch the case were one set was accidently appended to another.
-check_response_components_overlap <- function(df2, min_intersection, min_overlap_fraction, require_different_behaviors, max_hits) {
+check_response_components_overlap <- function(df2, pmids, min_intersection, min_overlap_fraction, require_different_behaviors, max_hits) {
 
   final_list <- vector(mode = "list", max_hits)
   cnt <- 1

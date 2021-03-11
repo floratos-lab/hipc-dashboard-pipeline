@@ -413,14 +413,17 @@ df2 <- as.data.frame(df2)
 # FIXME - any way to gain better control of this?
 df2$response_component_original <- as.character(df2$response_component_original)
 
-# check for lists of response components within one PMID that have a large overlap with one another.
-# This is intended to catch the case were one set was accidently appended to another.
-# (It happens!)
-ft <- check_response_components_overlap(df2, min_intersection = 10, min_overlap_fraction = 0.75, require_different_behaviors = TRUE, max_hits = 100)
-ft
+if (sheet_type == "GENE") {
+  # check for lists of response components within one PMID that have a large overlap with one another.
+  # This is intended to catch the case were one set was accidently appended to another.
+  # (It happens!)
+  ft <- check_response_components_overlap(df2, unique(pmids),
+                                          min_intersection = 10, min_overlap_fraction = 0.75,
+                                          require_different_behaviors = TRUE, max_hits = 100)
 
-###### end #########
-
+  write.xlsx(ft, file = logfile_path(logdir, base_filename, "overlapping_signatures.xlsx"),
+             append = FALSE, row.names = FALSE)
+}
 
 # create original gene symbols "signature" list after applying manual corrections
 # FIXME - need better variable name than "signatures"
