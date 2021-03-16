@@ -167,7 +167,8 @@ pmid_file <- paste(source_data_dir,
                    sep = "/")
 
 insub <- read.delim(file =  paste(source_data_dir, sheet_file, sep = "/"),
-                        stringsAsFactors = FALSE)
+                    strip.white = TRUE,
+                    stringsAsFactors = FALSE)
 
 # Get rid of unused columns (empty in curated data) or those not meant to appear in the Dashboard.
 # target_pathogen_taxonid and tissue_type_term_id are not consistently filled in yet
