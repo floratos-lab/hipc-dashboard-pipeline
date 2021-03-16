@@ -5,6 +5,7 @@ principal_investigator <- "HIPC-II Sigs: Steven H. Kleinstein, Ph.D."
 # NOTE - uses "GENE" and "CELLTYPE_FREQUENCY" definitions from main routine
 generate_observation_summary <- function(sheet_type,
                                          use_subgroup,
+                                         joining_preposition,
                                          exposure_cnt,
                                          pathogen_cnt) {
 
@@ -29,6 +30,7 @@ generate_observation_summary <- function(sheet_type,
     obs_summary     <- "In <tissue_type>, <response_component><proterm_and_extra> frequency"
   }
   obs_summary   <- paste(obs_summary, "was <response_behavior>")
+  obs_summary   <- paste(obs_summary, joining_preposition)
   obs_summary   <- paste(obs_summary, "<comparison> in")
   if (use_subgroup) {
     obs_summary <- paste(obs_summary, "subgroup <subgroup> of")
@@ -42,6 +44,19 @@ generate_observation_summary <- function(sheet_type,
     obs_summary <- paste(obs_summary, gen_phrase(pathogen_cnt, "target_pathogen"))
   }
   return(obs_summary)
+}
+
+choose_joining_preposition <- function(response_behavior) {
+  if(grepl("^up|^down|enriched", response_behavior, ignore.case = TRUE)) {
+    prep <- "for comparison"
+  } else if (grepl("correlated", response_behavior, ignore.case = TRUE)) {
+    prep <- "with"
+  } else if (grepl("predictive",  response_behavior, ignore.case = TRUE)) {
+    prep <- "of"
+  } else {
+    print(paste("choose_joining_preposition(): unexpected response_behavior:", response_behavior))
+    prep <- "for"
+  }
 }
 
 # Write out the submission templates
@@ -74,8 +89,11 @@ write_submission_template <- function(df2_cpy, header_rows, template_name, title
     uniqExpMat <- unique(as.character(dftmp$exposure_material))
     uniqPathogens <- unique(as.character(dftmp$target_pathogen))
 
-    pmid_local <- dftmp$publication_reference[1] # just take first one
+    # for one observation, all values in these columns are the same, so take first.
+    pmid_local <- dftmp$publication_reference[1]
     submission_identifier <- dftmp$subm_obs_id[1]
+    joining_preposition <- choose_joining_preposition(dftmp$response_behavior[1])
+    use_subgroup <- ifelse(dftmp$subgroup[1] != "none", TRUE, FALSE)
 
     # get titles and dates for matching PMID
     w <- which(titles_and_dates_df[, "pmid"] == pmid_local)
@@ -210,7 +228,6 @@ write_submission_template <- function(df2_cpy, header_rows, template_name, title
               file = paste0(template_name_csv, "/", submission_name, ".csv"),
               row.names = FALSE)
 
-    use_subgroup <- ifelse(dftmp$subgroup[7] != "none", TRUE, FALSE)
 
 
     if (any(uniqExpMat %in% vaccine_VO_has_pathogens)) {
@@ -221,6 +238,7 @@ write_submission_template <- function(df2_cpy, header_rows, template_name, title
 
     observation_summary <- generate_observation_summary(sheet_type,
                                                         use_subgroup,
+                                                        joining_preposition,
                                                         expMatCnt,
                                                         pathogen_cntOS)
 

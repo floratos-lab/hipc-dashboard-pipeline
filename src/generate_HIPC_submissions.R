@@ -65,7 +65,7 @@ source("find_unique.R")
 #####<<<< START HERE >>>>#####
 ##### Choose a sheet type (from "HIPC Dashboard.xlsx") #####
 # Available sheet_type values are "GENE", "CELLTYPE_FREQUENCY"
-sheet_type <- "CELLTYPE_FREQUENCY"
+sheet_type <- "GENE"
 
 # For the moment, assume executing interactively from the ./src directory
 source_data_dir <- "../source_data"
@@ -944,10 +944,6 @@ saveRDS(recreated_template_df,
 # NOTE - There are special cases in this routine
 # NOTE - Update code if new publication URL formats are added
 df2$signature_source_url <- format_hipc_urls(df2$signature_source_url)
-
-# for observation summary to read correctly, need to change response_behavior
-df2$response_behavior <- sub("positive", "positively", df2$response_behavior, ignore.case = TRUE )
-df2$response_behavior <- sub("negative", "negatively", df2$response_behavior, ignore.case = TRUE )
 
 # do a final check for illegal characters in df2
 s <- strict_char_check(df2, "\xa0")  # character 160.  Dashboard loader does not like it.
