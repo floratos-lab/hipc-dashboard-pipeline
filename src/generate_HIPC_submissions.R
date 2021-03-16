@@ -65,7 +65,7 @@ source("find_unique.R")
 #####<<<< START HERE >>>>#####
 ##### Choose a sheet type (from "HIPC Dashboard.xlsx") #####
 # Available sheet_type values are "GENE", "CELLTYPE_FREQUENCY"
-sheet_type <- "GENE"
+sheet_type <- "CELLTYPE_FREQUENCY"
 
 # For the moment, assume executing interactively from the ./src directory
 source_data_dir <- "../source_data"
@@ -356,6 +356,15 @@ w <- !stri_enc_isascii(df2$signature_source)
 if(any(w)) {
   stop(paste("signature_source has non-ascii character in row(s)", paste(df2$row_key[w], collapse = ", ")))
 }
+
+# Summarize response behavior strings
+response_behavior_strings <- sort(unique(df2$response_behavior))
+
+write.table(response_behavior_strings,
+            file = logfile_path(logdir, base_filename, "response_behavior_strings.txt"),
+            sep = "\t", row.names = FALSE, col.names = FALSE)
+
+
 
 ##########################################################
 ##### Other global changes to template before splits #####
