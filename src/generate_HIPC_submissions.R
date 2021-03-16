@@ -279,6 +279,12 @@ if (sheet_type == "CELLTYPE_FREQUENCY") {
 # In the original template there are 7 header lines, but here the first row is not counted,
 # as it taken as column headers.
 header_rows <- insub[1:6,]
+# Because these data columns are empty, R helpfully turns them into NA values.
+# Change them to blanks.
+header_rows$submission_name <- ""
+header_rows$submission_date <- ""
+header_rows$template_name <- ""
+
 df2 <- insub[7:nrow(insub),]
 
 summary_df <- add_to_summary(summary_df, "Data rows in original sheet", nrow(df2))
@@ -901,6 +907,8 @@ if (sheet_type == "GENE") {
 del_cols <- c("submission_name", "submission_date", "template_name", "short_comment", "process_note")
 recreated_template_df <- recreated_template_df[!colnames(recreated_template_df) %in% del_cols]
 
+# Set that first column name back to blank
+colnames(recreated_template_df)[1] <- ""
 # Write out the recreated upload template in tab-delimited format
 write.table(recreated_template_df,
             file = logfile_path(logdir, base_filename, "recreated_template.tab.txt"),
