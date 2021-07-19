@@ -5,12 +5,16 @@ This respository, hipc-dashboard-pipeline, provides code and data to generate su
 
 ## Curated data
 Curated data and various mapping and translation files are placed in ./source_data.
-"HIPC Dashboard.xlsx" contains the primary curated data, with one tab for gene data and another for cell-type data.
+The primary input data processed by the R script pipeline is stored in tab-delimited text files, one for each type of curated data.  These are currently:
+* HIPC Dashboard - Gene Expression.tsv
+* HIPC Dashboard - Cell type Frequency.tsv
+
+The same data is also available in an Excel file, "HIPC Dashboard.xlsx", for easy review, however this file is not used by the script.
 
 ## R scripts
 R scripts are in ./src
 "generate_HIPC_submissions.R" is the main script.  It expects to be called from its source location.
-It has a number of optional settings at the beginning.  In particular, one can choose to run the script for the gene data or the cell-type data in the input Excel file, 
+It has a number of optional settings at the beginning.  In particular, one can choose to run the script for the gene data or the cell-type data.
 
 ## Output files
 ### Submission files
