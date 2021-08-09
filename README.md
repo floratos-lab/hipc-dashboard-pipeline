@@ -32,4 +32,5 @@ An additional directory (not checked-in to GitHub), "../logfiles" is created rel
 Certain files from the "logfiles" directory are checked in to GitHub in the "reformatted_data" directory.  These are the "recreated_template" files in Excel, RDS and tab-delimited formats, as well as the response components for each signature in Broad GMT format.  These files represent the data after all updates and transformations. The "recreated_template" files are in the same spreadsheet format as the original data.
 
 
-
+## Database Schema
+![Dashboard DB schema](hipc_dashboard_data_model_simple.png)
