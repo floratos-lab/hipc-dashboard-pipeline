@@ -6,8 +6,9 @@ This respository, hipc-dashboard-pipeline, provides code and data to generate su
 In general, curators initially enter data exactly as it appears in a publication.  This data is then standardized as needed using suitable ontologies.  The original annotations are preserved for qualtity control and provenance.
 
 Standardization varies according to data type:
-* Update gene symbols.  Curated gene symbols are updated to current HGNC/NCBI symbols based on (1) NCBI synonyms and (2) a manually created mapping table.  The later deals with specific problematic symbols found in the curated data, where examination of the original data is able to support a definite mapping.
-* Standardize cell types.  We create a mapping table to standardize the orignal cell type descriptions using terms from the Cell Ontology for cell types and Protein Ontology for additional type-defining markers.
+* Gene symbols - Curated gene symbols are updated to current HGNC/NCBI symbols based on (1) NCBI synonyms and (2) a manually created mapping table.  The later deals with specific problematic symbols found in the curated data, where examination of the original data is able to support a definite mapping.
+* Cell types - We create a mapping table to standardize the orignal cell type descriptions using terms from the Cell Ontology for cell types and Protein Ontology for additional type-defining markers.
+* Vaccines - For influenza vaccines, the year is used to expand the vaccine into its three or four viral components.
 
 ## Curated data
 Curated data and various mapping and translation files are placed in ./source_data.
