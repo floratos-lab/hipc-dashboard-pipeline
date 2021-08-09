@@ -7,7 +7,7 @@ In general, curators initially enter data exactly as it appears in a publication
 
 Standardization varies according to data type:
 * Update gene symbols.  Curated gene symbols are updated to current HGNC/NCBI symbols based on (1) NCBI synonyms and (2) a manually created mapping table.  The later deals with specific problematic symbols found in the curated data, where examination of the original data is able to support a definite mapping.
-* Standardize cell types.  Cell types and their markers are initially curated as they appear in each publication.  We create a mapping table to transform the orignal values to standardized values using the Cell Ontology and Protein Ontology.
+* Standardize cell types.  We create a mapping table to standardize the orignal cell type descriptions using terms from the Cell Ontology for cell types and Protein Ontology for additional type-defining markers.
 
 ## Curated data
 Curated data and various mapping and translation files are placed in ./source_data.
