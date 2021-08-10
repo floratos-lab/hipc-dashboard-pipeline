@@ -18,15 +18,17 @@ Standardization varies according to data type.  We use existing community standa
 * Cell types and markers - We create a mapping table to standardize the orignal cell type descriptions using terms from the Cell Ontology for cell types and Protein Ontology for additional type-defining markers.
 * Vaccines - For influenza vaccines, the year is used to expand the vaccine into its three or four viral components.
 
-## Curated data repository
-Curated data and various mapping and translation files are placed in ./source_data.
-The primary input data processed by the R script pipeline is stored in tab-delimited text files, one for each type of curated data.  These are currently:
+## Curated data repository (./source_data)
+Unprocessed, curated data is placed as tab-delimited spreadsheet files in ./source_data, one file per response component type.
+These are currently:
 * HIPC Dashboard - Gene Expression.tsv
 * HIPC Dashboard - Cell type Frequency.tsv
 
-The same data is also available in an Excel file, "HIPC Dashboard.xlsx", for easy review, however this file is not used by the script.
+This directory also contains the various mapping and translation files required by the R pipeline script.
 
-## R scripts
+The curated response component data is also available in an Excel file, "HIPC Dashboard.xlsx", for easy review, however this file is not used by the script.
+
+## R scripts (./src)
 R scripts are in ./src.
 "generate_HIPC_submissions.R" is the main script.  It expects to be called from its source location.
 It has a number of optional settings at the beginning.  In particular, one can choose to run the script for the gene data or the cell-type data.
@@ -34,7 +36,7 @@ It has a number of optional settings at the beginning.  In particular, one can c
 ## Data Releases
 The Dashboard database is reloaded in its entirety each time a new release is created.  When a new version of the data is ready, the code, input data and resulting output files are all committed together as a release.  
 
-## Output files
+## Output files (../submissions)
 ### Submission files (Dashboard load files)
 If it does not already exist, a directory called "../submissions" will be created relative to ./src.
 The submission files are tab-delimited.
