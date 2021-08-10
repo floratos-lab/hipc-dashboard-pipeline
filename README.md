@@ -6,6 +6,10 @@ The HIPC Dashboard provides a web interface to the immune signatures curated as 
 
 The focus of curation are the "response components", the biological features whose change is being measured.  Extensive supporting metadata is captured to characterize the experiment giving rise to each signtaure.  The intial response components curated and released on the Dashboard have been gene expression and cell-type frequency.  Work is also in progress on metabolites, pathways etc.
 
+Although all of the original curated data files are made available on this site, it is the files output by the R pipeline, which contain data that has been standardized and reformated, which would be most suitable for consumption by other projects.  These processed files, described in more detail below, are found in the directories
+* ./submissions - tab-delimited Dashboard load files, one per signature
+* ./reformatted_data - standardized versions of curated data in several formats including tab-delimited, RDS, Excel and Broad GMT (tab-delimited).
+
 ## Design
 The Dashboard design is flexible and allows submissions with an arbitrary number and type of data columns.  The Dashboard is built on two classes of data.  The first, termed "subjects", comprises terms drawn from controlled vocabularies which are represented directly in the Dashboard database with all their underlying data. The second class, termed "evidence", is open and can be used to add additionnal annotation columns, such as free text or files, as needed for a particular submission.   The addition of new ontology-based data-types ("subjects") requires additions to the data model.  The templates for the first two supported submission types, gene expression and cell-type frequency, are almost identical. The HIPC Dashboard design is based on an earlier project, the Cancer Target Detection and Discovery Network (CTD2), initiated by the Office of Cancer Genomics of the National Cancer Institute (NCI).  A more detailed discussion of the Dashboard architecture is available in the publication Askoy et al. (2017), https://pubmed.ncbi.nlm.nih.gov/29220450/.
 
