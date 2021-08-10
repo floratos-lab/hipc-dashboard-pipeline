@@ -60,8 +60,9 @@ The "recreated_template" files are in the same spreadsheet format as the origina
 
 # Database Schema and Notes about Modules
 ## Core: Data structures and DAO methods
-(This section is excerpted from the HIPC Dashboard software repository https://github.com/floratos-lab/hipc-signature/blob/master/README.md#notes-about-modules)
-This module tries to capture the main database schema outlined below:
+(This section is excerpted from the HIPC Dashboard software repository https://github.com/floratos-lab/hipc-signature/blob/master/README.md#notes-about-modules).  Please visit that page for furhter details of the implementation of the HIPC Dashboard itself.
+
+The main database schema is outlined below:
 
 ![Dashboard DB schema](./hipc_dashboard_data_model_simple.png)
 
