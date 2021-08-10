@@ -2,16 +2,21 @@
 ## Overview
 This respository, hipc-dashboard-pipeline, provides code and data to generate submission files for the HIPC Dashboard (http://hipc-dashboard.org/).  
 
-The HIPC Dashboard provides a web interface to the immune signatures curated as part of the HIPC Signatures II project (NIAID).  This initial version of the Dashboard focuses on vaccine reponse signatures, however, it is designed to be extendable to additional signature types.  Work on signatures of response to infection is in progress.  The addition of new ontology-based data-types ("subjects") requires additions to the data model, but the addition of new unrestricted fields ("evidence") needed to annotate new data types is fully supported by the current data model.
+The HIPC Dashboard provides a web interface to the immune signatures curated as part of the HIPC Signatures II project (NIAID).  This initial version of the Dashboard focuses on vaccine reponse signatures, however, it is designed to be extendable to additional signature types.  Work on signatures of response to infection is in progress. The intial types of curated data submitted to the HIPC Dashboard are gene expression and cell-type frequency results.
 
-In general, curators initially enter data exactly as it appears in a publication.  This data is then standardized as needed using suitable ontologies.  The original annotations are preserved for qualtity control and provenance.  The curation sheets contain several rows of headers used in the Dashboard load process but which are not of interest to the wider community.
+## Design
+The Dashboard design is flexible and allows submissions with an arbitrary number and type of data columns.  The Dashboard is built on two classes of data.  The first, termed "subjects", comprises terms drawn from controlled vocabularies which are represented directly in the Dashboard database with all their underlying data. The second class, termed "evidence", is open and can be used to add additionnal annotation columns, such as free text or files, as needed for a particular submission.   The addition of new ontology-based data-types ("subjects") requires additions to the data model.  The templates for the first two supported submission types, gene expression and cell-type frequency, are almost identical. 
 
-Standardization varies according to data type:
+## Curation
+In general, curators initially enter data into type-specific templates exactly as it appears in a publication.  This data is then standardized as needed using suitable ontologies.  The original annotations are preserved for qualtity control and provenance.  The curation sheets contain several rows of headers used to guide the Dashboard load process but which are not of interest to the wider community.
+
+## Data Standardization
+Standardization varies according to data type.  We use existing community standards wherever possible:
 * Gene symbols - Curated gene symbols are updated to current HGNC/NCBI symbols based on (1) NCBI synonyms and (2) a manually created mapping table.  The later deals with specific problematic symbols found in the curated data, where examination of the original data is able to support a definite mapping.
 * Cell types and markers - We create a mapping table to standardize the orignal cell type descriptions using terms from the Cell Ontology for cell types and Protein Ontology for additional type-defining markers.
 * Vaccines - For influenza vaccines, the year is used to expand the vaccine into its three or four viral components.
 
-## Curated data
+## Curated data repository
 Curated data and various mapping and translation files are placed in ./source_data.
 The primary input data processed by the R script pipeline is stored in tab-delimited text files, one for each type of curated data.  These are currently:
 * HIPC Dashboard - Gene Expression.tsv
