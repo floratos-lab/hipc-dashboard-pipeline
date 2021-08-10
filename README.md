@@ -1,6 +1,6 @@
 # HIPC Dashboard Pipeline
 ## Overview
-This respository, hipc-dashboard-pipeline, provides code and data to generate submission files for the HIPC Dashboard (http://hipc-dashboard.org/).  The HIPC Dashboard itself resides in a separate GitHub repository at https://github.com/floratos-lab/hipc-signature.
+This respository, hipc-dashboard-pipeline, provides code and data to generate submission files for the HIPC Dashboard (http://hipc-dashboard.org/).  The HIPC Dashboard itself resides in a [separate GitHub repository](https://github.com/floratos-lab/hipc-signature).
 
 The HIPC Dashboard provides a web interface to the immune signatures curated as part of the HIPC Signatures II project (NIAID).  This initial version of the Dashboard focuses on vaccine reponse signatures, however, it is designed to be extendable to additional signature types.  Work on signatures of responses to infection is in progress.  
 
@@ -60,7 +60,7 @@ The "recreated_template" files are in the same spreadsheet format as the origina
 
 # Database Schema and Notes about Modules
 ## Core: Data structures and DAO methods
-(This section is excerpted from the HIPC Dashboard software repository https://github.com/floratos-lab/hipc-signature/blob/master/README.md#notes-about-modules).  Please visit that page for furhter details of the implementation of the HIPC Dashboard itself.
+This section is excerpted from the [HIPC Dashboard software repository](https://github.com/floratos-lab/hipc-signature/blob/master/README.md#notes-about-modules).  Please visit that page for further details of the implementation of the HIPC Dashboard itself.
 
 The main database schema is outlined below:
 
