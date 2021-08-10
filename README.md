@@ -1,6 +1,6 @@
 # HIPC Dashboard Pipeline
 ## Overview
-This respository, hipc-dashboard-pipeline, provides code and data to generate submission files for the HIPC Dashboard (http://hipc-dashboard.org/).  
+This respository, hipc-dashboard-pipeline, provides code and data to generate submission files for the HIPC Dashboard (http://hipc-dashboard.org/).  The HIPC Dashboard itself resides in a separate GitHub repository at https://github.com/floratos-lab/hipc-signature.
 
 The HIPC Dashboard provides a web interface to the immune signatures curated as part of the HIPC Signatures II project (NIAID).  This initial version of the Dashboard focuses on vaccine reponse signatures, however, it is designed to be extendable to additional signature types.  Work on signatures of response to infection is in progress. The intial types of curated data submitted to the HIPC Dashboard are gene expression and cell-type frequency results.
 
@@ -28,6 +28,9 @@ The same data is also available in an Excel file, "HIPC Dashboard.xlsx", for eas
 R scripts are in ./src.
 "generate_HIPC_submissions.R" is the main script.  It expects to be called from its source location.
 It has a number of optional settings at the beginning.  In particular, one can choose to run the script for the gene data or the cell-type data.
+
+## Data Releases
+The Dashboard database is reloaded in its entirety each time a new release is created.  When a new version of the data is ready, the code, input data and resulting output files are all committed together as a release.  
 
 ## Output files
 ### Submission files (Dashboard load files)
