@@ -43,6 +43,8 @@ The submission files are tab-delimited.
 Gene submission files are placed in a subdirectory called "submissions/hipc_gene/".
 Cell-type submissions are placed in a subdirectory called "submissions/hipc_ctf/".
 
+Each file represents one signature in a denormalized manner, with each response component in a separate row.  Other multi-valued fields such as vaccine components are expanded into separate columns by the R script.
+
 For easy inspection, CSV-formatted versions of the same files are also generated under "submissions/hipc_gene_csv/" and "submissions/hipc_ctf_csv/"
 
 ### Log files
