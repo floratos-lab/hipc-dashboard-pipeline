@@ -53,7 +53,7 @@ Each file represents one signature in a denormalized manner, with each response 
 
 For easy inspection, CSV-formatted versions of the same files are also generated under "submissions/hipc_gene_csv/" and "submissions/hipc_ctf_csv/"
 
-Files containing just the complete list of response components for each signature are located in a further subdirectory, "files", for reach response component type, e.g. "submissions/hipc_gene/files".  An example is the file hipc_gene_sig_21357945_3.txt which lists six genes, one per line, that make up the third signature for that PMID.
+Files containing just the complete list of response components for each signature are located in a further subdirectory, "files", for reach response component type, e.g. "submissions/hipc_gene/files".  An example is the file **hipc_gene_sig_21357945_3.txt** which lists six genes, one per line, that make up the third signature for that PMID.
 
 
 ### Log files
