@@ -1,0 +1,917 @@
+original_annotation	CL_term	CL_ID	PRO_term_w_intensity	PRO_ID	extra	comments																				
+activated CD4+ T cells	"activated CD4-positive, alpha-beta T cell"	CL_0000896																								
+antibody secreting cell	antibody secreting cell	CL_0000946																								
+CD19+ B-cells	B cell	CL_0000236	CD19+	PR_000001002																						
+CD19+ CD69+ B-cells	B cell	CL_0000236	"CD19+, CD69+"	"PR_000001002, PR:000001343"																						
+CD69+ CD19+ B-cells	B cell	CL_0000236	"CD19+, CD69+"	"PR_000001002, PR:000001343"																						
+CD38+ of CD20+IgD-CD27+ B cells	B cell	CL_0000236	"CD20+, CD27+, CD38+"	" PR:000001289, PR:000001963, PR:000001408"	IgD-																					
+CD86+ of CD20+ B cells	B cell	CL_0000236	"CD20+, CD86+"	"PR:000001289, PR_000001412 "																						
+B cells CD3-/CD19+CD20+	B cell	CL_0000236	"CD3-, CD19+, CD20+"	"PR:000001020, PR_000001002, PR:000001289"		CL issue: CD20 downregulated for activated B cells																				
+B cells CD3-/CD19+CD20+/IgD-IgM-/CD27+	B cell	CL_0000236	"CD3-, CD19+, CD20+, CD27+"	"PR:000001020, PR_000001002, PR:000001289, PR:000001963"	"IgD-, IgM-"																					
+CD32+ CD19+ B-cells	B cell	CL_0000236	"CD32+, CD19+"	"PR:000001479, PR_000001002"		low affinity immunoglobulin gamma Fc region receptor II																				
+B cell	B cell	CL_0000236																								
+CD5+ CD19+ B-cells	"B cell, CD19-positive"	CL_0001201	CD5+	PR:000001839																						
+CD14dim CD16++ monocytes	"CD14-low, CD16-positive monocyte"	CL_0002396	"CD14-dim, CD16++"	"PR:000001889, PR_000001483"																						
+CCR2+ CD14+ monocytes	CD14-positive monocyte	CL_0001054	CCR2+	PR:000001199																						
+CCR5+ CD14+ monocytes	CD14-positive monocyte	CL_0001054	CCR5+	PR:000001201																						
+CD14+ of viable CD45+ cells (Total monocytes)	CD14-positive monocyte	CL_0001054	CD45+	"PR:000001889, PR:000001006"	viable																					
+CD64+ CD14+ monocytes	CD14-positive monocyte	CL_0001054	CD64+																							
+total CD14+ monocytes	CD14-positive monocyte	CL_0001054			(total)																					
+Monocytes (CD14+)	CD14-positive monocyte	CL_0001054																								
+CD14+ monocytes	CD14-positive monocyte	CL_0001054																								
+CD14+ CD16- monocytes	"CD14-positive, CD16-negative classical monocyte"	CL_0002057																								
+CD14+ CD16- classical monocyte	"CD14-positive, CD16-negative classical monocyte"	CL_0002057																								
+CD16+ HLA-DR++ CD14+ monocytes	"CD14-positive, CD16-positive monocyte"	CL_0002397			HLA-DR++																					
+HLA-DR++ CD16+ CD14+ monocytes	"CD14-positive, CD16-positive monocyte"	CL_0002397			HLA-DR++																					
+CD14+ CD16+ monocytes	"CD14-positive, CD16-positive monocyte"	CL_0002397																								
+CD56dim CD16++ natural killer cells	"CD16-positive, CD56-dim natural killer cell, human"	CL_0000939	CD16++	PR_000001483																						
+CD56dim CD16++ NK cells	"CD16-positive, CD56-dim natural killer cell, human"	CL_0000939	CD16++	PR_000001483																						
+CD16+ CD56-dim natural killer cell	"CD16-positive, CD56-dim natural killer cell, human"	CL_0000939																								
+CD16+ CD56dim natural killer cell	"CD16-positive, CD56-dim natural killer cell, human"	CL_0000939																								
+CD27+CCR7- of memory CD4+ T cells	"CD4-positive, alpha-beta memory T cell"	CL_0000897	"CD27+, CCR7-"	"PR:000001963, PR_000001203 "		human specific CCR7 is PR_P32248 																				
+memory T cells VZV-specific CD4+ IL2+ BCL2+	"CD4-positive, alpha-beta memory T cell"	CL_0000897	"IL2+, BCL2+"	"PR:000001379, PR_000002307 "	VZV-specific																					
+memory T cells VZV-specific CD4+	"CD4-positive, alpha-beta memory T cell"	CL_0000897			VZV-specific																					
+CCR3+ CD4+ T-cells	"CD4-positive, alpha-beta T cell"	CL_0000624	CCR3+	PR:000001255																						
+CCR5+ CD4+ T-cells	"CD4-positive, alpha-beta T cell"	CL_0000624	CCR5+	PR:000001201																						
+CD103+ of CD4+ T cells	"CD4-positive, alpha-beta T cell"	CL_0000624	CD103+	PR:000001010																						
+T cells Cd14-/CD3+/CD4+/IL2+/ENV	"CD4-positive, alpha-beta T cell"	CL_0000624	"CD14-, CD3+, IL2+"	"PR:000001889, PR:000001020, PR:000001379"	ENV																					
+T cells CD14-/CD3+/CD4+/IL2+/NS1	"CD4-positive, alpha-beta T cell"	CL_0000624	"CD14-, CD3+, IL2+"	"PR:000001889, PR:000001020, PR:000001379"	NS1																					
+T cells CD3+/CD4+/CD28+	"CD4-positive, alpha-beta T cell"	CL_0000624	"CD3+, CD28+"	"PR:000001020, PR:000001841"																						
+T cells CD3+/CD4+/Ki67+	"CD4-positive, alpha-beta T cell"	CL_0000624	"CD3+, pKI-67+"	"PR:000001020, PR:000029630"																						
+CD38+HLADR+ VZV tetramer+ cells (% of VZV tetramer CD4 T cells)	"CD4-positive, alpha-beta T cell"	CL_0000624	CD38+	PR:000001408	"HLA-DR+, VZV tetramer+"																					
+CD38+ HLADR+ VZV tetramer+ cells (% of VZV tetramer CD4 T cells)	"CD4-positive, alpha-beta T cell"	CL_0000624	CD38+	PR:000001408	"HLA-DR+, VZV tetramer+"																					
+CD38+ of CD4+ T cells	"CD4-positive, alpha-beta T cell"	CL_0000624	CD38+	PR:000001408																						
+CD54+ CD4+ T-cells	"CD4-positive, alpha-beta T cell"	CL_0000624	CD54+	PR:000001467																						
+CD69+ CD4+ T-cells	"CD4-positive, alpha-beta T cell"	CL_0000624	CD69+	PR:000001343																						
+VZV-specific CD4+ CD69+ CD57+ PD1+ cells	"CD4-positive, alpha-beta T cell"	CL_0000624	"CD69+, PD-1+"	"PR:000001343, PR:000001919"	"CD57+, VZV-specific"																					
+CXCR4+ CD4+ T-cells	"CD4-positive, alpha-beta T cell"	CL_0000624	CXCR4+	PR:000001208																						
+T cells IFNg producing VZV-specific CD4+	"CD4-positive, alpha-beta T cell"	CL_0000624	IFNG+	PR:000000017	VZV-specific																					
+interferon-gamma+ CD4 T cells	"CD4-positive, alpha-beta T cell"	CL_0000624	IFNG+	PR:000000017																						
+"triple-positive (interferon-gamma, tumor necrosis factor-alpha, interleukin-2) CD4 T cells"	"CD4-positive, alpha-beta T cell"	CL_0000624	"IFNG+, TNF-a+, IL-2+"	"PR:000000017, PR:000000134, PR:000001379"																						
+IL2+ of CD4+ T cells	"CD4-positive, alpha-beta T cell"	CL_0000624	IL-2+	PR:000001379																						
+IL22+ of CD161- CD4+ T cells	"CD4-positive, alpha-beta T cell"	CL_0000624	"IL22+, CD161-"	"PR_000001383, PR_000025670 "		human IL22 is PR_Q9GZX6 but note synonym is hIL22																				
+IL4+ of CD4+ T cells	"CD4-positive, alpha-beta T cell"	CL_0000624	IL-4+	PR:000001391																						
+TEM2+ CD4+ T Cell	"CD4-positive, alpha-beta T cell"	CL_0000624	TEM2+	PR_Q96D21 																						
+CXCR3+ CD4+ T-cells	"CD4-positive, alpha-beta T cell"	CL_0000624			CXCR3+																					
+HLA-DR+ of CD4+ T cells	"CD4-positive, alpha-beta T cell"	CL_0000624			HLA-DR+																					
+HLA-DR+ CD4+ T-cells	"CD4-positive, alpha-beta T cell"	CL_0000624			HLA-DR+																					
+VZV antigen-reactive CD4 T cells	"CD4-positive, alpha-beta T cell"	CL_0000624			VZV antigen-reactive																					
+CD4+ T cells	"CD4-positive, alpha-beta T cell"	CL_0000624																								
+CD4+ alpha-beta T cell	"CD4-positive, alpha-beta T cell"	CL_0000624																								
+T cells CD4+	"CD4-positive, alpha-beta T cell"	CL_0000624																								
+CD25high CD4+ T-cells	"CD4-positive, CD25-positive, alpha-beta regulatory T cell"	CL_0000792	CD25-hi	PR_000001380																						
+"CD4-positive, CD25-positive, alpha-beta regulatory T cell"	"CD4-positive, CD25-positive, alpha-beta regulatory T cell"	CL_0000792																								
+CD25+ CD4+ T-cells	"CD4-positive, CD25-positive, alpha-beta regulatory T cell"	CL_0000792																								
+cytotoxic T lymphocytes VZV-specific CD8+ IFNg+ CD107a+	"CD8-positive, alpha-beta cytotoxic T cell"	CL_0000794	"CD107a+, IFNg+"	"PR:000002060, PR:000000017"	VZV-specific																					
+CCR3+ CD8+ T-cells	"CD8-positive, alpha-beta T cell"	CL_0000625	CCR3+	PR:000001255																						
+CD103+ of CD8+ T cells	"CD8-positive, alpha-beta T cell"	CL_0000625	CD103+	PR:000001010																						
+T cells CD3+/CD8+/CD28+	"CD8-positive, alpha-beta T cell"	CL_0000625	"CD3+, CD28+"	"PR:000001020, PR:000001841"																						
+T cells CD3+/CD8+/Ki67+	"CD8-positive, alpha-beta T cell"	CL_0000625	"CD3+, pKI-67+"	"PR:000001020, PR:000029630"																						
+CD38+ of CD8+ T cells	"CD8-positive, alpha-beta T cell"	CL_0000625	CD38+	PR:000001408																						
+CD38+ CD8+ T-cells	"CD8-positive, alpha-beta T cell"	CL_0000625	CD38+	PR:000001408																						
+CD39+ of CD8+ T cells	"CD8-positive, alpha-beta T cell"	CL_0000625	CD39+	PR:000001854																						
+CD54+ CD8+ T-cells	"CD8-positive, alpha-beta T cell"	CL_0000625	CD54+	PR:000001467																						
+VZV-specific CD8+ CD69+ CD57+ cells	"CD8-positive, alpha-beta T cell"	CL_0000625	CD69+	PR:000001343	"VZV-specific, CD57+"																					
+CD69+ of CD8+ T cells	"CD8-positive, alpha-beta T cell"	CL_0000625	CD69+	PR:000001343																						
+CD69+ CD8+ T-cells	"CD8-positive, alpha-beta T cell"	CL_0000625	CD69+	PR:000001343																						
+VZV-specific CD8+ CD69+ PD1+ cells	"CD8-positive, alpha-beta T cell"	CL_0000625	"CD69+, PD-1+"	"PR:000001343, PR:000001919"	VZV-specific																					
+CXCR4+ CD8+ T-cells	"CD8-positive, alpha-beta T cell"	CL_0000625	CXCR4+	PR:000001208																						
+TIV-specific CD8+ GRZ+ T lymphocyte cells	"CD8-positive, alpha-beta T cell"	CL_0000625	GZMB+	PR:000003499	TIV-specific																					
+T cell responder TIV-specific CD8+ GRZ+	"CD8-positive, alpha-beta T cell"	CL_0000625	GZMB+	PR:000003499	TIV-specific																					
+CXCR3+ CD8+ IFN-gamma producing T-cells	"CD8-positive, alpha-beta T cell"	CL_0000625	IFNG+	PR:000000017	CXCR3+																					
+CD8+ interleukin-17+ (IL-17+) cells	"CD8-positive, alpha-beta T cell"	CL_0000625	IL17A+	PR:000001138																						
+T cells CD8+ Ki67+	"CD8-positive, alpha-beta T cell"	CL_0000625	pKI-67+	PR:000029630																						
+CXCR3+ CD8+ T-cells	"CD8-positive, alpha-beta T cell"	CL_0000625			CXCR3+																					
+T cells Dual-function VZV-specific CD8+	"CD8-positive, alpha-beta T cell"	CL_0000625			"dual-function, VZV-specific"																					
+HLA-DR+ of CD8+ T cells	"CD8-positive, alpha-beta T cell"	CL_0000625			HLA-DR+																					
+HLA-DR+ CD8+ T-cells	"CD8-positive, alpha-beta T cell"	CL_0000625			HLA-DR+																					
+CD8+ T cells	"CD8-positive, alpha-beta T cell"	CL_0000625																								
+CD8+ alpha-beta T cell	"CD8-positive, alpha-beta T cell"	CL_0000625																								
+T cells CD8+	"CD8-positive, alpha-beta T cell"	CL_0000625																								
+CD25+ of CD8+ Tcells	"CD8-positive, CD25-positive, alpha-beta regulatory T cell"	CL_0000919																								
+CD25+ CD8+ T-cells	"CD8-positive, CD25-positive, alpha-beta regulatory T cell"	CL_0000919																								
+"CD8-positive, CD28-negative, alpha-beta regulatory T cell"	"CD8-positive, CD28-negative, alpha-beta regulatory T cell"	CL_0000920																								
+CD8+ CXCR3+ alpha-beta regulatory T cell	"CD8-positive, CXCR3-positive, alpha-beta regulatory T cell"	CL_0001041																								
+CD45RO+ CCR7+ central memory CD4 cells	"central memory CD4-positive, alpha-beta T cell"	CL_0000904	"CD45RO+, CCR7+"	"PR_000001017, PR_000001203"																						
+"central memory CD4-positive, alpha-beta T cell"	"central memory CD4-positive, alpha-beta T cell"	CL_0000904																								
+CD45RO+ CCR7+ central memory CD8 cells	"central memory CD8-positive, alpha-beta T cell"	CL_0000907	"CD45RO+, CCR7+"	"PR_000001017, PR_000001203"		"human-specific CD45RO is PR_P08575-4 , human specific CCR7 is PR_P32248 "																				
+DC HLA-DR+CD11c+	dendritic cell	CL_0000451	CD11c+	PR:000001013	HLA-DR+	"Only in comments in CL; Ricardo says sufficient for myeloid, note the minus in the name"																				
+CD11c-positive DC	dendritic cell	CL_0000451	CD11c+	PR:000001013		Only in comments in CL; Ricardo says sufficient for myeloid																				
+DC (NK-/CD123)	dendritic cell	CL_0000451	CD123+	PR:000001865	NK-																					
+IFNa+ of pDCs	dendritic cell	CL_0000451	interferon alpha+	PR:000024938																						
+dendritic cell	dendritic cell	CL_0000451																								
+"intereferon-gamma-negative, tumor-necrosis-factor-alfa-positive, interleukin-2-positive, effector memory CD4-positive, alpha-beta T cell"	"effector memory CD4-positive, alpha-beta T cell"	CL_0000905	"IFNG-, TNF-a+, IL-2+"	"PR:000000017, PR:000000134, PR:000001379"																						
+"intereferon-gamma-positive, tumor-necrosis-factor-alfa-positive, interleukin-2-positive, effector memory CD4-positive, alpha-beta T cell"	"effector memory CD4-positive, alpha-beta T cell"	CL_0000905	"TNF-a, IL-2+"	"PR:000000134, PR:000001379"																						
+"effector memory CD8-positive, alpha-beta T cell"	"effector memory CD8-positive, alpha-beta T cell"	CL_0000913																								
+eosinophil	eosinophil	CL_0000771																								
+CD69+ gamma-delta T-cell	gamma-delta T cell	CL_0000798	CD69+	PR:000001343																						
+gamma-delta cells	gamma-delta T cell	CL_0000798																								
+granulocyte	granulocyte	CL_0000094																								
+IgA+ of IgD-CD27+ memory B cells	IgA memory B cell	CL_0000973	CD27+	PR:000001963	IgD-																					
+influenza-specific IgA secreting plasmablasts	IgA plasmablast	CL_0000984			influenza-specific																					
+"memory B cells (CD19+, IgD-, CD27+) (CL_0001053)"	IgD-negative memory B cell	CL_0001053	"CD19+, CD27+"	"PR_000001002, PR:000001963"																						
+CD38+ of IgD-CD27+ memory B cells	IgD-negative memory B cell	CL_0001053	"CD27+, CD38+"	"PR:000001963,PR:000001408"																						
+CD80+ of IgD-CD27+ memory B cells	IgD-negative memory B cell	CL_0001053	"CD80+, CD27+"	"PR:000001438, PR:000001963"																						
+CD86+ of IgD-CD27- memory B cells	IgD-negative memory B cell	CL_0001053	"CD86+, CD27-"	"PR:000001412, PR:000001963"																						
+"switched IgG+ memory B cells (CD3-, CD19+, HLADR+, CD27+, IgG+)"	IgG memory B cell	CL_0000979	"CD3-, CD19+, CD27+"	"PR:000001020, PR_000001002, PR:000001963"	"HLADR+, IgG+"																					
+"IgG+ memory B cells (CD3-, CD19+, HLADR+, CD27+, CD10-, CD20+, IgG+)"	IgG memory B cell	CL_0000979	"CD3-, CD19+, CD27+, CD10-, CD20+"	"PR:000001020, PR_000001002, PR:000001963, PR_000001898, PR:000001289"	"HLADR+, IgG+"																					
+influenza-specific IgG secreting plasmablasts	IgG plasmablast	CL_0000982			influenza-specific																					
+IgG+ Antibody secreting cells	IgG plasmablast	CL_0000982				Paper is not totally clear if these are plasmablast or B cell or both (both is maybe most likely). Figure 3A does indicate y-axis is per 10^6 B cells.																				
+B cells CD3-/CD19+CD20+/IgD-IgM+/CD27+	IgM memory B cell	CL_0000971	"CD3-, CD19+, CD20+, CD27+"	"PR:000001020, PR_000001002, PR:000001289, PR:000001963"																						
+influenza-specific IgM secreting plasmablasts	IgM plasmablast	CL_0000983			influenza-specific																					
+white blood cell	leukocyte	CL_0000738																								
+lymphocyte	lymphocyte	CL_0000542																								
+CD38+ of IgD+CD27+ memory B cells	memory B cell	CL_0000787	"CD27+, CD38+"	"PR:000001963,PR:000001408"	IgD+																					
+memory B cell	memory B cell	CL_0000787																								
+CD16+ inflammatory monocytes	monocyte	CL_0000576	CD16-positive	PR_000001483	inflammatory																					
+CD40/CD86+ monocytes	monocyte	CL_0000576	"CD40, CD86"	"PR_P29965, PR_000001412 "																						
+CD40+ monocytes	monocyte	CL_0000576	CD40+	PR:000001961																						
+CD86+ monocytes	monocyte	CL_0000576	CD86+	PR:000001412																						
+CD86+ monocyte	monocyte	CL_0000576	CD86+	PR:000001412																						
+CD86+ CD16+ inflammatory monocyte	monocyte	CL_0000576	"CD86-positive, CD16-positive"	"PR_000001412, PR_000001483"	inflammatory																					
+CD86+ CD16+ inflammatory monocytes	monocyte	CL_0000576	"CD86-positive, CD16-positive"	"PR_000001412, PR_000001483"	inflammatory																					
+monocyte	monocyte	CL_0000576																								
+monocytes	monocyte	CL_0000576																								
+CCR7+ myeloid dendritic cells (mDCs)	myeloid dendritic cell	CL_0000782	CCR7+	PR_000001203 																						
+CD86+ myeloid dendritic cells (mDCs)	myeloid dendritic cell	CL_0000782	CD86-positive 	PR_000001412																						
+CD86+ myeloid dendritic cell (DC)	myeloid dendritic cell	CL_0000782	CD86-positive 	PR_000001412																						
+"naive B cells (CD19-positive, IgD-negative, CD27-negative) (CL_0000788)"	naive B cell	CL_0000788	"CD19+, CD27-"	"PR_000001002, PR:000001963"	IgD-																					
+CD38+ of Naive B cells	naive B cell	CL_0000788	CD38+	PR:000001408																						
+CD86+ of naive B cells	naive B cell	CL_0000788	CD86+	PR:000001412																						
+CD86+ of Naive B Cells	naive B cell	CL_0000788	CD86+	PR:000001412																						
+"naive thymus-derived CD8-positive, alpha-beta T cell"	"naive thymus-derived CD8-positive, alpha-beta T cell"	CL_0000900																								
+NK cells NK/CD107a+/K562	natural killer cell	CL_0000623	CD107a+	PR:000002060	K562 cells																					
+NK Cells (CD14-/CD19-/CD3-/NK/CD107A+/K562)	natural killer cell	CL_0000623	"CD14-, CD19-, CD3-, CD107a+"	"PR:000001889, PR_000001002, PR:000001020, PR_000002060"	K562 cells																					
+NK Cells (CD14-/CD19-/CD3-/NK/IFNg+/K562)	natural killer cell	CL_0000623	"CD14-, CD19-, CD3-, IFNG+"	"PR:000001889, PR_000001002, PR:000001020,PR:000000017"	K562 cells																					
+NK Cells (CD14-/CD19-/CD3-/NK/TNFa+/K562)	natural killer cell	CL_0000623	"CD14-, CD19-, CD3-, TNF-a+"	"PR:000001889, PR_000001002, PR:000001020, PR:000000134"	K562 cells																					
+NK cells (CD14-/CD20-/CD3-/NK)	natural killer cell	CL_0000623	"CD14-, CD20-, CD3-"	"PR:000001889, PR:000001289, PR:000001020"																						
+NK cells (CD14-/CD20-/CD3-/NK/NKP46+)	natural killer cell	CL_0000623	"CD14-, CD20-, CD3-, NKG2-A/B-activating NK receptor+"	"PR:000001889, PR:000001289, PR:000001020, PR:000002023"																						
+CD16+ CD56+ CD3+ Natural Killer cells	natural killer cell	CL_0000623	"CD16+, CD56+, CD3+"	"PR_000001483, PR_000001024, PR:000001020 "																						
+CD3- CD56dim Natural Killer cells	natural killer cell	CL_0000623	"CD3-, CD56-dim"	"PR:000001020, PR:000001024"																						
+CD38+ CD56-dim natural killer (NK) cells	natural killer cell	CL_0000623	"CD38+, CD56-dim"	"PR:000001408, PR:000001024"																						
+CD38+ CD56dim natural killer (NK) cells	natural killer cell	CL_0000623	"CD38+, CD56-dim"	"PR:000001408, PR:000001024"																						
+CD16+ CD56+ CD3- Natural Killer cells	natural killer cell	CL_0000623	"CD56+, CD16+"	"PR_000001024, PR_000001483"																						
+CD56++ NK cells	natural killer cell	CL_0000623	CD56++	PR:000001024																						
+CD56++ CD16+ natural killer (NK) cells	natural killer cell	CL_0000623	"CD56++, CD16+"	"PR_000001024, PR_000001483"																						
+CD56++ CD16+ Natural Killer cells	natural killer cell	CL_0000623	"CD56++, CD16+"	"PR_000001024, PR_000001483"																						
+CD56++ CD16+ NK cells	natural killer cell	CL_0000623	"CD56++, CD16+"	"PR_000001024, PR_000001483"																						
+CD56-bright natural killer (NK) cells	natural killer cell	CL_0000623	CD56-bright	PR:000001024																						
+CD56++ natural killer cells	natural killer cell	CL_0000623	CD56-bright	PR:000001024																						
+CD56bright natural killer (NK) cells	natural killer cell	CL_0000623	CD56-bright	PR:000001024																						
+NKG2D+ CD56dim natural killer (NK) cells	natural killer cell	CL_0000623	CD56-dim	PR_000001024 	NKG2D+	human CD56 is PR_P13591; no code for generic NKG2D																				
+CD69+ natural killer (NK) cell	natural killer cell	CL_0000623	CD69+	PR:000001343																						
+NK cells NK/TNFa+/K562	natural killer cell	CL_0000623	TNF-a+	PR:000000134	K562 cells																					
+Natural Killer cells	natural killer cell	CL_0000623																								
+natural killer cell	natural killer cell	CL_0000623																								
+NK cell	natural killer cell	CL_0000623																								
+neutrophil	neutrophil	CL_0000775																								
+NK cells (CD14-/CD20-/CD3-/NK/NKG2A+)	natural killer cell	CL_0000623	"CD14-, CD20-, CD3-"	"PR:000001889, PR:000001289, PR:000001020"	NKGA2+																					
+plasma cell	plasma cell	CL_0000786																								
+plasma cells	plasma cell	CL_0000786																								
+"plasmablasts (CD19+, CD27+, CD38+)"	plasmablast	CL_0000980	"CD19+, CD27+, CD38+"	"PR_000001002, PR:000001963, PR:000001408"																						
+CD21+ plasmablast	plasmablast	CL_0000980	CD21+	PR:000001338																						
+CD27+ CD38hi plasmablasts	plasmablast	CL_0000980	"CD27+, CD38-hi"	"PR:000001963, PR:000001408"																						
+CD27hi CD38hi of CD20- B cells (plasmablasts)	plasmablast	CL_0000980	"CD27-hi, CD38-hi, CD20-"	"PR:000001963, PR:000001408, PR:000001289"																						
+plasmablast	plasmablast	CL_0000980																								
+CD40+ pDC	plasmacytoid dendritic cell	CL_0000784	CD40+			"there is a human-specific pDC, but its definition includes markers not noted in this tag"																				
+CD40/CD86+ plasma dendritic cells (pDCs)	plasmacytoid dendritic cell	CL_0000784	"CD40+, CD86+"	"PR_P29965, PR_000001412 "																						
+CD86+ plasmacytoid dendritic cell (pDC)	plasmacytoid dendritic cell	CL_0000784	CD86+	PR_000001412 																						
+plasmacytoid dendritic cell	plasmacytoid dendritic cell	CL_0000784																								
+T cells CD4+ Tregs Foxp3+	regulatory T cell	CL_0000815	FOXP3+	PR_000001350 																						
+interferon-gamma-positive T cells	T cell	CL_0000084	IFNG+	PR:000000017																						
+IFN-gamma+ antigen specific T cell	T cell	CL_0000084	IFNG+	PR:000000017																						
+all T-cells	T cell	CL_0000084																								
+"transitional B cells (CD19+, CD24+, CD38+) (CL_0000818)"	transitional stage B cell	CL_0000818	"CD19+, CD24+, CD38+"	"PR_000001002, PR:000001932, PR:000001408"																						
+CD38+ of transitional B cells	transitional stage B cell	CL_0000818	CD38+	PR:000001408																						
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										

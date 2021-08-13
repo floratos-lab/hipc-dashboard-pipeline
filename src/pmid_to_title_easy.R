@@ -247,7 +247,7 @@ pmid_to_title_easy <- function(pmid, date_type = c("PubDate", "pubmed", "entrez"
   epm <- table_articles_byAuth(pubmed_data = article)
 
   if(length(epm$lastname[1]) == 0) {
-    print(paste("table_articles_byAuth() did not find author name, using direct parse"))
+    print(paste("table_articles_byAuth() did not find author name; instead using direct parse"))
 
     s <- as.vector(sapply(x, function(y) {grepl("<LastName>", y)}))
     w <- which(s)[1]  # note that only first value in list x[w] used anyway.

@@ -1,0 +1,24 @@
+year	vaccine type	name_1	ncbitax_1	name_2	ncbitax_2	name_3	ncbitax_3	name_4	ncbitax_4	Reference
+2005mv	monovalent	Influenza A virus (A/Indonesia/5/2005(H5N1))	400788							
+2007	trivalent	Influenza A virus (A/Solomon Islands/3/2006(H1N1))	464623	Influenza A virus (A/Wisconsin/67/2005(H3N2))	393902	Influenza B virus (B/Malaysia/2506/2004)	464417			
+2008	trivalent	Influenza A virus (A/Brisbane/59/2007(H1N1))	504904	Influenza A virus (A/Brisbane/10/2007(H3N2))	476294	Influenza B virus (B/Florida/4/2006)	461739			
+2009	trivalent	Influenza A virus (A/Brisbane/59/2007(H1N1))	504904	Influenza A virus (A/Brisbane/10/2007(H3N2))	476294	Influenza B virus (B/Brisbane/60/2008)	604436			
+2009mv	monovalent	Influenza A virus (A/California/7/2009(H1N1))	1316510							
+2009gH1-Qbeta	gH1-Qbeta	Influenza A virus (A/California/7/2009(H1N1))	1316510	Escherichia virus Qbeta	39803					
+2010	trivalent	Influenza A virus (A/California/7/2009(H1N1))	1316510	Influenza A virus (A/Perth/16/2009(H3N2))	654811	Influenza B virus (B/Brisbane/60/2008)	604436			
+2011	trivalent	Influenza A virus (A/California/7/2009(H1N1))	1316510	Influenza A virus (A/Perth/16/2009(H3N2))	654811	Influenza B virus (B/Brisbane/60/2008)	604436			
+2012	trivalent	Influenza A virus (A/California/7/2009(H1N1))	1316510	Influenza A virus (A/Victoria/361/2011(H3N2))	1268360	Influenza B virus (B/Wisconsin/01/2010)	1089607			
+2012-LAIV-Fluenz	trivalent	Influenza A virus (A/California/7/2009(H1N1))	1316510	Influenza A virus (A/Victoria/361/2011(H3N2))	1268360	Influenza B virus (B/Massachusetts/02/2012)	1321139			
+2013	trivalent	Influenza A virus (A/California/7/2009(H1N1))	1316510	Influenza A virus (A/Victoria/361/2011(H3N2))	1268360	Influenza B virus (B/Massachusetts/02/2012)	1321139			
+2014	trivalent	Influenza A virus (A/California/7/2009(H1N1))	1316510	Influenza A virus (A/Texas/50/2012(H3N2))	1321009	Influenza B virus (B/Massachusetts/02/2012)	1321139			
+2014qv	quadrivalent	Influenza A virus (A/California/7/2009(H1N1))	1316510	Influenza A virus (A/Texas/50/2012(H3N2))	1321009	Influenza B virus (B/Massachusetts/02/2012)	1321139	Influenza B virus (B/Brisbane/60/2008)	604436	https://www.who.int/influenza/vaccines/virus/recommendations/2014_15_north/en/
+2015	trivalent	Influenza A virus (A/California/7/2009(H1N1))	1316510	Influenza A virus (A/Switzerland/9715293/2013(H3N2))		Influenza B virus (B/Phuket/3073/2013)				
+2015qv	quadrivalent	Influenza A virus (A/California/7/2009(H1N1))	1316510	Influenza A virus (A/Switzerland/9715293/2013(H3N2))		Influenza B virus (B/Phuket/3073/2013)		Influenza B virus (B/Brisbane/60/2008)	604436	https://www.who.int/influenza/vaccines/virus/recommendations/2015_16_north/en/
+2016	trivalent	Influenza A virus (A/California/7/2009(H1N1))	1316510	Influenza A virus (A/Hong Kong/4801/2014(H3N2))		Influenza B virus (B/Brisbane/60/2008)	604436			
+2017	trivalent	Influenza A virus (A/Michigan/45/2015(H1N1))	1777792	Influenza A virus (A/Hong Kong/4801/2014(H3N2))		Influenza B virus (B/Brisbane/60/2008)	604436			
+2018	trivalent	Influenza A virus (A/Michigan/45/2015(H1N1))	1777792	Influenza A virus (A/Singapore/INFIMH-16-0019/2016(H3N2))		Influenza B virus (B/Colorado/06/2017)	1987257			
+2017	quadrivalent	Influenza A virus (A/Michigan/45/2015(H1N1))	1777792	Influenza A virus (A/Hong Kong/4801/2014(H3N2))		Influenza B virus (B/Brisbane/60/2008)	604436	Influenza B virus (B/Phuket/3073/2013)		
+2018	quadrivalent	Influenza A virus (A/Michigan/45/2015(H1N1))	1777792	Influenza A virus (A/Singapore/INFIMH-16-0019/2016(H3N2))		Influenza B virus (B/Colorado/06/2017)	1987257	Influenza B virus (B/Phuket/3073/2013)		
+pan	Pandemrix	Influenza A virus (A/California/7/2009(H1N1))	1316510							
+ut1	unspecified-trivalent1	H1N1 subtype	114727	H3N2 subtype	119210	Influenza B virus	11520			
+ut2	unspecified-trivalent2	Influenza A virus	11320	Influenza B virus	11520					

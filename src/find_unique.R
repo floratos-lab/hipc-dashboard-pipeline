@@ -3,7 +3,7 @@
 write_final_summary <- function(response_types, logdir) {
   # check if one file of each response_type is present
   for(i in 1:length(response_types)) {
-    test_filename <- logfile_path(logdir, response_types[i], "exposure_material.txt")
+    test_filename <- logfile_path(logdir, response_types[i], "exposure_material_id.txt")
     if(!file.exists(test_filename)) {
       print(paste("write_final_summary: file not found", test_filename))
       return(FALSE)
@@ -26,7 +26,7 @@ write_final_summary <- function(response_types, logdir) {
 
   joint_summary <- summarize_response(response_types,
                             type = "vaccines",
-                            type_file = "exposure_material.txt",
+                            type_file = "exposure_material_id.txt",
                             header = FALSE, get_column = "V1",
                             logdir = logdir)
 

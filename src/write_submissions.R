@@ -37,7 +37,7 @@ generate_observation_summary <- function(sheet_type,
   }
   obs_summary   <- paste(obs_summary, "cohort <cohort>")
   obs_summary <- paste(obs_summary, "after exposure to")
-  obs_summary <- paste(obs_summary, gen_phrase(exposure_cnt, "exposure_material"))
+  obs_summary <- paste(obs_summary, gen_phrase(exposure_cnt, "exposure_material_id"))
   # Note - pathogen_cnt is set to zero when don't want to display pathogens
   if (pathogen_cnt > 0 && pathogen_cnt <= 3) {
     obs_summary <- paste(obs_summary, "targeting")
@@ -84,13 +84,13 @@ write_submission_template <- function(df2_cpy, header_rows, template_name, title
   for (i in 1:length(uniq_ids_local)) {
     dftmp <- df2_cpy[df2_cpy$uniq_obs_id == uniq_ids_local[i], ]
 
-    # Despite best efforts, exposure_material was being treated as a factor.
+    # Despite best efforts, exposure_material_id was being treated as a factor.
     # Remember the data is still split at this point
-    uniqExpMat <- unique(as.character(dftmp$exposure_material))
+    uniqExpMat <- unique(as.character(dftmp$exposure_material_id))
     uniqPathogens <- unique(as.character(dftmp$target_pathogen))
 
     # for one observation, all values in these columns are the same, so take first.
-    pmid_local <- dftmp$publication_reference[1]
+    pmid_local <- dftmp$publication_reference_id[1]
     submission_identifier <- dftmp$subm_obs_id[1]
     joining_preposition <- choose_joining_preposition(dftmp$response_behavior[1])
     use_subgroup <- ifelse(dftmp$subgroup[1] != "none", TRUE, FALSE)
@@ -138,7 +138,7 @@ write_submission_template <- function(df2_cpy, header_rows, template_name, title
     # Add new columns for multiple exposure materials
     expMatCnt <- length(uniqExpMat)
     if(expMatCnt > 1) {
-      newCols <- paste("exposure_material", 1:expMatCnt, sep = "_")
+      newCols <- paste("exposure_material_id", 1:expMatCnt, sep = "_")
       dftmp[newCols] <- ""
 
       for (j in 1:expMatCnt) {
@@ -147,7 +147,7 @@ write_submission_template <- function(df2_cpy, header_rows, template_name, title
       }
 
       # Remove the original column
-      w <- which(colnames(dftmp) == "exposure_material")
+      w <- which(colnames(dftmp) == "exposure_material_id")
       if(length(w) != 1) {
         stop("column name mismatch", colnames(dftmp)[w])
       }
