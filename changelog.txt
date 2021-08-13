@@ -1,0 +1,10 @@
+HIPC Dashboard Pipeline
+
+Changes in version 1.2.0
+Update column headers:
+* baseline_time to baseline_time_event
+* exposure_material to exposure_material_id
+* publication_reference to publication_reference_id
+* Add publication_date (will remove publication_year)
+New columns added by pipeline now added at end rather than at fixed locations
+Use of Excel for all any input and most output files changed to tab-delimited
