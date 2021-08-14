@@ -102,15 +102,12 @@ write_submission_template <- function(df2_cpy, header_rows, template_name, title
     }
 
     title <- titles_and_dates_df[w, "title"]
-    date <- titles_and_dates_df[w, "date"]
-    subdate <- gsub("\\.", "", date)
+    header_rows$publication_reference_url[6] <- title
+    
     submission_name <- paste(template_name, pmid_local, submission_identifier, sep = "_")
-
     dftmp$submission_name <- submission_name
     dftmp$template_name   <- submission_name
-    dftmp$submission_date <- date
-
-    header_rows$publication_reference_url[6] <- title
+    dftmp$submission_date <- titles_and_dates_df[w, "date"]
 
     # Reattach the header rows to each submission in turn
     dftmp <- rbind(header_rows, dftmp)

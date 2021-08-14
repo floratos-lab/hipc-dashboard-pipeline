@@ -32,7 +32,7 @@ msigdb_intialize <- function() {
 # for MSigDB gene submission
 msigdb_description_brief <- function(sheet_type,
                                      tissue_type,
-                                     exposure_material_text,
+                                     exposure_material,
                                      cohort,
                                      subgroup,
                                      route,
@@ -53,7 +53,7 @@ msigdb_description_brief <- function(sheet_type,
   if (subgroup != "none") {
     obs_summary <- paste(obs_summary, paste0("(", subgroup, ")"))
   }
-  obs_summary   <- paste(obs_summary, "after exposure to", exposure_material_text)
+  obs_summary   <- paste(obs_summary, "after exposure to", exposure_material)
 
 
   time_unit <- abbreviate_time_unit(time_unit)
@@ -72,7 +72,7 @@ msigdb_description_brief <- function(sheet_type,
 
 msigdb_standard_name <- function(author,
                                  tissue_type,
-                                 exposure_material_text,
+                                 exposure_material,
                                  cohort,
                                  subgroup,
                                  route,
@@ -84,20 +84,20 @@ msigdb_standard_name <- function(author,
 
   tissue_type <- sub("peripheral blood mononuclear cell", "PBMC", tissue_type, ignore.case = TRUE)
 
-  exposure_material_text <- trimws(sub("\\.$", "", exposure_material_text))
-  exposure_material_text <- trimws(gsub("; ", "/", exposure_material_text))
+  exposure_material <- trimws(sub("\\.$", "", exposure_material))
+  exposure_material <- trimws(gsub("; ", "/", exposure_material))
 
-  exposure_material_text <- gsub("\\(.*\\)", "", exposure_material_text)
+  exposure_material <- gsub("\\(.*\\)", "", exposure_material)
 
-  exposure_material_text <- sub("seasonal trivalent inactivated influenza vaccine", "TIV",
-                                exposure_material_text, ignore.case = TRUE)
-  exposure_material_text <- sub("trivalent inactivated vaccine", "TIV",
-                                exposure_material_text, ignore.case = TRUE)
-  exposure_material_text <- sub("inactivated monovalent influenza A", "INACT_MONOV_INFLUENZA_A",
-                                exposure_material_text, ignore.case = TRUE)
-  exposure_material_text <- sub("split-virus vaccine", "",
-                                exposure_material_text, ignore.case = TRUE)
-  exposure_material_text <- trimws(exposure_material_text)
+  exposure_material <- sub("seasonal trivalent inactivated influenza vaccine", "TIV",
+                                exposure_material, ignore.case = TRUE)
+  exposure_material <- sub("trivalent inactivated vaccine", "TIV",
+                                exposure_material, ignore.case = TRUE)
+  exposure_material <- sub("inactivated monovalent influenza A", "INACT_MONOV_INFLUENZA_A",
+                                exposure_material, ignore.case = TRUE)
+  exposure_material <- sub("split-virus vaccine", "",
+                                exposure_material, ignore.case = TRUE)
+  exposure_material <- trimws(exposure_material)
 
   response_behavior <- sub("(not previously immunized)", "", response_behavior)
 
@@ -105,7 +105,7 @@ msigdb_standard_name <- function(author,
   route <- abbreviate_route(route)
   time_unit <- abbreviate_time_unit(time_unit)
 
-  p <- paste(author, tissue_type, exposure_material_text, comparison, cohort, subgroup, route,
+  p <- paste(author, tissue_type, exposure_material, comparison, cohort, subgroup, route,
              paste0(time_point, time_unit),
              short_comment, response_behavior, sep = "_" )
   p <- gsub("<=", "LTE", p)
@@ -127,7 +127,7 @@ msigdb_process_row <- function(msigdb_empty, df2tmp) {
 
   msigdb_df$standard_name <- msigdb_standard_name(titles_and_dates_row$author,
                                                   base_row$tissue_type,
-                                                  base_row$exposure_material_text,
+                                                  base_row$exposure_material,
                                                   base_row$cohort,
                                                   base_row$subgroup,
                                                   base_row$route,
@@ -149,7 +149,7 @@ msigdb_process_row <- function(msigdb_empty, df2tmp) {
 
   msigdb_df$description_brief    <- msigdb_description_brief(sheet_type,
                                                              base_row$tissue_type,
-                                                             gsub("; *", "/", base_row$exposure_material_text),
+                                                             gsub("; *", "/", base_row$exposure_material),
                                                              base_row$cohort,
                                                              base_row$subgroup,
                                                              base_row$route,

@@ -65,7 +65,7 @@ source("find_unique.R")
 #####<<<< START HERE >>>>#####
 ##### Choose a sheet type (from "HIPC Dashboard.xlsx") #####
 # Available sheet_type values are "GENE", "CELLTYPE_FREQUENCY"
-sheet_type <- "CELLTYPE_FREQUENCY"
+sheet_type <- "GENE"
 
 # For the moment, assume executing interactively from the ./src directory
 source_data_dir <- "../source_data"
@@ -87,7 +87,7 @@ ncbi_fixes <- data.frame(ncbi = "TRNS1", hgnc = "MT-TS1")
 #   set to FALSE to reuse existing file
 #   Run this every time new publications are added to the spreadsheet,
 #   for each response_component type.
-RENEW_PMIDS             <- TRUE
+RENEW_PMIDS             <- FALSE
 
 ## Please update gene files before each release
 ## These files will be overwritten if update is requested
@@ -182,11 +182,9 @@ remove_cols <- c("spot_check",
                  "Group1",
                  "addntl_time_point_units",
                  "Group0",
-                 "number_subjects",
-                 "scheduling",
                  "tissue_type_term_id",
                  "target_pathogen_taxonid",
-                 "extra_comments")
+                 "curator_comments")
 insub <- insub[!(colnames(insub) %in% remove_cols)]
 length(colnames(insub))
 
@@ -234,20 +232,27 @@ if (sheet_type == "GENE") {
     c("", "label", "observed", "", "", "response component (original cell type)")
 }
 
-# Add in some new columns
-insub$response_comp_orig_cnt <- ""
-insub$response_component     <- ""
-insub$response_comp_cnt      <- ""
-insub$subm_obs_id            <- ""
-insub$uniq_obs_id            <- ""
-insub$row_key                <- ""
+# Add in new columns
+insub$submission_name <- ""
+insub$submission_date <- ""
+insub$template_name   <- ""
 
-# Add headers in-common to all types
-insub$subm_obs_id[1:6]       <- c("", "label", "background", "", "", "ID of observation within its own submission")
-insub$uniq_obs_id[1:6]       <- c("", "label", "background", "", "", "Uniq ID of observation within its submission type")
-insub$response_comp_cnt[1:6] <- c("", "label", "observed",   "", "", "response component count")
-insub$response_comp_orig_cnt[1:6]  <- c("", "label", "observed",   "", "", "response component (original) count")
-insub$row_key[1:6]           <- c("", "label", "background", "", "", "row key")
+insub$response_component      <- ""  # this is a new version of the column, see above
+insub$response_comp_orig_cnt  <- ""
+insub$response_comp_cnt       <- ""
+insub$subm_obs_id             <- ""
+insub$uniq_obs_id             <- ""
+insub$row_key                 <- ""
+
+insub$submission_name[1:6]    <- c("", "label", "background", "", "", "submission name")
+insub$submission_date[1:6]    <- c("", "label", "background", "", "", "submission_date")
+insub$template_name[1:6]      <- c("", "label", "background", "", "", "template_name")
+insub$response_comp_cnt[1:6]  <- c("", "label", "observed",   "", "", "response component count")
+insub$response_comp_orig_cnt[1:6]  <- 
+                                 c("", "label", "observed",   "", "", "response component (original) count")
+insub$subm_obs_id[1:6]        <- c("", "label", "background", "", "", "ID of observation within its own submission")
+insub$uniq_obs_id[1:6]        <- c("", "label", "background", "", "", "Uniq ID of observation within its submission type")
+insub$row_key[1:6]            <- c("", "label", "background", "", "", "row key")
 
 if (sheet_type == "CELLTYPE_FREQUENCY") {
   ctf_fixes <- read.delim(file = paste(source_data_dir, ctf_fixes_tsv, sep = "/"),
@@ -268,20 +273,11 @@ if (sheet_type == "CELLTYPE_FREQUENCY") {
 # In the original template there are 7 header lines, but here the first row is not counted,
 # as it taken as column headers.
 header_rows <- insub[1:6,]
-# Because these data columns are empty, R helpfully turns them into NA values.
-# Change them to blanks.
-header_rows$submission_name <- ""
-header_rows$submission_date <- ""
-header_rows$template_name   <- ""
-
 df2 <- insub[7:nrow(insub),]
 # Depending on how the text file is created, the sheet may have blank rows at bottom.
 nrow(df2)
-
 df2 <- df2[df2$publication_reference_id != "", ]
 nrow(df2)
-
-colnames(df2)
 summary_df <- add_to_summary(summary_df, "Data rows in original sheet", nrow(df2))
 
 
@@ -367,7 +363,7 @@ write.table(response_behavior_strings,
 ## Create a map of VO codes to text equivalents
 ## Both columns must have the same number of values per row
 codes <- strsplit(df2$exposure_material_id,";")  # returns a list
-text  <- strsplit(df2$exposure_material_text, ";") # returns a list
+text  <- strsplit(df2$exposure_material, ";") # returns a list
 m <- mapply(function(x, y) {length(x) == length(y)}, codes, text)
 if (!all(m)) {
   # FIXME - should just stop, no reason to continue
@@ -713,7 +709,7 @@ write_unique_list(df2$response_component, logdir, base_filename, "response_compo
 
 # Only gene and cell type frequency have data of this type so far
 if (sheet_type == "CELLTYPE_FREQUENCY" | sheet_type == "GENE") {
-  write_unique_list(df2$exposure_material_text, logdir, base_filename, "exposure_material_text", do_split = TRUE)
+  write_unique_list(df2$exposure_material, logdir, base_filename, "exposure_material", do_split = TRUE)
   df2 <- cSplit(df2, "exposure_material_id", sep = ";", direction = "long")
   write_unique_list(df2$exposure_material_id, logdir, base_filename, "exposure_material_id", do_split = FALSE)
 }
@@ -963,7 +959,7 @@ if(!is.null(s)) {
 }
 
 # Remove columns not needed for Dashboard.
-del_cols <- c("exposure_material_text", "short_comment", "process_note")
+del_cols <- c("exposure_material", "short_comment", "process_note")
 df2 <- df2[!colnames(df2) %in% del_cols]
 header_rows <- header_rows[!colnames(header_rows) %in% del_cols]
 
