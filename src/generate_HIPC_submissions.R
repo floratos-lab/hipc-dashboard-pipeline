@@ -65,7 +65,7 @@ source("find_unique.R")
 #####<<<< START HERE >>>>#####
 ##### Choose a sheet type (from "HIPC Dashboard.xlsx") #####
 # Available sheet_type values are "GENE", "CELLTYPE_FREQUENCY"
-sheet_type <- "GENE"
+sheet_type <- "CELLTYPE_FREQUENCY"
 
 # For the moment, assume executing interactively from the ./src directory
 source_data_dir <- "../source_data"
@@ -87,7 +87,7 @@ ncbi_fixes <- data.frame(ncbi = "TRNS1", hgnc = "MT-TS1")
 #   set to FALSE to reuse existing file
 #   Run this every time new publications are added to the spreadsheet,
 #   for each response_component type.
-RENEW_PMIDS             <- FALSE
+RENEW_PMIDS             <- TRUE
 
 ## Please update gene files before each release
 ## These files will be overwritten if update is requested
@@ -807,12 +807,14 @@ saveRDS(response_df,
 
 pmids <- unique(df2$publication_reference_id)
 summary_df <- add_to_summary(summary_df, "Unique PMIDs", length(pmids))
+print_pub_year <- df2$publication_year[match(pmids, df2$publication_reference_id)]
+
 
 # pmids <- 16571413   # for testing
 # pmids <- "24336226" # for testing
 # pmids <- "23594957" # for testing
 if (RENEW_PMIDS || !file.exists(pmid_file)) {
-  td <- lapply(pmids, pmid_to_title_easy, "PubDate")
+  td <- mapply(pmid_to_title_easy, pmids, print_pub_year, SIMPLIFY = FALSE)
   titles_and_dates_df <- as.data.frame(rbindlist(td))
   save(titles_and_dates_df, file = pmid_file)
 } else {

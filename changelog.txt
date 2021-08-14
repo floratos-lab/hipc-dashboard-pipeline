@@ -1,10 +1,15 @@
 HIPC Dashboard Pipeline
 
 Changes in version 1.2.0
-Update column headers:
-* baseline_time to baseline_time_event
-* exposure_material to exposure_material_id
-* publication_reference to publication_reference_id
-* Add publication_date (will remove publication_year)
-New columns added by pipeline now added at end rather than at fixed locations
-Use of Excel for all any input and most output files changed to tab-delimited
+- Update column headers:
+-- baseline_time to baseline_time_event
+-- exposure_material to exposure_material_id
+-- publication_reference to publication_reference_id
+- New columns added by pipeline now added at end of templates rather than at fixed locations
+- Use tab-delimited files rather than Excel for all input and public output files
+- Change code to extract pubmed publish date (may be epub for some), 
+   and remove more complex code to construct pubmed-based print publish date
+- Use publication_year column for actual print year.
+* No longer reconstruct article abstract from xml. 
+    It preserved special characters that are not wanted.
+    Only used by mSigDB code.

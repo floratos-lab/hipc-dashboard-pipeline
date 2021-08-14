@@ -9,25 +9,6 @@ library(xml2)
 library(easyPubMed)
 
 ### DATA ###
-# Corrections for PMIDs where Pubmed does not return complete publication dates
-pmidMonths <- matrix(c("23844129", "Jul",
-                       "23658707", "May",
-                       "23594957", "Jul",
-                       "27529750", "Aug",
-                       "25706537", "Feb",
-                       "29868000", "May",
-                       "30873150", "Feb",
-                       "29535712", "Feb",
-                       "26148331", "Jul",
-                       "28099485", "Jan"),
-                     ncol = 2, byrow = TRUE)
-pmidMonths <- as.data.frame(pmidMonths)
-colnames(pmidMonths) <- c("pmid", "month")
-
-pmidYears <- matrix(c("23594957", "2013"), ncol = 2, byrow = TRUE)
-pmidYears <- as.data.frame(pmidYears)
-colnames(pmidYears) <- c("pmid", "year")
-
 # Special cases for consortia as first author:
 # Actual author names included for reference
 # Look at the actual journal article to see what the first author was.
@@ -43,33 +24,6 @@ use_consortium <- as.data.frame(use_consortium, stringsAsFactors = FALSE)
 colnames(use_consortium) <- c("pmid", "author", "use")
 rownames(use_consortium) <- use_consortium$pmid
 use_consortium$use <- as.logical(use_consortium$use)
-
-getPMIDMonth <- function(pmidi) {
-  if(pmidi %in% pmidMonths$pmid) {
-    rv <- as.character(subset(pmidMonths, pmid == pmidi, select = month))
-  } else {
-    rv <- ""
-  }
-  return(rv)
-}
-# test
-# getPMIDMonth("29868000")
-# getPMIDMonth("2986800")
-# getPMIDMonth("23594957")
-
-
-getPMIDYear <- function(pmidi) {
-  if(pmidi %in% pmidYears$pmid) {
-    rv <- as.character(subset(pmidYears, pmid == pmidi, select = year))
-  } else {
-    rv <- ""
-  }
-  return(rv)
-}
-# test
-# getPMIDYear("23594957")
-# getPMIDYear("2359495")
-
 
 
 # test:
@@ -105,7 +59,9 @@ getPMIDYear <- function(pmidi) {
 # date types "pubmed", "entrez" and "medline" return properly formated
 # full dates.  "medline" is often far later than the real publication date.
 # "entrez" and "pubmed" are almost exactly the same as the epub date.
-pmid_to_title_easy <- function(pmid, date_type = c("PubDate", "pubmed", "entrez", "medline"), verbose = FALSE) {
+# Dropped support for PubDate and medline.
+# Will just use "pubmed" now.
+pmid_to_title_easy <- function(pmid, print_pub_year) {
 #  pmid_to_title_easy <- function(pmid, date_type) {
 # print(paste(pmid, date_type))
   # test: pmid <- "16571413"
@@ -133,97 +89,23 @@ pmid_to_title_easy <- function(pmid, date_type = c("PubDate", "pubmed", "entrez"
   x <- x[[1]]
   x <- lapply(x, trimws)
 
-  # returns matrix[n,1], change to vector, though not necessary
-  s <- as.vector(sapply(x, function(y) {grepl("<AbstractText", y)}))
-  w <- which(s)
-  abstract <- sapply(x[w], function(y) {
-    custom_grep(y, tag = "AbstractText", format = "character")
-  })
-
-  tokens <- sapply(x[w], function(y) {
-    strsplit(y, split = " ")
-  })
-
-  li <- sapply(tokens, function(x) {
-    p <- grep("Label=\"", x)
-    if(length(p) == 0) {
-      p <- NA
-    }
-    return(p)
-  })
-
-  labels <- mapply(function(x, n) {
-    if(is.na(n)) {
-      y <- "" # no label this section
-    } else {
-      y <- x[n]
-      y <- sub("Label=\"", "", y)
-      y <- sub("\\\".*", ":", y)
-      if(substr(y, nchar(y), nchar(y)) != ":") {
-        y <- paste0(y, ":")
-      }
-    }
-    return(y)
-  }, tokens, li)
-
-  abstract <- mapply(function(x, n) {
-    paste(x, n)
-  }, labels, abstract)
-  # this will also insert a blank space before a section with no label.
-  abstract <- paste(abstract, collapse = " ")
-  abstract <- trimws(abstract)
-
-  if(!validUTF8(abstract)) {
-    print(paste("PMID", pmid, "has non-UTF-8 character(s)"))
-  }
-
+  
     # returns matrix[n,1], change to vector, though not necessary
   # date_type must be enclosed in escaped quotes
-  if (date_type == "PubDate") {
-    s <- as.vector(sapply(x, function(x) {grepl("<PubDate>", x)}))
-  } else {
-    s <- as.vector(sapply(x, function(x) {grepl(paste0("PubStatus=\"", date_type, "\">"), x)}))
-  }
+
+  s <- as.vector(sapply(x, function(x) {grepl(paste0("PubStatus=\"", "pubmed", "\">"), x)}))
 
   w <- which(s)
   custom_grep(x[w+1], tag = "Year", format = "character")
   pubYear <- custom_grep(x[w+1], tag = "Year", format = "character")
-  if(is.null(pubYear)) {
-    pubYear <- getPMIDYear(pmid)
-    if(pubYear == "") {
-      pubYear <- "0"
-      if (verbose) {
-        print(paste("No year found for PMID:", pmid))
-      }
-    }
-  }
-
   pubMonth <- custom_grep(x[w+2], tag = "Month", format = "character")
-  if(is.null(pubMonth)) {
-    pubMonth <- getPMIDMonth(pmid)
-    if(pubMonth == "") {
-      pubMonth <- "0"
-      if (verbose) {
-        print(paste("No month found for PMID:", pmid))
-      }
-    }
-  }
-  # For PubDate, the month can be MMM, NN, or just missing...
-  monthInt <- match(pubMonth, month.abb)
-  if(!is.na(monthInt)) {
-    pubMonth <- monthInt
-  }
+ 
   if(pubMonth %in% 0:9) {
     pubMonth <- paste0("0", pubMonth)
   }
 
   pubDay <- custom_grep(x[w+3], tag = "Day", format = "character")
-  if(is.null(pubDay)) {
-    pubDay <- "00"
-    if (verbose) {
-      print(paste("No day found for PMID:", pmid))
-    }
-  } else if(pubDay %in% 0:9) {
+  if(pubDay %in% 0:9) {
     pubDay <- paste0("0", pubDay)
   }
 
@@ -284,16 +166,13 @@ pmid_to_title_easy <- function(pmid, date_type = c("PubDate", "pubmed", "entrez"
       }
     }
   }
-
-  auth_ref <- paste0(aname,  " (", pubYear, ")")  # replace epm$year[1] with pubYear
+  # Use externally supplied print_pub_year instead of pubmed pubYear value obtained from NCBI.
+  auth_ref <- paste0(aname,  " (", print_pub_year, ")")  # replace epm$year[1] with pubYear
   pubmed_ref <- paste0("PMID: <a href = 'https://www.ncbi.nlm.nih.gov/pubmed/?term=", pmid, "' target='_blank'>", pmid, "</a>")
   title <- paste(auth_ref, article_title, paste0(journal_abb, "."), pubmed_ref)
 
-  if (date_type == "PubDate") {
-    date <- paste(pubYear, pubMonth, sep = ".")
-  } else {
-    date <- paste(pubYear, pubMonth, pubDay, sep = ".")
-  }
+  date <- paste(pubYear, pubMonth, pubDay, sep = ".")
+  abstract <- ""
   return(data.frame(pmid, author = aname, title, date, abstract, stringsAsFactors = FALSE))
 }
 

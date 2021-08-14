@@ -204,7 +204,7 @@ write_submission_template <- function(df2_cpy, header_rows, template_name, title
 
     # Write a copy of the response components to the submission CSV directory
     # Only difference is the files end in .csv so can automatically open in Excel
-    # For internal use only, not for users as Excel will alter some gene sybmols.
+    # For internal use only, not for users as Excel will alter some gene symbols.
     write.table(resp_components[[uil]],
                 file = paste(template_name_csv, "files", signatureFilename, sep = "/"),
                 row.names = FALSE, col.names = FALSE, quote = FALSE)
@@ -223,7 +223,6 @@ write_submission_template <- function(df2_cpy, header_rows, template_name, title
 
     # For convenience, write out CSV version
     # Java crashes when try to write out to Excel xlsx format,
-    # so have to use CSV instead.
     write.csv(dftmp,
               file = paste0(template_name_csv, "/", submission_name, ".csv"),
               row.names = FALSE)
