@@ -34,7 +34,6 @@ msigdb_description_brief <- function(sheet_type,
                                      tissue_type,
                                      exposure_material,
                                      cohort,
-                                     subgroup,
                                      route,
                                      time_point,
                                      time_unit,
@@ -50,9 +49,6 @@ msigdb_description_brief <- function(sheet_type,
   obs_summary <- paste("Genes", response_behavior, comparison)
   obs_summary <- paste(obs_summary, "in", tissue_type)
   obs_summary   <- paste(obs_summary, "in", cohort)
-  if (subgroup != "none") {
-    obs_summary <- paste(obs_summary, paste0("(", subgroup, ")"))
-  }
   obs_summary   <- paste(obs_summary, "after exposure to", exposure_material)
 
 
@@ -74,7 +70,6 @@ msigdb_standard_name <- function(author,
                                  tissue_type,
                                  exposure_material,
                                  cohort,
-                                 subgroup,
                                  route,
                                  time_point,
                                  time_unit,
@@ -101,11 +96,10 @@ msigdb_standard_name <- function(author,
 
   response_behavior <- sub("(not previously immunized)", "", response_behavior)
 
-  subgroup <- ifelse(subgroup != "none", subgroup, "")
   route <- abbreviate_route(route)
   time_unit <- abbreviate_time_unit(time_unit)
 
-  p <- paste(author, tissue_type, exposure_material, comparison, cohort, subgroup, route,
+  p <- paste(author, tissue_type, exposure_material, comparison, cohort, route,
              paste0(time_point, time_unit),
              short_comment, response_behavior, sep = "_" )
   p <- gsub("<=", "LTE", p)
@@ -129,7 +123,6 @@ msigdb_process_row <- function(msigdb_empty, df2tmp) {
                                                   base_row$tissue_type,
                                                   base_row$exposure_material,
                                                   base_row$cohort,
-                                                  base_row$subgroup,
                                                   base_row$route,
                                                   base_row$time_point,
                                                   base_row$time_point_unit,
@@ -151,7 +144,6 @@ msigdb_process_row <- function(msigdb_empty, df2tmp) {
                                                              base_row$tissue_type,
                                                              gsub("; *", "/", base_row$exposure_material),
                                                              base_row$cohort,
-                                                             base_row$subgroup,
                                                              base_row$route,
                                                              base_row$time_point,
                                                              base_row$time_point_unit,

@@ -65,7 +65,7 @@ source("find_unique.R")
 #####<<<< START HERE >>>>#####
 ##### Choose a sheet type (from "HIPC Dashboard.xlsx") #####
 # Available sheet_type values are "GENE", "CELLTYPE_FREQUENCY"
-sheet_type <- "GENE"
+sheet_type <- "CELLTYPE_FREQUENCY"
 
 # For the moment, assume executing interactively from the ./src directory
 source_data_dir <- "../source_data"
@@ -179,9 +179,7 @@ vaccines_by_year <- read.delim(file = paste(source_data_dir, vaccine_tsv, sep = 
 # Note - columns "short_comment" and "process_note" are removed later after not needed anymore
 remove_cols <- c("spot_check",
                  "second_spot_check",
-                 "Group1",
-                 "addntl_time_point_units",
-                 "Group0",
+                 "method",                  # Remove because no values in vaccine sheets yet (new column)
                  "tissue_type_term_id",
                  "target_pathogen_taxonid",
                  "curator_comments")
@@ -301,8 +299,6 @@ df2$row_key      <- paste(pmids, df2$subm_obs_id, df2$uniq_obs_id, sep = "_")
 # FIXME - not being used anymore in HIPC Dashboard source
 skip <- grepl("^skip", df2$process_note, ignore.case = TRUE)
 df2 <- df2[!skip, ]
-
-df2$subgroup[df2$subgroup == ""] <- "none"
 
 # FIXME - Most values are empty, not "Y" or "N".
 #         Empty is not the same as "N".
