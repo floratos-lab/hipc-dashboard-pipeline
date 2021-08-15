@@ -9,9 +9,11 @@ Changes in version 1.2.0
 -- submission_date to curation_date
 -- extra_comments to curator_comments
 - Remove certain columns from templates:
--- remove submission_name and template_name,
-     as values are generated in code
+-- remove submission_name and template_name, as values are generated in code
 -- remove addntl_time_point_units, group1 and group0 because not in use
+- Merge certain columns into cohort and remove from templates
+-- merge subgroup into cohort, remove subgroup and update code
+-- merge age_group into cohort, remove age_group
 - New columns added by pipeline now added at end of templates rather than at fixed locations
 - Use tab-delimited files rather than Excel for all input and public output files
 - Change code to extract pubmed publish date (may be epub for some), 

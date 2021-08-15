@@ -4,7 +4,6 @@ principal_investigator <- "HIPC-II Sigs: Steven H. Kleinstein, Ph.D."
 
 # NOTE - uses "GENE" and "CELLTYPE_FREQUENCY" definitions from main routine
 generate_observation_summary <- function(sheet_type,
-                                         use_subgroup,
                                          joining_preposition,
                                          exposure_cnt,
                                          pathogen_cnt) {
@@ -32,9 +31,6 @@ generate_observation_summary <- function(sheet_type,
   obs_summary   <- paste(obs_summary, "was <response_behavior>")
   obs_summary   <- paste(obs_summary, joining_preposition)
   obs_summary   <- paste(obs_summary, "<comparison> in")
-  if (use_subgroup) {
-    obs_summary <- paste(obs_summary, "subgroup <subgroup> of")
-  }
   obs_summary   <- paste(obs_summary, "cohort <cohort>")
   obs_summary <- paste(obs_summary, "after exposure to")
   obs_summary <- paste(obs_summary, gen_phrase(exposure_cnt, "exposure_material_id"))
@@ -93,7 +89,6 @@ write_submission_template <- function(df2_cpy, header_rows, template_name, title
     pmid_local <- dftmp$publication_reference_id[1]
     submission_identifier <- dftmp$subm_obs_id[1]
     joining_preposition <- choose_joining_preposition(dftmp$response_behavior[1])
-    use_subgroup <- ifelse(dftmp$subgroup[1] != "none", TRUE, FALSE)
 
     # get titles and dates for matching PMID
     w <- which(titles_and_dates_df[, "pmid"] == pmid_local)
@@ -233,7 +228,6 @@ write_submission_template <- function(df2_cpy, header_rows, template_name, title
     }
 
     observation_summary <- generate_observation_summary(sheet_type,
-                                                        use_subgroup,
                                                         joining_preposition,
                                                         expMatCnt,
                                                         pathogen_cntOS)
