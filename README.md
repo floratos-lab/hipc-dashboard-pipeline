@@ -34,8 +34,8 @@ This directory also contains the various mapping and translation files required 
 
 The curated response component data is also available in an Excel file, "HIPC Dashboard.xlsx", for easy review, however this file is not used by the script.
 
-## R scripts (./src)
-R scripts are in ./src. "generate_HIPC_submissions.R" is the main script. It expects to be called from its source location. It has a number of optional settings. In particular, one can currently choose to run the script for the gene data or the cell-type data (infection data to be added soon).
+## R scripts (./R)
+R scripts are in ./R. "generate_HIPC_submissions.R" is the main script. It expects to be called from its source location. It has a number of optional settings. In particular, one can currently choose to run the script for the gene data or the cell-type data (infection data to be added soon).
 
 ## Data Releases
 The Dashboard database is reloaded in its entirety each time a new release is created.  When a new version of the data is ready, the code, input data and resulting output files are all committed together as a release.  
