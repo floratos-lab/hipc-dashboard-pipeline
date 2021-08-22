@@ -7,7 +7,7 @@ The HIPC Dashboard provides a web interface to the immune signatures curated as 
 The focus of curation are the "response components", the biological features whose change is being measured.  Extensive supporting metadata is captured to characterize the experiment giving rise to each signtaure.  The intial response components curated and released on the Dashboard have been gene expression and cell-type frequency.  Work is also in progress on metabolites, pathways etc.
 
 Although all of the original curated data files are made available on this site, it is the files output by the R pipeline, which contain data that has been standardized and reformated, which would be most suitable for consumption by other projects.  These processed files, described in more detail below, are found in the directories
-* ./submissions - tab-delimited Dashboard load files, one per signature
+* ./submissions - tab-delimited Dashboard load files, one file per signature
 * ./reformatted_data - standardized versions of curated data in several formats including tab-delimited, RDS, Excel and Broad GMT (tab-delimited).
 
 ## Design
