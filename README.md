@@ -69,7 +69,7 @@ For cell-type frequency signatures, the pipeline splits the original single fiel
 
 Example of cell type mapping	
 	
-See the original files in [tab-delimited](https://github.com/floratos-lab/hipc-dashboard-pipeline/blob/master/submissions/hipc_ctf/hipc_ctf_28854372_3.txt) and [csv format](https://github.com/floratos-lab/hipc-dashboard-pipeline/blob/master/submissions/hipc_ctf_csv/hipc_ctf_28854372_3.csv).
+View the above file in [csv format ](https://github.com/floratos-lab/hipc-dashboard-pipeline/blob/master/submissions/hipc_ctf_csv/hipc_ctf_28854372_3.csv) or download the tab-delimited [tab-delimited](https://github.com/floratos-lab/hipc-dashboard-pipeline/blob/master/submissions/hipc_ctf/hipc_ctf_28854372_3.txt) version.
 	
 * response_component_original: CD38+ CD56-dim natural killer (NK) cells
 * response_component: natural killer cell
