@@ -54,12 +54,30 @@ Cell-type submissions are placed in the subdirectory "submissions/hipc_ctf/".
 * Example: for the file **hipc_ctf_26726811_1.txt**, "ctf" indicates type "cell-type frequency", "26726811" is the PMID, and "1" indicates the first signature of this type for that PMID.
 
 ### Submission file format
-The Dashboard submission load files contain the same columns as described in the curation document, with some additions to support the requirements of the Dashboard itself and to preserve original curated values for fields updated by the pipeline. Each file represents one signature in a denormalized manner. Because the "response_component" field for one signature many contain up to e.g. thousands of gene symbols, this element of the signature is treated differently than all other elements.
+The Dashboard submission load files contain the same columns as described in the curation document, with additions to support the requirements of the Dashboard itself, to preserve original curated values for fields updated by the pipeline, and to add separated-out fields for cell-type markers and ontology identifiers. Each file represents one signature in a denormalized manner. Because the "response_component" field for one signature many contain up to e.g. thousands of gene symbols, this element of the signature is treated differently than all other elements.
 * multi-valued "subject" fields other than "response_component" (genes or vaccines) are split into as many columns as needed to represent each entry in single-valued fashion.  For example, a spreadsheet target_pathogen field containing three pathogens would be split into three separate columns on the same row, "target_pathogen_1", "target_pathogen_2" and "target_pathogen_3".  This currently applies to the fields "exposure_material" and "target_pathogen".
 * "response_component" fields are split into a new row for each entry. For example, a signature with 100 genes will be expanded to 100 rows, each with 1 gene symbol in the response_component column. All other columns will be the same for each row. (This aspect of the Dashboard design allows in principle additional unique supporting evidence to be stored for each response_component (e.g. p-values for genes), however the current HIPC signatures curation project is not collecting data at this level of detail). 
 * The original curated values for response_component appear in the "response_component_original" column.
 
-The following additional fields are added by the pipeline
+For cell-type frequency signatures, the pipeline splits the original single field containing the curated cell types into several new columns:
+* response_component_original: the originally curated value
+* response_component: Cell Ontology name of the cell type
+* cell_ontology_id: Cell Ontology ID of the cell type
+* proterm_and_extra: a string beginning with "&" and followed first by any marker names found in the protein ontology, then any additional annotatons. CD38+, CD56-dim
+* pro_ontology_id: Protein Ontology IDs for cell-type markers	
+* fully_qualified_response_component: a reconstructed single string describing the cell type with official names
+
+Example of cell type mapping	
+	
+* response_component_original: CD38+ CD56-dim natural killer (NK) cells
+* response_component: natural killer cell
+* cell_ontology_id: CL_0000623
+* proterm_and_extra: & CD38+, CD56-dim
+* pro_ontology_id: PR:000001408, PR:000001024	
+* fully_qualified_response_component: natural killer cell & CD38+, CD56-dim
+
+
+The following additional convenience fields are also added by the pipeline
 * **response_comp_orig_cnt** - the number of response components in originally curated signature (e.g. gene symbols)
 * **response_comp_cnt** - the number of response components in the updated signature.
 * **subm_obs_id** - the sequential count of a signature within all signatures of this type for a particular publication_reference_id (PMID).      
@@ -70,6 +88,11 @@ For easy inspection, CSV-formatted versions of the same files are also generated
 
 Files containing just the complete list of response components for each signature are located in a further subdirectory, "files", for reach response component type, e.g. "submissions/hipc_gene/files".  An example is the file **hipc_gene_sig_21357945_3.txt** which lists six genes, one per line, that make up the third signature for that PMID.
 
+### Example of a cell-type frequency submission file with four response_components
+The cell-type submission file xXXX contains the response_component values 
+"CD86+ myeloid dendritic cells (mDCs); CCR7+ myeloid dendritic cells (mDCs); CD40/CD86+ monocytes; CD38+ CD56-dim natural killer (NK) cells".  After the cell-type mapping process, the new values are 
+	
+	
 
 ### Log files
 An additional directory (not checked-in to GitHub), "logfiles" is created.  After the script has run, this directory contains a number of files tracing the data transformations and final summary data, as well as "recreated_template" files that represent the data after all updates and transformations, in the same format as the original data.
