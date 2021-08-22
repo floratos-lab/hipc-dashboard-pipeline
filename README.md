@@ -16,6 +16,8 @@ The Dashboard design is flexible and allows submissions with an arbitrary number
 ## Curation
 Curators enter data into Google-sheet based templates exactly as it appears in a publication.  This data is then standardized as needed using suitable ontologies.  The original annotations are also preserved for qualtity control and provenance.  The curation sheets contain several rows of headers used to guide the Dashboard load process but which are not of interest to the wider community.
 
+The file "**HIPC Dashboard curation template fields.pdf**" in the pipeline root directly contains the complete specification for each field in the curation templates.
+
 ## Data Standardization
 Standardization varies according to data type.  We use existing community standards wherever possible:
 * Gene symbols - Curated gene symbols are updated to current HGNC/NCBI symbols based on (1) NCBI synonyms and (2) a manually created mapping table.  The later deals with specific problematic symbols found in the curated data, where examination of the original data is able to support a definite mapping.
@@ -37,6 +39,8 @@ It has a number of optional settings.  In particular, one can currently choose t
 
 ## Data Releases
 The Dashboard database is reloaded in its entirety each time a new release is created.  When a new version of the data is ready, the code, input data and resulting output files are all committed together as a release.  
+
+The file "**changelog.txt**" in the root directory lists all major changes in each release.
 
 ## Pipeline Output Files 
 ### Dashboard Submission files (./submissions)
