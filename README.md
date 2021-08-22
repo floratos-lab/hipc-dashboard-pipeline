@@ -51,16 +51,16 @@ Cell-type submissions are placed in the subdirectory "submissions/hipc_ctf/".
 
 ### Submission file format
 The Dashboard submission load files contain the same columns as described in the curation document, with some additions to support the requirements of the Dashboard itself and to preserve original curated values for fields updated by the pipeline. Each file represents one signature in a denormalized manner. Because the "response_component" field for one signature many contain up to e.g. thousands of gene symbols, this element of the signature is treated differently than all other elements.
-* multi-valued "subject" fields other than "response_component" (genes or vaccines) are split into as many columns as needed to represent each entry in single-valued fashion.  For example, a spreadsheet target_pathogen field containing three values would be split into three separate columns on the same row, "target_pathogen_1", "target_pathogen_2" and "target_pathogen_3".  This currently applies to the fields "exposure_material" and "target_pathogen".
+* multi-valued "subject" fields other than "response_component" (genes or vaccines) are split into as many columns as needed to represent each entry in single-valued fashion.  For example, a spreadsheet target_pathogen field containing three pathogens would be split into three separate columns on the same row, "target_pathogen_1", "target_pathogen_2" and "target_pathogen_3".  This currently applies to the fields "exposure_material" and "target_pathogen".
 * "response_component" fields are split into a new row for each entry. For example, a signature with 100 genes will be expanded to 100 rows, each with 1 gene symbol in the response_component column. All other columns will be the same for each row. (This aspect of the Dashboard design allows in principle additional unique supporting evidence to be stored for each response_component (e.g. p-values for genes), however the current HIPC signatures curation project is not collecting data at this level of detail). 
 * The original curated values for response_component appear in the "response_component_original" column.
 
 The following additional fields are added by the pipeline
-* response_comp_orig_cnt - the number of response components in originally curated signature (e.g. gene symbols)
-* response_comp_cnt - the number of response components in the updated signature.
-* subm_obs_id - the sequential count of a signature within all signatures of this type for a particular publication_reference_id (PMID).      
-* uniq_obs_id - the original row number of a signature in the curation sheet.         
-* row_key - the concatenation of the publication_reference_id, the subm_obs_id and the uniq_obs_id.
+* **response_comp_orig_cnt** - the number of response components in originally curated signature (e.g. gene symbols)
+* **response_comp_cnt** - the number of response components in the updated signature.
+* **subm_obs_id** - the sequential count of a signature within all signatures of this type for a particular publication_reference_id (PMID).      
+* **uniq_obs_id** - the original row number of a signature in the curation sheet.         
+* **row_key** - the concatenation of the publication_reference_id, the subm_obs_id and the uniq_obs_id.
 	
 For easy inspection, CSV-formatted versions of the same files are also generated under "submissions/hipc_gene_csv/" and "submissions/hipc_ctf_csv/"
 
