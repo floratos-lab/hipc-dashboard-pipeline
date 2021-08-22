@@ -55,6 +55,13 @@ The Dashboard submission load files contain the same columns as described in the
 * "response_component" fields are split into a new row for each entry. For example, a signature with 100 genes will be expanded to 100 rows, each with 1 gene symbol in the response_component column. All other columns will be the same for each row. (This aspect of the Dashboard design allows in principle additional unique supporting evidence to be stored for each response_component (e.g. p-values for genes), however the current HIPC signatures curation project is not collecting data at this level of detail). 
 * The original curated values for response_component appear in the "response_component_original" column.
 
+The following additional fields are added by the pipeline
+* response_comp_orig_cnt - the number of response components in originally curated signature (e.g. gene symbols)
+* response_comp_cnt - the number of response components in the updated signature.
+* subm_obs_id - the sequential count of a signature within all signatures of this type for a particular publication_reference_id (PMID).      
+* uniq_obs_id - the original row number of a signature in the curation sheet.         
+* row_key - the concatenation of the publication_reference_id, the subm_obs_id and the uniq_obs_id.
+	
 For easy inspection, CSV-formatted versions of the same files are also generated under "submissions/hipc_gene_csv/" and "submissions/hipc_ctf_csv/"
 
 Files containing just the complete list of response components for each signature are located in a further subdirectory, "files", for reach response component type, e.g. "submissions/hipc_gene/files".  An example is the file **hipc_gene_sig_21357945_3.txt** which lists six genes, one per line, that make up the third signature for that PMID.
