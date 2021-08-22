@@ -1,0 +1,26 @@
+HIPC Dashboard Pipeline
+
+Changes in version 1.2.0
+- Update column headers:
+-- baseline_time to baseline_time_event
+-- exposure_material to exposure_material_id
+-- exposure_material_text to exposure_material
+-- publication_reference to publication_reference_id
+-- submission_date to curation_date
+-- extra_comments to curator_comments
+- Remove certain columns from templates:
+-- remove submission_name and template_name, as values are generated in code
+-- remove addntl_time_point_units, group1 and group0 because not in use
+- Merge certain columns into cohort and remove from templates
+-- merge subgroup into cohort, remove subgroup and update code
+-- merge age_group into cohort, remove age_group
+- New columns added by pipeline now added at end of templates rather than at fixed locations
+- Use tab-delimited files rather than Excel for all input and public output files
+- Change code to extract pubmed publish date (may be epub for some), 
+    and remove more complex code to construct pubmed-based print publish date
+- Use publication_year column for actual print year.  
+    Previously retrieved from Pubmed as PubDate option but value not always present.
+- No longer reconstruct article abstract from xml. 
+    It preserved special characters that are not wanted.
+    Only used by mSigDB code.
+
