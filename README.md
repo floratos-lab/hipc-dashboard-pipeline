@@ -40,7 +40,7 @@ R scripts are in ./R. "generate_HIPC_submissions.R" is the main script. It expec
 ## Data Releases
 The Dashboard database is reloaded in its entirety each time a new release is created.  When a new version of the data is ready, the code, input data and resulting output files are all committed together as a release.  
 
-The file "**changelog.txt**" in the root directory lists all major changes in each release.
+The file ["**changelog.txt**"](https://github.com/floratos-lab/hipc-dashboard-pipeline/blob/master/changelog.txt) in the root directory lists all major changes in each release.
 
 ## Pipeline Output Files 
 ### Dashboard Submission files (./submissions)
