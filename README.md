@@ -67,7 +67,8 @@ For cell-type frequency signatures, the pipeline splits the original single fiel
 * **pro_ontology_id**: Protein Ontology IDs for cell-type markers	
 * **fully_qualified_response_component**: a reconstructed single string describing the cell type with official names
 
-Example of cell type mapping:	
+Example of cell type mapping:
+An example of multiple cell-types in a single signature can be seen in a signature from PMID 28854372 which contains "CD86+ myeloid dendritic cells (mDCs); CCR7+ myeloid dendritic cells (mDCs); CD40/CD86+ monocytes; CD38+ CD56-dim natural killer (NK) cells".  Below we examine how the fourth cell type is broke out into the new columns.
 	
 View the original submission file for the below example in [csv format ](https://github.com/floratos-lab/hipc-dashboard-pipeline/blob/master/submissions/hipc_ctf_csv/hipc_ctf_28854372_3.csv) or download the tab-delimited [tab-delimited](https://github.com/floratos-lab/hipc-dashboard-pipeline/blob/master/submissions/hipc_ctf/hipc_ctf_28854372_3.txt) version.
 	
@@ -88,7 +89,7 @@ The following additional convenience fields are also added by the pipeline
 	
 For easy inspection, CSV-formatted versions of the same files are also generated under "submissions/hipc_gene_csv/" and "submissions/hipc_ctf_csv/"
 
-Files containing just the complete list of response components for each signature are located in a further subdirectory, "files", for reach response component type, e.g. "submissions/hipc_gene/files".  An example is the file **hipc_gene_sig_21357945_3.txt** which lists six genes, one per line, that make up the third signature for that PMID.
+**Complete signature response component files* - Files containing just the complete list of response components for each signature are located in a further subdirectory, "files", for reach response component type, e.g. "submissions/hipc_gene/files".  An example is the file **hipc_gene_sig_21357945_3.txt** which lists six genes, one per line, that make up the third signature for that PMID.
 
 ### Example of a cell-type frequency submission file with four response_components
 The cell-type submission file xXXX contains the response_component values 
