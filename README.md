@@ -16,7 +16,7 @@ The basic Dashboard design was originated for the [Cancer Target Detection and D
 ## Curation
 Curators enter data into Google-sheet based templates exactly as it appears in a publication.  This data is then standardized as needed using suitable ontologies.  The original annotations are also preserved for qualtity control and provenance.  The curation sheets contain several rows of headers used to guide the Dashboard load process but which are not of interest to the wider community.
 
-The file "**HIPC Dashboard curation template fields.pdf**" in the pipeline root directly contains the complete specification for each field in the curation templates.
+The file ["**HIPC Dashboard curation template fields.pdf**"](https://github.com/floratos-lab/hipc-dashboard-pipeline/blob/master/HIPC_Dashboard_curation_template_fields.pdf) in the pipeline root directly contains the complete specification for each field in the curation templates.
 
 ## Data Standardization
 Standardization varies according to data type.  We use existing community standards wherever possible:
