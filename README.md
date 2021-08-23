@@ -59,28 +59,7 @@ The Dashboard submission load files contain the same columns as described in the
 * "response_component" fields are split into a new row for each entry. For example, a signature with 100 genes will be expanded to 100 rows, each with 1 gene symbol in the response_component column. All other columns will be the same for each row. (This aspect of the Dashboard design allows in principle additional unique supporting evidence to be stored for each response_component (e.g. p-values for genes), however the current HIPC signatures curation project is not collecting data at this level of detail). 
 * The original curated values for response_component appear in the "response_component_original" column.
 
-For cell-type frequency signatures, the pipeline splits the original single field containing the curated cell types into several new columns:
-* **response_component_original**: the originally curated value
-* **response_component**: Cell Ontology name of the cell type
-* **cell_ontology_id**: Cell Ontology ID of the cell type
-* **proterm_and_extra**: a string beginning with "&" and followed first by any marker names found in the protein ontology, then any additional annotatons. CD38+, CD56-dim
-* **pro_ontology_id**: Protein Ontology IDs for cell-type markers	
-* **fully_qualified_response_component**: a reconstructed single string describing the cell type with official names
-
-Example of cell type mapping:
-An example of multiple cell-types in a single signature can be seen in a signature from PMID 28854372 which contains "CD86+ myeloid dendritic cells (mDCs); CCR7+ myeloid dendritic cells (mDCs); CD40/CD86+ monocytes; **CD38+ CD56-dim natural killer (NK) cells**".  Below we examine how the fourth cell type is broke out into the new columns.
-	
-View the original submission file for the below example in [csv format ](https://github.com/floratos-lab/hipc-dashboard-pipeline/blob/master/submissions/hipc_ctf_csv/hipc_ctf_28854372_3.csv) or download the tab-delimited [tab-delimited](https://github.com/floratos-lab/hipc-dashboard-pipeline/blob/master/submissions/hipc_ctf/hipc_ctf_28854372_3.txt) version.
-	
-* **response_component_original**: CD38+ CD56-dim natural killer (NK) cells
-* **response_component**: natural killer cell
-* **cell_ontology_id**: CL_0000623
-* **proterm_and_extra**: & CD38+, CD56-dim
-* **pro_ontology_id**: PR:000001408, PR:000001024	
-* **fully_qualified_response_component**: natural killer cell & CD38+, CD56-dim
-
-
-The following additional convenience fields are also added by the pipeline
+The following additional convenience fields are also added by the pipeline for all template types
 * **response_comp_orig_cnt** - the number of response components in originally curated signature (e.g. gene symbols)
 * **response_comp_cnt** - the number of response components in the updated signature.
 * **subm_obs_id** - the sequential count of a signature within all signatures of this type for a particular publication_reference_id (PMID).      
@@ -90,13 +69,20 @@ The following additional convenience fields are also added by the pipeline
 For easy inspection, CSV-formatted versions of the same files are also generated under "submissions/hipc_gene_csv/" and "submissions/hipc_ctf_csv/"
 
 **Complete signature response component files** - Files containing just the complete list of response components for each signature are located in a further subdirectory, "files", for reach response component type, e.g. "submissions/hipc_gene/files".  An example is the file **hipc_gene_sig_21357945_3.txt** which lists six genes, one per line, that make up the third signature for that PMID.
-
-### Example of a cell-type frequency submission file with four response_components
-The cell-type submission file xXXX contains the response_component values 
-"CD86+ myeloid dendritic cells (mDCs); CCR7+ myeloid dendritic cells (mDCs); CD40/CD86+ monocytes; CD38+ CD56-dim natural killer (NK) cells".  After the cell-type mapping process, the new values are 
 	
+### Additional columns for cell-type signatures	
+For cell-type frequency signatures, the pipeline splits the original single field containing the curated cell types into several new columns.  An example containing multiple cell-types in a single signature can be seen in a signature from PMID 28854372 which contains the response components "CD86+ myeloid dendritic cells (mDCs); CCR7+ myeloid dendritic cells (mDCs); CD40/CD86+ monocytes; **CD38+ CD56-dim natural killer (NK) cells**".  
 	
+Below we examine the cell-type specific columns with example values.
+* **response_component_original**: the originally curated value: CD38+ CD56-dim natural killer (NK) cells
+* **response_component**: Cell Ontology name of the cell type : natural killer cell
+* **cell_ontology_id**: Cell Ontology ID of the cell type : CL_0000623
+* **proterm_and_extra**: a string beginning with "&" and followed first by any marker names found in the protein ontology, then any additional annotatons: & CD38+, CD56-dim
+* **pro_ontology_id**: Protein Ontology IDs for cell-type markers: PR:000001408, PR:000001024	
+* **fully_qualified_response_component**: a reconstructed single string describing the cell type with official names: natural killer cell & CD38+, CD56-dim	
 
+	View the original submission file for the example in [csv format ](https://github.com/floratos-lab/hipc-dashboard-pipeline/blob/master/submissions/hipc_ctf_csv/hipc_ctf_28854372_3.csv) or download the tab-delimited [tab-delimited](https://github.com/floratos-lab/hipc-dashboard-pipeline/blob/master/submissions/hipc_ctf/hipc_ctf_28854372_3.txt) version.
+	
 ### Log files
 An additional directory (not checked-in to GitHub), "logfiles" is created.  After the script has run, this directory contains a number of files tracing the data transformations and final summary data, as well as "recreated_template" files that represent the data after all updates and transformations, in the same format as the original data.
 
