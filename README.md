@@ -67,7 +67,7 @@ For cell-type frequency signatures, the pipeline splits the original single fiel
 * **pro_ontology_id**: Protein Ontology IDs for cell-type markers	
 * **fully_qualified_response_component**: a reconstructed single string describing the cell type with official names
 
-Example of cell type mapping	
+Example of cell type mapping:	
 	
 View the original submission file for the below example in [csv format ](https://github.com/floratos-lab/hipc-dashboard-pipeline/blob/master/submissions/hipc_ctf_csv/hipc_ctf_28854372_3.csv) or download the tab-delimited [tab-delimited](https://github.com/floratos-lab/hipc-dashboard-pipeline/blob/master/submissions/hipc_ctf/hipc_ctf_28854372_3.txt) version.
 	
