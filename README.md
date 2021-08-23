@@ -68,7 +68,7 @@ For cell-type frequency signatures, the pipeline splits the original single fiel
 * **fully_qualified_response_component**: a reconstructed single string describing the cell type with official names
 
 Example of cell type mapping:
-An example of multiple cell-types in a single signature can be seen in a signature from PMID 28854372 which contains "CD86+ myeloid dendritic cells (mDCs); CCR7+ myeloid dendritic cells (mDCs); CD40/CD86+ monocytes; CD38+ CD56-dim natural killer (NK) cells".  Below we examine how the fourth cell type is broke out into the new columns.
+An example of multiple cell-types in a single signature can be seen in a signature from PMID 28854372 which contains "CD86+ myeloid dendritic cells (mDCs); CCR7+ myeloid dendritic cells (mDCs); CD40/CD86+ monocytes; **CD38+ CD56-dim natural killer (NK) cells**".  Below we examine how the fourth cell type is broke out into the new columns.
 	
 View the original submission file for the below example in [csv format ](https://github.com/floratos-lab/hipc-dashboard-pipeline/blob/master/submissions/hipc_ctf_csv/hipc_ctf_28854372_3.csv) or download the tab-delimited [tab-delimited](https://github.com/floratos-lab/hipc-dashboard-pipeline/blob/master/submissions/hipc_ctf/hipc_ctf_28854372_3.txt) version.
 	
