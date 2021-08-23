@@ -60,23 +60,23 @@ The Dashboard submission load files contain the same columns as described in the
 * The original curated values for response_component appear in the "response_component_original" column.
 
 For cell-type frequency signatures, the pipeline splits the original single field containing the curated cell types into several new columns:
-* response_component_original: the originally curated value
-* response_component: Cell Ontology name of the cell type
-* cell_ontology_id: Cell Ontology ID of the cell type
-* proterm_and_extra: a string beginning with "&" and followed first by any marker names found in the protein ontology, then any additional annotatons. CD38+, CD56-dim
-* pro_ontology_id: Protein Ontology IDs for cell-type markers	
-* fully_qualified_response_component: a reconstructed single string describing the cell type with official names
+* **response_component_original**: the originally curated value
+* **response_component**: Cell Ontology name of the cell type
+* **cell_ontology_id**: Cell Ontology ID of the cell type
+* **proterm_and_extra**: a string beginning with "&" and followed first by any marker names found in the protein ontology, then any additional annotatons. CD38+, CD56-dim
+* **pro_ontology_id**: Protein Ontology IDs for cell-type markers	
+* **fully_qualified_response_component**: a reconstructed single string describing the cell type with official names
 
 Example of cell type mapping	
 	
 View the original submission file for the below example in [csv format ](https://github.com/floratos-lab/hipc-dashboard-pipeline/blob/master/submissions/hipc_ctf_csv/hipc_ctf_28854372_3.csv) or download the tab-delimited [tab-delimited](https://github.com/floratos-lab/hipc-dashboard-pipeline/blob/master/submissions/hipc_ctf/hipc_ctf_28854372_3.txt) version.
 	
-* response_component_original: CD38+ CD56-dim natural killer (NK) cells
-* response_component: natural killer cell
-* cell_ontology_id: CL_0000623
-* proterm_and_extra: & CD38+, CD56-dim
-* pro_ontology_id: PR:000001408, PR:000001024	
-* fully_qualified_response_component: natural killer cell & CD38+, CD56-dim
+* **response_component_original**: CD38+ CD56-dim natural killer (NK) cells
+* **response_component**: natural killer cell
+* **cell_ontology_id**: CL_0000623
+* **proterm_and_extra**: & CD38+, CD56-dim
+* **pro_ontology_id**: PR:000001408, PR:000001024	
+* **fully_qualified_response_component**: natural killer cell & CD38+, CD56-dim
 
 
 The following additional convenience fields are also added by the pipeline
