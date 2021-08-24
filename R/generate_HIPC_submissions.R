@@ -65,7 +65,7 @@ source("find_unique.R")
 #####<<<< START HERE >>>>#####
 ##### Choose a sheet type (from "HIPC Dashboard.xlsx") #####
 # Available sheet_type values are "GENE", "CELLTYPE_FREQUENCY"
-sheet_type <- "CELLTYPE_FREQUENCY"
+sheet_type <- "GENE"
 
 # For the moment, assume executing interactively from the ./src directory
 source_data_dir <- "../source_data"
@@ -186,11 +186,6 @@ remove_cols <- c("spot_check",
 insub <- insub[!(colnames(insub) %in% remove_cols)]
 length(colnames(insub))
 
-# cSplit() changes split column values to NA if first column named "X"!
-# The column name of the first column is removed
-# before templates are written in write_submission_template()
-colnames(insub)[1] <- "donotuse"
-
 # get rid of empty columns
 insub <- insub[!(grepl("X\\.[0-9]", colnames(insub)))]
 
@@ -199,6 +194,18 @@ insub <- insub[!(grepl("X\\.[0-9]", colnames(insub)))]
 # Save the original response_component values
 colnames(insub)[colnames(insub) == "response_component"] <- "response_component_original"
 
+# cSplit() changes split column values to NA if first column named "X"!
+# The column name of the first column is removed
+# before templates are written in write_submission_template()
+colnames(insub)[1] <- "donotuse"
+# Add back in the columns no longer included in the curation template
+insub <- data.frame(donotuse = insub[ , 1],  # for some reason column 1 name has to be respecified
+                    submission_name = "",
+                    submission_date = "",
+                    template_name = "",
+                    insub[ , 2:ncol(insub)],
+                    stringsAsFactors = FALSE)
+colnames(insub)
 # Create a new column for the corrected response_component values
 # and correct the headers for the response_component_original column
 # Add other new columns as needed per sheet type
@@ -229,11 +236,6 @@ if (sheet_type == "GENE") {
   insub$response_component_original[1:6]        <-
     c("", "label", "observed", "", "", "response component (original cell type)")
 }
-
-# Add in new columns
-insub$submission_name <- ""
-insub$submission_date <- ""
-insub$template_name   <- ""
 
 insub$response_component      <- ""  # this is a new version of the column, see above
 insub$response_comp_orig_cnt  <- ""
