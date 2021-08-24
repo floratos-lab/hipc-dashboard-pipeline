@@ -5,6 +5,7 @@ principal_investigator <- "HIPC-II Sigs: Steven H. Kleinstein, Ph.D."
 # NOTE - uses "GENE" and "CELLTYPE_FREQUENCY" definitions from main routine
 generate_observation_summary <- function(sheet_type,
                                          joining_preposition,
+                                         age_string,
                                          exposure_cnt,
                                          pathogen_cnt) {
 
@@ -31,7 +32,7 @@ generate_observation_summary <- function(sheet_type,
   obs_summary   <- paste(obs_summary, "was <response_behavior>")
   obs_summary   <- paste(obs_summary, joining_preposition)
   obs_summary   <- paste(obs_summary, "<comparison> in")
-  obs_summary   <- paste(obs_summary, "cohort <cohort>")
+  obs_summary   <- paste(obs_summary, "cohort", age_string, "<cohort>")
   obs_summary <- paste(obs_summary, "after exposure to")
   obs_summary <- paste(obs_summary, gen_phrase(exposure_cnt, "exposure_material_id"))
   # Note - pathogen_cnt is set to zero when don't want to display pathogens
@@ -85,10 +86,14 @@ write_submission_template <- function(df2_cpy, header_rows, template_name, title
     uniqExpMat <- unique(as.character(dftmp$exposure_material_id))
     uniqPathogens <- unique(as.character(dftmp$target_pathogen))
 
-    # for one observation, all values in these columns are the same, so take first.
+    # For one submission, all values in these columns are the same, so take first.
     pmid_local <- dftmp$publication_reference_id[1]
     submission_identifier <- dftmp$subm_obs_id[1]
     joining_preposition <- choose_joining_preposition(dftmp$response_behavior[1])
+    
+    age_min <- dftmp$age_min[1]
+    age_max <- dftmp$age_max[1]
+    age_units <- dftmp$age_units[1]
 
     # get titles and dates for matching PMID
     w <- which(titles_and_dates_df[, "pmid"] == pmid_local)
@@ -226,9 +231,36 @@ write_submission_template <- function(df2_cpy, header_rows, template_name, title
     } else {
       pathogen_cntOS <- pathogen_cnt
     }
+    
+    # We have to break the usual template wild-card rules and hard code
+    # the age values because of the complexity of age combinations.
+    age_string <- ""
+    if(age_min != "" && age_max != "") {
+      if(age_min == age_max) {
+        age_string <- age_min
+      } else {
+        age_string <- paste0(age_min, "-", age_max)
+      }
+    } else if(age_min != "" && age_max == "") {
+      age_string <- paste0(age_min, "+")
+    } else if(age_min == "" && age_max != "") {
+      age_string <- paste0("<=", age_max)
+    }
+    if(age_string != "") {
+      if (age_units != "") {
+        age_units_rewritten <- ifelse(age_units == "years", "yo",
+               ifelse(age_units == "months", "mo",
+               ifelse(age_units == "weeks", "wo", age_units)))
+        age_string <- paste(age_string, age_units_rewritten)
+      }
+      if(dftmp$cohort[1] != "") {
+        age_string <- paste0(age_string, ",")
+      }
+    }
 
     observation_summary <- generate_observation_summary(sheet_type,
                                                         joining_preposition,
+                                                        age_string,
                                                         expMatCnt,
                                                         pathogen_cntOS)
 
