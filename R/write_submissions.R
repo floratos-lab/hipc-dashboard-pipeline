@@ -4,8 +4,8 @@ principal_investigator <- "HIPC-II Sigs: Steven H. Kleinstein, Ph.D."
 
 # NOTE - uses "GENE" and "CELLTYPE_FREQUENCY" definitions from main routine
 generate_observation_summary <- function(sheet_type,
-                                         use_subgroup,
                                          joining_preposition,
+                                         age_string,
                                          exposure_cnt,
                                          pathogen_cnt) {
 
@@ -32,12 +32,9 @@ generate_observation_summary <- function(sheet_type,
   obs_summary   <- paste(obs_summary, "was <response_behavior>")
   obs_summary   <- paste(obs_summary, joining_preposition)
   obs_summary   <- paste(obs_summary, "<comparison> in")
-  if (use_subgroup) {
-    obs_summary <- paste(obs_summary, "subgroup <subgroup> of")
-  }
-  obs_summary   <- paste(obs_summary, "cohort <cohort>")
+  obs_summary   <- paste(obs_summary, "cohort", age_string, "<cohort>")
   obs_summary <- paste(obs_summary, "after exposure to")
-  obs_summary <- paste(obs_summary, gen_phrase(exposure_cnt, "exposure_material"))
+  obs_summary <- paste(obs_summary, gen_phrase(exposure_cnt, "exposure_material_id"))
   # Note - pathogen_cnt is set to zero when don't want to display pathogens
   if (pathogen_cnt > 0 && pathogen_cnt <= 3) {
     obs_summary <- paste(obs_summary, "targeting")
@@ -84,16 +81,19 @@ write_submission_template <- function(df2_cpy, header_rows, template_name, title
   for (i in 1:length(uniq_ids_local)) {
     dftmp <- df2_cpy[df2_cpy$uniq_obs_id == uniq_ids_local[i], ]
 
-    # Despite best efforts, exposure_material was being treated as a factor.
+    # Despite best efforts, exposure_material_id was being treated as a factor.
     # Remember the data is still split at this point
-    uniqExpMat <- unique(as.character(dftmp$exposure_material))
+    uniqExpMat <- unique(as.character(dftmp$exposure_material_id))
     uniqPathogens <- unique(as.character(dftmp$target_pathogen))
 
-    # for one observation, all values in these columns are the same, so take first.
-    pmid_local <- dftmp$publication_reference[1]
+    # For one submission, all values in these columns are the same, so take first.
+    pmid_local <- dftmp$publication_reference_id[1]
     submission_identifier <- dftmp$subm_obs_id[1]
     joining_preposition <- choose_joining_preposition(dftmp$response_behavior[1])
-    use_subgroup <- ifelse(dftmp$subgroup[1] != "none", TRUE, FALSE)
+    
+    age_min <- dftmp$age_min[1]
+    age_max <- dftmp$age_max[1]
+    age_units <- dftmp$age_units[1]
 
     # get titles and dates for matching PMID
     w <- which(titles_and_dates_df[, "pmid"] == pmid_local)
@@ -102,15 +102,12 @@ write_submission_template <- function(df2_cpy, header_rows, template_name, title
     }
 
     title <- titles_and_dates_df[w, "title"]
-    date <- titles_and_dates_df[w, "date"]
-    subdate <- gsub("\\.", "", date)
+    header_rows$publication_reference_url[6] <- title
+    
     submission_name <- paste(template_name, pmid_local, submission_identifier, sep = "_")
-
     dftmp$submission_name <- submission_name
     dftmp$template_name   <- submission_name
-    dftmp$submission_date <- date
-
-    header_rows$publication_reference_url[6] <- title
+    dftmp$submission_date <- titles_and_dates_df[w, "date"]
 
     # Reattach the header rows to each submission in turn
     dftmp <- rbind(header_rows, dftmp)
@@ -138,7 +135,7 @@ write_submission_template <- function(df2_cpy, header_rows, template_name, title
     # Add new columns for multiple exposure materials
     expMatCnt <- length(uniqExpMat)
     if(expMatCnt > 1) {
-      newCols <- paste("exposure_material", 1:expMatCnt, sep = "_")
+      newCols <- paste("exposure_material_id", 1:expMatCnt, sep = "_")
       dftmp[newCols] <- ""
 
       for (j in 1:expMatCnt) {
@@ -147,7 +144,7 @@ write_submission_template <- function(df2_cpy, header_rows, template_name, title
       }
 
       # Remove the original column
-      w <- which(colnames(dftmp) == "exposure_material")
+      w <- which(colnames(dftmp) == "exposure_material_id")
       if(length(w) != 1) {
         stop("column name mismatch", colnames(dftmp)[w])
       }
@@ -204,7 +201,7 @@ write_submission_template <- function(df2_cpy, header_rows, template_name, title
 
     # Write a copy of the response components to the submission CSV directory
     # Only difference is the files end in .csv so can automatically open in Excel
-    # For internal use only, not for users as Excel will alter some gene sybmols.
+    # For internal use only, not for users as Excel will alter some gene symbols.
     write.table(resp_components[[uil]],
                 file = paste(template_name_csv, "files", signatureFilename, sep = "/"),
                 row.names = FALSE, col.names = FALSE, quote = FALSE)
@@ -223,7 +220,6 @@ write_submission_template <- function(df2_cpy, header_rows, template_name, title
 
     # For convenience, write out CSV version
     # Java crashes when try to write out to Excel xlsx format,
-    # so have to use CSV instead.
     write.csv(dftmp,
               file = paste0(template_name_csv, "/", submission_name, ".csv"),
               row.names = FALSE)
@@ -235,10 +231,36 @@ write_submission_template <- function(df2_cpy, header_rows, template_name, title
     } else {
       pathogen_cntOS <- pathogen_cnt
     }
+    
+    # We have to break the usual template wild-card rules and hard code
+    # the age values because of the complexity of age combinations.
+    age_string <- ""
+    if(age_min != "" && age_max != "") {
+      if(age_min == age_max) {
+        age_string <- age_min
+      } else {
+        age_string <- paste0(age_min, "-", age_max)
+      }
+    } else if(age_min != "" && age_max == "") {
+      age_string <- paste0(age_min, "+")
+    } else if(age_min == "" && age_max != "") {
+      age_string <- paste0("<=", age_max)
+    }
+    if(age_string != "") {
+      if (age_units != "") {
+        age_units_rewritten <- ifelse(age_units == "years", "yo",
+               ifelse(age_units == "months", "mo",
+               ifelse(age_units == "weeks", "wo", age_units)))
+        age_string <- paste(age_string, age_units_rewritten)
+      }
+      if(dftmp$cohort[1] != "") {
+        age_string <- paste0(age_string, ",")
+      }
+    }
 
     observation_summary <- generate_observation_summary(sheet_type,
-                                                        use_subgroup,
                                                         joining_preposition,
+                                                        age_string,
                                                         expMatCnt,
                                                         pathogen_cntOS)
 

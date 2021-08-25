@@ -472,7 +472,7 @@ update_gene_symbols <- function(genes, logdir, base_filename, source_data_dir, d
 
   # Save PMID info for unmapped symbols
   no_valid_symbols_df <- df2[is.na(genes_map$Symbol),
-                             c("response_component", "publication_reference", "subm_obs_id", "uniq_obs_id")]
+                             c("response_component", "publication_reference_id", "subm_obs_id", "uniq_obs_id")]
   log_no_valid_symbol_vs_pmid(no_valid_symbols_df, base_filename)
   return(list(genes_map = genes_map, summary = summary_df))
 }
