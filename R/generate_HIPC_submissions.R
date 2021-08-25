@@ -15,11 +15,11 @@
 #    * Create CV-per-template file for set of submissions
 #
 # Input files (must be in current directory):
-#   * Dashboard spreadsheet e.g. "HIPC Dashboard 2020-10-22.xlsx"
-#     downloaded from Google Drive, use actual download date in filename.
-#   * "vaccine_years.xlsx" - maps vaccine season year to vaccine viral components
+#   * HIPC Dashboard - Gene Expression.tsv
+#   * HIPC Dashboard - Cell type Frequency.tsv
+#   * "vaccine_years.txt" - maps vaccine season year to vaccine viral components
 #   * "manual_gene_symbol_corrections.txt" - maps invalid symbols  to known valid sybmols
-#   * "cell_type_frequency-response_components_mapping.xlsx" - corrections to exposure_material
+#   * "cell_type_frequency-response_components_mapping.txt" - corrections to exposure_material
 #        terms for cell type frequency sheet.  These corrections will in the end be added
 #        directly into the HIPC Dashboard spreadsheet.
 #
@@ -180,7 +180,6 @@ vaccines_by_year <- read.delim(file = paste(source_data_dir, vaccine_tsv, sep = 
 remove_cols <- c("spot_check",
                  "second_spot_check",
                  "method",                  # Remove because no values in vaccine sheets yet (new column)
-                 "tissue_type_term_id",
                  "target_pathogen_taxonid",
                  "curator_comments")
 insub <- insub[!(colnames(insub) %in% remove_cols)]
