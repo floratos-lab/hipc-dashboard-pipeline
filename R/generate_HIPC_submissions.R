@@ -197,18 +197,19 @@ colnames(insub)[colnames(insub) == "response_component"] <- "response_component_
 # The column name of the first column is removed
 # before templates are written in write_submission_template()
 colnames(insub)[1] <- "donotuse"
-# Add back in the columns no longer included in the curation template
+# Add back in the columns no longer included in the curation template, 
+# plus response_component to position it more towards begin
 insub <- data.frame(donotuse = insub[ , 1],  # for some reason column 1 name has to be respecified
                     submission_name = "",
                     submission_date = "",
                     template_name = "",
+                    response_component = "",
                     insub[ , 2:ncol(insub)],
                     stringsAsFactors = FALSE)
 colnames(insub)
 # Create a new column for the corrected response_component values
 # and correct the headers for the response_component_original column
 # Add other new columns as needed per sheet type
-# Add certain new columns between existing columns 6 and 7.
 if (sheet_type == "GENE") {
   
   # gene-specific headers
@@ -236,7 +237,6 @@ if (sheet_type == "GENE") {
     c("", "label", "observed", "", "", "response component (original cell type)")
 }
 
-insub$response_component      <- ""  # this is a new version of the column, see above
 insub$response_comp_orig_cnt  <- ""
 insub$response_comp_cnt       <- ""
 insub$subm_obs_id             <- ""
@@ -246,9 +246,9 @@ insub$row_key                 <- ""
 insub$submission_name[1:6]    <- c("", "label", "background", "", "", "submission name")
 insub$submission_date[1:6]    <- c("", "label", "background", "", "", "submission_date")
 insub$template_name[1:6]      <- c("", "label", "background", "", "", "template_name")
-insub$response_comp_cnt[1:6]  <- c("", "label", "observed",   "", "", "response component count")
 insub$response_comp_orig_cnt[1:6]  <- 
                                  c("", "label", "observed",   "", "", "response component (original) count")
+insub$response_comp_cnt[1:6]  <- c("", "label", "observed",   "", "", "response component count")
 insub$subm_obs_id[1:6]        <- c("", "label", "background", "", "", "ID of observation within its own submission")
 insub$uniq_obs_id[1:6]        <- c("", "label", "background", "", "", "Uniq ID of observation within its submission type")
 insub$row_key[1:6]            <- c("", "label", "background", "", "", "row key")
