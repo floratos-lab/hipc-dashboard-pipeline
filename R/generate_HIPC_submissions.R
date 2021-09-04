@@ -65,7 +65,7 @@ source("find_unique.R")
 #####<<<< START HERE >>>>#####
 ##### Choose a sheet type (from "HIPC Dashboard.xlsx") #####
 # Available sheet_type values are "GENE", "CELLTYPE_FREQUENCY"
-sheet_type <- "GENE"
+sheet_type <- "CELLTYPE_FREQUENCY"
 
 # For the moment, assume executing interactively from the ./src directory
 source_data_dir <- "../source_data"
@@ -226,15 +226,15 @@ if (sheet_type == "GENE") {
   # cell-type specific headers
   insub$response_component[1:6] <- insub$response_component_original[1:6]
   insub$cell_ontology_id[1:6]  <-
-    c("", "label", "observed", "", "", "cell ontology ID")
+    c("", "label", "observed", "", "", "response component cell ontology ID")
   insub$proterm_and_extra[1:6] <-
-    c("", "label", "observed", "", "", "cell type PRO and extra terms")
+    c("", "label", "observed", "", "", "response component protein ontology and extra terms")
   insub$pro_ontology_id[1:6]   <-
-    c("", "label", "observed", "", "", "protein ontology ID")
+    c("", "label", "observed", "", "", "response component marker protein ontology ID")
   insub$fully_qualified_response_component[1:6] <-
-    c("", "label", "observed", "", "", "all response components in signature")
+    c("", "label", "observed", "", "", "response component (fully qualified)")
   insub$response_component_original[1:6]        <-
-    c("", "label", "observed", "", "", "response component (original cell type)")
+    c("", "label", "observed", "", "", "response component (original curated cell type)")
 }
 
 insub$response_comp_orig_cnt  <- ""
@@ -249,8 +249,8 @@ insub$template_name[1:6]      <- c("", "label", "background", "", "", "template_
 insub$response_comp_orig_cnt[1:6]  <- 
                                  c("", "label", "observed",   "", "", "response component (original) count")
 insub$response_comp_cnt[1:6]  <- c("", "label", "observed",   "", "", "response component count")
-insub$subm_obs_id[1:6]        <- c("", "label", "background", "", "", "ID of observation within its own submission")
-insub$uniq_obs_id[1:6]        <- c("", "label", "background", "", "", "Uniq ID of observation within its submission type")
+insub$subm_obs_id[1:6]        <- c("", "label", "background", "", "", "ID of observation within a publication (PMID) and for its submission type ")
+insub$uniq_obs_id[1:6]        <- c("", "label", "background", "", "", "ID of observation within its submission type")
 insub$row_key[1:6]            <- c("", "label", "background", "", "", "row key")
 
 if (sheet_type == "CELLTYPE_FREQUENCY") {
