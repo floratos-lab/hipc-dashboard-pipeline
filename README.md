@@ -11,7 +11,7 @@ Although all of the original curated data files are made available on this site,
 * ./reformatted_data - standardized versions of curated data in several formats including tab-delimited, RDS, Excel and Broad GMT (tab-delimited).
 
 ## Design
-The Dashboard design is flexible and allows submissions with an arbitrary number and type of data columns.  The Dashboard is built on two classes of data.  The first, termed "subjects", comprises terms drawn from controlled vocabularies which are represented directly in the Dashboard database with all their underlying data. The second class, termed "evidence", is open and can be used to add additionnal annotation columns, such as free text or files, as needed for a particular submission.   The addition of new ontology-based data-types ("subjects") requires additions to the data model.  The templates for the first two supported submission types, gene expression and cell-type frequency, are almost identical. The HIPC Dashboard design is based on an earlier project, the Cancer Target Detection and Discovery Network (CTD2), initiated by the Office of Cancer Genomics of the National Cancer Institute (NCI).  A more detailed discussion of the Dashboard architecture is available in the publication Askoy et al. (2017), https://pubmed.ncbi.nlm.nih.gov/29220450/.
+The Dashboard design is flexible and allows submissions with an arbitrary number and type of data columns.  The Dashboard is built on two classes of data.  The first, termed **subjects**, comprises terms drawn from controlled vocabularies which are represented directly in the Dashboard database with all their underlying data. The second class, termed **evidence**, is open and can be used to add any number of additional annotation columns, such as free text or files, as needed for a particular submission.  The addition of new ontology-based data-types ("subjects") requires additions to the data model.  The templates for the first two supported submission types, gene expression and cell-type frequency, are almost identical. The HIPC Dashboard design is based on an earlier project, the Cancer Target Detection and Discovery Network (CTD2), initiated by the Office of Cancer Genomics of the National Cancer Institute (NCI).  A more detailed discussion of the Dashboard architecture is available in the publication Askoy et al. (2017), https://pubmed.ncbi.nlm.nih.gov/29220450/.
 
 ## Curation
 Curators enter data into Google-sheet based templates exactly as it appears in a publication.  This data is then standardized as needed using suitable ontologies.  The original annotations are also preserved for qualtity control and provenance.  The curation sheets contain several rows of headers used to guide the Dashboard load process but which are not of interest to the wider community.
@@ -158,6 +158,8 @@ or to conduct a find operation:
 
 	List<Compound> compoundsBySmiles = dashboardDao.findCompoundsBySmilesNotation(pyrethrinII);
 
+# License
+This project is licensed under the BSD 3-clause license.  See the [LICENSE.txt](LICENSE.txt) file for details.
 
 # References
 Aksoy BA, Dancík V, Smith K, Mazerik JN, Ji Z, Gross B, Nikolova O, Jaber N, Califano A, Schreiber SL, Gerhard DS, Hermida LC, Jagu S, Sander C, Floratos A, Clemons PA. CTD2 Dashboard: a searchable web interface to connect validated results from the Cancer Target Discovery and Development Network. Database (Oxford). 2017 Jan 1;2017:bax054. doi: 10.1093/database/bax054. PMID: 29220450; PMCID: PMC5569694.
