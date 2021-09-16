@@ -30,6 +30,7 @@ generate_observation_summary <- function(sheet_type,
     obs_summary     <- "In <tissue_type>, <response_component><proterm_and_extra> frequency"
   }
   obs_summary   <- paste(obs_summary, "was <response_behavior>")
+  obs_summary   <- paste(obs_summary, "at <time_point> <time_point_units> from <baseline_time_event>")
   obs_summary   <- paste(obs_summary, joining_preposition)
   obs_summary   <- paste(obs_summary, "<comparison> in")
   obs_summary   <- paste(obs_summary, "cohort", age_string, "<cohort>")
