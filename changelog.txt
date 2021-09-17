@@ -23,4 +23,5 @@ Changes in version 1.2.0
 - No longer reconstruct article abstract from xml. 
     It preserved special characters that are not wanted.
     Only used by mSigDB code.
+- Add time_point, time_point_units, and baseline_time_event to observation summary statements to disambiguate.
 
