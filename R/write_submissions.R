@@ -7,7 +7,8 @@ generate_observation_summary <- function(sheet_type,
                                          joining_preposition,
                                          age_string,
                                          exposure_cnt,
-                                         pathogen_cnt) {
+                                         pathogen_cnt,
+                                         use_additional = FALSE) {
 
   # generate a wild-card template, add index if multiple to match new columns in data
   gen_phrase <- function(cnt, phrase) {
@@ -41,6 +42,10 @@ generate_observation_summary <- function(sheet_type,
     obs_summary <- paste(obs_summary, "targeting")
     obs_summary <- paste(obs_summary, gen_phrase(pathogen_cnt, "target_pathogen"))
   }
+  if(use_additional) {
+    obs_summary <- paste(obs_summary, "(<additional_exposure_material>)")
+  }
+  
   return(obs_summary)
 }
 
@@ -92,9 +97,10 @@ write_submission_template <- function(df2_cpy, header_rows, template_name, title
     submission_identifier <- dftmp$subm_obs_id[1]
     joining_preposition <- choose_joining_preposition(dftmp$response_behavior[1])
     
-    age_min <- dftmp$age_min[1]
-    age_max <- dftmp$age_max[1]
+    age_min   <- dftmp$age_min[1]
+    age_max   <- dftmp$age_max[1]
     age_units <- dftmp$age_units[1]
+    use_additional <- dftmp$additional_exposure_material[1] != ""
 
     # get titles and dates for matching PMID
     w <- which(titles_and_dates_df[, "pmid"] == pmid_local)
@@ -228,9 +234,9 @@ write_submission_template <- function(df2_cpy, header_rows, template_name, title
 
 
     if (any(uniqExpMat %in% vaccine_VO_has_pathogens)) {
-      pathogen_cntOS <- 0  # do not display pathogens in observation summary
+      pathogen_cnt_os <- 0  # do not display pathogens in observation summary
     } else {
-      pathogen_cntOS <- pathogen_cnt
+      pathogen_cnt_os <- pathogen_cnt
     }
     
     # We have to break the usual template wild-card rules and hard code
@@ -263,7 +269,8 @@ write_submission_template <- function(df2_cpy, header_rows, template_name, title
                                                         joining_preposition,
                                                         age_string,
                                                         expMatCnt,
-                                                        pathogen_cntOS)
+                                                        pathogen_cnt_os,
+                                                        use_additional)
 
     if (sheet_type == "GENE") {
       subm_type <- "gene"
