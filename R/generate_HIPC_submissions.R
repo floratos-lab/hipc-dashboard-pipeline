@@ -67,7 +67,7 @@ source("find_unique.R")
 # Available sheet_type values are "GENE", "CELLTYPE_FREQUENCY"
 sheet_type <- "CELLTYPE_FREQUENCY"
 
-# For the moment, assume executing interactively from the ./src directory
+# For the moment, assume executing interactively from the ./R directory
 source_data_dir <- "../source_data"
 submission_dir  <- "../submissions"
 logdir          <- "../logfiles"
@@ -206,7 +206,7 @@ insub <- data.frame(donotuse = insub[ , 1],  # for some reason column 1 name has
                     response_component = "",
                     insub[ , 2:ncol(insub)],
                     stringsAsFactors = FALSE)
-colnames(insub)
+
 # Create a new column for the corrected response_component values
 # and correct the headers for the response_component_original column
 # Add other new columns as needed per sheet type
