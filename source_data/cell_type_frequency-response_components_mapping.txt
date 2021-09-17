@@ -109,7 +109,7 @@ gamma-delta cells	gamma-delta T cell	CL:0000798
 granulocyte	granulocyte	CL:0000094																								
 IgA+ of IgD-CD27+ memory B cells	IgA memory B cell	CL:0000973	CD27+	PR:000001963	IgD-																					
 influenza-specific IgA secreting plasmablasts	IgA plasmablast	CL:0000984			influenza-specific																					
-"memory B cells (CD19+, IgD-, CD27+) (CL_0001053)"	IgD-negative memory B cell	CL:0001053	"CD19+, CD27+"	"PR:000001002, PR:000001963"																						
+"memory B cells (CD19+, IgD-, CD27+) (CL:0001053)"	IgD-negative memory B cell	CL:0001053	"CD19+, CD27+"	"PR:000001002, PR:000001963"																						
 CD38+ of IgD-CD27+ memory B cells	IgD-negative memory B cell	CL:0001053	"CD27+, CD38+"	"PR:000001963,PR:000001408"																						
 CD80+ of IgD-CD27+ memory B cells	IgD-negative memory B cell	CL:0001053	"CD80+, CD27+"	"PR:000001438, PR:000001963"																						
 CD86+ of IgD-CD27- memory B cells	IgD-negative memory B cell	CL:0001053	"CD86+, CD27-"	"PR:000001412, PR:000001963"																						
@@ -135,7 +135,7 @@ monocytes	monocyte	CL:0000576
 CCR7+ myeloid dendritic cells (mDCs)	myeloid dendritic cell	CL:0000782	CCR7+	PR:000001203 																						
 CD86+ myeloid dendritic cells (mDCs)	myeloid dendritic cell	CL:0000782	CD86-positive 	PR:000001412																						
 CD86+ myeloid dendritic cell (DC)	myeloid dendritic cell	CL:0000782	CD86-positive 	PR:000001412																						
-"naive B cells (CD19-positive, IgD-negative, CD27-negative) (CL_0000788)"	naive B cell	CL:0000788	"CD19+, CD27-"	"PR:000001002, PR:000001963"	IgD-																					
+"naive B cells (CD19-positive, IgD-negative, CD27-negative) (CL:0000788)"	naive B cell	CL:0000788	"CD19+, CD27-"	"PR:000001002, PR:000001963"	IgD-																					
 CD38+ of Naive B cells	naive B cell	CL:0000788	CD38+	PR:000001408																						
 CD86+ of naive B cells	naive B cell	CL:0000788	CD86+	PR:000001412																						
 CD86+ of Naive B Cells	naive B cell	CL:0000788	CD86+	PR:000001412																						
@@ -181,7 +181,7 @@ T cells CD4+ Tregs Foxp3+	regulatory T cell	CL:0000815	FOXP3+	PR:000001350
 interferon-gamma-positive T cells	T cell	CL:0000084	IFNG+	PR:000000017																						
 IFN-gamma+ antigen specific T cell	T cell	CL:0000084	IFNG+	PR:000000017																						
 all T-cells	T cell	CL:0000084																								
-"transitional B cells (CD19+, CD24+, CD38+) (CL_0000818)"	transitional stage B cell	CL:0000818	"CD19+, CD24+, CD38+"	"PR:000001002, PR:000001932, PR:000001408"																						
+"transitional B cells (CD19+, CD24+, CD38+) (CL:0000818)"	transitional stage B cell	CL:0000818	"CD19+, CD24+, CD38+"	"PR:000001002, PR:000001932, PR:000001408"																						
 CD38+ of transitional B cells	transitional stage B cell	CL:0000818	CD38+	PR:000001408																						
 																										
 																										
