@@ -12,7 +12,7 @@ attached base packages:
 [1] parallel  stats4    stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] easyPubMed_2.13       xml2_1.3.2            RCurl_1.98-1.4        annotate_1.70.0       XML_3.99-0.7         
+ [1] easyPubMed_2.13       xml2_1.3.2            RCurl_1.98-1.5        annotate_1.70.0       XML_3.99-0.8         
  [6] limma_3.48.3          org.Hs.eg.db_3.13.0   AnnotationDbi_1.54.1  IRanges_2.26.0        S4Vectors_0.30.0     
 [11] Biobase_2.52.0        BiocGenerics_0.38.0   HGNChelper_0.8.1      pracma_2.3.3          stringi_1.7.4        
 [16] ggplot2_3.3.5         data.table_1.14.0     uniqtag_1.0           splitstackshape_1.4.8 xlsx_0.6.5           
