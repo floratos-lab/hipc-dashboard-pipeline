@@ -72,11 +72,24 @@ Files containing just the complete list of response components for each signatur
 
 
 ### Log files
-An additional directory (not checked-in to GitHub), "logfiles" is created.  After the script has run, this directory contains a number of files tracing the data transformations and final summary data, as well as "recreated_template" files that represent the data after all updates and transformations, in the same format as the original data.
+An additional directory (not checked-in to GitHub), "logfiles" is created.  After the script has run, this directory contains a number of files tracing the data transformations and final summary data, as well as "recreated_template" files that represent the data after all updates and transformations, in the same format as the original data.  Some of these files are copied to the folder ./reformatted_data.
 
 ### Reformatted data files (./reformatted_data)
 The "recreated_template" files are in the same spreadsheet format as the original curated data.  These files represent the original data after all updates and transformations, and are provided in tab-delimited, RDS and Excel formats.  Files containing the "response components" for each signature are also provided in the tab-delimited Broad GMT format.
-
+* cell_type-recreated_template.RDS - updated cell-type data in R RDS format
+* cell_type-recreated_template.txt - updated cell-type data in text format
+* cell_type-recreated_template.xlsx - updated cell-type data in Exel format
+* cell_type-response_component_counts_by_row.csv - the count of  cell-type response components for each signature row
+* cell_type-response_component_counts.txt - a list of each cell-type among the response components and its number of occurences.
+* cell_type-response_components.gmt.txt - a list of each fully-qualified cell-type (including additional protein markers etc.) in Broad GMT format.  The additional markers are separated from the primary cell type by an ampsersand sybmol "&". For example, "alpha-beta T cell & IFNG-, TNF-a+, IL-2+".
+* cell_type-session_info.txt - R session_info  file
+* gene_expression-recreated_template.RDS - updated gene data in R RDS format
+* gene_expression-recreated_template.txt - updated gene data in text format
+* gene_expression-recreated_template.xlsx - updated gene data in Exel format
+* gene_expression-response_component_counts_by_row.csv - the count of gene response components for each signature row
+* gene_expression-response_components.gmt.txt - a list of all gene response components for each signature row in Broad GMT format
+* gene_expression-session_info.txt - R session_info  file
+* joint_signatures_count_summary.csv - contains a table sumamrizing submissions by number of genes, cell types, pathogens, vaccines, tissues and PMIDs.
 
 # Database Schema and Notes about Modules
 ## Core: Data structures and DAO methods
