@@ -31,15 +31,15 @@ These are currently:
 * **HIPC Dashboard - Cell type Frequency.tsv**
 
 This directory also contains the various mapping and translation files required by the R pipeline script.
-**cell_type_frequency-response_components_mapping.txt** - maps cell-type strings to official cell ontology and protein ontology terms (text export for pipeline).
-**cell_type_frequency-response_components_mapping.xlsx** - maps cell-type strings to official cell ontology and protein ontology terms (primary copy).
-**cell_type_frequency_titles_and_dates_df.RData** - an intermediate data file containing downloaded data from PubMed.
-**gene_expression_titles_and_dates_df.RData** - an intermediate data file containing downloaded data from PubMed.
-**hgnc_complete_set.RData** - HGNC data file downloaded from EBI.
-**Homo_sapiens.gene_info.gz** - gene file downloaded from NBCBI.
-**manual_gene_symbol_corrections.txt** - a manually maintained file containing special gene symbol mappings
-**vaccine_years.txt** - a mapping of influenza vaccines by year to their viral components (text export for pipeline)
-**vaccine_years.xlsx** - a mapping of influenza vaccines by year to their viral components (primary copy)
+* **cell_type_frequency-response_components_mapping.txt** - maps cell-type strings to official cell ontology and protein ontology terms (text export for pipeline).
+* **cell_type_frequency-response_components_mapping.xlsx** - maps cell-type strings to official cell ontology and protein ontology terms (primary copy).
+* **cell_type_frequency_titles_and_dates_df.RData** - an intermediate data file containing downloaded data from PubMed.
+* **gene_expression_titles_and_dates_df.RData** - an intermediate data file containing downloaded data from PubMed.
+* **hgnc_complete_set.RData** - HGNC data file downloaded from EBI.
+* **Homo_sapiens.gene_info.gz** - gene file downloaded from NBCBI.
+* **manual_gene_symbol_corrections.txt** - a manually maintained file containing special gene symbol mappings
+* **vaccine_years.txt** - a mapping of influenza vaccines by year to their viral components (text export for pipeline)
+* **vaccine_years.xlsx** - a mapping of influenza vaccines by year to their viral components (primary copy)
 
 ## R scripts (./R)
 R scripts are in ./R. **generate_HIPC_submissions.R** is the main script. It expects to be called from its source location. It has a number of optional settings. In particular, one can currently choose to run the script for the gene data or the cell-type data (infection data to be added soon).
