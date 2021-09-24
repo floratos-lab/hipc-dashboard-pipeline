@@ -24,4 +24,8 @@ Changes in version 1.2.0
     It preserved special characters that are not wanted.
     Only used by mSigDB code.
 - Add time_point, time_point_units, and baseline_time_event to observation summary statements to disambiguate.
-
+- Add additional_exposure_material to observation summary statements if it has an entry (most do not).
+- Template data cleaning:
+-- change all ontology references to type:value format
+-- remove confirmed redundant subgroup entries
+- Add this file (changelog.txt) and HIPC_Dashboard_curation_template_fields.pdf to project.
