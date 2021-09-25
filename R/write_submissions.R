@@ -28,7 +28,7 @@ generate_observation_summary <- function(sheet_type,
   } else if (sheet_type == "CELLTYPE_FREQUENCY") {
     # FIXME - the responses may not be just frequency.  There can also be activation state.
     #         This could be implemented using <response_behavior_type> to specify actual.
-    obs_summary     <- "In <tissue_type>, <response_component><proterm_and_extra> frequency"
+    obs_summary     <- "In <tissue_type>, <response_component> <proterm_and_extra> frequency"
   }
   obs_summary   <- paste(obs_summary, "was <response_behavior>")
   obs_summary   <- paste(obs_summary, "at <time_point> <time_point_units> from <baseline_time_event>")
