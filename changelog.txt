@@ -1,7 +1,7 @@
 HIPC Dashboard Pipeline
 
-Changes in version 1.2.1.0
-- no changes, this is a new release to trigger Zenodo integration
+Changes in version 1.2.2
+- no changes from 1.2.1, this is a new release solely to trigger Zenodo integration and generate a DOI
 
 Changes in version 1.2.1
 - update some signatures to clarify comparison column entries
