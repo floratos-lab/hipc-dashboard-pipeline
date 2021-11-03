@@ -1,5 +1,8 @@
 HIPC Dashboard Pipeline
 
+Changes in version 1.2.1.0
+- no changes, this is a new release to trigger Zenodo integration
+
 Changes in version 1.2.1
 - update some signatures to clarify comparison column entries
 - update observation summary template to match change to Dashboard special character handling (left-paren, ampersand) 
