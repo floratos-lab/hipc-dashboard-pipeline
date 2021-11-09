@@ -1,3 +1,5 @@
+<a href="https://zenodo.org/badge/latestdoi/335726224"><img src="https://zenodo.org/badge/335726224.svg" alt="DOI"></a>
+
 # HIPC Dashboard Pipeline
 ## Overview
 This respository, hipc-dashboard-pipeline, provides code and data to generate submission files for the HIPC Dashboard (http://hipc-dashboard.org/).  The HIPC Dashboard itself resides in a [separate GitHub repository](https://github.com/floratos-lab/hipc-signature).
