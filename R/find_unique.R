@@ -1,6 +1,6 @@
 # Returns FALSE if not all types present, TRUE otherwise.
 # WARNING - The format of each result file to be read must be specified.
-write_final_summary <- function(response_types, logdir) {
+write_final_summary <- function(response_types, exposure_type, logdir) {
   # check if one file of each response_type is present
   for(i in 1:length(response_types)) {
     test_filename <- logfile_path(logdir, response_types[i], "exposure_material_id.txt")
@@ -25,18 +25,20 @@ write_final_summary <- function(response_types, logdir) {
   }
 
   joint_summary <- summarize_response(response_types,
-                            type = "vaccines",
+                            type = ifelse(exposure_type == "VACCINE", "vaccines", "pathogen"),
                             type_file = "exposure_material_id.txt",
                             header = FALSE, get_column = "V1",
                             logdir = logdir)
 
-  joint_summary <- rbind(joint_summary,
-                         summarize_response(response_types,
-                            type = "target_pathogens",
-                            type_file = "target_pathogens_after_fixes.txt",
-                            header = FALSE, get_column = "V1",
-                            logdir = logdir))
-
+  if(exposure_type == "VACCINE") {
+    joint_summary <- rbind(joint_summary,
+                           summarize_response(response_types,
+                              type = "target_pathogens",
+                              type_file = "target_pathogens_after_fixes.txt",
+                              header = FALSE, get_column = "V1",
+                              logdir = logdir))
+    }
+  
   joint_summary <- rbind(joint_summary,
                          summarize_response(response_types,
                              type = "PMIDs",
@@ -55,6 +57,7 @@ write_final_summary <- function(response_types, logdir) {
   rownames(joint_summary) <- joint_summary$type
   joint_summary <- joint_summary[, -1]
   joint_summary <- t(joint_summary)
-  write.csv(joint_summary, file = logfile_path(logdir, NULL, "joint_signatures_count_summary.csv"))
+  write.csv(joint_summary, file = logfile_path(logdir, NULL, 
+                                  paste(exposure_type, "joint_signatures_count_summary.csv", sep = "_")))
   return(TRUE)
 }
