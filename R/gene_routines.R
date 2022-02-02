@@ -57,16 +57,26 @@ fix_orf_symbols <- function(genes) {
 }
 
 # Check gene symbol list against real NCBI symbols
-# Returns index of non-matching symbols
 check_against_real_ncbi <- function(gene_list, source_data_dir) {
-  summary_df <- data.frame()  # initialize summary log
-
   Homo_sapiens.gene_info.file <- paste(source_data_dir, basename(ncbi_gene_file_ftp), sep = "/")
 
   ncbi_genes <- read.table(file = Homo_sapiens.gene_info.file, header = TRUE,
                            strip.white = TRUE, stringsAsFactors = FALSE, sep = "\t", quote = "", comment.char = "")
 
-  return(which(!(gene_list %in% ncbi_genes$Symbol)))
+  return(gene_list %in% ncbi_genes$Symbol)
+}
+
+# check a list of symbols against the nomenclature column.
+# if a match, return the official NCBI symbol.
+# This is used where NCBI is using an older symbol.
+check_against_nomenclature_authority <- function(gene_list, source_data_dir) {
+  Homo_sapiens.gene_info.file <- paste(source_data_dir, basename(ncbi_gene_file_ftp), sep = "/")
+  
+  ncbi_genes <- read.table(file = Homo_sapiens.gene_info.file, header = TRUE,
+                           strip.white = TRUE, stringsAsFactors = FALSE, sep = "\t", quote = "", comment.char = "")
+  
+  m <- match(gene_list, ncbi_genes$Symbol_from_nomenclature_authority)
+  return(ncbi_genes$Symbol[m])
 }
 
 
@@ -97,41 +107,26 @@ update_symbols_ncbi <- function(genes, source_data_dir, logdir, base_filename) {
 
   outFile <- paste0(logdir, "/", base_filename, "-bioc_substitute_genes.txt")
   write.table(changedSymbols, outFile, sep = "\t", row.names = FALSE, quote = FALSE)
-  outFile <- paste0(logdir, "/", base_filename, "-bioc_substitute_genes.xlsx")
-  if (nrow(changedSymbols) > 0) {
-    write.xlsx(changedSymbols, outFile, row.names = FALSE)
-  }
-
+  
+  w <- which(is.na(genes_map$Symbol))
+  ncbi_symbols <- check_against_nomenclature_authority(genes_map$alias[w], source_data_dir)
+  
+  # use the NCBI symbol for these symbols for which NCBI 
+  # does not use the nomenclature authority symbol
+  ok <- !is.na(ncbi_symbols)
+  genes_map$Symbol[w][ok] <- ncbi_symbols[ok]
+  write.table(genes_map[w[ok], c("alias", "Symbol")],
+              file = logfile_path(logdir, base_filename, "NCBI_symbols_over_nomenclature_authority.txt"),
+              sep = "\t", row.names = FALSE, col.names = FALSE, quote = FALSE)
+  summary_df <- add_to_summary(summary_df,
+                               "NCBI: symbols over nomenclature authority" , sum(!is.na(ncbi_symbols)))
+  
+  
   # if no symbol was found for an alias, it is NA
   failed_symbols <- unique(subset(genes_map, is.na(Symbol)))
   failed_symbols <- sort(failed_symbols$alias)
   summary_df <- add_to_summary(summary_df,
                                "alias2SymbolUsingNCBI(): failed symbols remaining" , length(failed_symbols))
-
-  # Are all non-matching symbols NA?
-  w <- check_against_real_ncbi(genes_map$Symbol, source_data_dir)
-
-  summary_df <- add_to_summary(summary_df,
-                               "update_symbols_using_ncbi: all non-matching symbols are NA",
-                               all(is.na(genes_map$Symbol[w])))
-
-  # there are NCBI symbols that do not have HGCN symbols, which are reported as "-"
-  # FIXME - should handle case where all match
-  w <- which(genes_map$Symbol != genes_map$Symbol_from_nomenclature_authority)
-  ncbi_vs_hgnc <- data.frame(ncbi = genes_map$Symbol[w],
-                             hgnc = genes_map$Symbol_from_nomenclature_authority[w],
-                             stringsAsFactors = FALSE)
-
-  ncbi_vs_hgnc <- unique(ncbi_vs_hgnc)
-  if(!all(ncbi_vs_hgnc$hgnc == "-")) {
-    print(paste("update_symbols_using_ncbi: ncbi_vs_hgnc not \"-\""))
-  }
-  summary_df <- add_to_summary(summary_df,
-                               "update_symbols_using_ncbi: number of ncbi vs hgnc differences",
-                               nrow(ncbi_vs_hgnc))
-  summary_df <- add_to_summary(summary_df,
-                               "update_symbols_using_ncbi: all ncbi vs hgnc differences are \"-\"",
-                              all(ncbi_vs_hgnc$hgnc == "-"))
 
   write.table(failed_symbols,
               file = logfile_path(logdir, base_filename, "bioc_no_substitute_genes.txt"),
@@ -157,31 +152,31 @@ update_symbols_using_hgnc_helper <- function(genes_map, source_data_dir, logdir,
     # use the map that is included with the HGNChelper package.
     genes.retried <- checkGeneSymbols(genes_map$alias, species="human")
   }
-
-  newHit <- is.na(genes_map$Symbol) & !is.na(genes.retried$Suggested.Symbol)
+  
+  is_good <- check_against_real_ncbi(genes.retried$Suggested.Symbol, source_data_dir)
+  newHit <- is_good & is.na(genes_map$Symbol) & !is.na(genes.retried$Suggested.Symbol)
   # not going to try to fix these (just one present)
   newHit <- newHit & !grepl(" /// ", genes.retried$Suggested.Symbol)
-
+  
+  # Add the HGNC symbols to the master list
+  genes_map$Symbol[newHit] <- genes.retried$Suggested.Symbol[newHit]
+  
   additional <- unique(genes.retried[newHit, ])
+  
+  # find HGNC symbols not in NCBI
+  summary_df  <- add_to_summary(summary_df,
+                                "HGNChelper: HGNC symbols not in NCBI" ,
+                                paste(additional$Suggested.Symbol, collapse = ", "))
+  
   additional <- additional[order(additional$x), ]
   summary_df  <- add_to_summary(summary_df, "HGNChelper: symbols changed" , nrow(additional))
 
   write.table(additional,
-              file = logfile_path(logdir, base_filename, "HGNC_additional_substitute_genes.txt"),
+              file = logfile_path(logdir, base_filename, "HGNChelper_additional_substitute_genes.txt"),
               sep = "\t", row.names = FALSE, quote = FALSE)
-  write.xlsx(additional,
-             file = logfile_path(logdir, base_filename, "HGNC_additional_substitute_genes.xlsx"),
-             row.names = FALSE)
+  
 
-  # Add the HGNC symbols to the master list
-  genes_map$Symbol[newHit] <- genes.retried$Suggested.Symbol[newHit]
-
-  # find HGNC symbols not in NCBI
-  w <- check_against_real_ncbi(additional$Suggested.Symbol, source_data_dir)
-  summary_df  <- add_to_summary(summary_df,
-                                "HGNChelper: HGNC symbols not in NCBI" ,
-                                paste(additional$Suggested.Symbol[w], collapse = ", "))
-
+ 
   # gene symbols still not found after HGNC helper
   failed_symbols <- subset(genes_map, is.na(Symbol))
   failed_symbols <- sort(unique(failed_symbols$alias))
@@ -200,9 +195,6 @@ update_symbols_using_hgnc_helper <- function(genes_map, source_data_dir, logdir,
   write.table(alternate_symbols,
               file = logfile_path(logdir, base_filename, "HGNC_vs_bioc_alternate_genes.txt"),
               sep = "\t", row.names = FALSE)
-  write.xlsx(alternate_symbols,
-             file = logfile_path(logdir, base_filename, "HGNC_vs_bioc_alternate_genes.xlsx"),
-             row.names = FALSE, col.names = FALSE)
 
   return(list(genes_map = genes_map, failed_symbols = failed_symbols, summary = summary_df))
 }
@@ -331,7 +323,7 @@ genbank_acc_to_ncbi <- function(genes_map, failed_symbols, source_data_dir) {
   new_symbols <- alias2SymbolUsingNCBI(acc_df$ncbi,
                                       gene.info.file = Homo_sapiens.gene_info.file,
                                       required.columns = c("Symbol", "Symbol_from_nomenclature_authority"))
-
+  
   w <- which(new_symbols$Symbol != acc_df$ncbi)
   summary_df <- add_to_summary(summary_df,
                               "genbank: count of corrected accessions that did not get expected NCBI symbols",
@@ -379,8 +371,8 @@ check_against_ncbi_synonyms <- function(failed_symbols, source_data_dir, logdir,
                            quote = "", comment.char = "")
 
   m <- match(failed_symbols, ncbi_genes$Symbol)
-  sum(is.na(m))   # 929
-  sum(!is.na(m))  # 0
+  sum(is.na(m)) 
+  sum(!is.na(m))
   # Using grepl because synonyms can have many entries per line, just need to find candidates
   # Candidates can then be identified manually
   m <- sapply(failed_symbols, function(x) {any(grepl(x,ncbi_genes$Synonyms))})
@@ -390,26 +382,26 @@ check_against_ncbi_synonyms <- function(failed_symbols, source_data_dir, logdir,
   m_lines <- sapply(failed_symbols[m], function(x) {grep(x, ncbi_genes$Synonyms)})
 
   # process each item in a list of vectors of varying length
-  print_df <- data.frame()
-  cnt <- 0
-  for (k in 1:length(m_lines)) {
-    for (l in 1:length(m_lines[[k]])) {
-      cnt <- cnt + 1
-      row_n <- m_lines[[k]][l]
-      # print(paste0(names(m_lines[k]), ": ",  ncbi_genes$Synonyms[row_n]))
-      print_df <- rbind(print_df, data.frame(gene = names(m_lines[k]), synonyms = ncbi_genes$Synonyms[row_n]))
+  if(length(m_lines) > 0) {
+    print_df <- data.frame()
+    cnt <- 0
+    for (k in 1:length(m_lines)) {
+      for (l in 1:length(m_lines[[k]])) {
+        cnt <- cnt + 1
+        row_n <- m_lines[[k]][l]
+        # print(paste0(names(m_lines[k]), ": ",  ncbi_genes$Synonyms[row_n]))
+        print_df <- rbind(print_df, data.frame(gene = names(m_lines[k]), synonyms = ncbi_genes$Synonyms[row_n]))
+      }
     }
-  }
 
-  # Write out the list of potential synonyms
-  write.table(print_df,
-              file = logfile_path(logdir, base_filename, "genbank_synonyms.txt"),
-              sep = "\t", row.names = FALSE, col.names = TRUE, quote = FALSE)
-  write.xlsx(print_df,
-             file = logfile_path(logdir, base_filename, "genbank_synonyms.xlsx"),
-             row.names = FALSE, col.names = TRUE)
-  summary_df <- add_to_summary(summary_df,
-                               "ncbi: possible synonyms to be checked manually" , cnt)
+    # Write out the list of potential synonyms
+    # FIXME - if not writing to these filenames, should delete the files if present.
+    write.table(print_df,
+                file = logfile_path(logdir, base_filename, "genbank_synonyms.txt"),
+                sep = "\t", row.names = FALSE, col.names = TRUE, quote = FALSE)
+    summary_df <- add_to_summary(summary_df,
+                                 "ncbi: possible synonyms to be checked manually" , cnt)
+  }
   return(summary_df)
 }
 
@@ -418,9 +410,6 @@ log_no_valid_symbol_vs_pmid <- function(noValidSymbols_df, base_filename) {
   write.table(noValidSymbols_df,
               file = logfile_path(logdir, base_filename, "no_substitute_genes_with_PMIDs.txt"),
               row.names = FALSE, col.names = TRUE,  quote = FALSE)
-  write.xlsx(noValidSymbols_df,
-             file = logfile_path(logdir, base_filename, "no_substitute_genes_with_PMIDs.xlsx"),
-             row.names = FALSE, col.names = TRUE)
 
   pmids_with_invalid_gene_symbols <- unique(noValidSymbols_df$publication_reference)
   write.table(pmids_with_invalid_gene_symbols,
@@ -445,8 +434,6 @@ update_gene_symbols <- function(genes, logdir, base_filename, source_data_dir, d
   #  x contains non-approved gene symbols
 
   # See how many NAs can be fixed
-  # For some reason, HGNChelper can map aliases to HGNC symbols that ARE also NCBI symbols
-  # but that alias2SymbolUsingNCBI() does not map.
   rvl            <- update_symbols_using_hgnc_helper(genes_map, source_data_dir, logdir, base_filename,
                                                      download_new_hgnc)
   genes_map      <- rvl$genes_map
@@ -467,6 +454,7 @@ update_gene_symbols <- function(genes, logdir, base_filename, source_data_dir, d
 
   # Does a check against NCBI synonyms but does not alter any values
   # Writes results to file
+  # FIXME: Error in m_lines[[k]] : subscript out of bounds
   summary_rv <- check_against_ncbi_synonyms(failed_symbols, source_data_dir, logdir, base_filename)
   summary_df <- rbind(summary_df, summary_rv)
 
