@@ -1,0 +1,25 @@
+pmid:32788292_1_8	PMID pmid:32788292 submission 1 row 8	plasmablast & CD3-, CD20-, CD56-, CD14-, CD16-, CD11c-, CD123-, CD19-lo, CD27-hi, CD38-hi, HLA-DR+	effector CD8-positive, alpha-beta T cell & CD3+, CD38-hi, HLA-DR++
+pmid:32788292_2_9	PMID pmid:32788292 submission 2 row 9	plasmablast & CD3-, CD20-, CD56-, CD14-, CD16-, CD11c-, CD123-, CD19-lo, CD27-hi, CD38-hi, HLA-DR+	effector CD8-positive, alpha-beta T cell & CD3+, CD38-hi, HLA-DR++
+pmid:32788292_3_10	PMID pmid:32788292 submission 3 row 10	plasmacytoid dendritic cell & CD3-, CD20-, CD56-, CD14-, CD16-, CD11c-, and CD123+, HLA-DR+
+pmid:32788292_4_11	PMID pmid:32788292 submission 4 row 11	plasmacytoid dendritic cell & CD3-, CD20-, CD56-, CD14-, CD16-, CD11c-, and CD123+, HLA-DR+
+pmid:32650275_1_12	PMID pmid:32650275 submission 1 row 12	lymphocyte
+pmid:32650275_2_13	PMID pmid:32650275 submission 2 row 13	natural killer cell & CD45+, CD19-, CD56-, CD3+	mature NK T cell & CD45+, CD19-, CD56-, CD3+	mature gamma-delta T cell & CD3+, CD45RA+	CD8-positive, alpha-beta T cell & CD45+, CD19-, CD56-, CD3+
+pmid:32650275_3_14	PMID pmid:32650275 submission 3 row 14	B cell, CD19-positive & CD45+, CD3-	natural killer cell & CD45+, CD19-, CD56-, CD3+	mature NK T cell & CD45+, CD19-, CD56-, CD3+	mature gamma-delta T cell & CD3+, CD45RA+	CD8-positive, alpha-beta T cell & CD45+, CD19-, CD56-, CD3+	CD4-positive, alpha-beta T cell & CD45+, CD19-, CD3+	CD4-positive, CD25-positive, alpha-beta regulatory T cell & CD45+, CD19-, CD3+, CD4+, CD25+, CD127low
+pmid:32650275_4_15	PMID pmid:32650275 submission 4 row 15	B cell, CD19-positive & CD45+, CD3-	CD4-positive, CD25-positive, alpha-beta regulatory T cell & CD45+, CD19-, CD3+, CD4+, CD25+, CD127low
+pmid:32650275_5_16	PMID pmid:32650275 submission 5 row 16	effector memory CD4-positive, alpha-beta T cell & CD3+, CD56-, CD19-, CD4+, CD25low, CD127hi, CD45RA-, CD62L-
+pmid:32650275_6_17	PMID pmid:32650275 submission 6 row 17	CD4-positive, alpha-beta T cell & CD3+, CD56-, CD19-, CD4+, CD25low, CD127hi, CD45RA+, CD62L-
+pmid:32650275_7_18	PMID pmid:32650275 submission 7 row 18	CD4-positive, alpha-beta T cell & CD3+, CD56-, CD19-, CD4+, CD25low, CD127hi, CD45RA+, CD62L-	central memory CD4-positive, alpha-beta T cell & CD3+, CD56-, CD19-, CD4+, CD25low, CD127hi, CD45RA-, CD62L+
+pmid:32650275_8_19	PMID pmid:32650275 submission 8 row 19	naive T cell & CD3+, CD56-, CD19-, CD8+, CD45RA+, CD62L+	effector memory CD8-positive, alpha-beta T cell & CD3+, CD56-, CD19-, CD45RA+, CD62L+
+pmid:32650275_9_20	PMID pmid:32650275 submission 9 row 20	CD8-positive, alpha-beta T cell & CD3+, CD56-, CD19-, CD8+, CD45RA+, CD62L+	central memory CD8-positive, alpha-beta T cell
+pmid:32650275_10_21	PMID pmid:32650275 submission 10 row 21	effector memory CD8-positive, alpha-beta T cell & CD3+, CD56-, CD19-, CD45RA+, CD62L+
+pmid:32650275_11_22	PMID pmid:32650275 submission 11 row 22	naive T cell & CD3+, CD56-, CD19-, CD8+, CD45RA+, CD62L+
+pmid:32650275_12_23	PMID pmid:32650275 submission 12 row 23	naive T cell & CD3+, CD56-, CD19-, CD8+, CD45RA+, CD62L+
+pmid:32650275_13_24	PMID pmid:32650275 submission 13 row 24	effector memory CD8-positive, alpha-beta T cell & CD3+, CD56-, CD19-, CD45RA+, CD62L+
+pmid:32650275_14_25	PMID pmid:32650275 submission 14 row 25	mature gamma-delta T cell & CD3+, CD45RA+, CD62L+
+pmid:32650275_15_26	PMID pmid:32650275 submission 15 row 26	mature gamma-delta T cell & CD3+, CD45RA-, CD62L-	mature gamma-delta T cell & CD3+, CD45RA-, CD62L+	mature gamma-delta T cell & CD3+, CD45RA+, CD62L-
+pmid:32650275_16_27	PMID pmid:32650275 submission 16 row 27	mature gamma-delta T cell & CD3+, CD45RA-, CD62L-
+pmid:32650275_17_28	PMID pmid:32650275 submission 17 row 28	mature gamma-delta T cell & CD3+, CD45RA-, CD62L+
+pmid:32650275_18_29	PMID pmid:32650275 submission 18 row 29	naive T cell & CD3+, CD56-, CD19-, CD4+, CD25low, CD127hi, CD45RA+, CD62L-
+pmid:32650275_19_30	PMID pmid:32650275 submission 19 row 30	effector memory CD4-positive, alpha-beta T cell & CD3+, CD56-, CD19-, CD4+, CD25low, CD127hi, CD45RA-, CD62L-	central memory CD4-positive, alpha-beta T cell & CD3+, CD56-, CD19-, CD4+, CD25low, CD127hi, CD45RA-, CD62L+
+pmid:32650275_20_31	PMID pmid:32650275 submission 20 row 31	naive T cell & CD3+, CD56-, CD19-, CD8+, CD45RA+, CD62L+
+pmid:32650275_21_32	PMID pmid:32650275 submission 21 row 32	effector memory CD8-positive, alpha-beta T cell & CD3+, CD56-, CD19-, CD45RA+, CD62L+	central memory CD8-positive, alpha-beta T cell

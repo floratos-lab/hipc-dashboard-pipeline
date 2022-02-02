@@ -1,0 +1,17 @@
+"response_component"	"count"
+"mature gamma-delta T cell"	6
+"naive T cell"	5
+"effector memory CD8-positive, alpha-beta T cell"	4
+"CD4-positive, alpha-beta T cell"	3
+"CD8-positive, alpha-beta T cell"	3
+"B cell, CD19-positive"	2
+"CD4-positive, CD25-positive, alpha-beta regulatory T cell"	2
+"central memory CD4-positive, alpha-beta T cell"	2
+"central memory CD8-positive, alpha-beta T cell"	2
+"effector CD8-positive, alpha-beta T cell"	2
+"effector memory CD4-positive, alpha-beta T cell"	2
+"mature NK T cell"	2
+"natural killer cell"	2
+"plasmablast"	2
+"plasmacytoid dendritic cell"	2
+"lymphocyte"	1
