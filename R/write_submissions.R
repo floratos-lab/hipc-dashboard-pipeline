@@ -4,6 +4,7 @@ principal_investigator <- "HIPC-II Sigs: Steven H. Kleinstein, Ph.D."
 
 # NOTE - uses "GENE" and "CELLTYPE_FREQUENCY" definitions from main routine
 generate_observation_summary <- function(sheet_type,
+                                         exposure_type,
                                          joining_preposition,
                                          age_string,
                                          exposure_cnt,
@@ -24,23 +25,25 @@ generate_observation_summary <- function(sheet_type,
     return(os)
   }
   if (sheet_type == "GENE") {
-    obs_summary     <- "In <tissue_type>, <response_component> <response_behavior_type>"
+    obs_summary     <- "In <tissue_type_term_id>, <response_component> <response_behavior_type>"
   } else if (sheet_type == "CELLTYPE_FREQUENCY") {
     # FIXME - the responses may not be just frequency.  There can also be activation state.
     #         This could be implemented using <response_behavior_type> to specify actual.
-    obs_summary     <- "In <tissue_type>, <response_component> <proterm_and_extra> frequency"
+    obs_summary     <- "In <tissue_type_term_id>, <response_component_id> <proterm_and_extra> frequency"
   }
   obs_summary   <- paste(obs_summary, "was <response_behavior>")
   obs_summary   <- paste(obs_summary, "at <time_point> <time_point_units> from <baseline_time_event>")
   obs_summary   <- paste(obs_summary, joining_preposition)
   obs_summary   <- paste(obs_summary, "<comparison> in")
-  obs_summary   <- paste(obs_summary, "cohort", age_string, "<cohort>")
+  obs_summary   <- paste(obs_summary, "cohort", "<cohort>", age_string)
   obs_summary <- paste(obs_summary, "after exposure to")
   obs_summary <- paste(obs_summary, gen_phrase(exposure_cnt, "exposure_material_id"))
   # Note - pathogen_cnt is set to zero when don't want to display pathogens
-  if (pathogen_cnt > 0 && pathogen_cnt <= 3) {
-    obs_summary <- paste(obs_summary, "targeting")
-    obs_summary <- paste(obs_summary, gen_phrase(pathogen_cnt, "target_pathogen"))
+  if(exposure_type == "VACCINE") {
+    if (pathogen_cnt > 0 && pathogen_cnt <= 3) {
+      obs_summary <- paste(obs_summary, "targeting")
+      obs_summary <- paste(obs_summary, gen_phrase(pathogen_cnt, "target_pathogen"))
+    }
   }
   if(use_additional) {
     obs_summary <- paste(obs_summary, "(<additional_exposure_material>)")
@@ -64,7 +67,8 @@ choose_joining_preposition <- function(response_behavior) {
 
 # Write out the submission templates
 write_submission_template <- function(df2_cpy, header_rows, template_name, titles_and_dates_df,
-                                      resp_components, unmatched_symbols_map = NULL, sheet_type, project) {
+                                      resp_components, unmatched_symbols_map = NULL, 
+                                      sheet_type, exposure_type, project) {
 
   # create template directory and its file subdirectory
   double_path <- paste(template_name, "files", sep = "/")
@@ -90,17 +94,26 @@ write_submission_template <- function(df2_cpy, header_rows, template_name, title
     # Despite best efforts, exposure_material_id was being treated as a factor.
     # Remember the data is still split at this point
     uniqExpMat <- unique(as.character(dftmp$exposure_material_id))
-    uniqPathogens <- unique(as.character(dftmp$target_pathogen))
+    if(exposure_type == "VACCINE") {
+      uniqPathogens <- unique(as.character(dftmp$target_pathogen_taxonid))
+    }
 
     # For one submission, all values in these columns are the same, so take first.
     pmid_local <- dftmp$publication_reference_id[1]
+    # FIXME - this again!  Right now just hard code "pmid:"
+    pmid_local <- sub("pmid:", "", pmid_local)
     submission_identifier <- dftmp$subm_obs_id[1]
     joining_preposition <- choose_joining_preposition(dftmp$response_behavior[1])
     
     age_min   <- dftmp$age_min[1]
     age_max   <- dftmp$age_max[1]
     age_units <- dftmp$age_units[1]
-    use_additional <- dftmp$additional_exposure_material[1] != ""
+
+    if(exposure_type == "VACCINE") {
+      use_additional <- dftmp$additional_exposure_material[1] != ""
+    } else {
+      use_additional <- FALSE
+    }
 
     # get titles and dates for matching PMID
     w <- which(titles_and_dates_df[, "pmid"] == pmid_local)
@@ -144,36 +157,45 @@ write_submission_template <- function(df2_cpy, header_rows, template_name, title
     if(expMatCnt > 1) {
       newCols <- paste("exposure_material_id", 1:expMatCnt, sep = "_")
       dftmp[newCols] <- ""
-
+      
       for (j in 1:expMatCnt) {
-        dftmp[1:6, newCols[j]] <- c("vaccine", "", "vaccine", "", "", paste("exposure material", j , "(VO)"))
+        if(exposure_type == "VACCINE") {
+          dftmp[1:6, newCols[j]] <- c("vaccine", "", "vaccine", "", "", paste("exposure material", j))
+        } else if (exposure_type == "INFECTION") {
+          dftmp[1:6, newCols[j]] <- c("pathogen", "", "pathogen", "", "", paste("exposure material", j))
+        } else {
+          stop("unknown exposure_type")
+        }
         dftmp[7:nrow(dftmp), newCols[j]] <- uniqExpMat[j]
       }
 
-      # Remove the original column
+      # Remove the original column if now has multiple children
       w <- which(colnames(dftmp) == "exposure_material_id")
       if(length(w) != 1) {
-        stop("column name mismatch", colnames(dftmp)[w])
+        stop(paste("exposure_material column name mismatch", colnames(dftmp)[w]))
+      } else {
+        dftmp <- dftmp[, -w]
       }
-      dftmp <- dftmp[, -w]
     }
 
-    # Add new columns for multiple pathogens
-    pathogen_cnt <- length(uniqPathogens)
-    if(pathogen_cnt > 1) {
-      newCols <- paste("target_pathogen", 1:pathogen_cnt, sep = "_")  # new column names
-      dftmp[newCols] <- ""
-
-      for (j in 1:pathogen_cnt) {
-        dftmp[1:6, newCols[j]] <- c("pathogen", "", "pathogen", "", "", paste("target pathogen", j))
-        dftmp[7:nrow(dftmp), newCols[j]] <- uniqPathogens[j]
+    if(exposure_type == "VACCINE") {
+      # Add new columns for multiple pathogens
+      pathogen_cnt <- length(uniqPathogens)
+      if(pathogen_cnt > 1) {
+        newCols <- paste("target_pathogen_taxonid", 1:pathogen_cnt, sep = "_")  # new column names
+        dftmp[newCols] <- ""
+  
+        for (j in 1:pathogen_cnt) {
+          dftmp[1:6, newCols[j]] <- c("pathogen", "", "pathogen", "", "", paste("target pathogen", j))
+          dftmp[7:nrow(dftmp), newCols[j]] <- uniqPathogens[j]
+        }
+        # Remove the original column
+        w <- which(colnames(dftmp) == "target_pathogen_taxonid")
+        if(length(w) != 1) {
+          stop(paste("target_pathogen column name mismatch", colnames(dftmp)[w]))
+        }
+        dftmp <- dftmp[, -w]
       }
-      # Remove the original column
-      w <- which(colnames(dftmp) == "target_pathogen")
-      if(length(w) != 1) {
-        stop("column name mismatch", colnames(dftmp)[w])
-      }
-      dftmp <- dftmp[, -w]
     }
 
     # since all exposure materials and pathogens are now in each row,
@@ -231,12 +253,15 @@ write_submission_template <- function(df2_cpy, header_rows, template_name, title
               file = paste0(template_name_csv, "/", submission_name, ".csv"),
               row.names = FALSE)
 
-
-
-    if (any(uniqExpMat %in% vaccine_VO_has_pathogens)) {
-      pathogen_cnt_os <- 0  # do not display pathogens in observation summary
+    if(exposure_type == "VACCINE") {
+      # FIXME - vaccine_VO_has_pathogens is a global variable defined in main routine
+      if (any(uniqExpMat %in% vaccine_VO_has_pathogens)) {
+        pathogen_cnt_os <- 0  # do not display pathogens in observation summary
+      } else {
+        pathogen_cnt_os <- pathogen_cnt
+      }
     } else {
-      pathogen_cnt_os <- pathogen_cnt
+      pathogen_cnt_os <- 0
     }
     
     # We have to break the usual template wild-card rules and hard code
@@ -266,6 +291,7 @@ write_submission_template <- function(df2_cpy, header_rows, template_name, title
     }
 
     observation_summary <- generate_observation_summary(sheet_type,
+                                                        exposure_type,
                                                         joining_preposition,
                                                         age_string,
                                                         expMatCnt,
