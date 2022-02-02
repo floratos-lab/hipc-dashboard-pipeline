@@ -1,0 +1,2 @@
+IgG memory B cell & CD3-, CD19+, CD27+, HLADR+, IgG+
+IgG memory B cell & CD3-, CD19+, CD27+, CD10-, CD20+, HLADR+, IgG+

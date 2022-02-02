@@ -1,0 +1,4 @@
+plasmacytoid dendritic cell
+B cell & CD3-, CD19+, CD20+
+IgM memory B cell & CD3-, CD19+, CD20+, CD27+
+CD4-positive, alpha-beta T cell & CD14-, CD3+, IL2+, ENV

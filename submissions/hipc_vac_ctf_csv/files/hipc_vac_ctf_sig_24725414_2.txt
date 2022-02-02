@@ -1,0 +1,16 @@
+monocyte & CD40+
+CD8-positive, alpha-beta T cell & CD38+
+monocyte & CD86+
+naive B cell & CD86+
+CD8-positive, alpha-beta T cell & CD69+
+CD8-positive, CD25-positive, alpha-beta regulatory T cell
+memory B cell & CD27+, CD38+, IgD+
+CD4-positive, alpha-beta T cell & IL-2+
+CD4-positive, alpha-beta T cell & HLA-DR+
+CD4-positive, alpha-beta T cell & CD103+
+CD14-positive monocyte & CD45+, viable
+IgD-negative memory B cell & CD80+, CD27+
+CD8-positive, alpha-beta T cell & CD103+
+dendritic cell & interferon alpha+
+CD8-positive, alpha-beta T cell & HLA-DR+
+CD4-positive, alpha-beta T cell & IL-4+
