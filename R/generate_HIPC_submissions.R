@@ -15,8 +15,6 @@
 #    * Create CV-per-template file for set of submissions
 #
 # Input files (must be in current directory):
-#   * HIPC Dashboard - Gene Expression.tsv
-#   * HIPC Dashboard - Cell type Frequency.tsv
 #   * "vaccine_years.txt" - maps vaccine season year to vaccine viral components
 #   * "manual_gene_symbol_corrections.txt" - maps invalid symbols  to known valid sybmols
 #   * "cell_type_frequency-response_components_mapping.txt" - corrections to exposure_material
@@ -62,13 +60,10 @@ source("write_submissions.R")
 source("msigdb_submission_utils.R")
 source("find_unique.R")
 
-#####<<<< START HERE >>>>#####
-##### Choose a sheet type (from "HIPC Dashboard.xlsx") #####
 # Available sheet_type values are "GENE", "CELLTYPE_FREQUENCY"
 sheet_type    <- "GENE"
 # Available exposure_type values are "VACCINE", "INFECTION" (covid-19)
 exposure_type <- "VACCINE"
-
 
 # For the moment, assume executing interactively from the ./R directory
 source_data_dir <- "../source_data"
@@ -393,14 +388,14 @@ df2$row_key      <- paste(pmids, df2$subm_obs_id, df2$uniq_obs_id, sep = "_")
 # Remove rows marked "skip"
 # FIXME - not being used anymore in HIPC Dashboard source
 # FIXME -should actually test for presence of this column
-#        rather than it being template-dependant.
+#        rather than it being template-dependent.
 if(exposure_type == "VACCINE") {
   skip <- grepl("^skip", df2$process_note, ignore.case = TRUE)
   df2 <- df2[!skip, ]
 }
 
 # FIXME - Most values are empty, not "Y" or "N".
-#         Empty is not the same as "N".
+#         Empty is not necessarily the same as "N".
 # Currently only used for type GENE
 if(sheet_type == "GENE") {
   df2$is_model[df2$is_model == ""] <- "N"
@@ -505,10 +500,6 @@ write.table(exposure_code_map[w, ],
 
 write.table(unique(text),
             file = logfile_path(logdir, base_filename, "exposure_materials.txt"),
-            sep = "\t", row.names = FALSE, col.names = FALSE)
-
-write.table(unique(codes),
-            file = logfile_path(logdir, base_filename, "exposure_material_ids.txt"),
             sep = "\t", row.names = FALSE, col.names = FALSE)
 
 
@@ -711,12 +702,14 @@ if (sheet_type == "GENE") {
     print(paste("row", df2$uniq_obs_id[w], ", no mapping for cell type",
                 df2$response_component_original[w]))
     missing_mappings <- data.frame(row = df2$uniq_obs_id[w], label = df2$response_component_original[w])
-    write.xlsx(missing_mappings,
-               file = logfile_path(logdir, base_filename, "missing_mappings.xlsx"),
-               sheetName = "all rows", append = FALSE, row.names = FALSE)
-    write.xlsx(unique(sort(df2$response_component_original[w])),
-               file = logfile_path(logdir, base_filename, "missing_mappings.xlsx"),
-               sheetName = "unique", append = TRUE, row.names = FALSE)
+    write.table(missing_mappings,
+                file = logfile_path(logdir, base_filename, "missing_mappings.tsv"),
+                sep = "\t", row.names = FALSE, col.names = FALSE, quote = FALSE)
+    
+    write.table(unique(sort(df2$response_component_original[w])),
+                file = logfile_path(logdir, base_filename, "missing_mappings_unique.tsv"),
+                sep = "\t", row.names = FALSE, col.names = FALSE, quote = FALSE)
+    
     stop("cell type mapping not found")
   } else {
     print("all cell types matched")
@@ -731,20 +724,12 @@ if (sheet_type == "GENE") {
 
   if (length(failed_matches) > 0) {
     write.table(unique(failed_matches),
-                file = logfile_path(logdir, base_filename, "no_cell_type_match.txt"),
+                file = logfile_path(logdir, base_filename, "no_cell_type_match.tsv"),
                 sep = "\t", row.names = FALSE, col.names = FALSE, quote = FALSE)
-
-    write.xlsx(unique(failed_matches),
-               file = logfile_path(logdir, base_filename, "no_cell_type_match.xlsx"),
-               row.names = FALSE, col.names = FALSE)
 
     write.table(sort(failed_matches_uniq),
-                file = logfile_path(logdir, base_filename, "no_cell_type_match_sorted.txt"),
+                file = logfile_path(logdir, base_filename, "no_cell_type_match_sorted.tsv"),
                 sep = "\t", row.names = FALSE, col.names = FALSE, quote = FALSE)
-
-    write.xlsx(sort(failed_matches_uniq),
-               file = logfile_path(logdir, base_filename, "no_cell_type_match_sorted.xlsx"),
-               row.names = FALSE, col.names = FALSE)
   }
 
   # combine proterm(s) and extra together.  All same length as df2.
@@ -825,12 +810,13 @@ write_unique_list(df2$response_component, logdir, base_filename, "response_compo
 ##### Data splitting (2): exposure material #####
 #################################################
 
-# FIXME - why is the list written twice to same file?
-
-write_unique_list(df2$exposure_material_id, logdir, base_filename, "exposure_material_id", do_split = TRUE)
 df2 <- cSplit(df2, "exposure_material_id", sep = ";", direction = "long")
 
-# FIXME - should report this but it is only temporary
+if(any(df2$exposure_material_id == "")) {
+  # Do not expect this
+  stop("missing exposure_material_id")
+}
+# In case we forget to stop...
 df2 <- df2[df2$exposure_material_id != "", ]
 
 write_unique_list(df2$exposure_material_id, logdir, base_filename, "exposure_material_id", do_split = FALSE)
@@ -921,23 +907,14 @@ response_df <- response_df[order(response_df$count, decreasing = TRUE), ]
 
 #Write out counts in tab-delimited format
 write.table(response_df,
-            file = logfile_path(logdir, base_filename, "response_component_counts.txt"),
+            file = logfile_path(logdir, base_filename, "response_component_counts.tsv"),
             sep = "\t", row.names = FALSE)
 
-# Write out counts in Excel format
-write.xlsx(response_df,
-           file = logfile_path(logdir, base_filename, "response_component_counts.xlsx"),
-           sheetName = sheet_name, row.names = FALSE)
-
-# Write out counts in RDS format
-saveRDS(response_df,
-        file = logfile_path(logdir, base_filename, "response_component_counts.RDS"))
 
 ##########################################################
 ####  Collect publication titles, dates and abstracts ####
 ##########################################################
 
-# FIXME - Repeating this code again
 pmids <- df2$publication_reference_id
 pmids <- sub("pmid:", "", pmids)
 s <- sapply(as.integer(pmids), is.integer)
@@ -1007,7 +984,6 @@ for (i in 1:length(uniqIDs)) {
     base_row$response_component <- paste(unique(df2tmp$response_component), collapse = "; ")
     resp_components_annotated[[i]] <- c(response_rowname, response_description, unique(df2tmp$response_component))
 
-    # FIXME - the PMID problem again
     w <- which(titles_and_dates_df$pmid == sub("pmid:", "", base_row$publication_reference_id))
     if (length(w) != 1) {
       stop(paste("unexpected PMID result: uniqID = ", uniqIDs[i], ", pmid = ", base_row$publication_reference_id))
@@ -1072,7 +1048,7 @@ recreated_template_df <- recreated_template_df[!colnames(recreated_template_df) 
 colnames(recreated_template_df)[1] <- ""
 # Write out the recreated upload template in tab-delimited format
 write.table(recreated_template_df,
-            file = logfile_path(logdir, base_filename, "recreated_template.txt"),
+            file = logfile_path(logdir, base_filename, "recreated_template.tsv"),
             sep = "\t", row.names = FALSE)
 
 # Write out the recreated upload template in Excel format
@@ -1080,9 +1056,6 @@ write.xlsx(recreated_template_df,
            file = logfile_path(logdir, base_filename, "recreated_template.xlsx"),
            sheetName = sheet_name, row.names = FALSE)
 
-# Write out the recreated upload template in RDS format
-saveRDS(recreated_template_df,
-        file = logfile_path(logdir, base_filename, "recreated_template.RDS"))
 
 ########################################
 ##### Prepare submission templates #####
@@ -1106,7 +1079,6 @@ if(!is.null(s)) {
 }
 
 # Remove columns not needed for Dashboard.
-# FIXME - look at this again
 if (exposure_type == "VACCINE") {
    del_cols <- c("exposure_material", "target_pathogen", "short_comment", "process_note")
 } else {
