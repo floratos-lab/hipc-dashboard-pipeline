@@ -1,3 +1,0 @@
-TLR4
-CXCL8
-IFNG

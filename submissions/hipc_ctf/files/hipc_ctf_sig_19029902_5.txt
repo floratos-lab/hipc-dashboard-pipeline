@@ -1,2 +1,0 @@
-plasmacytoid dendritic cell & CD86+
-monocyte & CD86-positive, CD16-positive, inflammatory

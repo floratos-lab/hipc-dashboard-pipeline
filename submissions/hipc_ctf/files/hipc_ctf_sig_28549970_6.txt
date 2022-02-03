@@ -1,4 +1,0 @@
-CD4-positive, alpha-beta T cell & CD54+
-CD4-positive, alpha-beta T cell & CXCR4+
-CD8-positive, alpha-beta T cell & CD38+
-CD14-positive monocyte & CCR5+

@@ -1,4 +1,0 @@
-central memory CD4-positive, alpha-beta T cell
-effector memory CD8-positive, alpha-beta T cell
-CD8-positive, CD28-negative, alpha-beta regulatory T cell
-natural killer cell

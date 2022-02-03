@@ -1,8 +1,0 @@
-plasmacytoid dendritic cell & CD40+, CD86+
-myeloid dendritic cell & CD86-positive
-monocyte & CD86-positive, CD16-positive, inflammatory
-monocyte & CD40, CD86
-monocyte & CD16-positive, inflammatory
-natural killer cell & CD38+, CD56-dim
-natural killer cell & CD56-dim, NKG2D+
-natural killer cell & CD56-bright

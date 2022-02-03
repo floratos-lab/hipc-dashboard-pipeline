@@ -1,3 +1,0 @@
-naive B cell & CD19+, CD27-, IgD-
-IgD-negative memory B cell & CD19+, CD27+
-transitional stage B cell & CD19+, CD24+, CD38+

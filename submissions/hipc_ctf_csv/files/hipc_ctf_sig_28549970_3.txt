@@ -1,4 +1,0 @@
-B cell & CD19+, CD69+
-CD4-positive, alpha-beta T cell & CCR3+
-CD4-positive, alpha-beta T cell & CCR5+
-CD8-positive, alpha-beta T cell & CXCR4+

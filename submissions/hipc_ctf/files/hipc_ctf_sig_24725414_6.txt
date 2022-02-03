@@ -1,6 +1,0 @@
-CD4-positive, alpha-beta T cell & IL22+, CD161-
-CD4-positive, alpha-beta T cell & IL-2+
-transitional stage B cell & CD38+
-B cell & CD20+, CD27+, CD38+, IgD-
-memory B cell & CD27+, CD38+, IgD+
-naive B cell & CD38+
