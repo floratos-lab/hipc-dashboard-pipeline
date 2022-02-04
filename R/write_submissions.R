@@ -42,11 +42,11 @@ generate_observation_summary <- function(sheet_type,
   if(exposure_type == "VACCINE") {
     if (pathogen_cnt > 0 && pathogen_cnt <= 3) {
       obs_summary <- paste(obs_summary, "targeting")
-      obs_summary <- paste(obs_summary, gen_phrase(pathogen_cnt, "target_pathogen"))
+      obs_summary <- paste(obs_summary, gen_phrase(pathogen_cnt, "target_pathogen_taxonid"))
+      if(use_additional) {
+        obs_summary <- paste(obs_summary, "as well as (<additional_exposure_material>)")
+      }
     }
-  }
-  if(use_additional) {
-    obs_summary <- paste(obs_summary, "(<additional_exposure_material>)")
   }
   
   return(obs_summary)
