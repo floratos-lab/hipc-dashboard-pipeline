@@ -44,7 +44,7 @@ generate_observation_summary <- function(sheet_type,
       obs_summary <- paste(obs_summary, "targeting")
       obs_summary <- paste(obs_summary, gen_phrase(pathogen_cnt, "target_pathogen_taxonid"))
       if(use_additional) {
-        obs_summary <- paste(obs_summary, "as well as (<additional_exposure_material>)")
+        obs_summary <- paste(obs_summary, "as well as <additional_exposure_material>")
       }
     }
   }
