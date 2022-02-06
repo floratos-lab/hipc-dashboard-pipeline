@@ -895,9 +895,10 @@ response_df <- as.data.frame(table(response_df$response_component))
 colnames(response_df) <- c("response_component", "count")
 response_df <- response_df[order(response_df$count, decreasing = TRUE), ]
 
-#Write out counts in tab-delimited format
+# Write out counts in tab-delimited format
+# Use .txt extension rather than .tsv to thwart Excel auto-change of symbols
 write.table(response_df,
-            file = logfile_path(logdir, base_filename, "response_component_counts.tsv"),
+            file = logfile_path(logdir, base_filename, "response_component_counts.txt"),
             sep = "\t", row.names = FALSE)
 
 
