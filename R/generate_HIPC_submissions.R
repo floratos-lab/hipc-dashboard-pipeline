@@ -141,7 +141,7 @@ if (sheet_type == "GENE" && exposure_type == "VACCINE") {
   project        <- "Gene expression response to vaccine exposure"
 } else if (sheet_type == "GENE" && exposure_type == "INFECTION") {
   sheet_file     <- "COVID-19 curation template - example curation.tsv"
-  sheet_file2    <- "Odak-doi.org10.11012020.05.11.20096263-Julia Davis-Porada-curation sheet.tsv"
+  sheet_file2    <- "Odak_2020-Julia_Davis-Porada-covid19.tsv"
   sheet_file3    <- "hipc_infection_covid_v2 - multiple_types.tsv"
   sheet_name     <- "Gene Expression"
   base_filename  <- "inf_gene_expression"
@@ -156,7 +156,7 @@ if (sheet_type == "GENE" && exposure_type == "VACCINE") {
   project        <- "Immune cell-type frequency response to vaccine exposure"
 } else if (sheet_type == "CELLTYPE_FREQUENCY" && exposure_type == "INFECTION") {
   sheet_file     <- "COVID-19 curation template - example curation.tsv"
-  sheet_file2    <- "Odak-doi.org10.11012020.05.11.20096263-Julia Davis-Porada-curation sheet.tsv"
+  sheet_file2    <- "Odak_2020-Julia_Davis-Porada-covid19.tsv"
   sheet_file3    <- "hipc_infection_covid_v2 - multiple_types.tsv"
   sheet_name     <- "Cell type Frequency"
   base_filename  <- "inf_cell_type"
