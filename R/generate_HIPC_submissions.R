@@ -61,7 +61,7 @@ source("msigdb_submission_utils.R")
 source("find_unique.R")
 
 # Available sheet_type values are "GENE", "CELLTYPE_FREQUENCY"
-sheet_type    <- "GENE"
+sheet_type    <- "CELLTYPE_FREQUENCY"
 # Available exposure_type values are "VACCINE", "INFECTION" (covid-19)
 exposure_type <- "INFECTION"
 
