@@ -29,7 +29,6 @@
 #   * Numerous log files with details of each stage of processing.
 #
 
-# BiocManager::install("xlsx")
 # BiocManager::install("splitstackshape")
 # BiocManager::install("HGNChelper")
 # BiocManager::install("limma")
@@ -43,7 +42,6 @@
 # BiocManager::install("stringi")
 # BiocManager::install("pracma")
 
-library(xlsx)
 library(splitstackshape)  # for cSplit()
 library(uniqtag)          # for cumcount()
 # Note that rbindlist() tends to return a data.table with a data.frame, which causes
@@ -135,7 +133,6 @@ summary_df <- data.frame()  # initialize summary log
 # change sheet name spaces to underscores
 if (sheet_type == "GENE" && exposure_type == "VACCINE") {
   sheet_file     <- "hipc_vaccine - gene_expression.tsv"
-  sheet_name     <- "Gene Expression"  # only used for recreated template.xlsx
   base_filename  <- "vac_gene_expression"
   template_name  <- "hipc_vac_gene"
   project        <- "Gene expression response to vaccine exposure"
@@ -143,13 +140,11 @@ if (sheet_type == "GENE" && exposure_type == "VACCINE") {
   sheet_file     <- "COVID-19 curation template - example curation.tsv"
   sheet_file2    <- "Odak_2020-Julia_Davis-Porada-covid19.tsv"
   sheet_file3    <- "hipc_infection_covid_v2 - multiple_types.tsv"
-  sheet_name     <- "Gene Expression"
   base_filename  <- "inf_gene_expression"
   template_name  <- "hipc_inf_gene"
   project        <- "Gene expression response to infection"
 } else if (sheet_type == "CELLTYPE_FREQUENCY" && exposure_type == "VACCINE") {
   sheet_file     <- "hipc_vaccine - cell_type_frequency.tsv"
-  sheet_name     <- "Cell type Frequency"
   base_filename  <- "vac_cell_type"
   template_name  <- "hipc_vac_ctf"
   cell_mapping_sheet_name   <- "HIPC_Dashboard-Cell_type_Freque"
@@ -158,7 +153,6 @@ if (sheet_type == "GENE" && exposure_type == "VACCINE") {
   sheet_file     <- "COVID-19 curation template - example curation.tsv"
   sheet_file2    <- "Odak_2020-Julia_Davis-Porada-covid19.tsv"
   sheet_file3    <- "hipc_infection_covid_v2 - multiple_types.tsv"
-  sheet_name     <- "Cell type Frequency"
   base_filename  <- "inf_cell_type"
   template_name  <- "hipc_inf_ctf"
   cell_mapping_sheet_name   <- "HIPC_Dashboard-Cell_type_Freque"
@@ -1046,11 +1040,6 @@ colnames(recreated_template_df)[1] <- ""
 write.table(recreated_template_df,
             file = logfile_path(logdir, base_filename, "recreated_template.tsv"),
             sep = "\t", row.names = FALSE)
-
-# Write out the recreated upload template in Excel format
-write.xlsx(recreated_template_df,
-           file = logfile_path(logdir, base_filename, "recreated_template.xlsx"),
-           sheetName = sheet_name, row.names = FALSE)
 
 
 ########################################
