@@ -63,7 +63,7 @@ source("find_unique.R")
 # Available sheet_type values are "GENE", "CELLTYPE_FREQUENCY"
 sheet_type    <- "GENE"
 # Available exposure_type values are "VACCINE", "INFECTION" (covid-19)
-exposure_type <- "VACCINE"
+exposure_type <- "INFECTION"
 
 # For the moment, assume executing interactively from the ./R directory
 source_data_dir <- "../source_data"
@@ -134,25 +134,22 @@ summary_df <- data.frame()  # initialize summary log
 ##### Set up file and template name components #####
 # change sheet name spaces to underscores
 if (sheet_type == "GENE" && exposure_type == "VACCINE") {
-  sheet_file     <- "HIPC Dashboard - Gene Expression.tsv"
-  sheet_name     <- "Gene Expression"
-  sheet_name_out <- "vac_gene_expression"
+  sheet_file     <- "hipc_vaccine - gene_expression.tsv"
+  sheet_name     <- "Gene Expression"  # only used for recreated template.xlsx
   base_filename  <- "vac_gene_expression"
   template_name  <- "hipc_vac_gene"
   project        <- "Gene expression response to vaccine exposure"
 } else if (sheet_type == "GENE" && exposure_type == "INFECTION") {
   sheet_file     <- "COVID-19 curation template - example curation.tsv"
   sheet_file2    <- "Odak-doi.org10.11012020.05.11.20096263-Julia Davis-Porada-curation sheet.tsv"
-  sheet_file3    <- "HIPC_dashboard_V2_covid - HIPC_V2.tsv"
+  sheet_file3    <- "hipc_infection_covid_v2 - multiple_types.tsv"
   sheet_name     <- "Gene Expression"
-  sheet_name_out <- "inf_gene_expression"
   base_filename  <- "inf_gene_expression"
   template_name  <- "hipc_inf_gene"
   project        <- "Gene expression response to infection"
 } else if (sheet_type == "CELLTYPE_FREQUENCY" && exposure_type == "VACCINE") {
-  sheet_file     <- "HIPC Dashboard - Cell type Frequency.tsv"
+  sheet_file     <- "hipc_vaccine - cell_type_frequency.tsv"
   sheet_name     <- "Cell type Frequency"
-  sheet_name_out <- "vac_cell_type_frequency"
   base_filename  <- "vac_cell_type"
   template_name  <- "hipc_vac_ctf"
   cell_mapping_sheet_name   <- "HIPC_Dashboard-Cell_type_Freque"
@@ -160,9 +157,8 @@ if (sheet_type == "GENE" && exposure_type == "VACCINE") {
 } else if (sheet_type == "CELLTYPE_FREQUENCY" && exposure_type == "INFECTION") {
   sheet_file     <- "COVID-19 curation template - example curation.tsv"
   sheet_file2    <- "Odak-doi.org10.11012020.05.11.20096263-Julia Davis-Porada-curation sheet.tsv"
-  sheet_file3    <- "HIPC_dashboard_V2_covid - HIPC_V2.tsv"
+  sheet_file3    <- "hipc_infection_covid_v2 - multiple_types.tsv"
   sheet_name     <- "Cell type Frequency"
-  sheet_name_out <- "inf_cell_type_frequency"
   base_filename  <- "inf_cell_type"
   template_name  <- "hipc_inf_ctf"
   cell_mapping_sheet_name   <- "HIPC_Dashboard-Cell_type_Freque"
@@ -177,7 +173,7 @@ if (exposure_type == "VACCINE") {
   all_response_types <- c("inf_gene_expression", "inf_cell_type")
 }
 pmid_file <- paste(source_data_dir,
-                   paste(sheet_name_out, "titles_and_dates_df.RData", sep = "_"),
+                   paste(base_filename, "titles_and_dates_df.RData", sep = "-"),
                    sep = "/")
 
 if (exposure_type == "VACCINE") {
