@@ -1,8 +1,37 @@
 HIPC Dashboard Pipeline
 
+Changes in version 1.3.0
+- Support new exposure type: infection (COVID-19 studies)
+- For subject type "cell_subset", use cell ontology ids instead of display names.
+  This concerns tissue types (column tissue_type_term_id) and cell-type response components (column response_component_id)
+- For subject type "pathogen", use NCBI taxonomy ids instead of display names 
+  (columns target_pathogen_taxonid for vaccine, exposure_material_id for infection).
+- For tissue types, support parsing out cell ontology IDs from curator-oriented data validation pulldown values added to templates:
+-- The pulldown value is shown first. Just the term is also permitted:
+     CL:0000624 (CD4-positive, alpha-beta T cell)
+     CL:0000624
+- For target pathogens in the vaccine templates, support parsing out NCBI taxonomy IDs 
+  from curator-oriented data validation pulldown values added to templates:
+-- The pulldown value is shown first.  The other values are also accepted:
+    “ncbi_taxid:11090 (Yellow fever virus 17D)”
+    “ncbi_taxid:11090”
+    “11090”  (defaults to NCBI taxonomy id)
+- In the target_pathogen_taxonid column of vaccine templates, for influenza vaccine entries, 
+  allow use of lookup tags for taxonomy ids.  The tags will be replaced by the actual viral 
+  components of the vaccine, looked up in the file "vaccine_years.txt.  Multiple entries are allowed.
+-- For example
+     “influ:2008” will be substituted with the several actual viral components of the vaccine for year 2008.
+     “influ:2007; influ:2008; influ:2009” will be substituted with the union of the three year's viral components.
+- Add ability to return vaccine pathogen component NCBI taxonomy ids to lookup function.
+- Gene lookup using the NCBI data file now also checks the nomenclature_authority column (HGNC).  
+  If a query symbol is not found in the official NCBI symbols or aliases, 
+  but IS found in the nomenclature_authority column, the NCBI official symbol is substituted.
+
+
 Changes in version 1.2.1
 - update some signatures to clarify comparison column entries
 - update observation summary template to match change to Dashboard special character handling (left-paren, ampersand) 
+
 
 Changes in version 1.2.0
 - Update column headers:
