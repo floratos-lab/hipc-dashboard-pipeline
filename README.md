@@ -24,16 +24,19 @@ The file "**HIPC Dashboard curation template fields.pdf**" in the pipeline root 
 Standardization varies according to data type.  We use existing community standards wherever possible:
 * **Gene symbols** - Curated gene symbols are updated to current HGNC/NCBI symbols based on (1) NCBI synonyms and (2) a manually created mapping table.  The later deals with specific problematic symbols found in the curated data, where examination of the original data is able to support a definite mapping.
 * **Cell types and markers** - We create a mapping table to standardize the orignal cell type descriptions using terms from the Cell Ontology for cell types and Protein Ontology for additional type-defining markers.
-* **Vaccines** - For influenza vaccines, the year is used to expand the vaccine into its three or four viral components.
+* **Vaccines** - For influenza vaccines, a year-based tag is used to expand the vaccine into its one to four viral components, by lookup in the file "vaccine_years.txt".
 
 ## Pipeline Input: Curated data (./source_data)
 Unprocessed, curated data is placed as tab-delimited spreadsheet files in ./source_data, one file per exposure type and per response component type.  These files are the input for the pipeline.
 These are currently:
+
+**Vaccine:**
 * **hipc_vaccine - gene_expression.tsv**
 * **hipc_vaccine - cell_type_frequency**
+
+**Infection (COVID-19):**
 * **Odak_2020-Julia_Davis-Porada-covid19**
 * **COVID-19 curation template - example curation**
-
 
 This directory also contains the various mapping and translation files required by the R pipeline script.
 * **cell_type_frequency-response_components_mapping.txt** - maps cell-type strings to official cell ontology and protein ontology terms (text export for pipeline).
