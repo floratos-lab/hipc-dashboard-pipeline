@@ -1,0 +1,14 @@
+HIPC data/curation sheet-related changes
+
+Changes in version 1.3.0
+- Add two infection (COVID-19) studies:
+-- Odak et al., 2020
+-- Arunachalam et al., 2020
+- Create pathogen and cell_subset lookup-values for curation sheets.  Format is e.g.
+-- “ncbi_taxid:11090 (Yellow fever virus 17D)”
+-- "CL:2000001 (peripheral blood mononuclear cell)"
+- The following formats are also accepted
+-- “ncbi_taxid:11090”
+-- "CL:2000001"
+-- “11090”  (tissues only, defaults to NCBI taxonomy id)
+- Add cell ontology and NCBI taxonomy IDs to existing data as needed.
