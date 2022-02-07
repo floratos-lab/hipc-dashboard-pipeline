@@ -10,7 +10,7 @@ The focus of curation are the "response components", the biological features who
 
 Although all of the original curated data files are made available on this site, it is the files output by the R pipeline, which contain data that has been standardized and reformated, which would be most suitable for consumption by other projects.  These processed files, described in more detail below, are found in the directories
 * **./submissions** - tab-delimited Dashboard load files, one file per signature
-* **./reformatted_data** - standardized versions of curated data in several formats including tab-delimited, RDS, Excel and Broad GMT (tab-delimited).
+* **./reformatted_data** - standardized versions of curated data in tab-delimited and Broad GMT (tab-delimited) formats.
 
 ## Design
 The Dashboard design is flexible and allows submissions with an arbitrary number and type of data columns.  The Dashboard is built on two classes of data.  The first, termed **subjects**, comprises terms drawn from controlled vocabularies which are represented directly in the Dashboard database with all their underlying data. The second class, termed **evidence**, is open and can be used to add any number of additional annotation columns, such as free text or files, as needed for a particular submission.  The addition of new ontology-based data-types ("subjects") requires additions to the data model.  The templates for the first two supported submission types, gene expression and cell-type frequency, are almost identical. The HIPC Dashboard design is based on an earlier project, the Cancer Target Detection and Discovery Network (CTD2), initiated by the Office of Cancer Genomics of the National Cancer Institute (NCI).  A more detailed discussion of the Dashboard architecture is available in the publication Askoy et al. (2017), https://pubmed.ncbi.nlm.nih.gov/29220450/.
@@ -24,21 +24,34 @@ The file "**HIPC Dashboard curation template fields.pdf**" in the pipeline root 
 Standardization varies according to data type.  We use existing community standards wherever possible:
 * **Gene symbols** - Curated gene symbols are updated to current HGNC/NCBI symbols based on (1) NCBI synonyms and (2) a manually created mapping table.  The later deals with specific problematic symbols found in the curated data, where examination of the original data is able to support a definite mapping.
 * **Cell types and markers** - We create a mapping table to standardize the orignal cell type descriptions using terms from the Cell Ontology for cell types and Protein Ontology for additional type-defining markers.
-* **Vaccines** - For influenza vaccines, the year is used to expand the vaccine into its three or four viral components.
+* **Vaccines** - For influenza vaccines, a year-based tag is used to expand the vaccine into its one to four viral components, by lookup in the file "vaccine_years.txt".
 
 ## Pipeline Input: Curated data (./source_data)
-Unprocessed, curated data is placed as tab-delimited spreadsheet files in ./source_data, one file per response component type.  These files are the input for the pipeline.
+Unprocessed, curated data is placed as tab-delimited spreadsheet files in ./source_data, one file per exposure type and per response component type.  These files are the input for the pipeline.
 These are currently:
-* **HIPC Dashboard - Gene Expression.tsv**
-* **HIPC Dashboard - Cell type Frequency.tsv**
+
+**Vaccine:**
+* **hipc_vaccine - gene_expression.tsv**
+* **hipc_vaccine - cell_type_frequency**
+
+**Infection (COVID-19):**
+* **Odak_2020-Julia_Davis-Porada-covid19**
+* **COVID-19 curation template - example curation**
 
 This directory also contains the various mapping and translation files required by the R pipeline script.
 * **cell_type_frequency-response_components_mapping.txt** - maps cell-type strings to official cell ontology and protein ontology terms (text export for pipeline).
 * **cell_type_frequency-response_components_mapping.xlsx** - maps cell-type strings to official cell ontology and protein ontology terms (primary copy).
-* **cell_type_frequency_titles_and_dates_df.RData** - an intermediate data file containing downloaded data from PubMed.
-* **gene_expression_titles_and_dates_df.RData** - an intermediate data file containing downloaded data from PubMed.
+vac_cell_type-titles_and_dates_df
+
+Data downloaded from PubMed by the pipeline, by exposure type and response component type:
+* **vac_cell_type-titles_and_dates_df.RData**
+* **vac_gene_expression-titles_and_dates_df.RData**
+* **inf_cell_type-titles_and_dates_df.RData**
+* **inf_gene_expression-titles_and_dates_df.RData**
+
+Other background data files:
+* **Homo_sapiens.gene_info.gz** - gene file downloaded from NCBI.
 * **hgnc_complete_set.RData** - HGNC data file downloaded from EBI.
-* **Homo_sapiens.gene_info.gz** - gene file downloaded from NBCBI.
 * **manual_gene_symbol_corrections.txt** - a manually maintained file containing special gene symbol mappings
 * **vaccine_years.txt** - a mapping of influenza vaccines by year to their viral components (text export for pipeline)
 * **vaccine_years.xlsx** - a mapping of influenza vaccines by year to their viral components (primary copy)
@@ -56,11 +69,11 @@ The file "**changelog.txt**" in the root directory lists all major changes in ea
 This directory contains the Dashboard load files generated by the R pipeline script.
 The submission files are tab-delimited.  The files are named using the pattern "hipc_<type>_<PMID>_<number>, where type is the type of response component ("gene"; or "ctf" for cell-type frequency), PMID is the PMID of the source publication, and "number" is the sequential count of this signature of this type within the publication.
 	
-Gene expression submission files are placed in the subdirectory "submissions/hipc_gene/".  
-* Example: for the file **hipc_gene_21357945_1.txt**, "21357945" is the PMID of the publication, and "1" indicates the first signature of this type from that PMID.
+Gene expression submission files are placed in the subdirectory "submissions/hipc_vac_gene/" or "submissions/hipc_inf_gene/".  
+* Example: for the file **hipc_vac_gene_21357945_1.txt**, "vac" indicates a vaccination signature, "21357945" is the PMID of the publication, and "1" indicates the first signature of this type from that PMID.
 	
-Cell-type submissions are placed in the subdirectory "submissions/hipc_ctf/".
-* Example: for the file **hipc_ctf_26726811_1.txt**, "ctf" indicates type "cell-type frequency", "26726811" is the PMID, and "1" indicates the first signature of this type for that PMID.
+Cell-type submissions are placed in the subdirectory "submissions/hipc_vac_ctf/" or "submissions/hipc_inf_ctf/".
+* Example: for the file **hipc_vac_ctf_26726811_1.txt**, "vac" indicates a vaccination signature, "ctf" indicates type "cell-type frequency", "26726811" is the PMID, and "1" indicates the first signature of this type for that PMID.
 
 ### Submission file format
 The Dashboard submission load files contain the same columns as described in the curation document, with some additions to support the requirements of the Dashboard itself and to preserve original curated values for fields updated by the pipeline. Each file represents one signature in a denormalized manner. Because the "response_component" field for one signature many contain up to e.g. thousands of gene symbols, this element of the signature is treated differently than all other elements.
@@ -85,20 +98,19 @@ An additional directory (not checked-in to GitHub), "logfiles" is created.  Afte
 
 ### Reformatted data files (./reformatted_data)
 The "recreated_template" files are in the same spreadsheet format as the original curated data.  These files represent the original data after all updates and transformations, and are provided in tab-delimited, RDS and Excel formats.  Files containing the "response components" for each signature are also provided in the tab-delimited Broad GMT format.
-* **cell_type-recreated_template.RDS** - updated cell-type data in R RDS format
-* **cell_type-recreated_template.txt** - updated cell-type data in text format
-* **cell_type-recreated_template.xlsx** - updated cell-type data in Exel format
-* **cell_type-response_component_counts_by_row.csv** - the count of  cell-type response components for each signature row
-* **cell_type-response_component_counts.txt** - a list of each cell-type among the response components and its number of occurences.
-* **cell_type-response_components.gmt.txt** - a list of each fully-qualified cell-type (including additional protein markers etc.) in Broad GMT format.  The additional markers are separated from the primary cell type by an ampsersand sybmol "&". For example, "alpha-beta T cell & IFNG-, TNF-a+, IL-2+".
-* **cell_type-session_info.txt** - R session_info  file
-* **gene_expression-recreated_template.RDS** - updated gene data in R RDS format
-* **gene_expression-recreated_template.txt** - updated gene data in text format
-* **gene_expression-recreated_template.xlsx** - updated gene data in Exel format
-* **gene_expression-response_component_counts_by_row.csv** - the count of gene response components for each signature row
-* **gene_expression-response_components.gmt.txt** - a list of all gene response components for each signature row in Broad GMT format
-* **gene_expression-session_info.txt** - R session_info  file
-* **joint_signatures_count_summary.csv** - contains a table sumamrizing submissions by number of genes, cell types, pathogens, vaccines, tissues and PMIDs.
+	
+Cell-type response component files (vaccine = "vac", infection = "inf").  Examples given for vaccine exposure types:
+* **vac_cell_type-recreated_template.tsv** - updated cell-type data in text format
+* **vac_cell_type-response_component_counts_by_row.csv** - the count of  cell-type response components for each signature row
+* **vac_cell_type-response_component_counts.txt** - a list of each cell-type among the response components and its number of occurences.
+* **vac_cell_type-response_components.gmt.txt** - a list of each fully-qualified cell-type (including additional protein markers etc.) in Broad GMT format.  The additional markers are separated from the primary cell type by an ampsersand sybmol "&". For example, "alpha-beta T cell & IFNG-, TNF-a+, IL-2+".
+* **vac_cell_type-session_info.txt** - R session_info  file
+* **vac_gene_expression-recreated_template.txt** - updated gene data in text format
+* **vac_gene_expression-response_component_counts_by_row.csv** - the count of gene response components for each signature row
+* **vac_gene_expression-response_component_counts.txt** - a list of each gene symbol among the response components and its number of occurences
+* **vac_gene_expression-response_components.gmt.txt** - a list of all gene response components for each signature row in Broad GMT format
+* **vac_gene_expression-session_info.txt** - R session_info  file
+* **VACCINE_joint_signatures_count_summary.csv** - contains a table sumamrizing submissions by number of genes, cell types, pathogens, vaccines, tissues and PMIDs.
 
 # Database Schema and Notes about Modules
 ## Core: Data structures and DAO methods
