@@ -29,14 +29,24 @@ Standardization varies according to data type.  We use existing community standa
 ## Pipeline Input: Curated data (./source_data)
 Unprocessed, curated data is placed as tab-delimited spreadsheet files in ./source_data, one file per response component type.  These files are the input for the pipeline.
 These are currently:
-* **HIPC Dashboard - Gene Expression.tsv**
-* **HIPC Dashboard - Cell type Frequency.tsv**
+* **hipc_vaccine - gene_expression.tsv**
+* **hipc_vaccine - cell_type_frequency**
+* **Odak_2020-Julia_Davis-Porada-covid19**
+* **COVID-19 curation template - example curation**
+
 
 This directory also contains the various mapping and translation files required by the R pipeline script.
 * **cell_type_frequency-response_components_mapping.txt** - maps cell-type strings to official cell ontology and protein ontology terms (text export for pipeline).
 * **cell_type_frequency-response_components_mapping.xlsx** - maps cell-type strings to official cell ontology and protein ontology terms (primary copy).
-* **cell_type_frequency_titles_and_dates_df.RData** - an intermediate data file containing downloaded data from PubMed.
-* **gene_expression_titles_and_dates_df.RData** - an intermediate data file containing downloaded data from PubMed.
+vac_cell_type-titles_and_dates_df
+
+Intermediate data files containing downloaded data from PubMed, by exposure type and response component type
+* **vac_cell_type-titles_and_dates_df.RData**
+* **vac_gene_expression-titles_and_dates_df.RData**
+* **inf_cell_type-titles_and_dates_df.RData**
+* **inf_gene_expression-titles_and_dates_df.RData**
+
+
 * **hgnc_complete_set.RData** - HGNC data file downloaded from EBI.
 * **Homo_sapiens.gene_info.gz** - gene file downloaded from NBCBI.
 * **manual_gene_symbol_corrections.txt** - a manually maintained file containing special gene symbol mappings
