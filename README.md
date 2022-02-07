@@ -32,18 +32,18 @@ These are currently:
 
 **Vaccine:**
 * **hipc_vaccine - gene_expression.tsv**
-* **hipc_vaccine - cell_type_frequency**
+* **hipc_vaccine - cell_type_frequency.tsv**
 
 **Infection (COVID-19):**
-* **Odak_2020-Julia_Davis-Porada-covid19**
-* **COVID-19 curation template - example curation**
+* **Odak_2020-Julia_Davis-Porada-covid19.tsv**
+* **COVID-19 curation template - example curation.tsv**
 
 This directory also contains the various mapping and translation files required by the R pipeline script.
 * **cell_type_frequency-response_components_mapping.txt** - maps cell-type strings to official cell ontology and protein ontology terms (text export for pipeline).
 * **cell_type_frequency-response_components_mapping.xlsx** - maps cell-type strings to official cell ontology and protein ontology terms (primary copy).
 vac_cell_type-titles_and_dates_df
 
-Data downloaded from PubMed by the pipeline, by exposure type and response component type:
+Pubmed data downloaded by the pipeline, by exposure type and response component type:
 * **vac_cell_type-titles_and_dates_df.RData**
 * **vac_gene_expression-titles_and_dates_df.RData**
 * **inf_cell_type-titles_and_dates_df.RData**
@@ -62,7 +62,9 @@ R scripts are in ./R. **generate_HIPC_submissions.R** is the main script. It exp
 ## Data Releases
 The Dashboard database is reloaded in its entirety each time a new release is created.  When a new version of the data is ready, the code, input data and resulting output files are all committed together as a release.  
 
-The file "**changelog.txt**" in the root directory lists all major changes in each release.
+The file "**changelog.txt**" in the root directory lists all major changes to the pipeline code and process in each release.
+The file "**changelog-data.txt**" in the root directory lists all major updates to the curation templates and the data in each release.
+
 
 ## Pipeline Output Files 
 ### Dashboard Submission files (./submissions)
