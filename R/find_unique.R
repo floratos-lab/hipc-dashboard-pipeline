@@ -2,6 +2,8 @@
 # WARNING - The format of each result file to be read must be specified.
 write_final_summary <- function(response_types, exposure_type, logdir) {
   # check if one file of each response_type is present
+  # FIXME - this will not catch rare case of when new file type added in code,
+  #         but not yet present on disk.  Should check for each file.
   for(i in 1:length(response_types)) {
     test_filename <- logfile_path(logdir, response_types[i], "exposure_material_id.txt")
     if(!file.exists(test_filename)) {
@@ -13,8 +15,7 @@ write_final_summary <- function(response_types, exposure_type, logdir) {
   summarize_response <- function(response_types, type, type_file, header, get_column, logdir) {
 
     joint_items <- sapply(response_types, function(x) {
-      s <- read.table(file = logfile_path(logdir, x,
-                                          type_file),
+      s <- read.table(file = logfile_path(logdir, x, type_file),
                       header = header, stringsAsFactors = FALSE)
       return(s[ , get_column])})
 
@@ -37,8 +38,8 @@ write_final_summary <- function(response_types, exposure_type, logdir) {
                               type_file = "target_pathogens_after_fixes.txt",
                               header = FALSE, get_column = "V1",
                               logdir = logdir))
-    }
-  
+  }
+
   joint_summary <- rbind(joint_summary,
                          summarize_response(response_types,
                              type = "PMIDs",
@@ -49,7 +50,7 @@ write_final_summary <- function(response_types, exposure_type, logdir) {
   joint_summary <- rbind(joint_summary,
                          summarize_response(response_types,
                              type = "tissues",
-                             type_file = "tissue_type_list.txt",
+                             type_file = "tissue_type_term_id.txt",
                              header = FALSE, get_column = "V1",
                              logdir = logdir))
 
@@ -57,7 +58,7 @@ write_final_summary <- function(response_types, exposure_type, logdir) {
   rownames(joint_summary) <- joint_summary$type
   joint_summary <- joint_summary[, -1]
   joint_summary <- t(joint_summary)
-  write.csv(joint_summary, file = logfile_path(logdir, NULL, 
+  write.csv(joint_summary, file = logfile_path(logdir, NULL,
                                   paste(exposure_type, "joint_signatures_count_summary.csv", sep = "_")))
   return(TRUE)
 }
