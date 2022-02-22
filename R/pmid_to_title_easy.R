@@ -18,7 +18,10 @@ use_consortium <- rbind(c("28854372", "Rechtien", FALSE),
                         c("30244872", "Fischer", FALSE),
                         c("28404856", "Huttner", FALSE),
                         c("28842433", "HIPC-CHI Signatures Project Team", TRUE),
-                        c("24725414", "Tsang", FALSE))
+                        c("24725414", "Tsang", FALSE),
+                        c("32826343", "Maucourant", FALSE),
+                        c("32717743", "Lucas", FALSE),
+                        c("33846275", "Saris", FALSE))
 
 use_consortium <- as.data.frame(use_consortium, stringsAsFactors = FALSE)
 colnames(use_consortium) <- c("pmid", "author", "use")
@@ -71,6 +74,8 @@ pmid_to_title_easy <- function(pmid, print_pub_year) {
     # test: pmid <- "29868000"
     # test: pmid <- "28137280"
     # test: pmid <- "19155521" # has name Garcia with special characters
+    # test: pmid <- "33033248"
+    # test: pmid <- "32826343"
   pmids_thing <-  get_pubmed_ids(pmid)
 
   article <- fetch_pubmed_data(pmids_thing, format = "xml")
@@ -89,7 +94,7 @@ pmid_to_title_easy <- function(pmid, print_pub_year) {
   x <- x[[1]]
   x <- lapply(x, trimws)
 
-  
+
     # returns matrix[n,1], change to vector, though not necessary
   # date_type must be enclosed in escaped quotes
 
@@ -99,7 +104,7 @@ pmid_to_title_easy <- function(pmid, print_pub_year) {
   custom_grep(x[w+1], tag = "Year", format = "character")
   pubYear <- custom_grep(x[w+1], tag = "Year", format = "character")
   pubMonth <- custom_grep(x[w+2], tag = "Month", format = "character")
- 
+
   if(pubMonth %in% 0:9) {
     pubMonth <- paste0("0", pubMonth)
   }
