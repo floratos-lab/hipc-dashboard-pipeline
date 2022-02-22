@@ -1,6 +1,4 @@
 # File name: generate_HIPC_submissions.R
-# Author: Kenneth C. Smith
-
 # Description:
 #  Starting with curated HIPC data, prepare Dashboard submission templates.
 #  Types currently explicitly supported: Gene, Cell type frequency.
@@ -28,7 +26,7 @@
 #   * CV-per-template file for all signatures of a type (gene, cell-type)
 #   * Numerous log files with details of each stage of processing.
 #
-
+# BiocManager::install(version = "3.14")
 # BiocManager::install("splitstackshape")
 # BiocManager::install("HGNChelper")
 # BiocManager::install("limma")
@@ -40,6 +38,7 @@
 # BiocManager::install("xml2")
 # BiocManager::install("annotate")
 # BiocManager::install("stringi")
+# BiocManager::install("stringr")
 # BiocManager::install("pracma")
 
 library(splitstackshape)  # for cSplit()
@@ -49,6 +48,8 @@ library(uniqtag)          # for cumcount()
 library(data.table)       # for rbindlist()
 library(ggplot2)
 library(stringi)
+library(stringr)
+
 
 source("hipc_utils.R")
 source("gene_routines.R")
@@ -58,10 +59,10 @@ source("write_submissions.R")
 source("msigdb_submission_utils.R")
 source("find_unique.R")
 
-# Available sheet_type values are "GENE", "CELLTYPE_FREQUENCY"
-sheet_type    <- "CELLTYPE_FREQUENCY"
+# Available response_type values are "GENE", "CELLTYPE_FREQUENCY"
+response_type <- "GENE"
 # Available exposure_type values are "VACCINE", "INFECTION" (covid-19)
-exposure_type <- "INFECTION"
+exposure_type <- "VACCINE"
 
 # For the moment, assume executing interactively from the ./R directory
 source_data_dir <- "../source_data"
@@ -120,7 +121,7 @@ if(!dir.exists(submission_dir)) {
 # Note - if running interactively, will exit script in submission_dir
 setwd(submission_dir)
 
-if (sheet_type == "GENE" && DOWNLOAD_NEW_NCBI_GENES) {
+if (response_type == "GENE" && DOWNLOAD_NEW_NCBI_GENES) {
   if(!update_ncbi_homo_sapiens_gene_info(source_data_dir)) {
     print("update of NCBI gene info file failed")
   }
@@ -131,25 +132,25 @@ summary_df <- data.frame()  # initialize summary log
 
 ##### Set up file and template name components #####
 # change sheet name spaces to underscores
-if (sheet_type == "GENE" && exposure_type == "VACCINE") {
+if (response_type == "GENE" && exposure_type == "VACCINE") {
   sheet_file     <- "hipc_vaccine - gene_expression.tsv"
   base_filename  <- "vac_gene_expression"
   template_name  <- "hipc_vac_gene"
   project        <- "Gene expression response to vaccine exposure"
-} else if (sheet_type == "GENE" && exposure_type == "INFECTION") {
+} else if (response_type == "GENE" && exposure_type == "INFECTION") {
   sheet_file     <- "COVID-19 curation template - example curation.tsv"
-  sheet_file2    <- "Odak_2020-Julia_Davis-Porada-covid19.tsv"
+  sheet_file2    <- "Odak_2020_reappearance_of_effector_pmid_32650275 - covid19.tsv"
   sheet_file3    <- "hipc_infection_covid_v2 - multiple_types.tsv"
   base_filename  <- "inf_gene_expression"
   template_name  <- "hipc_inf_gene"
   project        <- "Gene expression response to infection"
-} else if (sheet_type == "CELLTYPE_FREQUENCY" && exposure_type == "VACCINE") {
+} else if (response_type == "CELLTYPE_FREQUENCY" && exposure_type == "VACCINE") {
   sheet_file     <- "hipc_vaccine - cell_type_frequency.tsv"
   base_filename  <- "vac_cell_type"
   template_name  <- "hipc_vac_ctf"
   cell_mapping_sheet_name   <- "HIPC_Dashboard-Cell_type_Freque"
   project        <- "Immune cell-type frequency response to vaccine exposure"
-} else if (sheet_type == "CELLTYPE_FREQUENCY" && exposure_type == "INFECTION") {
+} else if (response_type == "CELLTYPE_FREQUENCY" && exposure_type == "INFECTION") {
   sheet_file     <- "COVID-19 curation template - example curation.tsv"
   sheet_file2    <- "Odak_2020-Julia_Davis-Porada-covid19.tsv"
   sheet_file3    <- "hipc_infection_covid_v2 - multiple_types.tsv"
@@ -193,53 +194,56 @@ insub <- insub[!(colnames(insub) %in% del_cols_common)]
 if (exposure_type == "VACCINE") {
   del_cols <- c("method")  # not filled in
   insub <- insub[!(colnames(insub) %in% del_cols)]
-  
+
 } else if(exposure_type == "INFECTION") {
   # read additional file
+  # FIXME - a more general solution will be needed for handling multiple files
   insub2 <- read.delim(file =  paste(source_data_dir, sheet_file2, sep = "/"),
                       strip.white = TRUE,
                       stringsAsFactors = FALSE)
   nrow(insub2)
   insub2 <- insub2[!(colnames(insub2) %in% del_cols_common)]
-  
-  insub3 <- read.delim(file =  paste(source_data_dir, sheet_file3, sep = "/"),
-                       strip.white = TRUE,
-                       stringsAsFactors = FALSE,
-                       quote = "")
-  nrow(insub3)
-  insub3 <- insub3[!(colnames(insub3) %in% del_cols_common)]
 
-  del_cols <- c("route", 
-                "addntl_time_point_units", 
+#  insub3 <- read.delim(file =  paste(source_data_dir, sheet_file3, sep = "/"),
+#                       strip.white = TRUE,
+#                       stringsAsFactors = FALSE,
+#                       quote = "")
+#  nrow(insub3)
+#  insub3 <- insub3[!(colnames(insub3) %in% del_cols_common)]
+
+  del_cols <- c("route",
+                "addntl_time_point_units",
                 "signature_source_url")  # discontinued in latest template
   colnames(insub)[(colnames(insub) %in% del_cols)]
-  
+
   colnames(insub2)[(colnames(insub2) %in% del_cols)]
   insub2 <- insub2[!(colnames(insub2) %in% del_cols)]
-  
-  colnames(insub3)[(colnames(insub3) %in% del_cols)]
-  insub3 <- insub3[!(colnames(insub3) %in% del_cols)]
-  
-  # colnames(insub3)[!(colnames(insub3) %in% (colnames(insub2)))]
-  # colnames(insub2)[!(colnames(insub2) %in% (colnames(insub3)))]
+
+#  colnames(insub3)[(colnames(insub3) %in% del_cols)]
+#  insub3 <- insub3[!(colnames(insub3) %in% del_cols)]
+
+#  colnames(insub3)[!(colnames(insub3) %in% (colnames(insub2)))]
+#  colnames(insub2)[!(colnames(insub2) %in% (colnames(insub3)))]
 
   all(colnames(insub) == colnames(insub2))
-  all(colnames(insub2) == colnames(insub3))
-  
+#  all(colnames(insub2) == colnames(insub3))
+
   # stitch together the data sections
+  nrow(insub)
   insub <- rbind(insub, insub2[9:nrow(insub2),])
-  # FIXME - not using insub3 file yet except in tests, has not finished curation
-  # insub <- rbind(insub, insub3[9:nrow(insub3),])
+  nrow(insub)
+#  insub <- rbind(insub, insub3[9:nrow(insub3),])
+#  nrow(insub)
+
 }
 
-# get rid of empty columns
-# FIXME - not needed anymore now that not using Excel...?
-nrow(insub)
-insub <- insub[!(grepl("X\\.[0-9]", colnames(insub)))]
-nrow(insub)
+uniq_pmid <- unique(insub$publication_reference_id[9:nrow(insub)])
+uniq_pmid <- sub("pmid:", "", uniq_pmid)
+uniq_pmid <- uniq_pmid[uniq_pmid != ""]
+
 
 ### Make any changes to headers right at the beginning,
-### before separate headers and data
+### before separating headers and data
 # Save the original response_component values
 colnames(insub)[colnames(insub) == "response_component"] <- "response_component_original"
 
@@ -247,7 +251,7 @@ colnames(insub)[colnames(insub) == "response_component"] <- "response_component_
 # The column name of the first column is removed
 # before templates are written in write_submission_template()
 colnames(insub)[1] <- "donotuse"
-# Add back in the columns no longer included in the curation template, 
+# Add back in the columns no longer included in the curation template,
 # plus response_component to position it more towards begin
 insub <- data.frame(donotuse = insub[ , 1],  # for some reason column 1 name has to be respecified
                     submission_name = "",
@@ -260,19 +264,19 @@ insub <- data.frame(donotuse = insub[ , 1],  # for some reason column 1 name has
 # Create a new column for the corrected response_component values
 # and correct the headers for the response_component_original column
 # Add other new columns as needed per sheet type
-if (sheet_type == "GENE") {
+if (response_type == "GENE") {
   # gene-specific headers
   # Need to set for INFECTION type, will just overwrite existing for VACCINE
   insub$response_component[1:6] <- c("gene", "", "gene_biomarker", "", "", "response component")
   insub$response_component_original[1:6] <-
     c("", "label", "observed", "", "", "response component (original gene symbol)")
 
-} else if (sheet_type == "CELLTYPE_FREQUENCY") {
+} else if (response_type == "CELLTYPE_FREQUENCY") {
   insub$response_component_id  <- ""
   insub$proterm_and_extra <- ""
   insub$pro_ontology_id   <- ""
   insub$fully_qualified_response_component <- ""
-  
+
   # cell-type specific headers
   # Need to set for INFECTION type, will just overwrite existing for VACCINE
   insub$response_component[1:6] <- c("", "label", "observed", "", "", "response component name")
@@ -297,14 +301,14 @@ insub$row_key                 <- ""
 insub$submission_name[1:6]    <- c("", "label", "background", "", "", "submission name")
 insub$submission_date[1:6]    <- c("", "label", "background", "", "", "submission_date")
 insub$template_name[1:6]      <- c("", "label", "background", "", "", "template_name")
-insub$response_comp_orig_cnt[1:6]  <- 
+insub$response_comp_orig_cnt[1:6]  <-
                                  c("", "label", "observed",   "", "", "response component (original) count")
 insub$response_comp_cnt[1:6]  <- c("", "label", "observed",   "", "", "response component count")
 insub$subm_obs_id[1:6]        <- c("", "label", "background", "", "", "ID of observation within a publication (PMID) and for its submission type ")
 insub$uniq_obs_id[1:6]        <- c("", "label", "background", "", "", "ID of observation within its submission type")
 insub$row_key[1:6]            <- c("", "label", "background", "", "", "row key")
 
-if (sheet_type == "CELLTYPE_FREQUENCY") {
+if (response_type == "CELLTYPE_FREQUENCY") {
   ctf_fixes <- read.delim(file = paste(source_data_dir, ctf_fixes_tsv, sep = "/"),
                           stringsAsFactors = FALSE)
   ctf_fixes <- ctf_fixes[1:6]
@@ -331,9 +335,9 @@ if (exposure_type == "VACCINE") {  # the original curations, assumes no more wil
 
 # Special handling for INFECTION templates
 if(exposure_type == "INFECTION") {
-  if (sheet_type == "CELLTYPE_FREQUENCY") {
+  if (response_type == "CELLTYPE_FREQUENCY") {
     w <- df2$response_behavior_type == "cell-type frequency"
-  } else if (sheet_type == "GENE") {
+  } else if (response_type == "GENE") {
     w <- df2$response_behavior_type == "gene expression"
   } else {
     stop("unexpected sheet type, not yet implemented")
@@ -344,7 +348,7 @@ if(exposure_type == "INFECTION") {
 }
 
 # Depending on how the text file is created, the sheet may have blank rows at bottom.
-# NOTE - the step above for INFECTION deals with this problem aleady
+# NOTE - the step above for INFECTION deals with this problem already
 nrow(df2)
 df2 <- df2[df2$publication_reference_id != "", ]
 nrow(df2)
@@ -354,22 +358,20 @@ summary_df <- add_to_summary(summary_df, "Data rows in original sheet", nrow(df2
 # Generate observation IDs based on the PMID field value and on original row number,
 # to allow e.g. response_components to be summarized by observation later.
 # These are generated before any row deletions so that can refer back to original template
-# for now, INFECTION template only has namespace id "pmid:".
-# FIXME - in future, plan to handle other sources, like bioRxiv.
-pmids <- df2$publication_reference_id
-pmids <- sub("pmid:", "", pmids)
-s <- sapply(as.integer(pmids), is.integer)
+# The "pmid:" tag is not currently required, but check if anything was entered
+df2$publication_reference_id <- sub("pmid:", "", df2$publication_reference_id)
+s <- sapply(as.integer(df2$publication_reference_id), is.integer)
 if (!all(s)) {
-  print("unexpected namespace tag")
+  stop("unexpected namespace tag")
 }
 
 # ID number of observation within its submission (based on PMID)
-df2$subm_obs_id  <- cumcount(pmids)
+df2$subm_obs_id  <- cumcount(df2$publication_reference_id)
 # unique observation ID (row number in original template) within this sheet
 df2$uniq_obs_id  <- seq(from = 8, length.out = nrow(df2))
 # save so can check later for removed observations
 uniq_obs_id_orig <- df2$uniq_obs_id
-df2$row_key      <- paste(pmids, df2$subm_obs_id, df2$uniq_obs_id, sep = "_")
+df2$row_key      <- paste(df2$publication_reference_id, df2$subm_obs_id, df2$uniq_obs_id, sep = "_")
 
 ########################################################
 ##### Fix temporary problems with the curated data #####
@@ -387,7 +389,7 @@ if(exposure_type == "VACCINE") {
 # FIXME - Most values are empty, not "Y" or "N".
 #         Empty is not necessarily the same as "N".
 # Currently only used for type GENE
-if(sheet_type == "GENE") {
+if(response_type == "GENE") {
   df2$is_model[df2$is_model == ""] <- "N"
 }
 
@@ -403,7 +405,8 @@ df2$response_behavior      <- tolower(df2$response_behavior)
 # check if  comment column has more than 255 character limit
 w <- sapply(df2$comments, function(x) {nchar(x) > 255}, USE.NAMES	= FALSE)
 if(any(w)) {
-  stop(paste("comment too long for row(s)", paste(df2$row_key[w], collapse = ", ")))
+  df2$comments[w] <- stringr::str_trunc(df2$comments[w], 250)
+  print(paste("some comments were too long for row(s), truncated:", paste(df2$row_key[w], collapse = ", ")))
 }
 
 # check if comment column has non-UTF8 characters
@@ -437,15 +440,6 @@ write.table(response_behavior_strings,
 ##########################################################
 ##### Other global changes to template before splits #####
 ##########################################################
-
-# Write unique list of tissue types
-write_unique_list(df2$tissue_type_term_id, logdir, base_filename, "tissue_type_list")
-summary_df <- add_to_summary(summary_df, "tissue types", length(unique(df2$tissue_type_term_id)))
-
-# remove tissue name after the code, used in newer submissions
-# FIXME - in future, verify have a code first - 
-#         maybe user just entered a tissue name...
-df2$tissue_type_term_id <- sub(" .*$", "", df2$tissue_type_term_id)
 
 ## Create a map of VO codes to text equivalents
 ## Both columns must have the same number of values per row
@@ -497,10 +491,10 @@ write.table(unique(text),
 ##### Data substitution and splitting (1): response_component_original #####
 ############################################################################
 
-if (sheet_type == "GENE") {
+if (response_type == "GENE") {
   # df2$response_component_original values become factors!
   df2 <- cSplit(df2, "response_component_original", sep = ",", direction = "long")
-  df2 <- cSplit(df2, "response_component_original", sep = ";", direction = "long") # ";" not used so far
+  df2 <- cSplit(df2, "response_component_original", sep = ";", direction = "long")
   affyHits <- grep("///", df2$response_component_original)
   write.csv(df2[affyHits, c("response_component_original", "publication_reference_id", "subm_obs_id")],
             file = logfile_path(logdir, base_filename, "affyHits.csv"),
@@ -514,7 +508,7 @@ if (sheet_type == "GENE") {
   df2 <- cSplit(df2, "response_component_original", sep = "[/]{3}", direction = "long", fixed = FALSE)
   # the curated data does in places have spaces as separators
   df2 <- cSplit(df2, "response_component_original", sep = " ", direction = "long")
-} else if (sheet_type == "CELLTYPE_FREQUENCY") {
+} else if (response_type == "CELLTYPE_FREQUENCY") {
   df2 <- cSplit(df2, "response_component_original", sep = ";", direction = "long")
 }
 
@@ -526,21 +520,14 @@ df2 <- as.data.frame(df2)
 df2$response_component_original <- as.character(df2$response_component_original)
 
 
-#  get PMIDs again in case any data rows deleted.
-# already tested above that all codes are integers.
-# FIXME - change order of operations so this cannot happen?
-# FIXME - this is repeated code from above
-pmids <- df2$publication_reference_id
-pmids <- sub("pmid:", "", pmids)
-
-if (sheet_type == "GENE") {
+if (response_type == "GENE") {
   # check for lists of response components within one PMID that have a large overlap with one another.
   # This is intended to catch the case were one set was accidentally appended to another.
   # (It happens!)
-  ft <- check_response_components_overlap(df2, unique(pmids),
+  ft <- check_response_components_overlap(df2, unique(df2$publication_reference_id),
                                           min_intersection = 10, min_overlap_fraction = 0.75,
                                           require_different_behaviors = TRUE, max_hits = 100)
-  
+
   file <- logfile_path(logdir, base_filename, "overlapping_signatures.txt")
   if(length(ft) > 0) {
     write.table(ft, file = file, row.names = FALSE)
@@ -554,7 +541,7 @@ if (sheet_type == "GENE") {
 
 # create original gene symbols "signature" list after applying manual corrections
 # FIXME - need better variable name than "signatures"
-if (sheet_type == "GENE") {
+if (response_type == "GENE") {
   # Apply manual gene corrections
   rvl <- manual_gene_corrections(df2$response_component_original,
                                  paste(source_data_dir, manual_gene_corrections_tsv, sep = "/"))
@@ -568,7 +555,7 @@ if (sheet_type == "GENE") {
   signatures <- lapply(unique(df2$uniq_obs_id), function(uniqID) {
     genes[df2$uniq_obs_id == uniqID]
   })
-} else if (sheet_type == "CELLTYPE_FREQUENCY") {
+} else if (response_type == "CELLTYPE_FREQUENCY") {
 
   # Reconstruct original signatures, after splitting by various separators
   signatures <- lapply(unique(df2$uniq_obs_id), function(uniqID) {
@@ -646,7 +633,7 @@ if(length(dups) > 0) {
 start_cnt <- nrow(df2)
 
 # Update original gene symbols to latest versions (NCBI/HGNC)
-if (sheet_type == "GENE") {
+if (response_type == "GENE") {
   # starts with "genes" manually corrected list from above
   # make sure "genes" is still in synch with df2.
   length(genes) == nrow(df2)
@@ -656,6 +643,11 @@ if (sheet_type == "GENE") {
   genes_map <- rvl$genes_map
   summary_df <- rbind(summary_df, rvl$summary)
   rm(rvl)
+  
+  # Save PMID info for unmapped symbols
+  no_valid_symbols_df <- df2[is.na(genes_map$Symbol), names(df2) %in%
+                             c("response_component_original", "publication_reference_id", "subm_obs_id", "uniq_obs_id")]
+  log_no_valid_symbol_vs_pmid(no_valid_symbols_df, base_filename)
 
   # w <- which(genes_map$Symbol != genes_map$alias)
 
@@ -674,7 +666,7 @@ if (sheet_type == "GENE") {
                                "Number of valid gene symbols" ,
                                length(unique(df2$response_component)))
 
-} else if (sheet_type == "CELLTYPE_FREQUENCY") {
+} else if (response_type == "CELLTYPE_FREQUENCY") {
 
   # ctf_match will have NA values where no match found
   ctf_match <- match(df2$response_component_original, ctf_fixes$original_annotation)
@@ -695,11 +687,11 @@ if (sheet_type == "GENE") {
     write.table(missing_mappings,
                 file = logfile_path(logdir, base_filename, "missing_mappings.tsv"),
                 sep = "\t", row.names = FALSE, col.names = FALSE, quote = FALSE)
-    
+
     write.table(unique(sort(df2$response_component_original[w])),
                 file = logfile_path(logdir, base_filename, "missing_mappings_unique.tsv"),
                 sep = "\t", row.names = FALSE, col.names = FALSE, quote = FALSE)
-    
+
     stop("cell type mapping not found")
   } else {
     print("all cell types matched")
@@ -827,8 +819,10 @@ df2 <- as.data.frame(df2, stringsAsFactors = FALSE)
 ###############################################################
 
 if (exposure_type == "VACCINE") {
-  
+
   # Substitute in actual virus components for influenza pathogens only.
+  # Note - this is done before the real splitting below because the
+  # lookup_vaccine() function needs all codes at once for an observation.
   for (i in 1:nrow(df2)) {
     if(grepl("influ:", df2$target_pathogen_taxonid[i])) {
       codes <- unlist(strsplit(df2$target_pathogen_taxonid[i],";"))
@@ -839,7 +833,7 @@ if (exposure_type == "VACCINE") {
       df2$target_pathogen_taxonid[i] <- lookup_vaccine(codes, type = "taxid")
     }
   }
-  
+
   # Substitute in actual pathogens for measles + DPT vaccination
   # Note - the specific pathogen strains below are not specified by the VO codes used.
   # These are the only case in Gene and Cell-type where there are more than a single pathogen,
@@ -857,12 +851,12 @@ if (exposure_type == "VACCINE") {
 
   # class(df2)  # "data.table" "data.frame"
   df2 <- as.data.frame(df2)
-  
+
   end_cnt <- nrow(df2)
   summary_df <- add_to_summary(summary_df, "Split 3, on pathogens, rows added", end_cnt - start_cnt)
   summary_df <- add_to_summary(summary_df, "Split 3, on pathogens, total rows", end_cnt)
   start_cnt <- end_cnt
-  
+
   # in Infection template, have allowed "(name)" exposure_material_id column.  Remove.
   codes <- sub(" .*$", "", df2$target_pathogen_taxonid)
   codes <- sub("ncbi_taxid:", "", codes)
@@ -871,7 +865,7 @@ if (exposure_type == "VACCINE") {
     print("target_pathogen_taxonid: unexpected namespace tag")
   }
   df2$target_pathogen_taxonid <- codes
-  
+
   # Write unique list of target pathogens after substitutions
   text  <- strsplit(df2$target_pathogen, ";") # returns a list
   text <- unique(trimws(unlist(text)))
@@ -880,10 +874,39 @@ if (exposure_type == "VACCINE") {
 #  substr(text, 1, 1) <- tolower(substr(text, 1,1))
   write_unique_list(text, logdir, base_filename, "target_pathogens_after_fixes")
   summary_df <- add_to_summary(summary_df, "target_pathogens_after_fixes", length(text))
-  
+
   write_unique_list(df2$target_pathogen_taxonid, logdir, base_filename, "target_pathogen_taxonid")
   summary_df <- add_to_summary(summary_df, "target_pathogen_taxonid", length(unique(df2$target_pathogen_taxonid)))
 }
+
+
+###############################################################
+##### Data splitting (4): tissue_type_term_id             #####
+###############################################################
+
+##### split ######
+# influenza rows don't hae taxonid yet, supply a dummy so split does not remove rows
+df2 <- cSplit(df2, "tissue_type_term_id", sep = ";", direction = "long")
+
+# class(df2)  # "data.table" "data.frame"
+df2 <- as.data.frame(df2)
+
+end_cnt <- nrow(df2)
+summary_df <- add_to_summary(summary_df, "Split 4, on tissues, rows added", end_cnt - start_cnt)
+summary_df <- add_to_summary(summary_df, "Split 4, on tissues, total rows", end_cnt)
+start_cnt <- end_cnt
+
+df2$tissue_type_term_id <- sub(" .*$", "", df2$tissue_type_term_id)
+
+# Write unique list of observed tissues
+text  <- strsplit(df2$tissue_type, ";") # returns a list
+text <- unique(trimws(unlist(text)))
+
+write_unique_list(text, logdir, base_filename, "tissues_observed")
+summary_df <- add_to_summary(summary_df, "tissues_observed", length(text))
+
+write_unique_list(df2$tissue_type_term_id, logdir, base_filename, "tissue_type_term_id")
+summary_df <- add_to_summary(summary_df, "tissue_type_term_id", length(unique(df2$tissue_type_term_id)))
 
 
 ####################################################################
@@ -906,27 +929,20 @@ write.table(response_df,
 ####  Collect publication titles, dates and abstracts ####
 ##########################################################
 
-pmids <- df2$publication_reference_id
-pmids <- sub("pmid:", "", pmids)
-s <- sapply(as.integer(pmids), is.integer)
-if (!all(s)) {
-  print("unexpected namespace tag")
-}
-pmids_all <- pmids
-pmids <- unique(pmids)
+pmids_uniq <- unique(df2$publication_reference_id)
 
-summary_df <- add_to_summary(summary_df, "Unique PMIDs", length(pmids))
+summary_df <- add_to_summary(summary_df, "Unique PMIDs", length(pmids_uniq))
 # Get user-entered year for each pmid
 # FIXME - need to catch if user did not enter year.
-print_pub_year <- df2$publication_date[match(pmids, pmids_all)]
+print_pub_year <- df2$publication_date[match(pmids_uniq, df2$publication_reference_id)]
 # FIXME - need to check date format valid
 print_pub_year <- stri_sub(print_pub_year, 1, 4)
 
-# pmids <- 16571413   # for testing
+# pmids <- "16571413" # for testing
 # pmids <- "24336226" # for testing
 # pmids <- "23594957" # for testing
 if (RENEW_PMIDS || !file.exists(pmid_file)) {
-  td <- mapply(pmid_to_title_easy, pmids, print_pub_year, SIMPLIFY = FALSE)
+  td <- mapply(pmid_to_title_easy, pmids_uniq, print_pub_year, SIMPLIFY = FALSE)
   titles_and_dates_df <- as.data.frame(rbindlist(td))
   save(titles_and_dates_df, file = pmid_file)
 } else {
@@ -946,12 +962,13 @@ resp_components_full_sig   <- vector("list", length(uniqIDs))   # used for cell 
 recreated_template         <- vector("list", length(uniqIDs))
 
 # Some signatures are lost entirely during cleaning
+# FIXME - this is also logged below at comment "original template rows deleted"
 which(!(names(signatures_uniq) %in% uniqIDs))
 signatures_uniq <- signatures_uniq[names(signatures_uniq) %in% uniqIDs]
 
 
 # create data structures needed for mSigDB
-if (sheet_type == "GENE" && CREATE_MSIGDB) {
+if (response_type == "GENE" && CREATE_MSIGDB) {
   msigdb_empty <- msigdb_intialize()
   msigdb_list <- vector("list", length(uniqIDs))
 }
@@ -971,7 +988,7 @@ for (i in 1:length(uniqIDs)) {
   # The "updated" (gene or cell types after fixes) response_components
   resp_components_collected[[i]] <- unique(df2tmp$response_component)  # genes or base cell types
 
-  if (sheet_type == "GENE") {
+  if (response_type == "GENE") {
     base_row$response_component <- paste(unique(df2tmp$response_component), collapse = "; ")
     resp_components_annotated[[i]] <- c(response_rowname, response_description, unique(df2tmp$response_component))
 
@@ -987,7 +1004,7 @@ for (i in 1:length(uniqIDs)) {
       msigdb_list[[i]] <- msigdb_df
     }
 
-  } else if (sheet_type == "CELLTYPE_FREQUENCY") {
+  } else if (response_type == "CELLTYPE_FREQUENCY") {
     full_sig <- unique(df2tmp$fully_qualified_response_component)
     base_row$response_component    <- paste(full_sig, collapse = "; ")
     resp_components_full_sig[[i]]  <- full_sig
@@ -1006,6 +1023,8 @@ for (i in 1:length(uniqIDs)) {
     base_row$target_pathogen_taxonid   <- paste(unique(df2tmp$target_pathogen_taxonid), collapse = "; ")
   }
   base_row$exposure_material_id <- paste(unique(df2tmp$exposure_material_id), collapse = "; ")
+  base_row$tissue_type_term_id <- paste(unique(df2tmp$tissue_type_term_id), collapse = "; ")
+
 
   recreated_template[[i]] <- base_row
 }
@@ -1020,14 +1039,14 @@ if(any(colnames(header_rows) != colnames(recreated_template_df))) {
 recreated_template_df <- rbind(header_rows, recreated_template_df)
 
 # Finish up and write out mSigDB submission
-if (sheet_type == "GENE" && CREATE_MSIGDB) {
+if (response_type == "GENE" && CREATE_MSIGDB) {
   summary_df <- write_msigdb_submission(msigdb_list, summary_df)
 }
 
 # Delete unneeded columns from the recreated template
-if (sheet_type == "GENE") {
+if (response_type == "GENE") {
   # do nothing
-} else if (sheet_type == "CELLTYPE_FREQUENCY") {
+} else if (response_type == "CELLTYPE_FREQUENCY") {
   del_cols <- c("proterm_and_extra", "fully_qualified_response_component")
   recreated_template_df <- recreated_template_df[!colnames(recreated_template_df) %in% del_cols]
 }
@@ -1074,14 +1093,14 @@ if (exposure_type == "VACCINE") {
 df2 <- df2[!colnames(df2) %in% del_cols]
 header_rows <- header_rows[!colnames(header_rows) %in% del_cols]
 
-if (sheet_type == "GENE") {
+if (response_type == "GENE") {
   write_submission_template(df2, header_rows, template_name, titles_and_dates_df,
                             resp_components_collected, unmatched_symbols_map,
-                            sheet_type, exposure_type, project)
-} else if (sheet_type == "CELLTYPE_FREQUENCY") {
+                            response_type, exposure_type, project)
+} else if (response_type == "CELLTYPE_FREQUENCY") {
   write_submission_template(df2, header_rows, template_name, titles_and_dates_df,
                             resp_components_full_sig, unmatched_symbols_map = NULL,
-                            sheet_type, exposure_type, project)
+                            response_type, exposure_type, project)
 }
 
 ###########################################
@@ -1095,9 +1114,9 @@ summary_df <- add_to_summary(summary_df, "duplicate signatures (response compone
 dd0 <- length(unique(resp_components_collected))
 summary_df <- add_to_summary(summary_df, "unique signatures (response components only)", dd0)
 
-if (sheet_type == "GENE") {
+if (response_type == "GENE") {
   # do nothing
-} else if (sheet_type == "CELLTYPE_FREQUENCY") {
+} else if (response_type == "CELLTYPE_FREQUENCY") {
   dd0 <- length(resp_components_full_sig)
   summary_df <- add_to_summary(summary_df, "signatures (including proterms)", dd0)
   dd0 <- length(unique(resp_components_full_sig))
@@ -1147,7 +1166,7 @@ d <- lapply(signatures_uniq_gmt,
 
 
 # totals by PMID
-rc_cnt_by_pmid <- lapply(pmids, function(pmid) {
+rc_cnt_by_pmid <- lapply(pmids_uniq, function(pmid) {
   vals <- resp_components_cnt_df[resp_components_cnt_df$pmid == pmid, "count"]
   return(list(pmid = pmid, sum = sum(vals)))
 })
@@ -1159,7 +1178,7 @@ write.csv(rc_cnt_by_pmid,
 
 # Unique response component count by PMID
 # ordered by count, but could as well be ordered by PMID
-rc_cnt_by_pmid_uniq <- resp_comps_by_pmid(resp_components_annotated, pmids)
+rc_cnt_by_pmid_uniq <- resp_comps_by_pmid(resp_components_annotated, pmids_uniq)
 rc_cnt_by_pmid_uniq <- rc_cnt_by_pmid_uniq[order(rc_cnt_by_pmid_uniq$count, decreasing = TRUE), ]
 
 write.csv(rc_cnt_by_pmid_uniq,
@@ -1189,10 +1208,10 @@ write_final_summary(all_response_types, exposure_type, logdir)
 # Plot a histogram of unique response components per PMID
 # outfile <- paste(base_filename, "UniqueCountByPMID.png", sep = "-")
 # png(outfile)
-# if (sheet_type == "GENE") {
+# if (response_type == "GENE") {
 #   p <- ggplot(rc_cnt_by_pmid_uniq, aes(count)) + geom_histogram(bins = 10) + scale_x_log10()
 #   p +  labs(x = "genes per PMID") + annotation_logticks(sides = "b")
-# } else  if (sheet_type == "CELLTYPE_FREQUENCY") {
+# } else  if (response_type == "CELLTYPE_FREQUENCY") {
 #   p <- ggplot(rc_cnt_by_pmid_uniq, aes(count)) + geom_histogram(bins = 10)
 #   p +  labs(x = "Cell types per PMID")
 # }
@@ -1200,10 +1219,10 @@ write_final_summary(all_response_types, exposure_type, logdir)
 
 # Plot a histogram of response_components per signature
 # png(logfile_path(logdir, base_filename, "unique_count_by_signature.png"))
-# if (sheet_type == "GENE") {
+# if (response_type == "GENE") {
 #   p2 <- ggplot(resp_components_cnt_df, aes(count)) + geom_histogram(bins = 10) + scale_x_log10()
 #   p2 +  labs(x = "genes per signature") + annotation_logticks(sides = "b") + theme(axis.title.x = element_text(size = 14), axis.title.y = element_text(size = 14))
-# } else  if (sheet_type == "CELLTYPE_FREQUENCY") {
+# } else  if (response_type == "CELLTYPE_FREQUENCY") {
 #   p2 <- ggplot(resp_components_cnt_df, aes(count)) + geom_histogram(bins = 9) + scale_x_continuous(breaks = seq(1, 9, 1))
 #   p2 +  labs(x = "Cell types per signature") + theme(axis.title.x = element_text(size = 14), axis.title.y = element_text(size = 14))
 # }
