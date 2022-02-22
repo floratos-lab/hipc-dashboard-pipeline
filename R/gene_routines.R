@@ -71,10 +71,10 @@ check_against_real_ncbi <- function(gene_list, source_data_dir) {
 # This is used where NCBI is using an older symbol.
 check_against_nomenclature_authority <- function(gene_list, source_data_dir) {
   Homo_sapiens.gene_info.file <- paste(source_data_dir, basename(ncbi_gene_file_ftp), sep = "/")
-  
+
   ncbi_genes <- read.table(file = Homo_sapiens.gene_info.file, header = TRUE,
                            strip.white = TRUE, stringsAsFactors = FALSE, sep = "\t", quote = "", comment.char = "")
-  
+
   m <- match(gene_list, ncbi_genes$Symbol_from_nomenclature_authority)
   return(ncbi_genes$Symbol[m])
 }
@@ -107,21 +107,27 @@ update_symbols_ncbi <- function(genes, source_data_dir, logdir, base_filename) {
 
   outFile <- paste0(logdir, "/", base_filename, "-bioc_substitute_genes.txt")
   write.table(changedSymbols, outFile, sep = "\t", row.names = FALSE, quote = FALSE)
-  
+
   w <- which(is.na(genes_map$Symbol))
   ncbi_symbols <- check_against_nomenclature_authority(genes_map$alias[w], source_data_dir)
-  
-  # use the NCBI symbol for these symbols for which NCBI 
+
+  # use the NCBI symbol for these symbols for which NCBI
   # does not use the nomenclature authority symbol
   ok <- !is.na(ncbi_symbols)
   genes_map$Symbol[w][ok] <- ncbi_symbols[ok]
-  write.table(genes_map[w[ok], c("alias", "Symbol")],
+
+  uniq_genes_map <- genes_map[w[ok], ]
+  uniq_genes_map <- unique(uniq_genes_map[, c("alias", "Symbol")])
+  uniq_genes_map <- uniq_genes_map[order(uniq_genes_map$alias), ]
+  colnames(uniq_genes_map) <- c("HGNC", "NCBI")
+
+  write.table(uniq_genes_map,
               file = logfile_path(logdir, base_filename, "NCBI_symbols_over_nomenclature_authority.txt"),
-              sep = "\t", row.names = FALSE, col.names = FALSE, quote = FALSE)
+              sep = "\t", row.names = FALSE, col.names = TRUE, quote = FALSE)
   summary_df <- add_to_summary(summary_df,
-                               "NCBI: symbols over nomenclature authority" , sum(!is.na(ncbi_symbols)))
-  
-  
+                               "NCBI: symbols over nomenclature authority" , nrow(uniq_genes_map))
+
+
   # if no symbol was found for an alias, it is NA
   failed_symbols <- unique(subset(genes_map, is.na(Symbol)))
   failed_symbols <- sort(failed_symbols$alias)
@@ -146,55 +152,42 @@ update_symbols_using_hgnc_helper <- function(genes_map, source_data_dir, logdir,
     load(hgnc_file_path)  # assumes it was previously downloaded
     genes.retried <- checkGeneSymbols(genes_map$alias, map=new.hgnc.table, species="human")
   } else {
+    # HGNChelper includes its own internal data if no file provided.
     print(paste("hgnc file not found:", hgnc_file_path))
-    print(paste("hgnc file not found, using HGNCHelper package version"))
+    print(paste("hgnc file not found, using HGNCHelper package version instead"))
 
     # use the map that is included with the HGNChelper package.
     genes.retried <- checkGeneSymbols(genes_map$alias, species="human")
   }
-  
+
   is_good <- check_against_real_ncbi(genes.retried$Suggested.Symbol, source_data_dir)
   newHit <- is_good & is.na(genes_map$Symbol) & !is.na(genes.retried$Suggested.Symbol)
   # not going to try to fix these (just one present)
   newHit <- newHit & !grepl(" /// ", genes.retried$Suggested.Symbol)
-  
+
   # Add the HGNC symbols to the master list
   genes_map$Symbol[newHit] <- genes.retried$Suggested.Symbol[newHit]
-  
+
   additional <- unique(genes.retried[newHit, ])
-  
+
   # find HGNC symbols not in NCBI
   summary_df  <- add_to_summary(summary_df,
                                 "HGNChelper: HGNC symbols not in NCBI" ,
                                 paste(additional$Suggested.Symbol, collapse = ", "))
-  
+
   additional <- additional[order(additional$x), ]
   summary_df  <- add_to_summary(summary_df, "HGNChelper: symbols changed" , nrow(additional))
 
   write.table(additional,
               file = logfile_path(logdir, base_filename, "HGNChelper_additional_substitute_genes.txt"),
               sep = "\t", row.names = FALSE, quote = FALSE)
-  
 
- 
   # gene symbols still not found after HGNC helper
   failed_symbols <- subset(genes_map, is.na(Symbol))
   failed_symbols <- sort(unique(failed_symbols$alias))
   summary_df <- add_to_summary(summary_df,
                                "HGNChelper: failed symbols remaining" , length(failed_symbols))
 
-  # Here we just look at disagreements between the bioconductor symbols and the HGNC symbols in general.
-  # This does not feed into the actual final set of gene symbols we will use.
-  alternate <- genes_map$Symbol != genes.retried$Suggested.Symbol
-  alternate_symbols <- data.frame(symbol = genes_map$Symbol[alternate],
-                                  hgnc = genes.retried$Suggested.Symbol[alternate])
-  alternate_symbols <- unique(subset(alternate_symbols, !is.na(symbol)))
-  summary_df <- add_to_summary(summary_df,
-                               "HGNC_vs_bioc: count of differences" , nrow(alternate_symbols))
-
-  write.table(alternate_symbols,
-              file = logfile_path(logdir, base_filename, "HGNC_vs_bioc_alternate_genes.txt"),
-              sep = "\t", row.names = FALSE)
 
   return(list(genes_map = genes_map, failed_symbols = failed_symbols, summary = summary_df))
 }
@@ -323,7 +316,7 @@ genbank_acc_to_ncbi <- function(genes_map, failed_symbols, source_data_dir) {
   new_symbols <- alias2SymbolUsingNCBI(acc_df$ncbi,
                                       gene.info.file = Homo_sapiens.gene_info.file,
                                       required.columns = c("Symbol", "Symbol_from_nomenclature_authority"))
-  
+
   w <- which(new_symbols$Symbol != acc_df$ncbi)
   summary_df <- add_to_summary(summary_df,
                               "genbank: count of corrected accessions that did not get expected NCBI symbols",
@@ -359,6 +352,7 @@ check_against_ncbi_synonyms <- function(failed_symbols, source_data_dir, logdir,
   ## Check against the actual NCBI background data.
   # Here we will use grep rather than exact matches, to see if any
   # genes warrant manual investigation.
+  # FIXME - grep is not safe, as the curated gene symbols may have regular expression characters.
   # Note we don't use this source as primary because the bioconductor method provides
   # a defined way to chose among multiple hits.
   # "Homo_sapiens.gene_info" has "'" and "#" characters embedded in strings, e.g. "5'";
@@ -371,7 +365,7 @@ check_against_ncbi_synonyms <- function(failed_symbols, source_data_dir, logdir,
                            quote = "", comment.char = "")
 
   m <- match(failed_symbols, ncbi_genes$Symbol)
-  sum(is.na(m)) 
+  sum(is.na(m))
   sum(!is.na(m))
   # Using grepl because synonyms can have many entries per line, just need to find candidates
   # Candidates can then be identified manually
@@ -395,12 +389,17 @@ check_against_ncbi_synonyms <- function(failed_symbols, source_data_dir, logdir,
     }
 
     # Write out the list of potential synonyms
-    # FIXME - if not writing to these filenames, should delete the files if present.
     write.table(print_df,
                 file = logfile_path(logdir, base_filename, "genbank_synonyms.txt"),
                 sep = "\t", row.names = FALSE, col.names = TRUE, quote = FALSE)
     summary_df <- add_to_summary(summary_df,
                                  "ncbi: possible synonyms to be checked manually" , cnt)
+  } else {
+    # if old copy exists, remove it
+    file = logfile_path(logdir, base_filename, "genbank_synonyms.txt")
+    if(file.exists(file)) {
+      file.remove(file = file)
+    }
   }
   return(summary_df)
 }
@@ -420,6 +419,8 @@ log_no_valid_symbol_vs_pmid <- function(noValidSymbols_df, base_filename) {
 # Run all symbol updates
 update_gene_symbols <- function(genes, logdir, base_filename, source_data_dir, download_new_hgnc) {
   summary_df <- data.frame()  # initialize summary log
+
+  genes <- gsub("[()]", "", genes)
 
   rvl <- update_symbols_ncbi(genes, source_data_dir, logdir, base_filename)
   genes_map      <- rvl$genes_map
@@ -452,16 +453,13 @@ update_gene_symbols <- function(genes, logdir, base_filename, source_data_dir, d
   summary_df     <- add_to_summary(summary_df,
                                "Number of invalid gene symbols after all replacements", length(failed_symbols))
 
+  # FIXME - found a case where "(bacterial" caused search to crash due to regular expression error.
+  #         Added code above to fix this particular error, but may need more general character scan
   # Does a check against NCBI synonyms but does not alter any values
   # Writes results to file
-  # FIXME: Error in m_lines[[k]] : subscript out of bounds
   summary_rv <- check_against_ncbi_synonyms(failed_symbols, source_data_dir, logdir, base_filename)
   summary_df <- rbind(summary_df, summary_rv)
 
-  # Save PMID info for unmapped symbols
-  no_valid_symbols_df <- df2[is.na(genes_map$Symbol),
-                             c("response_component", "publication_reference_id", "subm_obs_id", "uniq_obs_id")]
-  log_no_valid_symbol_vs_pmid(no_valid_symbols_df, base_filename)
   return(list(genes_map = genes_map, summary = summary_df))
 }
 
