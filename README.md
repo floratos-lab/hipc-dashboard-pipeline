@@ -2,200 +2,196 @@
 
 # HIPC Dashboard Pipeline
 ## Overview
-This respository, hipc-dashboard-pipeline, provides code and data to generate submission files for the HIPC Dashboard (http://hipc-dashboard.org/).  The HIPC Dashboard itself resides in a [separate GitHub repository](https://github.com/floratos-lab/hipc-signature).
 
-The HIPC Dashboard provides a web interface to the immune signatures curated as part of the HIPC Signatures II project (NIAID).  This initial version of the Dashboard focuses on vaccine reponse signatures, however, it is designed to be extendable to additional signature types.  Work on signatures of responses to infection is in progress.  
+The [Human Immunology Project Consortium (HIPC) Dashboard](http://hipc-dashboard.org/) 
+is a web-application supporting the storage and dissemination of immune
+signatures curated from published literature. This GitHub repository is
+used for preparing data releases for the HIPC Dashboard. It includes
+both the actual release files as well as the code used for generating
+them. The HIPC Dashboard web-app itself is managed via a [separate GitHub repository](https://github.com/floratos-lab/hipc-signature).
 
-The focus of curation are the "response components", the biological features whose change is being measured.  Extensive supporting metadata is captured to characterize the experiment giving rise to each signtaure.  The intial response components curated and released on the Dashboard have been gene expression and cell-type frequency.  Work is also in progress on metabolites, pathways etc.
+Our main objective in this project is to standardize the representation
+of immune signatures, i.e., of research findings that describe how
+immune exposures (e.g., infection, immunization) modulate the abundance
+of biologically important response components (e.g., genes, cell
+subpopulations). Such findings are typically not presented in a
+consistent format and may be found as text, tables, or images within
+publications. To improve access and to promote reuse, we have developed
+a data model that standardizes the content and context of published
+immune signatures. The model is used as the basis for generating
+[curation spreadsheets](./docs) which are utilized by
+human experts to record immune signatures from published literature.
+These spreadsheets are then further processed by the pipeline in this
+GitHub repository. The pipeline performs quality control, enforces
+consistent use of controlled vocabularies, and, finally, generates the
+data release files which will be uploaded to the HIPC Dashboard.
 
-Although all of the original curated data files are made available on this site, it is the files output by the R pipeline, which contain data that has been standardized and reformated, which would be most suitable for consumption by other projects.  These processed files, described in more detail below, are found in the directories
-* **./submissions** - tab-delimited Dashboard load files, one file per signature
-* **./reformatted_data** - standardized versions of curated data in tab-delimited and Broad GMT (tab-delimited) formats.
+The repository contents are as follows:
 
-## Design
-The Dashboard design is flexible and allows submissions with an arbitrary number and type of data columns.  The Dashboard is built on two classes of data.  The first, termed **subjects**, comprises terms drawn from controlled vocabularies which are represented directly in the Dashboard database with all their underlying data. The second class, termed **evidence**, is open and can be used to add any number of additional annotation columns, such as free text or files, as needed for a particular submission.  The addition of new ontology-based data-types ("subjects") requires additions to the data model.  The templates for the first two supported submission types, gene expression and cell-type frequency, are almost identical. The HIPC Dashboard design is based on an earlier project, the Cancer Target Detection and Discovery Network (CTD2), initiated by the Office of Cancer Genomics of the National Cancer Institute (NCI).  A more detailed discussion of the Dashboard architecture is available in the publication Askoy et al. (2017), https://pubmed.ncbi.nlm.nih.gov/29220450/.
+  - **./code**: contains the R code used for processing the source
+    curation data and generating the Dashboard release files.
 
-## Curation
-Curators enter data into Google-sheet based templates exactly as it appears in a publication.  This data is then standardized as needed using suitable ontologies.  The original annotations are also preserved for qualtity control and provenance.  The curation sheets contain several rows of headers used to guide the Dashboard load process but which are not of interest to the wider community.
+  - **./data**:
+    
+      - **./data/source_curations**: source curation spreadsheets, as
+        provided by curators.
+    
+      - **./data/standardized_curations**: curation spreadsheets after
+        undergoing processing for quality control and standardization.
+    
+      - **./data/reference_files**: resources used to support the
+        standardization process, including controlled vocabularies from
+        external sources and mapping files maintained by the project.
+    
+      - **./data/release_files**: Dashboard release files. These are
+        denormalized spreadsheet files generated from the standardized
+        curations. They are formatted as needed for uploading to the
+        Dashboard.
 
-The file "[HIPC_Dashboard_curation_template_fields.pdf](HIPC_Dashboard_curation_template_fields.pdf)" in the pipeline root directly contains the complete specification for each field in the curation templates.
+  - **./docs**: curation templates and column specification.
 
-## Data Standardization
-Standardization varies according to data type.  We use existing community standards wherever possible:
-* **Gene symbols** - Curated gene symbols are updated to current HGNC/NCBI symbols based on (1) NCBI synonyms and (2) a manually created mapping table.  The later deals with specific problematic symbols found in the curated data, where examination of the original data is able to support a definite mapping.
-* **Cell types and markers** - We create a mapping table to standardize the orignal cell type descriptions using terms from the Cell Ontology for cell types and Protein Ontology for additional type-defining markers.
-* **Vaccines** - For influenza vaccines, a year-based tag is used to expand the vaccine into its one to four viral components, by lookup in the file "vaccine_years.txt".
+The overall workflow of the project is depicted below.
 
-## Pipeline Input: Curated data (./source_data)
-Unprocessed, curated data is placed as tab-delimited spreadsheet files in ./source_data, one file per exposure type and per response component type.  These files are the input for the pipeline.
-These are currently:
+![Overall-workflow](./docs/img/overall_workflow.png)
 
-**Vaccine:**
-* **hipc_vaccine - gene_expression.tsv**
-* **hipc_vaccine - cell_type_frequency.tsv**
+## Immune Signature Data Model
 
-**Infection (COVID-19):**
-* **Odak_2020-Julia_Davis-Porada-covid19.tsv**
-* **COVID-19 curation template - example curation.tsv**
+The figure above outlines the key elements of the immune signature data
+model. These are:
 
-This directory also contains the various mapping and translation files required by the R pipeline script.
-* **cell_type_frequency-response_components_mapping.txt** - maps cell-type strings to official cell ontology and protein ontology terms (text export for pipeline).
-* **cell_type_frequency-response_components_mapping.xlsx** - maps cell-type strings to official cell ontology and protein ontology terms (primary copy).
-vac_cell_type-titles_and_dates_df
+  - **Immune exposure**: the immunological perturbation whose effect is
+    measured by the immune signature.
 
-Pubmed data downloaded by the pipeline, by exposure type and response component type:
-* **vac_cell_type-titles_and_dates_df.RData**
-* **vac_gene_expression-titles_and_dates_df.RData**
-* **inf_cell_type-titles_and_dates_df.RData**
-* **inf_gene_expression-titles_and_dates_df.RData**
+  - **Response component**: the biological entity whose abundance is being
+    quantified.
 
-Other background data files:
-* **Homo_sapiens.gene_info.gz** - gene file downloaded from NCBI.
-* **hgnc_complete_set.RData** - HGNC data file downloaded from EBI.
-* **manual_gene_symbol_corrections.txt** - a manually maintained file containing special gene symbol mappings
-* **vaccine_years.txt** - a mapping of influenza vaccines by year to their viral components (text export for pipeline)
-* **vaccine_years.xlsx** - a mapping of influenza vaccines by year to their viral components (primary copy)
+  - **Tissue**: the biological context where the abundance measurements are
+    made.
 
-## R scripts (./R)
-R scripts are in ./R. **generate_HIPC_submissions.R** is the main script. It expects to be called from its source location. It has a number of optional settings. In particular, one can currently choose to run the script for the gene data or the cell-type data (infection data to be added soon).
+  - **Cohort**: the group of individuals subjected to the immune exposure;
+    they are the source of the biological material from which the
+    abundance measurements are taken.
 
-## Data Releases
-The Dashboard database is reloaded in its entirety each time a new release is created.  When a new version of the data is ready, the code, input data and resulting output files are all committed together as a release.  
+  - **Comparison**: the conditions under which differential abundance is
+    assessed.
 
-The file "**changelog.txt**" in the root directory lists all major changes to the pipeline code and process in each release.
-The file "**changelog-data.txt**" in the root directory lists all major updates to the curation templates and the data in each release.
+For each of these elements we define a number of associated data fields
+used to collect element-specific information. As much as possible,
+values for these fields come from controlled vocabularies, either
+leveraging community standards (HUGO gene symbols for genes, Cell
+Ontology terms for cell types, Vaccine Ontology ids for vaccines, etc.)
+or utilizing term lists developed specifically for the needs of the
+project. A specification of all available data fields can be found under
+the [**./docs**](./docs) directory.
 
+## Immune Signature Curation
 
-## Pipeline Output Files 
-### Dashboard Submission files (./submissions)
-This directory contains the Dashboard load files generated by the R pipeline script.
-The submission files are tab-delimited.  The files are named using the pattern "hipc_<type>_<PMID>_<number>, where type is the type of response component ("gene"; or "ctf" for cell-type frequency), PMID is the PMID of the source publication, and "number" is the sequential count of this signature of this type within the publication.
-	
-Gene expression submission files are placed in the subdirectory "submissions/hipc_vac_gene/" or "submissions/hipc_inf_gene/".  
-* Example: for the file **hipc_vac_gene_21357945_1.txt**, "vac" indicates a vaccination signature, "21357945" is the PMID of the publication, and "1" indicates the first signature of this type from that PMID.
-	
-Cell-type submissions are placed in the subdirectory "submissions/hipc_vac_ctf/" or "submissions/hipc_inf_ctf/".
-* Example: for the file **hipc_vac_ctf_26726811_1.txt**, "vac" indicates a vaccination signature, "ctf" indicates type "cell-type frequency", "26726811" is the PMID, and "1" indicates the first signature of this type for that PMID.
+Curators review selected publications, identify immune signatures
+reported therein, and record the signature-related data into the
+curation templates. Data is recorded as it appears in a publication and
+then standardized using suitable controlled vocabularies. The
+standardization is performed partly by the curators and partly by
+post-curation script-assisted annotation. For some data
+(tissue types, vaccines, pathogens) curators are asked to match
+what is reported in the publication to standardized terms from specific
+ontologies. For other data, such as gene symbols, the post-curation
+process will ensure that these are valid HUGO symbols and rectify issues
+such as spelling errors and use of deprecated terms. In all cases, the
+original text from the publication is also preserved, to be used for
+quality control and for maintaining proper provenance.
 
-### Submission file format
-The Dashboard submission load files contain the same columns as described in the curation document, with some additions to support the requirements of the Dashboard itself and to preserve original curated values for fields updated by the pipeline. Each file represents one signature in a denormalized manner. Because the "response_component" field for one signature many contain up to e.g. thousands of gene symbols, this element of the signature is treated differently than all other elements.
-* multi-valued "subject" fields other than "response_component" (genes or vaccines) are split into as many columns as needed to represent each entry in single-valued fashion.  For example, a spreadsheet target_pathogen field containing three pathogens would be split into three separate columns on the same row, "target_pathogen_1", "target_pathogen_2" and "target_pathogen_3".  This currently applies to the fields "exposure_material" and "target_pathogen".
-* "response_component" fields are split into a new row for each entry. For example, a signature with 100 genes will be expanded to 100 rows, each with 1 gene symbol in the response_component column. All other columns will be the same for each row. (This aspect of the Dashboard design allows in principle additional unique supporting evidence to be stored for each response_component (e.g. p-values for genes), however the current HIPC signatures curation project is not collecting data at this level of detail). 
-* The original curated values for response_component appear in the "response_component_original" column.
+Dedicated templates are used for different types of immune
+signatures (infection, vaccination) to accommodate the specific
+data collection needs of each signature type. Bank copies ave available under
+the [**./docs**](./docs) directory.
 
-The following additional fields are added by the pipeline
-* **response_comp_orig_cnt** - the number of response components in originally curated signature (e.g. gene symbols)
-* **response_comp_cnt** - the number of response components in the updated signature.
-* **subm_obs_id** - the sequential count of a signature within all signatures of this type for a particular publication_reference_id (PMID).      
-* **uniq_obs_id** - the original row number of a signature in the curation sheet.         
-* **row_key** - the concatenation of the publication_reference_id, the subm_obs_id and the uniq_obs_id.
-	
-For easy inspection, CSV-formatted versions of the same files are also generated under "submissions/hipc_gene_csv/" and "submissions/hipc_ctf_csv/"
+## Post-Curation Data Processing
 
-Files containing just the complete list of response components for each signature are located in a further subdirectory, "files", for reach response component type, e.g. "submissions/hipc_gene/files".  An example is the file **hipc_gene_sig_21357945_3.txt** which lists six genes, one per line, that make up the third signature for that PMID.
+The high-level post-curation data processing workflow is outlined in the
+figure below.
 
+![Post-curation-processing](./docs/img/post-curation-data-processing.png)
 
-### Log files
-An additional directory (not checked-in to GitHub), "logfiles" is created.  After the script has run, this directory contains a number of files tracing the data transformations and final summary data, as well as "recreated_template" files that represent the data after all updates and transformations, in the same format as the original data.  Some of these files are copied to the folder ./reformatted_data.
+### Standardization
 
-### Reformatted data files (./reformatted_data)
-The "recreated_template" files are in the same spreadsheet format as the original curated data.  These files represent the original data after all updates and transformations, and are provided in tab-delimited, RDS and Excel formats.  Files containing the "response components" for each signature are also provided in the tab-delimited Broad GMT format.
-	
-Cell-type response component files (vaccine = "vac", infection = "inf").  Examples given for vaccine exposure types:
-* **vac_cell_type-recreated_template.tsv** - updated cell-type data in text format
-* **vac_cell_type-response_component_counts_by_row.csv** - the count of  cell-type response components for each signature row
-* **vac_cell_type-response_component_counts.txt** - a list of each cell-type among the response components and its number of occurences.
-* **vac_cell_type-response_components.gmt.txt** - a list of each fully-qualified cell-type (including additional protein markers etc.) in Broad GMT format.  The additional markers are separated from the primary cell type by an ampsersand sybmol "&". For example, "alpha-beta T cell & IFNG-, TNF-a+, IL-2+".
-* **vac_cell_type-session_info.txt** - R session_info  file
-* **vac_gene_expression-recreated_template.txt** - updated gene data in text format
-* **vac_gene_expression-response_component_counts_by_row.csv** - the count of gene response components for each signature row
-* **vac_gene_expression-response_component_counts.txt** - a list of each gene symbol among the response components and its number of occurences
-* **vac_gene_expression-response_components.gmt.txt** - a list of all gene response components for each signature row in Broad GMT format
-* **vac_gene_expression-session_info.txt** - R session_info  file
-* **VACCINE_joint_signatures_count_summary.csv** - contains a table sumamrizing submissions by number of genes, cell types, pathogens, vaccines, tissues and PMIDs.
+Unprocessed data from the curation templates are stored as tab-delimited
+spreadsheet files in the directory **./data/source_curations**. In
+preparation for data release, the files undergo a quality control and
+standardization process. The objective of the process is to identify and
+correct discrepancies and to ensure consistent use of controlled
+vocabularies. Some of the steps undertaken during this process include:
 
-# Database Schema and Notes about Modules
-## Core: Data structures and DAO methods
-This section is excerpted from the [HIPC Dashboard software repository](https://github.com/floratos-lab/hipc-signature/blob/master/README.md#notes-about-modules).  Please visit that page for further details of the implementation of the HIPC Dashboard itself.
+  - **Gene symbols** - Curated gene symbols are updated to current
+    HGNC/NCBI symbols based on (1) NCBI synonyms and (2) a manually
+    created mapping table. The later, where possible, resolves
+    problematic symbols found in the curated data to their correct gene
+    symbol, following manual re-examination of the original publication.
 
-The main database schema is outlined below:
+  - **Cell types and markers** - Measurement of cell type abundance
+    typically involves flow cytometry experiments that utilize
+    cell-marker based sorting. In these cases, Cell Ontology alone may
+    not provide adequate resolution for the proper description of the
+    cell types reported in an immune signature. To address this issue,
+    we curate a mapping table to standardize the original publication
+    cell type descriptions using terms from the Cell Ontology for cell
+    types and Protein Ontology for additional type-defining markers.
 
-![Dashboard DB schema](./hipc_dashboard_data_model_simple.png)
+  - **Vaccines** – For vaccination signatures, curators use the [Vaccine
+    Ontology](https://www.ebi.ac.uk/ols/ontologies/vo) to code vaccines
+    and the [NCBI Taxonomy](https://www.ncbi.nlm.nih.gov/taxonomy) to
+    code the pathogens targeted by these vaccines. For influenza (and
+    possibly other vaccines in the future) we remove the coding burden
+    from the curators by utilizing a mapping file to perform this task.
+    Curators only need to specify the vaccine using a year-based tag and
+    then the coding information is retrieved by looking up the tag in
+    the mapping file.
 
-We are taking advantage of _factory pattern_ and also separating class definitions (interfaces) and their actual implementations (`*Impl`s) for convenience.
-We basically try to convey the following basic ideas in our implementation:
+The curated files mentioned above as well as ancillary files utilized by
+the standardization process (e.g., containing controlled vocabulary
+terms from outside ontologies) are stored in **./data/reference_files**
+and are updated with the latest versions prior to a Dashboard release.
 
-1. Every item that is going to be persisted in the database is of type `DashboardEntity`.
-2. Every `DashboardEntity` has a unique id, which is autogenerated by the database (_i.e._ when persisted in the database); therefore id spaces do not clash.
-3. All new instances of the classes should be created via `DashboardFactory` -- this is for better handling of the semantics.
+### Release Preparation
 
-So let's take `Compound` as an example.
-The class `Compound` is actually an interface that extends the `Subject` interface which, in turn, extends the `DashboardEntity` interface.
-The interface determines which methods a class should provide.
-The actual implementation of the methods goes into the class `CompoundImpl` which, programmatically speaking, implements `Compound`.
-This is better explained with the following simple UML diagram:
+The quality control and standardization process produces new versions of
+the source spreadsheets which are placed under **./data/standardized
+curations**. These files then undergo further processing to generate the
+final data release files which will be uploaded to the Dashboard. This
+processing is essentially a straightforward repackaging of the
+spreadsheets into a format appropriate for the upload scripts. It
+involves the following steps:
 
-![Compound](./sampleClassDiagram.png)
+  - Splitting immune signatures into individual spreadsheet files, one
+    signature per file.
 
-The following UML diagram also shows properties and methods in a detailed manner:
+  - Denormalizing signatures involving multiple response components so
+    that each component is listed on a separate spreadsheet row.
 
-![CompoundDeatils](./sampleClassDiagramDetails.png)
+The final release files are stored under **./data/release_files** and
+have the same columns as the source curation files, with some additions
+to support the requirements of the Dashboard itself and to preserve
+original curated values for fields updated by the pipeline.
 
-Because of these implementation choices, the good practice for creating a new instance of a specific object is as follows:
+Additional details about the processing pipeline can be found under the
+**./data** directory.
 
-	// Demonstration of how a new instance of an object should be created
+## Release Versioning
 
-	// Create a factory
-	DashboardFactory dashboardFactory = new DashboardFactory();
+The Dashboard database is reloaded in its entirety each time a new
+release is created. This involves reprocessing all curation templates,
+old and new, as described above. When the data processing is complete,
+the entire repository is tagged with the new Dashboard release number.
+This includes the pipeline code used to generate the release, the source
+curation templates, all intermediate and support files, and the final
+data release files.
 
-	// Factory grabs the actual implementation and binds it to the object
-	Compound compound = dashboardFactory.create(Compound.class);
-	// Developer modifies the object through the methods defined in the interface
-	String pyrethrinII = "COC(=O)C(\\C)=C\\C1C(C)(C)[C@H]1C(=O)O[C@@H]2C(C)=C(C(=O)C2)CC=CC=C";
-	compound.setSmilesNotation(pyrethrinII);
-	compound.setDisplayName("Pyrethrin II");
+The file **changelog.txt** in the root directory lists all major changes
+to the pipeline code and process in each release. The file
+**changelog-data.txt** in the root directory lists all major updates to
+the curation templates and the data in each release.
 
-Furthermore, the interfaces do not know about the persistence details -- that is, column/table names and _etc_.
-We do not empose a pre-set SQL schema onto the persistence layer, but instead let `Hibernate` deal with the details -- *i.e.* creating the schema.
-So all `Hibernate` and `Persistence` annotations go into the _*Impl*_ classes which use the actual interfaces as *Proxy* (see the UML diagram above). 
-The specific details -- database dialect, usernames, passwords, database names -- are all defined in the `signature.properties` file mentioned above.
+## License
 
-Basic querying methods are implemented as part of the `DashboardDao`.
-Developers do not have to deal with the configuration and/or initialization of the _Dao_ class, 
-but rather they can get it through _Spring_ facilities, _e.g._:
-
-	ApplicationContext appContext = new ClassPathXmlApplicationContext("classpath*:META-INF/spring/applicationContext.xml");
-	DashboardDao dashboardDao = (DashboardDao) appContext.getBean("dashboardDao");
-
-`DashboardDao` can be used to persist objects:
-
-	Synonym synonym = dashboardFactory.create(Synonym.class);
-	synonym.setDisplayName("Synonym 1");
-	dashboardDao.save(synonym);
-
-Normally, you don't have to worry about the `id` field.
-When an object is created via `DashboardFactory`, it has an id of `null`.
-When it gets persisted, the `id` field is updated with the automatically-generated value:
-
-	Synonym synonym = dashboardFactory.create(Synonym.class);
-	assert synonym.getId() == null;
-	dashboardDao.save(synonym);
-	assert synonym.getId() != null;
-
-`DashboardDao` can also be used to acquire objects that are already in the database:
-
-	// Grabs all compounds in the database
-	List<Compound> allCompounds = dashboardDao.findEntities(Compound.class);
-
-	// or more generic entities, for example all Subjects
-	List<Subject> allSubjects = dashboardDao.findEntities(Subject.class);
-
-or to conduct a find operation:
-
-	List<Compound> compoundsBySmiles = dashboardDao.findCompoundsBySmilesNotation(pyrethrinII);
-
-# License
-This project is licensed under the BSD 3-clause license.  See the [LICENSE.txt](LICENSE.txt) file for details.
-
-# References
-Aksoy BA, Dancík V, Smith K, Mazerik JN, Ji Z, Gross B, Nikolova O, Jaber N, Califano A, Schreiber SL, Gerhard DS, Hermida LC, Jagu S, Sander C, Floratos A, Clemons PA. CTD2 Dashboard: a searchable web interface to connect validated results from the Cancer Target Discovery and Development Network. Database (Oxford). 2017 Jan 1;2017:bax054. doi: 10.1093/database/bax054. PMID: 29220450; PMCID: PMC5569694.
+This project is licensed under the BSD 3-clause license. See
+the [LICENSE.txt](./LICENSE.txt) file
+for details.
