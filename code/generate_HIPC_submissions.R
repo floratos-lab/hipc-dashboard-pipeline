@@ -64,13 +64,15 @@ response_type <- "GENE"
 # Available exposure_type values are "VACCINE", "INFECTION" (covid-19)
 exposure_type <- "VACCINE"
 
-# For the moment, assume executing interactively from the ./R directory
-source_data_dir <- "../source_data"
-submission_dir  <- "../submissions"
-logdir          <- "../logfiles"
+# For the moment, assume executing interactively from the ./code directory
+source_curations <- "../data/source_curations"
+reference_files  <- "../data/reference_files"
+release_files    <- "../data/release_files"
+log_files        <- "../logfiles"
+csv_files        <- "../logfiles"
 
-vaccine_tsv     <- "vaccine_years.txt"
-ctf_fixes_tsv   <- "cell_type_frequency-response_components_mapping.txt"
+vaccine_tsv      <- "vaccine_years.txt"
+ctf_fixes_tsv    <- "cell_type_frequency-response_components_mapping.txt"
 manual_gene_corrections_tsv <- "manual_gene_symbol_corrections.txt"
 
 ##### Set runtime parameters #####
@@ -104,25 +106,25 @@ vaccine_VO_has_pathogens <- c("VO_0004810", "VO_0004899", "VO_0004903")
 ##############################
 ##### Initial data setup #####
 ##############################
-if(!dir.exists(source_data_dir)) {
-  stop(paste("source data directory not found:", source_data_dir))
+if(!dir.exists(reference_files)) {
+  stop(paste("source data directory not found:", reference_files))
 }
 
 # create log files directory
-if(!dir.exists(logdir)) {
-  dir.create(logdir)
+if(!dir.exists(log_files)) {
+  dir.create(log_files)
 }
 
 # create submission files directory
-if(!dir.exists(submission_dir)) {
-  dir.create(submission_dir)
+if(!dir.exists(release_files)) {
+  dir.create(release_files)
 }
 
-# Note - if running interactively, will exit script in submission_dir
-setwd(submission_dir)
+# Note - if running interactively, will exit script in release_files
+# setwd(release_files)
 
 if (response_type == "GENE" && DOWNLOAD_NEW_NCBI_GENES) {
-  if(!update_ncbi_homo_sapiens_gene_info(source_data_dir)) {
+  if(!update_ncbi_homo_sapiens_gene_info(reference_files)) {
     print("update of NCBI gene info file failed")
   }
 }
@@ -167,16 +169,16 @@ if (exposure_type == "VACCINE") {
 } else if (exposure_type == "INFECTION") {
   all_response_types <- c("inf_gene_expression", "inf_cell_type")
 }
-pmid_file <- paste(source_data_dir,
+pmid_file <- paste(reference_files,
                    paste(base_filename, "titles_and_dates_df.RData", sep = "-"),
                    sep = "/")
 
 if (exposure_type == "VACCINE") {
-  vaccines_by_year <- read.delim(file = paste(source_data_dir, vaccine_tsv, sep = "/"),
+  vaccines_by_year <- read.delim(file = paste(reference_files, vaccine_tsv, sep = "/"),
                                  stringsAsFactors = FALSE)
 }
 
-insub <- read.delim(file =  paste(source_data_dir, sheet_file, sep = "/"),
+insub <- read.delim(file =  paste(source_curations, sheet_file, sep = "/"),
                     strip.white = TRUE,
                     stringsAsFactors = FALSE)
 nrow(insub)
@@ -198,13 +200,13 @@ if (exposure_type == "VACCINE") {
 } else if(exposure_type == "INFECTION") {
   # read additional file
   # FIXME - a more general solution will be needed for handling multiple files
-  insub2 <- read.delim(file =  paste(source_data_dir, sheet_file2, sep = "/"),
+  insub2 <- read.delim(file =  paste(source_curations, sheet_file2, sep = "/"),
                       strip.white = TRUE,
                       stringsAsFactors = FALSE)
   nrow(insub2)
   insub2 <- insub2[!(colnames(insub2) %in% del_cols_common)]
 
-#  insub3 <- read.delim(file =  paste(source_data_dir, sheet_file3, sep = "/"),
+#  insub3 <- read.delim(file =  paste(source_curations, sheet_file3, sep = "/"),
 #                       strip.white = TRUE,
 #                       stringsAsFactors = FALSE,
 #                       quote = "")
@@ -309,7 +311,7 @@ insub$uniq_obs_id[1:6]        <- c("", "label", "background", "", "", "ID of obs
 insub$row_key[1:6]            <- c("", "label", "background", "", "", "row key")
 
 if (response_type == "CELLTYPE_FREQUENCY") {
-  ctf_fixes <- read.delim(file = paste(source_data_dir, ctf_fixes_tsv, sep = "/"),
+  ctf_fixes <- read.delim(file = paste(reference_files, ctf_fixes_tsv, sep = "/"),
                           stringsAsFactors = FALSE)
   ctf_fixes <- ctf_fixes[1:6]
   # keep only relevant content
@@ -395,7 +397,7 @@ if(response_type == "GENE") {
 
 # Write list of pathogens before any substitutions
 if(exposure_type == "VACCINE") {
-  write_unique_list(df2$target_pathogen, logdir, base_filename, "target_pathogens_before_fixes", do_split = TRUE)
+  write_unique_list(df2$target_pathogen, log_files, base_filename, "target_pathogens_before_fixes", do_split = TRUE)
 }
 
 # fix capitalization (should fix in source google sheet)
@@ -432,7 +434,7 @@ if(any(w)) {
 response_behavior_strings <- sort(unique(df2$response_behavior))
 
 write.table(response_behavior_strings,
-            file = logfile_path(logdir, base_filename, "response_behavior_strings.txt"),
+            file = logfile_path(log_files, base_filename, "response_behavior_strings.txt"),
             sep = "\t", row.names = FALSE, col.names = FALSE)
 
 
@@ -473,17 +475,17 @@ exposure_code_map <- unique(data.frame(codes, text, stringsAsFactors = FALSE))
 exposure_code_map <- exposure_code_map[order(exposure_code_map$codes), ]
 
 write.table(exposure_code_map,
-            file = logfile_path(logdir, base_filename, "exposure_material_code_mapping.txt"),
+            file = logfile_path(log_files, base_filename, "exposure_material_code_mapping.txt"),
             sep = "\t", row.names = FALSE, col.names = FALSE)
 
 dupcodes <- exposure_code_map[duplicated(exposure_code_map$codes), ]$codes
 w <- which(exposure_code_map$codes %in% dupcodes)
 write.table(exposure_code_map[w, ],
-            file = logfile_path(logdir, base_filename, "exposure_material_code_duplicates.txt"),
+            file = logfile_path(log_files, base_filename, "exposure_material_code_duplicates.txt"),
             sep = "\t", row.names = FALSE, col.names = FALSE)
 
 write.table(unique(text),
-            file = logfile_path(logdir, base_filename, "exposure_materials.txt"),
+            file = logfile_path(log_files, base_filename, "exposure_materials.txt"),
             sep = "\t", row.names = FALSE, col.names = FALSE)
 
 
@@ -497,7 +499,7 @@ if (response_type == "GENE") {
   df2 <- cSplit(df2, "response_component_original", sep = ";", direction = "long")
   affyHits <- grep("///", df2$response_component_original)
   write.csv(df2[affyHits, c("response_component_original", "publication_reference_id", "subm_obs_id")],
-            file = logfile_path(logdir, base_filename, "affyHits.csv"),
+            file = logfile_path(log_files, base_filename, "affyHits.csv"),
             row.names = FALSE)
 
   # using " /// " leaves extra slashes, regexp "[/]{3}" does not
@@ -528,7 +530,7 @@ if (response_type == "GENE") {
                                           min_intersection = 10, min_overlap_fraction = 0.75,
                                           require_different_behaviors = TRUE, max_hits = 100)
 
-  file <- logfile_path(logdir, base_filename, "overlapping_signatures.txt")
+  file <- logfile_path(log_files, base_filename, "overlapping_signatures.txt")
   if(length(ft) > 0) {
     write.table(ft, file = file, row.names = FALSE)
   } else {
@@ -544,7 +546,7 @@ if (response_type == "GENE") {
 if (response_type == "GENE") {
   # Apply manual gene corrections
   rvl <- manual_gene_corrections(df2$response_component_original,
-                                 paste(source_data_dir, manual_gene_corrections_tsv, sep = "/"))
+                                 paste(reference_files, manual_gene_corrections_tsv, sep = "/"))
   genes <- rvl$genes
   summary_df <- rbind(summary_df, rvl$summary)
 
@@ -606,12 +608,12 @@ if(length(dups) > 0) {
 
   # Write out list of counts of duplicated response components by signature
   write.table(paste(names(dup_resp_comps), sapply(dup_resp_comps, length), sep = ", "),
-              file = logfile_path(logdir, base_filename, "response_component_duplicates_count.csv"),
+              file = logfile_path(log_files, base_filename, "response_component_duplicates_count.csv"),
               row.names = FALSE, col.names = FALSE, quote = FALSE)
 
   # Write out list of duplicated response components by signature
   # Have to write in loop because varying number of elements per row
-  outfile = logfile_path(logdir, base_filename, "response_component_duplicates.txt")
+  outfile = logfile_path(log_files, base_filename, "response_component_duplicates.txt")
   if(file.exists(outfile)) file.remove(outfile)
   d <- mapply(function(x, n) {
          write.table(paste(c(x, n), collapse = "\t"),
@@ -621,7 +623,7 @@ if(length(dups) > 0) {
 
 
   # Write out sorted list of duplicated response components by signature
-  outfile = logfile_path(logdir, base_filename, "response_component_duplicates_sorted.txt")
+  outfile = logfile_path(log_files, base_filename, "response_component_duplicates_sorted.txt")
   if(file.exists(outfile)) file.remove(outfile)
   d <- mapply(function(x, n) {
          write.table(paste(c(x, sort(n)), collapse = "\t"),
@@ -637,8 +639,8 @@ if (response_type == "GENE") {
   # starts with "genes" manually corrected list from above
   # make sure "genes" is still in synch with df2.
   length(genes) == nrow(df2)
-  rvl <- update_gene_symbols(genes, logdir, base_filename,
-                             source_data_dir,
+  rvl <- update_gene_symbols(genes, log_files, base_filename,
+                             reference_files,
                              DOWNLOAD_NEW_HGNC)
   genes_map <- rvl$genes_map
   summary_df <- rbind(summary_df, rvl$summary)
@@ -647,7 +649,7 @@ if (response_type == "GENE") {
   # Save PMID info for unmapped symbols
   no_valid_symbols_df <- df2[is.na(genes_map$Symbol), names(df2) %in%
                              c("response_component_original", "publication_reference_id", "subm_obs_id", "uniq_obs_id")]
-  log_no_valid_symbol_vs_pmid(no_valid_symbols_df, base_filename)
+  log_no_valid_symbol_vs_pmid(no_valid_symbols_df, log_files, base_filename)
 
   # w <- which(genes_map$Symbol != genes_map$alias)
 
@@ -685,11 +687,11 @@ if (response_type == "GENE") {
                 df2$response_component_original[w]))
     missing_mappings <- data.frame(row = df2$uniq_obs_id[w], label = df2$response_component_original[w])
     write.table(missing_mappings,
-                file = logfile_path(logdir, base_filename, "missing_mappings.tsv"),
+                file = logfile_path(log_files, base_filename, "missing_mappings.tsv"),
                 sep = "\t", row.names = FALSE, col.names = FALSE, quote = FALSE)
 
     write.table(unique(sort(df2$response_component_original[w])),
-                file = logfile_path(logdir, base_filename, "missing_mappings_unique.tsv"),
+                file = logfile_path(log_files, base_filename, "missing_mappings_unique.tsv"),
                 sep = "\t", row.names = FALSE, col.names = FALSE, quote = FALSE)
 
     stop("cell type mapping not found")
@@ -706,11 +708,11 @@ if (response_type == "GENE") {
 
   if (length(failed_matches) > 0) {
     write.table(unique(failed_matches),
-                file = logfile_path(logdir, base_filename, "no_cell_type_match.tsv"),
+                file = logfile_path(log_files, base_filename, "no_cell_type_match.tsv"),
                 sep = "\t", row.names = FALSE, col.names = FALSE, quote = FALSE)
 
     write.table(sort(failed_matches_uniq),
-                file = logfile_path(logdir, base_filename, "no_cell_type_match_sorted.tsv"),
+                file = logfile_path(log_files, base_filename, "no_cell_type_match_sorted.tsv"),
                 sep = "\t", row.names = FALSE, col.names = FALSE, quote = FALSE)
   }
 
@@ -751,7 +753,7 @@ if (response_type == "GENE") {
 
   concatenated_cell_types <- sort(unique(concatenated_cell_types))
   write.table(concatenated_cell_types,
-              file = logfile_path(logdir, base_filename, "concatenated_cell_types.txt"),
+              file = logfile_path(log_files, base_filename, "concatenated_cell_types.txt"),
               sep = "\t", row.names = FALSE, col.names = FALSE, quote = FALSE)
 
   summary_df <- add_to_summary(summary_df,
@@ -786,7 +788,7 @@ for (i in 1:length(uids_list)) {
 
 start_cnt <- end_cnt
 
-write_unique_list(df2$response_component, logdir, base_filename, "response_component_list")
+write_unique_list(df2$response_component, log_files, base_filename, "response_component_list")
 
 #################################################
 ##### Data splitting (2): exposure material #####
@@ -801,7 +803,7 @@ if(any(df2$exposure_material_id == "")) {
 # In case we forget to stop...
 df2 <- df2[df2$exposure_material_id != "", ]
 
-write_unique_list(df2$exposure_material_id, logdir, base_filename, "exposure_material_id", do_split = FALSE)
+write_unique_list(df2$exposure_material_id, log_files, base_filename, "exposure_material_id", do_split = FALSE)
 
 end_cnt <- nrow(df2)
 summary_df <- add_to_summary(summary_df, "Split 2, on exposure material_id, rows added", end_cnt - start_cnt)
@@ -872,10 +874,10 @@ if (exposure_type == "VACCINE") {
 
   # lowercase first letter of each pathogen
 #  substr(text, 1, 1) <- tolower(substr(text, 1,1))
-  write_unique_list(text, logdir, base_filename, "target_pathogens_after_fixes")
+  write_unique_list(text, log_files, base_filename, "target_pathogens_after_fixes")
   summary_df <- add_to_summary(summary_df, "target_pathogens_after_fixes", length(text))
 
-  write_unique_list(df2$target_pathogen_taxonid, logdir, base_filename, "target_pathogen_taxonid")
+  write_unique_list(df2$target_pathogen_taxonid, log_files, base_filename, "target_pathogen_taxonid")
   summary_df <- add_to_summary(summary_df, "target_pathogen_taxonid", length(unique(df2$target_pathogen_taxonid)))
 }
 
@@ -902,10 +904,10 @@ df2$tissue_type_term_id <- sub(" .*$", "", df2$tissue_type_term_id)
 text  <- strsplit(df2$tissue_type, ";") # returns a list
 text <- unique(trimws(unlist(text)))
 
-write_unique_list(text, logdir, base_filename, "tissues_observed")
+write_unique_list(text, log_files, base_filename, "tissues_observed")
 summary_df <- add_to_summary(summary_df, "tissues_observed", length(text))
 
-write_unique_list(df2$tissue_type_term_id, logdir, base_filename, "tissue_type_term_id")
+write_unique_list(df2$tissue_type_term_id, log_files, base_filename, "tissue_type_term_id")
 summary_df <- add_to_summary(summary_df, "tissue_type_term_id", length(unique(df2$tissue_type_term_id)))
 
 
@@ -921,7 +923,7 @@ response_df <- response_df[order(response_df$count, decreasing = TRUE), ]
 # Write out counts in tab-delimited format
 # Use .txt extension rather than .tsv to thwart Excel auto-change of symbols
 write.table(response_df,
-            file = logfile_path(logdir, base_filename, "response_component_counts.txt"),
+            file = logfile_path(log_files, base_filename, "response_component_counts.txt"),
             sep = "\t", row.names = FALSE)
 
 
@@ -1058,7 +1060,7 @@ recreated_template_df <- recreated_template_df[!colnames(recreated_template_df) 
 colnames(recreated_template_df)[1] <- ""
 # Write out the recreated upload template in tab-delimited format
 write.table(recreated_template_df,
-            file = logfile_path(logdir, base_filename, "recreated_template.tsv"),
+            file = logfile_path(log_files, base_filename, "recreated_template.tsv"),
             sep = "\t", row.names = FALSE)
 
 
@@ -1094,11 +1096,11 @@ df2 <- df2[!colnames(df2) %in% del_cols]
 header_rows <- header_rows[!colnames(header_rows) %in% del_cols]
 
 if (response_type == "GENE") {
-  write_submission_template(df2, header_rows, template_name, titles_and_dates_df,
+  write_submission_template(df2, header_rows, release_files, csv_files, template_name, titles_and_dates_df,
                             resp_components_collected, unmatched_symbols_map,
                             response_type, exposure_type, project)
 } else if (response_type == "CELLTYPE_FREQUENCY") {
-  write_submission_template(df2, header_rows, template_name, titles_and_dates_df,
+  write_submission_template(df2, header_rows, release_files, csv_files, template_name, titles_and_dates_df,
                             resp_components_full_sig, unmatched_symbols_map = NULL,
                             response_type, exposure_type, project)
 }
@@ -1122,14 +1124,14 @@ if (response_type == "GENE") {
   dd0 <- length(unique(resp_components_full_sig))
   summary_df <- add_to_summary(summary_df, "unique signatures (including proterms)", dd0)
 
-  outfile = logfile_path(logdir, base_filename, "full_signatures_with_proterms.txt")
+  outfile = logfile_path(log_files, base_filename, "full_signatures_with_proterms.txt")
   if(file.exists(outfile)) file.remove(outfile)
   d <- lapply(resp_components_full_sig,
               function(x) {write.table(paste(x, collapse = "\t"),
                           file = outfile, row.names = FALSE, col.names = FALSE,
                           quote = FALSE, append = TRUE)})
 
-  outfile = logfile_path(logdir, base_filename, "full_signatures_with_proterms_unique.txt")
+  outfile = logfile_path(log_files, base_filename, "full_signatures_with_proterms_unique.txt")
   if(file.exists(outfile)) file.remove(outfile)
   d <- lapply(unique(resp_components_full_sig),
               function(x) {write.table(paste(x, collapse = "\t"),
@@ -1138,10 +1140,10 @@ if (response_type == "GENE") {
 }
 
 write.csv(resp_components_cnt_df,
-          file = logfile_path(logdir, base_filename, "response_component_counts_by_row.csv"),
+          file = logfile_path(log_files, base_filename, "response_component_counts_by_row.csv"),
           row.names = FALSE)
 
-outfile = logfile_path(logdir, base_filename, "response_components.gmt.txt")
+outfile = logfile_path(log_files, base_filename, "response_components.gmt.txt")
 if(file.exists(outfile)) file.remove(outfile)
 d <- lapply(resp_components_annotated,
             function(x) write.table(paste(x, collapse = "\t"),
@@ -1157,7 +1159,7 @@ signatures_uniq_gmt <- mapply(function(x, n) {
                          c(x[1], x[2], n)
                        }, resp_components_annotated, signatures_uniq)
 
-outfile = logfile_path(logdir, base_filename, "response_components_original.gmt.txt")
+outfile = logfile_path(log_files, base_filename, "response_components_original.gmt.txt")
 if(file.exists(outfile)) file.remove(outfile)
 d <- lapply(signatures_uniq_gmt,
             function(x) write.table(paste(x, collapse = "\t"),
@@ -1173,7 +1175,7 @@ rc_cnt_by_pmid <- lapply(pmids_uniq, function(pmid) {
 rc_cnt_by_pmid <- rbindlist(rc_cnt_by_pmid)
 # Note that response components can appear in more than one signature per PMID.  These are not unique counts.
 write.csv(rc_cnt_by_pmid,
-          file = logfile_path(logdir, base_filename, "response_component_non-unique_count_by_PMID.csv"),
+          file = logfile_path(log_files, base_filename, "response_component_non-unique_count_by_PMID.csv"),
           row.names = FALSE)
 
 # Unique response component count by PMID
@@ -1182,7 +1184,7 @@ rc_cnt_by_pmid_uniq <- resp_comps_by_pmid(resp_components_annotated, pmids_uniq)
 rc_cnt_by_pmid_uniq <- rc_cnt_by_pmid_uniq[order(rc_cnt_by_pmid_uniq$count, decreasing = TRUE), ]
 
 write.csv(rc_cnt_by_pmid_uniq,
-          file = logfile_path(logdir, base_filename, "response_component_unique_count_by_PMID.csv"),
+          file = logfile_path(log_files, base_filename, "response_component_unique_count_by_PMID.csv"),
           row.names = FALSE)
 
 summary_df <- add_to_summary(summary_df, "min signature size", min(resp_components_cnt_df$count))
@@ -1194,11 +1196,11 @@ s <- paste(s, collapse = " ")
 summary_df <- add_to_summary(summary_df, "original template rows deleted", s)
 
 write.csv(summary_df,
-          file = logfile_path(logdir, base_filename, "run_summary_counts.csv"),
+          file = logfile_path(log_files, base_filename, "run_summary_counts.csv"),
           row.names = FALSE)
 
 # if have all available response types, write a joint summary
-write_final_summary(all_response_types, exposure_type, logdir)
+write_joint_summary(all_response_types, exposure_type, log_files)
 
 
 ##########################
@@ -1218,7 +1220,7 @@ write_final_summary(all_response_types, exposure_type, logdir)
 # dev.off()
 
 # Plot a histogram of response_components per signature
-# png(logfile_path(logdir, base_filename, "unique_count_by_signature.png"))
+# png(logfile_path(log_files, base_filename, "unique_count_by_signature.png"))
 # if (response_type == "GENE") {
 #   p2 <- ggplot(resp_components_cnt_df, aes(count)) + geom_histogram(bins = 10) + scale_x_log10()
 #   p2 +  labs(x = "genes per signature") + annotation_logticks(sides = "b") + theme(axis.title.x = element_text(size = 14), axis.title.y = element_text(size = 14))
@@ -1233,5 +1235,5 @@ write_final_summary(all_response_types, exposure_type, logdir)
 #################################
 
 writeLines(capture.output(sessionInfo()),
-           logfile_path(logdir, base_filename, "session_info.txt"))
+           logfile_path(log_files, base_filename, "session_info.txt"))
 
