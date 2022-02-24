@@ -25,7 +25,7 @@ These are currently:
 * **hipc_vaccine - cell_type_frequency.tsv**
 
 **Infection (COVID-19):**
-* **Odak_2020-Julia_Davis-Porada-covid19.tsv**
+* **Odak_2020_pmid_32650275 - covid19.tsv**
 * **COVID-19 curation template - example curation.tsv**
 
 ## Reference and Ancillary Data (./reference_files)
