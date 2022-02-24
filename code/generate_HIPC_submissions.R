@@ -60,9 +60,9 @@ source("msigdb_submission_utils.R")
 source("write_joint_summary.R")
 
 # Available response_type values are "GENE", "CELLTYPE_FREQUENCY"
-response_type <- "GENE"
+response_type <- "CELLTYPE_FREQUENCY"
 # Available exposure_type values are "VACCINE", "INFECTION" (covid-19)
-exposure_type <- "VACCINE"
+exposure_type <- "INFECTION"
 
 # For the moment, assume executing interactively from the ./code directory
 source_curations <- "../data/source_curations"
@@ -848,7 +848,6 @@ if (exposure_type == "VACCINE") {
   df2[w, "target_pathogen_taxonid"] <- "1717; 1513; 12080; 12083; 12086"
 
   ##### split ######
-  # influenza rows don't hae taxonid yet, supply a dummy so split does not remove rows
   df2 <- cSplit(df2, "target_pathogen_taxonid", sep = ";", direction = "long")
 
   # class(df2)  # "data.table" "data.frame"
@@ -887,7 +886,6 @@ if (exposure_type == "VACCINE") {
 ###############################################################
 
 ##### split ######
-# influenza rows don't hae taxonid yet, supply a dummy so split does not remove rows
 df2 <- cSplit(df2, "tissue_type_term_id", sep = ";", direction = "long")
 
 # class(df2)  # "data.table" "data.frame"
@@ -910,6 +908,21 @@ summary_df <- add_to_summary(summary_df, "tissues_observed", length(text))
 write_unique_list(df2$tissue_type_term_id, log_files, base_filename, "tissue_type_term_id")
 summary_df <- add_to_summary(summary_df, "tissue_type_term_id", length(unique(df2$tissue_type_term_id)))
 
+###############################################################
+##### Data splitting (5): comparison                      #####
+###############################################################
+
+##### split ######
+df2 <- cSplit(df2, "comparison", sep = ";", direction = "long")
+
+# class(df2)  # "data.table" "data.frame"
+df2 <- as.data.frame(df2)
+df2$comparison <- trimws(df2$comparison)
+
+end_cnt <- nrow(df2)
+summary_df <- add_to_summary(summary_df, "Split 5, on comparison, rows added", end_cnt - start_cnt)
+summary_df <- add_to_summary(summary_df, "Split 5, on comparison, total rows", end_cnt)
+start_cnt <- end_cnt
 
 ####################################################################
 #### Get counts of each response component for e.g. word cloud #####
