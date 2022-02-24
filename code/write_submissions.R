@@ -71,19 +71,19 @@ choose_joining_preposition <- function(response_behavior) {
 }
 
 # Write out the submission templates
-write_submission_template <- function(df2_cpy, header_rows, template_name, titles_and_dates_df,
+write_submission_template <- function(df2_cpy, header_rows, release_files, csv_files, template_name, titles_and_dates_df,
                                       resp_components, unmatched_symbols_map = NULL,
                                       sheet_type, exposure_type, project) {
 
   # create template directory and its file subdirectory
-  double_path <- paste(template_name, "files", sep = "/")
+  double_path <- paste(release_files, template_name, "files", sep = "/")
   if (!dir.exists(double_path)) {
     dir.create(double_path, recursive = TRUE)
   }
 
   # A place to keep csv format copies of the templates for easy inspection in Excel
   template_name_csv <- paste(template_name, "csv", sep = "_")
-  double_path <- paste(template_name_csv, "files", sep = "/")
+  double_path <- paste(csv_files, template_name_csv, "files", sep = "/")
   if (!dir.exists(double_path)) {
     dir.create(double_path, recursive = TRUE)
   }
@@ -237,7 +237,7 @@ write_submission_template <- function(df2_cpy, header_rows, template_name, title
     # Note that only one response_component per line, so don't worry about separator character.
     # Use suffix ".txt" to prevent automatic Excel conversions of gene names
     write.table(resp_components[[uil]],
-                file = paste(template_name, "files", signatureFilename, sep = "/"),
+                file = paste(release_files, template_name, "files", signatureFilename, sep = "/"),
                 row.names = FALSE, col.names = FALSE, quote = FALSE)
 
     if (sheet_type == "GENE") {
@@ -246,7 +246,7 @@ write_submission_template <- function(df2_cpy, header_rows, template_name, title
       # ugs_map <- sort(ugs_map$alias)
       completeGenes <- c(resp_components[[uil]], ugs_map)
       write.table(completeGenes,
-                  file = paste(template_name, "files", completeSignatureFilename, sep = "/"),
+                  file = paste(release_files, template_name, "files", completeSignatureFilename, sep = "/"),
                   row.names = FALSE, col.names = FALSE, quote = FALSE)
     } else if (sheet_type == "CELLTYPE_FREQUENCY") {
       # do nothing
@@ -256,11 +256,11 @@ write_submission_template <- function(df2_cpy, header_rows, template_name, title
     # Only difference is the files end in .csv so can automatically open in Excel
     # For internal use only, not for users as Excel will alter some gene symbols.
     write.table(resp_components[[uil]],
-                file = paste(template_name_csv, "files", signatureFilename, sep = "/"),
+                file = paste(csv_files, template_name_csv, "files", signatureFilename, sep = "/"),
                 row.names = FALSE, col.names = FALSE, quote = FALSE)
     if (sheet_type == "GENE") {
       write.table(completeGenes,
-                  file = paste(template_name_csv, "files", completeSignatureFilename, sep = "/"),
+                  file = paste(csv_files, template_name_csv, "files", completeSignatureFilename, sep = "/"),
                   row.names = FALSE, col.names = FALSE, quote = FALSE)
     } else if (sheet_type == "CELLTYPE_FREQUENCY") {
       # do nothing
@@ -268,13 +268,12 @@ write_submission_template <- function(df2_cpy, header_rows, template_name, title
 
     # Write out the actual submission template in tab-delimited format
     write.table(dftmp,
-                file = paste0(template_name, "/", submission_name, ".txt"),
+                file = paste(release_files, template_name, paste0(submission_name, ".txt"), sep = "/"),
                 sep = "\t", row.names = FALSE)
 
     # For convenience, write out CSV version
-    # Java crashes when try to write out to Excel xlsx format,
     write.csv(dftmp,
-              file = paste0(template_name_csv, "/", submission_name, ".csv"),
+              file = paste(csv_files, template_name_csv, paste0(submission_name, ".csv"), sep = "/"),
               row.names = FALSE)
 
     if(exposure_type == "VACCINE") {
@@ -348,11 +347,11 @@ write_submission_template <- function(df2_cpy, header_rows, template_name, title
 
   # Write out the actual dashboard-CV-per-template template in tab-delimited format
   write.table(cv,
-              logfile_path(template_name, template_name, "CV-per-template.txt"),
+              paste(release_files, template_name, paste0(template_name, "-CV-per-template.txt"), sep = "/"),
               sep = "\t", row.names = FALSE)
 
   # Write out the actual dashboard-CV-per-template template in csv format
   write.csv(cv,
-            logfile_path(template_name_csv, template_name, "CV-per-template.csv"),
+            paste(csv_files, template_name_csv, paste0(template_name, "-CV-per-template.csv"), sep = "/"),
             row.names = FALSE)
 }
