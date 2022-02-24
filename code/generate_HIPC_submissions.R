@@ -64,12 +64,13 @@ response_type <- "CELLTYPE_FREQUENCY"
 # Available exposure_type values are "VACCINE", "INFECTION" (covid-19)
 exposure_type <- "INFECTION"
 
-# For the moment, assume executing interactively from the ./code directory
+# Assume executing from the ./code directory
 source_curations <- "../data/source_curations"
 reference_files  <- "../data/reference_files"
 release_files    <- "../data/release_files"
 log_files        <- "../logfiles"
 csv_files        <- "../logfiles"
+standardized_curations <- "../standardized_curations"
 
 vaccine_tsv      <- "vaccine_years.txt"
 ctf_fixes_tsv    <- "cell_type_frequency-response_components_mapping.txt"
@@ -1073,7 +1074,7 @@ recreated_template_df <- recreated_template_df[!colnames(recreated_template_df) 
 colnames(recreated_template_df)[1] <- ""
 # Write out the recreated upload template in tab-delimited format
 write.table(recreated_template_df,
-            file = logfile_path(log_files, base_filename, "recreated_template.tsv"),
+            file = logfile_path(standardized_curations, base_filename, "standardized_curations.tsv"),
             sep = "\t", row.names = FALSE)
 
 
@@ -1156,7 +1157,7 @@ write.csv(resp_components_cnt_df,
           file = logfile_path(log_files, base_filename, "response_component_counts_by_row.csv"),
           row.names = FALSE)
 
-outfile = logfile_path(log_files, base_filename, "response_components.gmt.txt")
+outfile = logfile_path(standardized_curations, base_filename, "response_components.gmt.txt")
 if(file.exists(outfile)) file.remove(outfile)
 d <- lapply(resp_components_annotated,
             function(x) write.table(paste(x, collapse = "\t"),
@@ -1213,7 +1214,7 @@ write.csv(summary_df,
           row.names = FALSE)
 
 # if have all available response types, write a joint summary
-write_joint_summary(all_response_types, exposure_type, log_files)
+write_joint_summary(all_response_types, exposure_type, standardized_curations)
 
 
 ##########################
@@ -1249,4 +1250,6 @@ write_joint_summary(all_response_types, exposure_type, log_files)
 
 writeLines(capture.output(sessionInfo()),
            logfile_path(log_files, base_filename, "session_info.txt"))
+writeLines(capture.output(sessionInfo()),
+           logfile_path(standardized_curations, base_filename, "session_info.txt"))
 
