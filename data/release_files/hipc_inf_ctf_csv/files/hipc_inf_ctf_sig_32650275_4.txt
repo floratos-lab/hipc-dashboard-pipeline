@@ -1,2 +1,0 @@
-B cell, CD19-positive & CD45+, CD3-
-CD4-positive, CD25-positive, alpha-beta regulatory T cell & CD45+, CD19-, CD3+, CD4+, CD25+, CD127low

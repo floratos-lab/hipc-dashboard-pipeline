@@ -1,7 +1,0 @@
-CD14-positive, CD16-positive monocyte & HLA-DR++
-B cell & CD19+, CD69+
-CD8-positive, alpha-beta T cell & CXCR4+
-CD8-positive, alpha-beta T cell & CD69+
-CD4-positive, alpha-beta T cell & CCR5+
-CD4-positive, alpha-beta T cell & CD54+
-CD4-positive, alpha-beta T cell & CD69+

@@ -1,1 +1,0 @@
-naive T cell & CD3+, CD56-, CD19-, CD8+, CD45RA+, CD62L+

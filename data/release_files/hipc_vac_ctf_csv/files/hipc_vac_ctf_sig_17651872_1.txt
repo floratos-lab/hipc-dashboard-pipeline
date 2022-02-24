@@ -1,4 +1,0 @@
-leukocyte
-neutrophil
-lymphocyte
-eosinophil

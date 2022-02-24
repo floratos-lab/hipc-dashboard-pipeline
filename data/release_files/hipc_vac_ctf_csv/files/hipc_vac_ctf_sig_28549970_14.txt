@@ -1,7 +1,0 @@
-CD14-positive monocyte & (total)
-CD14-positive monocyte & CCR5+
-natural killer cell & CD16+, CD56+, CD3+
-CD4-positive, alpha-beta T cell & CD54+
-CD4-positive, alpha-beta T cell & CCR3+
-CD4-positive, alpha-beta T cell & CXCR4+
-CD8-positive, alpha-beta T cell & CD54+

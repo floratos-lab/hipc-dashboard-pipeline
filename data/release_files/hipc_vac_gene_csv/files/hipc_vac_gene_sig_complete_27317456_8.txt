@@ -1,4 +1,0 @@
-SQLE
-FDFT1
-LBR
-PMVK

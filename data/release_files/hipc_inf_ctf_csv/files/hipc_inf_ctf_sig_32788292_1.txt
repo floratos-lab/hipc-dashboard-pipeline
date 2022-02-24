@@ -1,2 +1,0 @@
-plasmablast & CD3-, CD20-, CD56-, CD14-, CD16-, CD11c-, CD123-, CD19-lo, CD27-hi, CD38-hi, HLA-DR+
-effector CD8-positive, alpha-beta T cell & CD3+, CD38-hi, HLA-DR++
