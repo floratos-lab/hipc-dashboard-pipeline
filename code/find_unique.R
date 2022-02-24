@@ -1,6 +1,6 @@
 # Returns FALSE if not all types present, TRUE otherwise.
 # WARNING - The format of each result file to be read must be specified.
-write_final_summary <- function(response_types, exposure_type, logdir) {
+write_joint_summary <- function(response_types, exposure_type, logdir) {
   # check if one file of each response_type is present
   # FIXME - this will not catch rare case of when new file type added in code,
   #         but not yet present on disk.  Should check for each file.
