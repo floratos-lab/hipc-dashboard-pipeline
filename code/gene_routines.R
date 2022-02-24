@@ -80,7 +80,7 @@ check_against_nomenclature_authority <- function(gene_list, source_data_dir) {
 }
 
 
-update_symbols_ncbi <- function(genes, source_data_dir, logdir, base_filename) {
+update_symbols_ncbi <- function(genes, source_data_dir, log_files, base_filename) {
   summary_df <- data.frame()  # initialize summary log
 
 
@@ -105,7 +105,7 @@ update_symbols_ncbi <- function(genes, source_data_dir, logdir, base_filename) {
   summary_df <- add_to_summary(summary_df,
                                "alias2SymbolUsingNCBI(): symbols changed" , nrow(changedSymbols))
 
-  outFile <- paste0(logdir, "/", base_filename, "-bioc_substitute_genes.txt")
+  outFile <- paste0(log_files, "/", base_filename, "-bioc_substitute_genes.txt")
   write.table(changedSymbols, outFile, sep = "\t", row.names = FALSE, quote = FALSE)
 
   w <- which(is.na(genes_map$Symbol))
@@ -122,7 +122,7 @@ update_symbols_ncbi <- function(genes, source_data_dir, logdir, base_filename) {
   colnames(uniq_genes_map) <- c("HGNC", "NCBI")
 
   write.table(uniq_genes_map,
-              file = logfile_path(logdir, base_filename, "NCBI_symbols_over_nomenclature_authority.txt"),
+              file = logfile_path(log_files, base_filename, "NCBI_symbols_over_nomenclature_authority.txt"),
               sep = "\t", row.names = FALSE, col.names = TRUE, quote = FALSE)
   summary_df <- add_to_summary(summary_df,
                                "NCBI: symbols over nomenclature authority" , nrow(uniq_genes_map))
@@ -135,12 +135,12 @@ update_symbols_ncbi <- function(genes, source_data_dir, logdir, base_filename) {
                                "alias2SymbolUsingNCBI(): failed symbols remaining" , length(failed_symbols))
 
   write.table(failed_symbols,
-              file = logfile_path(logdir, base_filename, "bioc_no_substitute_genes.txt"),
+              file = logfile_path(log_files, base_filename, "bioc_no_substitute_genes.txt"),
               sep = "\t", row.names = FALSE, col.names = FALSE, quote = FALSE)
   return(list(genes_map = genes_map, failed_symbols = failed_symbols, summary = summary_df))
 }
 
-update_symbols_using_hgnc_helper <- function(genes_map, source_data_dir, logdir, base_filename, download_new_hgnc) {
+update_symbols_using_hgnc_helper <- function(genes_map, source_data_dir, log_files, base_filename, download_new_hgnc) {
   summary_df <- data.frame()  # initialize summary log
   hgnc_file_path <- paste(source_data_dir, hgnc_file, sep = "/")
   if (download_new_hgnc) {
@@ -179,7 +179,7 @@ update_symbols_using_hgnc_helper <- function(genes_map, source_data_dir, logdir,
   summary_df  <- add_to_summary(summary_df, "HGNChelper: symbols changed" , nrow(additional))
 
   write.table(additional,
-              file = logfile_path(logdir, base_filename, "HGNChelper_additional_substitute_genes.txt"),
+              file = logfile_path(log_files, base_filename, "HGNChelper_additional_substitute_genes.txt"),
               sep = "\t", row.names = FALSE, quote = FALSE)
 
   # gene symbols still not found after HGNC helper
@@ -347,7 +347,7 @@ genbank_acc_to_ncbi <- function(genes_map, failed_symbols, source_data_dir) {
   return(list(genes_map = genes_map, summary = summary_df))
 }
 
-check_against_ncbi_synonyms <- function(failed_symbols, source_data_dir, logdir, base_filename) {
+check_against_ncbi_synonyms <- function(failed_symbols, source_data_dir, log_files, base_filename) {
 
   ## Check against the actual NCBI background data.
   # Here we will use grep rather than exact matches, to see if any
@@ -390,13 +390,13 @@ check_against_ncbi_synonyms <- function(failed_symbols, source_data_dir, logdir,
 
     # Write out the list of potential synonyms
     write.table(print_df,
-                file = logfile_path(logdir, base_filename, "genbank_synonyms.txt"),
+                file = logfile_path(log_files, base_filename, "genbank_synonyms.txt"),
                 sep = "\t", row.names = FALSE, col.names = TRUE, quote = FALSE)
     summary_df <- add_to_summary(summary_df,
                                  "ncbi: possible synonyms to be checked manually" , cnt)
   } else {
     # if old copy exists, remove it
-    file = logfile_path(logdir, base_filename, "genbank_synonyms.txt")
+    file = logfile_path(log_files, base_filename, "genbank_synonyms.txt")
     if(file.exists(file)) {
       file.remove(file = file)
     }
@@ -404,25 +404,25 @@ check_against_ncbi_synonyms <- function(failed_symbols, source_data_dir, logdir,
   return(summary_df)
 }
 
-log_no_valid_symbol_vs_pmid <- function(noValidSymbols_df, base_filename) {
+log_no_valid_symbol_vs_pmid <- function(noValidSymbols_df, log_files, base_filename) {
   # contains the following columns: c("response_component", "publication_reference", "subObsID", "uniqObsID")
   write.table(noValidSymbols_df,
-              file = logfile_path(logdir, base_filename, "no_substitute_genes_with_PMIDs.txt"),
+              file = logfile_path(log_files, base_filename, "no_substitute_genes_with_PMIDs.txt"),
               row.names = FALSE, col.names = TRUE,  quote = FALSE)
 
   pmids_with_invalid_gene_symbols <- unique(noValidSymbols_df$publication_reference)
   write.table(pmids_with_invalid_gene_symbols,
-              file = logfile_path(logdir, base_filename, "PMIDs_with_invalid_gene_symbols.txt"),
+              file = logfile_path(log_files, base_filename, "PMIDs_with_invalid_gene_symbols.txt"),
               sep = "\t", row.names = FALSE, col.names = TRUE, quote = FALSE)
 }
 
 # Run all symbol updates
-update_gene_symbols <- function(genes, logdir, base_filename, source_data_dir, download_new_hgnc) {
+update_gene_symbols <- function(genes, log_files, base_filename, source_data_dir, download_new_hgnc) {
   summary_df <- data.frame()  # initialize summary log
 
   genes <- gsub("[()]", "", genes)
 
-  rvl <- update_symbols_ncbi(genes, source_data_dir, logdir, base_filename)
+  rvl <- update_symbols_ncbi(genes, source_data_dir, log_files, base_filename)
   genes_map      <- rvl$genes_map
   failed_symbols <- rvl$failed_symbols
   summary_df     <- rbind(summary_df, rvl$summary)
@@ -435,7 +435,7 @@ update_gene_symbols <- function(genes, logdir, base_filename, source_data_dir, d
   #  x contains non-approved gene symbols
 
   # See how many NAs can be fixed
-  rvl            <- update_symbols_using_hgnc_helper(genes_map, source_data_dir, logdir, base_filename,
+  rvl            <- update_symbols_using_hgnc_helper(genes_map, source_data_dir, log_files, base_filename,
                                                      download_new_hgnc)
   genes_map      <- rvl$genes_map
   failed_symbols <- rvl$failed_symbols
@@ -457,7 +457,7 @@ update_gene_symbols <- function(genes, logdir, base_filename, source_data_dir, d
   #         Added code above to fix this particular error, but may need more general character scan
   # Does a check against NCBI synonyms but does not alter any values
   # Writes results to file
-  summary_rv <- check_against_ncbi_synonyms(failed_symbols, source_data_dir, logdir, base_filename)
+  summary_rv <- check_against_ncbi_synonyms(failed_symbols, source_data_dir, log_files, base_filename)
   summary_df <- rbind(summary_df, summary_rv)
 
   return(list(genes_map = genes_map, summary = summary_df))
