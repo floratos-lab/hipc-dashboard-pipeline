@@ -57,7 +57,7 @@ source("vaccines_pathogens.R")
 source("pmid_to_title_easy.R")
 source("write_submissions.R")
 source("msigdb_submission_utils.R")
-source("find_unique.R")
+source("write_joint_summary.R")
 
 # Available response_type values are "GENE", "CELLTYPE_FREQUENCY"
 response_type <- "GENE"
