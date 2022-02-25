@@ -102,7 +102,7 @@ quality control and for maintaining proper provenance.
 
 Dedicated templates are used for different types of immune
 signatures (infection, vaccination) to accommodate the specific
-data collection needs of each signature type. Bank copies ave available under
+data collection needs of each signature type. Blank copies ave available under
 the [**./docs**](./docs) directory.
 
 ## Post-Curation Data Processing
@@ -154,8 +154,7 @@ and are updated with the latest versions prior to a Dashboard release.
 ### Release Preparation
 
 The quality control and standardization process produces new versions of
-the source spreadsheets which are placed under **./data/standardized
-curations**. These files then undergo further processing to generate the
+the source spreadsheets which are placed under **./data/standardized_curations**. These files then undergo further processing to generate the
 final data release files which will be uploaded to the Dashboard. This
 processing is essentially a straightforward repackaging of the
 spreadsheets into a format appropriate for the upload scripts. It
