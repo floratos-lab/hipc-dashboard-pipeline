@@ -7,7 +7,7 @@ write_joint_summary <- function(response_types, exposure_type, logdir) {
   for(i in 1:length(response_types)) {
     test_filename <- logfile_path(logdir, response_types[i], "exposure_material_id.txt")
     if(!file.exists(test_filename)) {
-      print(paste("write_final_summary: file not found", test_filename))
+      print(paste("write_joint_summary: file not found", test_filename))
       return(FALSE)
     }
   }
