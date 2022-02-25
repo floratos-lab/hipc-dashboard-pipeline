@@ -18,11 +18,11 @@ other attached packages:
 [19] uniqtag_1.0           splitstackshape_1.4.8
 
 loaded via a namespace (and not attached):
- [1] KEGGREST_1.34.0        tidyselect_1.1.1       purrr_0.3.4            colorspace_2.0-2       vctrs_0.3.8            generics_0.1.2        
+ [1] KEGGREST_1.34.0        tidyselect_1.1.2       purrr_0.3.4            colorspace_2.0-3       vctrs_0.3.8            generics_0.1.2        
  [7] utf8_1.2.2             blob_1.2.2             rlang_1.0.1            pillar_1.7.0           glue_1.6.1             withr_2.4.3           
 [13] DBI_1.1.2              bit64_4.0.5            GenomeInfoDbData_1.2.7 lifecycle_1.0.1        zlibbioc_1.40.0        Biostrings_2.62.0     
 [19] munsell_0.5.0          gtable_0.3.0           memoise_2.0.1          fastmap_1.1.0          GenomeInfoDb_1.30.0    fansi_1.0.2           
 [25] Rcpp_1.0.8             xtable_1.8-4           scales_1.1.1           cachem_1.0.6           XVector_0.34.0         bit_4.0.4             
-[31] png_0.1-7              dplyr_1.0.8            grid_4.1.2             cli_3.1.1              tools_4.1.2            bitops_1.0-7          
-[37] magrittr_2.0.2         tibble_3.1.6           RSQLite_2.2.9          crayon_1.5.0           pkgconfig_2.0.3        ellipsis_0.3.2        
+[31] png_0.1-7              dplyr_1.0.8            grid_4.1.2             cli_3.2.0              tools_4.1.2            bitops_1.0-7          
+[37] magrittr_2.0.2         tibble_3.1.6           RSQLite_2.2.10         crayon_1.5.0           pkgconfig_2.0.3        ellipsis_0.3.2        
 [43] assertthat_0.2.1       httr_1.4.2             rstudioapi_0.13        R6_2.5.1               compiler_4.1.2        
