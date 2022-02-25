@@ -88,7 +88,7 @@ resp_comps_by_pmid <- function(resp_components_annotated, pmids) {
   return(as.data.frame(rbindlist(l3)))
 }
 
-
+# This was used for mSigDB.  Do not use for regular Dashboard submissions.
 abbreviate_route <- function(route) {
   route <- trimws(route)
   route <- ifelse(route == "", "",
@@ -132,7 +132,7 @@ strict_char_check <- function(in_df, testchar) {
 }
 
 # check for lists of response components within one PMID that have a large overlap with one another.
-# This is intended to catch the case were one set was accidently appended to another.
+# This is intended to catch the case were one set was accidentally appended to another.
 check_response_components_overlap <- function(df2, pmids, min_intersection, min_overlap_fraction, require_different_behaviors, max_hits) {
 
   final_list <- vector(mode = "list", max_hits)
