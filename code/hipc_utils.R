@@ -138,16 +138,16 @@ check_response_components_overlap <- function(df2, pmids, min_intersection, min_
   final_list <- vector(mode = "list", max_hits)
   cnt <- 1
   for(pmid in pmids) {
-    rows_for_pmid <- unique(df2$uniq_obs_id[df2$publication_reference_id == pmid])
+    rows_for_pmid <- unique(df2$sig_row_id[df2$publication_reference_id == pmid])
     for(i in 1:length(rows_for_pmid)) {
-      rco_i <- df2$response_component_original[df2$uniq_obs_id == rows_for_pmid[i]]
-      rb_i <- df2$response_behavior[df2$uniq_obs_id == rows_for_pmid[i]][1]
+      rco_i <- df2$response_component_original[df2$sig_row_id == rows_for_pmid[i]]
+      rb_i <- df2$response_behavior[df2$sig_row_id == rows_for_pmid[i]][1]
       for(j in min(i + 1, length(rows_for_pmid)):length(rows_for_pmid)) {
         if(i == j) {
           next
         }
-        rco_j <- df2$response_component_original[df2$uniq_obs_id == rows_for_pmid[j]]
-        rb_j <- df2$response_behavior[df2$uniq_obs_id == rows_for_pmid[j]][1]
+        rco_j <- df2$response_component_original[df2$sig_row_id == rows_for_pmid[j]]
+        rb_j <- df2$response_behavior[df2$sig_row_id == rows_for_pmid[j]][1]
         inter_set <- intersect(rco_i, rco_j)
         overlap_longer_fraction <- length(inter_set)/max(length(rco_i), length(rco_j))
         overlap_shorter_fraction <- length(inter_set)/min(length(rco_i), length(rco_j))

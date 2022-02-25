@@ -89,12 +89,12 @@ write_submission_template <- function(df2_cpy, header_rows, release_files, csv_f
   }
 
   cv <- data.frame()  # initialize
-  uniq_ids_local <- as.character(unique(df2_cpy$uniq_obs_id))
+  uniq_ids_local <- as.character(unique(df2_cpy$sig_row_id))
   print(paste("uniq_ids match:", all(names(resp_components) == uniq_ids_local), collapse = ", "))
 
-  # For each submission, i.e. uniq_obs_id (one signature)
+  # For each submission, i.e. sig_row_id (one signature)
   for (i in 1:length(uniq_ids_local)) {
-    dftmp <- df2_cpy[df2_cpy$uniq_obs_id == uniq_ids_local[i], ]
+    dftmp <- df2_cpy[df2_cpy$sig_row_id == uniq_ids_local[i], ]
 
     # Despite best efforts, exposure_material_id was being treated as a factor.
     # Remember the data is still split at this point
@@ -106,7 +106,7 @@ write_submission_template <- function(df2_cpy, header_rows, release_files, csv_f
 
     # For one submission, all values in these columns are the same, so take first.
     pmid_local <- dftmp$publication_reference_id[1]
-    submission_identifier <- dftmp$subm_obs_id[1]
+    submission_identifier <- dftmp$sig_subm_id[1]
     joining_preposition <- choose_joining_preposition(dftmp$response_behavior[1])
 
     age_min   <- dftmp$age_min[1]
@@ -242,7 +242,7 @@ write_submission_template <- function(df2_cpy, header_rows, release_files, csv_f
 
     if (sheet_type == "GENE") {
       # write the complete signature with all genes, including non-HGNC
-      ugs_map <- unmatched_symbols_map[unmatched_symbols_map$uniq_obs_id == uniq_ids_local[i], "alias"]
+      ugs_map <- unmatched_symbols_map[unmatched_symbols_map$sig_row_id == uniq_ids_local[i], "alias"]
       # ugs_map <- sort(ugs_map$alias)
       completeGenes <- c(resp_components[[uil]], ugs_map)
       write.table(completeGenes,

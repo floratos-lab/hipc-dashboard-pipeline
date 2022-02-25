@@ -299,8 +299,8 @@ if (response_type == "GENE") {
 
 insub$response_comp_orig_cnt  <- ""
 insub$response_comp_cnt       <- ""
-insub$subm_obs_id             <- ""
-insub$uniq_obs_id             <- ""
+insub$sig_subm_id             <- ""
+insub$sig_row_id             <- ""
 insub$row_key                 <- ""
 
 insub$submission_name[1:6]    <- c("", "label", "background", "", "", "submission name")
@@ -309,8 +309,8 @@ insub$template_name[1:6]      <- c("", "label", "background", "", "", "template_
 insub$response_comp_orig_cnt[1:6]  <-
                                  c("", "label", "observed",   "", "", "response component (original) count")
 insub$response_comp_cnt[1:6]  <- c("", "label", "observed",   "", "", "response component count")
-insub$subm_obs_id[1:6]        <- c("", "label", "background", "", "", "ID of observation within a publication (PMID) and for its submission type ")
-insub$uniq_obs_id[1:6]        <- c("", "label", "background", "", "", "ID of observation within its submission type")
+insub$sig_subm_id[1:6]        <- c("", "label", "background", "", "", "sequential ID of signature within a publication (PMID) and for its response_type ")
+insub$sig_row_id[1:6]        <- c("", "label", "background", "", "", "row ID of signature within its submission data file(s)")
 insub$row_key[1:6]            <- c("", "label", "background", "", "", "row key")
 
 if (response_type == "CELLTYPE_FREQUENCY") {
@@ -319,6 +319,7 @@ if (response_type == "CELLTYPE_FREQUENCY") {
   ctf_fixes <- ctf_fixes[1:6]
   # keep only relevant content
   ctf_fixes <- subset(ctf_fixes, original_annotation != "")
+  # FIXME - this is probably not doing anything
   s <- strict_char_check(ctf_fixes, "\xa0")  # character 160.  Dashboard loader does not like it.
   if(!is.null(s)) {
     print(paste("for ctf_fixes, found problems in column (row numbers do not include any header)", s))
@@ -334,7 +335,7 @@ header_rows <- insub[1:6,]
 df2 <- insub[first_data_row:nrow(insub),]
 
 # unique observation ID (row number in original template) within this sheet
-df2$uniq_obs_id  <- seq(from = first_data_row + 1, length.out = nrow(df2))
+df2$sig_row_id  <- seq(from = first_data_row + 1, length.out = nrow(df2))
 
 # Special handling for INFECTION templates
 if(exposure_type == "INFECTION") {
@@ -369,11 +370,11 @@ if (!all(s)) {
 }
 
 # ID number of observation within its submission (based on PMID)
-df2$subm_obs_id  <- cumcount(df2$publication_reference_id)
+df2$sig_subm_id  <- cumcount(df2$publication_reference_id)
 
 # save so can check later for  observations removed below during processing
-uniq_obs_id_orig <- df2$uniq_obs_id
-df2$row_key      <- paste(df2$publication_reference_id, df2$subm_obs_id, df2$uniq_obs_id, sep = "_")
+sig_row_id_orig <- df2$sig_row_id
+df2$row_key      <- paste(df2$publication_reference_id, df2$sig_subm_id, df2$sig_row_id, sep = "_")
 
 ########################################################
 ##### Fix temporary problems with the curated data #####
@@ -498,7 +499,7 @@ if (response_type == "GENE") {
   df2 <- cSplit(df2, "response_component_original", sep = ",", direction = "long")
   df2 <- cSplit(df2, "response_component_original", sep = ";", direction = "long")
   affyHits <- grep("///", df2$response_component_original)
-  write.csv(df2[affyHits, c("response_component_original", "publication_reference_id", "subm_obs_id")],
+  write.csv(df2[affyHits, c("response_component_original", "publication_reference_id", "sig_subm_id")],
             file = logfile_path(log_files, base_filename, "affyHits.csv"),
             row.names = FALSE)
 
@@ -554,29 +555,29 @@ if (response_type == "GENE") {
   genes <- fix_orf_symbols(genes)
 
   # Reconstruct original signatures, after splitting by various separators
-  signatures <- lapply(unique(df2$uniq_obs_id), function(uniqID) {
-    genes[df2$uniq_obs_id == uniqID]
+  signatures <- lapply(unique(df2$sig_row_id), function(uniqID) {
+    genes[df2$sig_row_id == uniqID]
   })
 } else if (response_type == "CELLTYPE_FREQUENCY") {
 
   # Reconstruct original signatures, after splitting by various separators
-  signatures <- lapply(unique(df2$uniq_obs_id), function(uniqID) {
-    df2$response_component_original[df2$uniq_obs_id == uniqID]
+  signatures <- lapply(unique(df2$sig_row_id), function(uniqID) {
+    df2$response_component_original[df2$sig_row_id == uniqID]
   })
 }
 
 # list of original response components before main changes, with duplicates per signature removed
 signatures_uniq <- lapply(signatures, unique)
 # name for indexing into signatures_uniq
-names(signatures_uniq) <- unique(df2$uniq_obs_id)
+names(signatures_uniq) <- unique(df2$sig_row_id)
 
-uids_list <- unique(df2$uniq_obs_id)
-# get original count of rows for each uniq_obs_id.
-uids_cnt  <- sapply(uids_list, function(x) {sum(df2$uniq_obs_id == x)})
+uids_list <- unique(df2$sig_row_id)
+# get original count of rows for each sig_row_id.
+uids_cnt  <- sapply(uids_list, function(x) {sum(df2$sig_row_id == x)})
 
 for (i in 1:length(uids_list)) {
   # NOTE - df2$response_comp_orig_cnt is of type "character".  Be careful!
-  df2$response_comp_orig_cnt[df2$uniq_obs_id == uids_list[i]] <- uids_cnt[i]
+  df2$response_comp_orig_cnt[df2$sig_row_id == uids_list[i]] <- uids_cnt[i]
 }
 
 changed <- mapply(function(x, n) {length(x) != length(n)}, signatures, signatures_uniq)
@@ -595,8 +596,8 @@ dups <- lapply(signatures, function(x) {unique(x[duplicated(x)])})
 if(length(dups) > 0) {
 
   # assign each dup its row_key as name
-  names(dups) <- sapply(unique(df2$uniq_obs_id), function(x) {
-    unique(df2[df2$uniq_obs_id == x, "row_key"])
+  names(dups) <- sapply(unique(df2$sig_row_id), function(x) {
+    unique(df2[df2$sig_row_id == x, "row_key"])
   })
 
   # only keep entries that have duplicates
@@ -645,17 +646,17 @@ if (response_type == "GENE") {
   genes_map <- rvl$genes_map
   summary_df <- rbind(summary_df, rvl$summary)
   rm(rvl)
-  
+
   # Save PMID info for unmapped symbols
   no_valid_symbols_df <- df2[is.na(genes_map$Symbol), names(df2) %in%
-                             c("response_component_original", "publication_reference_id", "subm_obs_id", "uniq_obs_id")]
+                             c("response_component_original", "publication_reference_id", "sig_subm_id", "sig_row_id")]
   log_no_valid_symbol_vs_pmid(no_valid_symbols_df, log_files, base_filename)
 
   # w <- which(genes_map$Symbol != genes_map$alias)
 
-  # Save the gene map for the unmatched symbols with their uniq_obs_id
+  # Save the gene map for the unmatched symbols with their sig_row_id
   # to add them back to complete signatures later
-  unmatched_symbols_map <- cbind(genes_map, uniq_obs_id = df2$uniq_obs_id)
+  unmatched_symbols_map <- cbind(genes_map, sig_row_id = df2$sig_row_id)
   unmatched_symbols_map <- unmatched_symbols_map[is.na(unmatched_symbols_map$Symbol), ]
 
   # copy the fixed symbols back to the main data structure df2
@@ -683,9 +684,9 @@ if (response_type == "GENE") {
 
   if (any(is.na(ctf_match))) {
     w <- which(is.na(ctf_match))
-    print(paste("row", df2$uniq_obs_id[w], ", no mapping for cell type",
+    print(paste("row", df2$sig_row_id[w], ", no mapping for cell type",
                 df2$response_component_original[w]))
-    missing_mappings <- data.frame(row = df2$uniq_obs_id[w], label = df2$response_component_original[w])
+    missing_mappings <- data.frame(row = df2$sig_row_id[w], label = df2$response_component_original[w])
     write.table(missing_mappings,
                 file = logfile_path(log_files, base_filename, "missing_mappings.tsv"),
                 sep = "\t", row.names = FALSE, col.names = FALSE, quote = FALSE)
@@ -778,12 +779,12 @@ summary_df <- add_to_summary(summary_df, "Split 1, rows remaining", end_cnt)
 
 start_cnt <- end_cnt
 
-# get count of rows for each uniq_obs_id.
-uids_list <- unique(df2$uniq_obs_id)
-uids_cnt  <- sapply(uids_list, function(x) {sum(df2$uniq_obs_id == x)})
+# get count of rows for each sig_row_id.
+uids_list <- unique(df2$sig_row_id)
+uids_cnt  <- sapply(uids_list, function(x) {sum(df2$sig_row_id == x)})
 
 for (i in 1:length(uids_list)) {
-  df2$response_comp_cnt[df2$uniq_obs_id == uids_list[i]] <- uids_cnt[i]
+  df2$response_comp_cnt[df2$sig_row_id == uids_list[i]] <- uids_cnt[i]
 }
 
 start_cnt <- end_cnt
@@ -928,7 +929,7 @@ start_cnt <- end_cnt
 #### Get counts of each response component for e.g. word cloud #####
 ####################################################################
 
-response_df <- unique(df2[ , c("response_component", "uniq_obs_id")])
+response_df <- unique(df2[ , c("response_component", "sig_row_id")])
 response_df <- as.data.frame(table(response_df$response_component))
 colnames(response_df) <- c("response_component", "count")
 response_df <- response_df[order(response_df$count, decreasing = TRUE), ]
@@ -969,7 +970,7 @@ if (RENEW_PMIDS || !file.exists(pmid_file)) {
 #############################################################
 
 # Collect multi-valued columns by unique observation ID (each row in original spreadsheet)
-uniqIDs                    <- unique(df2$uniq_obs_id)
+uniqIDs                    <- unique(df2$sig_row_id)
 resp_components_cnt_df     <- data.frame()
 resp_components_annotated  <- vector("list", length(uniqIDs))
 resp_components_collected  <- vector("list", length(uniqIDs))
@@ -989,12 +990,12 @@ if (response_type == "GENE" && CREATE_MSIGDB) {
 }
 
 for (i in 1:length(uniqIDs)) {
-  df2tmp <- df2[df2$uniq_obs_id == uniqIDs[i], ]
+  df2tmp <- df2[df2$sig_row_id == uniqIDs[i], ]
   # Recreate a full signature in one row
   base_row <- df2tmp[1, ] # get first row for this uniqID
 
-  response_rowname     <- paste(base_row$publication_reference_id, base_row$subm_obs_id, uniqIDs[i], sep = "_")
-  response_description <- paste("PMID", base_row$publication_reference_id, "submission", base_row$subm_obs_id, "row", uniqIDs[i], sep = " ")
+  response_rowname     <- paste(base_row$publication_reference_id, base_row$sig_subm_id, uniqIDs[i], sep = "_")
+  response_description <- paste("PMID", base_row$publication_reference_id, "submission", base_row$sig_subm_id, "row", uniqIDs[i], sep = " ")
 
   # Use the full original set of response components rather than just those
   # for which a valid symbol was found.
@@ -1028,8 +1029,8 @@ for (i in 1:length(uniqIDs)) {
 
   tmp <- data.frame(rowname = response_rowname,
                     pmid = base_row$publication_reference_id,
-                    subm_obs_id = base_row$subm_obs_id,
-                    uniq_obs_id = uniqIDs[i],
+                    sig_subm_id = base_row$sig_subm_id,
+                    sig_row_id = uniqIDs[i],
                     count = length(resp_components_collected[[i]]))
   resp_components_cnt_df <- rbind(resp_components_cnt_df, tmp)
 
@@ -1203,8 +1204,8 @@ write.csv(rc_cnt_by_pmid_uniq,
 summary_df <- add_to_summary(summary_df, "min signature size", min(resp_components_cnt_df$count))
 summary_df <- add_to_summary(summary_df, "max signature size", max(resp_components_cnt_df$count))
 
-# uniq_obs_ids that got deleted because no valid response_component
-s <- subset(uniq_obs_id_orig, !(uniq_obs_id_orig %in% uniqIDs))
+# sig_row_ids that got deleted because no valid response_component
+s <- subset(sig_row_id_orig, !(sig_row_id_orig %in% uniqIDs))
 s <- paste(s, collapse = " ")
 summary_df <- add_to_summary(summary_df, "original template rows deleted", s)
 
