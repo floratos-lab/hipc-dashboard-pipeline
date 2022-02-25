@@ -60,7 +60,7 @@ source("msigdb_submission_utils.R")
 source("write_joint_summary.R")
 
 # Available response_type values are "GENE", "CELLTYPE_FREQUENCY"
-response_type <- "CELLTYPE_FREQUENCY"
+response_type <- "GENE"
 # Available exposure_type values are "VACCINE", "INFECTION" (covid-19)
 exposure_type <- "INFECTION"
 
@@ -68,9 +68,9 @@ exposure_type <- "INFECTION"
 source_curations <- "../data/source_curations"
 reference_files  <- "../data/reference_files"
 release_files    <- "../data/release_files"
+standardized_curations <- "../data/standardized_curations"
 log_files        <- "../logfiles"
 csv_files        <- "../logfiles"
-standardized_curations <- "../standardized_curations"
 
 vaccine_tsv      <- "vaccine_years.txt"
 ctf_fixes_tsv    <- "cell_type_frequency-response_components_mapping.txt"
@@ -135,35 +135,42 @@ summary_df <- data.frame()  # initialize summary log
 
 ##### Set up file and template name components #####
 # change sheet name spaces to underscores
-if (response_type == "GENE" && exposure_type == "VACCINE") {
-  sheet_file     <- "hipc_vaccine - gene_expression.tsv"
-  base_filename  <- "vac_gene_expression"
-  template_name  <- "hipc_vac_gene"
-  project        <- "Gene expression response to vaccine exposure"
-} else if (response_type == "GENE" && exposure_type == "INFECTION") {
-  sheet_file     <- "COVID-19 curation template - example curation.tsv"
-  sheet_file2    <- "Odak_2020_pmid_32650275 - covid19.tsv"
-#  sheet_file3    <- "hipc_infection_covid_v2 - multiple_types.tsv"
-  base_filename  <- "inf_gene_expression"
-  template_name  <- "hipc_inf_gene"
-  project        <- "Gene expression response to infection"
-} else if (response_type == "CELLTYPE_FREQUENCY" && exposure_type == "VACCINE") {
-  sheet_file     <- "hipc_vaccine - cell_type_frequency.tsv"
-  base_filename  <- "vac_cell_type"
-  template_name  <- "hipc_vac_ctf"
-  cell_mapping_sheet_name   <- "HIPC_Dashboard-Cell_type_Freque"
-  project        <- "Immune cell-type frequency response to vaccine exposure"
-} else if (response_type == "CELLTYPE_FREQUENCY" && exposure_type == "INFECTION") {
-  sheet_file     <- "COVID-19 curation template - example curation.tsv"
-  sheet_file2    <- "Odak_2020_pmid_32650275 - covid19.tsv"
-#  sheet_file3    <- "hipc_infection_covid_v2 - multiple_types.tsv"
-  base_filename  <- "inf_cell_type"
-  template_name  <- "hipc_inf_ctf"
-  cell_mapping_sheet_name   <- "HIPC_Dashboard-Cell_type_Freque"
-  project        <- "Immune cell-type frequency response to infection"
+if (exposure_type == "VACCINE") {
+  first_data_row <- 7  # not counting the first row, which becomes a column header.
+  if (response_type == "GENE") {
+    sheet_file     <- "hipc_vaccine - gene_expression.tsv"
+    base_filename  <- "vac_gene_expression"
+    template_name  <- "hipc_vac_gene"
+    project        <- "Gene expression response to vaccine exposure"
+  } else if (response_type == "CELLTYPE_FREQUENCY") {
+    sheet_file     <- "hipc_vaccine - cell_type_frequency.tsv"
+    base_filename  <- "vac_cell_type"
+    template_name  <- "hipc_vac_ctf"
+    cell_mapping_sheet_name   <- "HIPC_Dashboard-Cell_type_Freque"
+    project        <- "Immune cell-type frequency response to vaccine exposure"
+  }
+} else if (exposure_type == "INFECTION") {
+  first_data_row <- 9  # not counting the first row, which becomes a column header.
+  if (response_type == "GENE") {
+    sheet_file     <- "COVID-19 curation template - example curation.tsv"
+    sheet_file2    <- "Odak_2020_pmid_32650275 - covid19.tsv"
+    #  sheet_file3    <- "hipc_infection_covid_v2 - multiple_types.tsv"
+    base_filename  <- "inf_gene_expression"
+    template_name  <- "hipc_inf_gene"
+    project        <- "Gene expression response to infection"
+  } else if (response_type == "CELLTYPE_FREQUENCY") {
+    sheet_file     <- "COVID-19 curation template - example curation.tsv"
+    sheet_file2    <- "Odak_2020_pmid_32650275 - covid19.tsv"
+    #  sheet_file3    <- "hipc_infection_covid_v2 - multiple_types.tsv"
+    base_filename  <- "inf_cell_type"
+    template_name  <- "hipc_inf_ctf"
+    cell_mapping_sheet_name   <- "HIPC_Dashboard-Cell_type_Freque"
+    project        <- "Immune cell-type frequency response to infection"
+  }
 } else {
-  stop("unknown sheet type")
+  stop("unknown exposure type")
 }
+
 # for joint summary, list all possible values of base_filename from above
 if (exposure_type == "VACCINE") {
   all_response_types <- c("vac_gene_expression", "vac_cell_type")
@@ -233,17 +240,12 @@ if (exposure_type == "VACCINE") {
 
   # stitch together the data sections
   nrow(insub)
-  insub <- rbind(insub, insub2[9:nrow(insub2),])
+  insub <- rbind(insub, insub2[first_data_row:nrow(insub2),])
   nrow(insub)
-#  insub <- rbind(insub, insub3[9:nrow(insub3),])
+#  insub <- rbind(insub, insub3[first_data_row:nrow(insub3),])
 #  nrow(insub)
 
 }
-
-uniq_pmid <- unique(insub$publication_reference_id[9:nrow(insub)])
-uniq_pmid <- sub("pmid:", "", uniq_pmid)
-uniq_pmid <- uniq_pmid[uniq_pmid != ""]
-
 
 ### Make any changes to headers right at the beginning,
 ### before separating headers and data
@@ -326,15 +328,13 @@ if (response_type == "CELLTYPE_FREQUENCY") {
 #########################################
 ##### Separate header and data rows #####
 #########################################
-# Separate the header rows and the data rows, as the data rows will be split on several columns.
-# In the original template there are 7 header lines, but here the first row is not counted,
-# as it taken as column headers.
+# Separate the Dashboard header rows and the data rows, as the data rows will be split on several columns.
 header_rows <- insub[1:6,]
-if (exposure_type == "VACCINE") {  # the original curations, assumes no more will be added using updated template
-  df2 <- insub[7:nrow(insub),]
-} else {  # INFECTION, the new curation template has two extra rows of instructions
-  df2 <- insub[9:nrow(insub),]
-}
+# omit the extra two descriptive rows of headers in the curation sheets
+df2 <- insub[first_data_row:nrow(insub),]
+
+# unique observation ID (row number in original template) within this sheet
+df2$uniq_obs_id  <- seq(from = first_data_row + 1, length.out = nrow(df2))
 
 # Special handling for INFECTION templates
 if(exposure_type == "INFECTION") {
@@ -370,9 +370,8 @@ if (!all(s)) {
 
 # ID number of observation within its submission (based on PMID)
 df2$subm_obs_id  <- cumcount(df2$publication_reference_id)
-# unique observation ID (row number in original template) within this sheet
-df2$uniq_obs_id  <- seq(from = 8, length.out = nrow(df2))
-# save so can check later for removed observations
+
+# save so can check later for  observations removed below during processing
 uniq_obs_id_orig <- df2$uniq_obs_id
 df2$row_key      <- paste(df2$publication_reference_id, df2$subm_obs_id, df2$uniq_obs_id, sep = "_")
 
@@ -531,9 +530,9 @@ if (response_type == "GENE") {
                                           min_intersection = 10, min_overlap_fraction = 0.75,
                                           require_different_behaviors = TRUE, max_hits = 100)
 
-  file <- logfile_path(log_files, base_filename, "overlapping_signatures.txt")
+  file <- logfile_path(log_files, base_filename, "overlapping_signatures.csv")
   if(length(ft) > 0) {
-    write.table(ft, file = file, row.names = FALSE)
+    write.csv(ft, file = file, row.names = FALSE)
   } else {
     print("no signature overlaps found...")
     if(file.exists(file)) {
@@ -1214,7 +1213,7 @@ write.csv(summary_df,
           row.names = FALSE)
 
 # if have all available response types, write a joint summary
-write_joint_summary(all_response_types, exposure_type, standardized_curations)
+write_joint_summary(all_response_types, exposure_type, log_files)
 
 
 ##########################
