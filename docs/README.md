@@ -26,6 +26,9 @@ exposure types (vaccination, infection).
 
   - **Curation template column specification.ods:** Column specification
     in Open Document format.
+	
+  - **immune_signature_summary_example.pdf:** Description of how immune signature
+    summaries are constructed in the HIPC Dashboard.
 
   - **Infection signature curation template.xlsx, Vaccination signature
     curation template.xlsx:** Curation templates.
