@@ -1,5 +1,3 @@
-# Overview
-
 Curation templates are utilized to
 record immune signatures, i.e., published research findings that
 describe how immune exposures (e.g., infection, immunization) modulate
@@ -14,7 +12,7 @@ immune signatures in a publication.
 Currently there are two curation templates in use, one each for two
 exposure types (vaccination, infection).
 
-# File Description
+## File Description
 
   - **Curation template column specification.xlsx**. Specification for
     the data fields comprising the HIPC Dashboard curation templates.
@@ -30,5 +28,4 @@ exposure types (vaccination, infection).
   - **immune_signature_summary_example.pdf:** Description of how immune signature
     summaries are constructed in the HIPC Dashboard.
 
-  - **Infection signature curation template.xlsx, Vaccination signature
-    curation template.xlsx:** Curation templates.
+  - **infection_signature_curation_template.xlsx, vaccination_signature_curation_template.xlsx:** Curation templates.
