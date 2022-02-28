@@ -26,10 +26,16 @@ Changes in version 1.3.0
 - Gene lookup using the NCBI data file now also checks the nomenclature_authority column (HGNC).  
   If a query symbol is not found in the official NCBI symbols or aliases, 
   but IS found in the nomenclature_authority column, the NCBI official symbol is substituted.
+- Create pathogen and cell_subset lookup-values for curation sheets.  Format is e.g.
+-- “ncbi_taxid:11090 (Yellow fever virus 17D)”
+-- "CL:2000001 (peripheral blood mononuclear cell)"
+- The following formats are also accepted
+-- “ncbi_taxid:11090”
+-- "CL:2000001"
+-- “11090”  (tissues only, defaults to NCBI taxonomy id)
 
 
 Changes in version 1.2.1
-- update some signatures to clarify comparison column entries
 - update observation summary template to match change to Dashboard special character handling (left-paren, ampersand) 
 
 
@@ -44,9 +50,6 @@ Changes in version 1.2.0
 - Remove certain columns from templates:
 -- remove submission_name and template_name, as values are generated in code
 -- remove addntl_time_point_units, group1 and group0 because not in use
-- Merge certain columns into cohort and remove from templates
--- merge subgroup into cohort, remove subgroup and update code
--- merge age_group into cohort, remove age_group
 - New columns added by pipeline now added at end of templates rather than at fixed locations
 - Use tab-delimited files rather than Excel for all input and public output files
 - Change code to extract pubmed publish date (may be epub for some), 
@@ -58,7 +61,4 @@ Changes in version 1.2.0
     Only used by mSigDB code.
 - Add time_point, time_point_units, and baseline_time_event to observation summary statements to disambiguate.
 - Add additional_exposure_material to observation summary statements if it has an entry (most do not).
-- Template data cleaning:
--- change all ontology references to type:value format
--- remove confirmed redundant subgroup entries
 - Add this file (changelog.txt) and HIPC_Dashboard_curation_template_fields.pdf to project.
