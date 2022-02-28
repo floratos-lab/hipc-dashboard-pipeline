@@ -50,9 +50,8 @@ Pubmed data downloaded by the pipeline, by exposure type and response component 
 * **inf_gene_expression-titles_and_dates_df.RData**
 
 ## Standardized Curation Template Data (./standardized_curations)
-The "recreated_template" files are in the same spreadsheet format as the original curated data.  
-These files represent the original data after all updates and transformations, and are provided 
-in tab-delimited, RDS and Excel formats.  Files containing the "response components" for each 
+The "standardized_curations" files represent  the curated data after all updates and transformations, and are provided 
+in tab-delimited spreadsheet format.  Files containing the "response components" for each 
 signature are also provided in the tab-delimited Broad GMT format.
 	
 Cell-type response component files (vaccination = "vac", infection = "inf").  Examples given for vaccine exposure types:
