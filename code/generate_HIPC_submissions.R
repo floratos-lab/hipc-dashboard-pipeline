@@ -60,9 +60,9 @@ source("msigdb_submission_utils.R")
 source("write_joint_summary.R")
 
 # Available response_type values are "GENE", "CELLTYPE_FREQUENCY"
-response_type <- "GENE"
+response_type <- "CELLTYPE_FREQUENCY"
 # Available exposure_type values are "VACCINE", "INFECTION" (covid-19)
-exposure_type <- "INFECTION"
+exposure_type <- "VACCINE"
 
 # Assume executing from the ./code directory
 source_curations <- "../data/source_curations"
@@ -74,7 +74,7 @@ csv_files        <- "../logfiles"
 
 vaccine_tsv      <- "vaccine_years.txt"
 ctf_fixes_tsv    <- "cell_type_frequency-response_components_mapping.txt"
-manual_gene_corrections_tsv <- "manual_gene_symbol_corrections.txt"
+manual_gene_corrections_txt <- "manual_gene_symbol_corrections.txt"
 
 ##### Set runtime parameters #####
 # Download publication references again using PMIDs,
@@ -380,11 +380,9 @@ df2$row_key      <- paste(df2$publication_reference_id, df2$sig_subm_id, df2$sig
 ##### Fix temporary problems with the curated data #####
 ########################################################
 
-# Remove rows marked "skip"
+# Remove rows marked "skip" in optional column "process_note"
 # FIXME - not being used anymore in HIPC Dashboard source
-# FIXME -should actually test for presence of this column
-#        rather than it being template-dependent.
-if(exposure_type == "VACCINE") {
+if("process_note" %in% names(df2)) {
   skip <- grepl("^skip", df2$process_note, ignore.case = TRUE)
   df2 <- df2[!skip, ]
 }
@@ -547,7 +545,7 @@ if (response_type == "GENE") {
 if (response_type == "GENE") {
   # Apply manual gene corrections
   rvl <- manual_gene_corrections(df2$response_component_original,
-                                 paste(reference_files, manual_gene_corrections_tsv, sep = "/"))
+                                 paste(reference_files, manual_gene_corrections_txt, sep = "/"))
   genes <- rvl$genes
   summary_df <- rbind(summary_df, rvl$summary)
 
