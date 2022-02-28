@@ -1,7 +1,9 @@
 HIPC Dashboard Pipeline
 
 Changes in version 1.3.1
-- Add code to split comparison field entries
+- Add splitting on comparison field entries (split 5)
+- Add splitting on tissue_type_term_id (split 4).
+-- Split tissue_type_term_ids get individual columns in Dashboard submission files
 - Adapt code to new directory structure in github repository
 - change "recreated_templates" to "standardized_curations" in output file names
 - Rename submission id variables in code and standardized files for clarity
@@ -9,6 +11,7 @@ Changes in version 1.3.1
 - Revise messages in code for clarity
 - Separate writing tab-delimited and csv versions of standardized submission files to different, specifiable directories
 - fix problem with logging using log_no_valid_symbol_vs_pmid()
+- "pmid:" tags now removed immediately
 
 Changes in version 1.3.0
 - Support new exposure type: infection (COVID-19 studies)
