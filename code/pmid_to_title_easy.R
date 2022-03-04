@@ -174,10 +174,10 @@ pmid_to_title_easy <- function(pmid, print_pub_year) {
   # Use externally supplied print_pub_year instead of pubmed pubYear value obtained from NCBI.
   auth_ref <- paste0(aname,  " (", print_pub_year, ")")  # replace epm$year[1] with pubYear
   pubmed_ref <- paste0("PMID: <a href = 'https://www.ncbi.nlm.nih.gov/pubmed/?term=", pmid, "' target='_blank'>", pmid, "</a>")
-  title <- paste(auth_ref, article_title, paste0(journal_abb, "."), pubmed_ref)
+  dashboard_title <- paste(auth_ref, article_title, paste0(journal_abb, "."), pubmed_ref)
 
   date <- paste(pubYear, pubMonth, pubDay, sep = ".")
   abstract <- ""
-  return(data.frame(pmid, author = aname, title, date, abstract, stringsAsFactors = FALSE))
+  return(data.frame(pmid, author = aname, article_title, dashboard_title, date, abstract, stringsAsFactors = FALSE))
 }
 

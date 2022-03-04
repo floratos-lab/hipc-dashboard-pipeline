@@ -81,7 +81,7 @@ manual_gene_corrections_txt <- "manual_gene_symbol_corrections.txt"
 #   set to FALSE to reuse existing file
 #   Run this every time new publications are added to the spreadsheet,
 #   for each response_component type.
-RENEW_PMIDS             <- FALSE
+RENEW_PMIDS             <- TRUE
 
 ## Please update gene files before each release
 ## These files will be overwritten if update is requested
@@ -959,6 +959,11 @@ if (RENEW_PMIDS || !file.exists(pmid_file)) {
   td <- mapply(pmid_to_title_easy, pmids_uniq, print_pub_year, SIMPLIFY = FALSE)
   titles_and_dates_df <- as.data.frame(rbindlist(td))
   save(titles_and_dates_df, file = pmid_file)
+  write.table(titles_and_dates_df,
+              file = paste(log_files,
+                           paste(base_filename, "titles_and_dates_df.tsv", sep = "-"),
+                           sep = "/"), 
+              row.names = FALSE, col.names = TRUE, sep = "\t")
 } else {
   load(file = pmid_file)
 }
@@ -1006,7 +1011,7 @@ for (i in 1:length(uniqIDs)) {
     base_row$response_component <- paste(unique(df2tmp$response_component), collapse = "; ")
     resp_components_annotated[[i]] <- c(response_rowname, response_description, unique(df2tmp$response_component))
 
-    w <- which(titles_and_dates_df$pmid == sub("pmid:", "", base_row$publication_reference_id))
+    w <- which(titles_and_dates_df$pmid == base_row$publication_reference_id)
     if (length(w) != 1) {
       stop(paste("unexpected PMID result: uniqID = ", uniqIDs[i], ", pmid = ", base_row$publication_reference_id))
     }

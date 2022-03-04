@@ -125,8 +125,8 @@ write_submission_template <- function(df2_cpy, header_rows, release_files, csv_f
       stop("missing PMID result: uniqID = ", uniq_ids_local[i], ", pmid = ", pmid_local)
     }
 
-    title <- titles_and_dates_df[w, "title"]
-    header_rows$publication_reference_url[6] <- title
+    dashboard_title <- titles_and_dates_df[w, "dashboard_title"]
+    header_rows$publication_reference_url[6] <- dashboard_title
 
     submission_name <- paste(template_name, pmid_local, submission_identifier, sep = "_")
     dftmp$submission_name <- submission_name
@@ -334,7 +334,7 @@ write_submission_template <- function(df2_cpy, header_rows, release_files, csv_f
                                observation_summary = observation_summary,
                                story_title = "",
                                submission_name = submission_name,
-                               submission_description = title,
+                               submission_description = dashboard_title,
                                project = project,
                                submission_story = "false",
                                submission_story_rank = 0,
