@@ -40,6 +40,8 @@
 # BiocManager::install("stringi")
 # BiocManager::install("stringr")
 # BiocManager::install("pracma")
+# BiocManager::install("R.utils")
+
 
 library(splitstackshape)  # for cSplit()
 library(uniqtag)          # for cumcount()
@@ -49,6 +51,7 @@ library(data.table)       # for rbindlist()
 library(ggplot2)
 library(stringi)
 library(stringr)
+library(R.utils)
 
 
 source("hipc_utils.R")
@@ -60,20 +63,20 @@ source("msigdb_submission_utils.R")
 source("write_joint_summary.R")
 
 # Available response_type values are "GENE", "CELLTYPE_FREQUENCY"
-response_type <- "CELLTYPE_FREQUENCY"
+response_type <- "GENE"
 # Available exposure_type values are "VACCINE", "INFECTION" (covid-19)
 exposure_type <- "VACCINE"
 
 # Assume executing from the ./code directory
-source_curations <- "../data/source_curations"
-reference_files  <- "../data/reference_files"
-release_files    <- "../data/release_files"
+source_curations       <- "../data/source_curations"
+reference_files        <- "../data/reference_files"
+release_files          <- "../data/release_files"
 standardized_curations <- "../data/standardized_curations"
-log_files        <- "../logfiles"
-csv_files        <- "../logfiles"
-
-vaccine_tsv      <- "vaccine_years.txt"
-ctf_fixes_tsv    <- "cell_type_frequency-response_components_mapping.txt"
+convenience_files      <- "../data/convenience_files"
+log_files              <- "../logfiles"
+csv_submission_files   <- "../logfiles"
+vaccine_tsv            <- "vaccine_years.txt"
+ctf_fixes_tsv          <- "cell_type_frequency-response_components_mapping.txt"
 manual_gene_corrections_txt <- "manual_gene_symbol_corrections.txt"
 
 ##### Set runtime parameters #####
@@ -81,7 +84,7 @@ manual_gene_corrections_txt <- "manual_gene_symbol_corrections.txt"
 #   set to FALSE to reuse existing file
 #   Run this every time new publications are added to the spreadsheet,
 #   for each response_component type.
-RENEW_PMIDS             <- TRUE
+RENEW_PMIDS             <- FALSE
 
 ## Please update gene files before each release
 ## These files will be overwritten if update is requested
@@ -169,6 +172,13 @@ if (exposure_type == "VACCINE") {
   }
 } else {
   stop("unknown exposure type")
+}
+
+# used to filter sheet rows
+if (response_type == "GENE") {
+  response_behavior_type_var <- "gene expression"
+} else if (response_type == "CELLTYPE_FREQUENCY") {
+  response_behavior_type_var <- "cell-type frequency"
 }
 
 # for joint summary, list all possible values of base_filename from above
@@ -338,17 +348,11 @@ df2 <- insub[first_data_row:nrow(insub),]
 df2$sig_row_id  <- seq(from = first_data_row + 1, length.out = nrow(df2))
 
 # Special handling for INFECTION templates
+# FIXME - if vaccine templates have these values too, can remove exposure_type restriction
+# Infection templates contain more than one response_behavior_type, filter out all but current type
 if(exposure_type == "INFECTION") {
-  if (response_type == "CELLTYPE_FREQUENCY") {
-    w <- df2$response_behavior_type == "cell-type frequency"
-  } else if (response_type == "GENE") {
-    w <- df2$response_behavior_type == "gene expression"
-  } else {
-    stop("unexpected sheet type, not yet implemented")
-  }
-  nrow(df2)
+  w <- df2$response_behavior_type == response_behavior_type_var
   df2 <- df2[w, ]
-  nrow(df2)
 }
 
 # Depending on how the text file is created, the sheet may have blank rows at bottom.
@@ -356,7 +360,7 @@ if(exposure_type == "INFECTION") {
 nrow(df2)
 df2 <- df2[df2$publication_reference_id != "", ]
 nrow(df2)
-summary_df <- add_to_summary(summary_df, "Data rows in original sheet", nrow(df2))
+summary_df <- add_to_summary(summary_df, "available data rows in original sheet", nrow(df2))
 
 
 # Generate observation IDs based on the PMID field value and on original row number,
@@ -969,37 +973,51 @@ if (RENEW_PMIDS || !file.exists(pmid_file)) {
 }
 
 #############################################################
+#### Write out full denormalized data                    ####
+#############################################################
+del_cols <- c("submission_name", "submission_date", "template_name", "short_comment", "process_note")
+df2tmp <- df2[!colnames(df2) %in% del_cols]
+df2tmp <- df2tmp[-1]
+
+filename <- logfile_path(standardized_curations, base_filename, "standardized_denormalized.tsv")
+write.table(df2tmp,
+            file = filename,
+            sep = "\t", row.names = FALSE, col.names = TRUE)
+gzip(filename, destname=paste0(filename, ".gz"), overwrite=TRUE, remove=TRUE)
+
+#############################################################
 #### Recreate original spreadsheet with all corrections #####
 #############################################################
 
 # Collect multi-valued columns by unique observation ID (each row in original spreadsheet)
-uniqIDs                    <- unique(df2$sig_row_id)
+uniq_sig_row_ids                    <- unique(df2$sig_row_id)
 resp_components_cnt_df     <- data.frame()
-resp_components_annotated  <- vector("list", length(uniqIDs))
-resp_components_collected  <- vector("list", length(uniqIDs))
-resp_components_full_sig   <- vector("list", length(uniqIDs))   # used for cell types only
-recreated_template         <- vector("list", length(uniqIDs))
+resp_components_annotated  <- vector("list", length(uniq_sig_row_ids))
+resp_components_collected  <- vector("list", length(uniq_sig_row_ids))
+resp_components_full_sig   <- vector("list", length(uniq_sig_row_ids))   # used for cell types only
+recreated_template         <- vector("list", length(uniq_sig_row_ids))
 
 # Some signatures are lost entirely during cleaning
 # FIXME - this is also logged below at comment "original template rows deleted"
-which(!(names(signatures_uniq) %in% uniqIDs))
-signatures_uniq <- signatures_uniq[names(signatures_uniq) %in% uniqIDs]
+which(!(names(signatures_uniq) %in% uniq_sig_row_ids))
+signatures_uniq <- signatures_uniq[names(signatures_uniq) %in% uniq_sig_row_ids]
 
 
 # create data structures needed for mSigDB
 if (response_type == "GENE" && CREATE_MSIGDB) {
   msigdb_empty <- msigdb_intialize()
-  msigdb_list <- vector("list", length(uniqIDs))
+  msigdb_list <- vector("list", length(uniq_sig_row_ids))
 }
 
-for (i in 1:length(uniqIDs)) {
-  df2tmp <- df2[df2$sig_row_id == uniqIDs[i], ]
+for (i in 1:length(uniq_sig_row_ids)) {
+  df2tmp <- df2[df2$sig_row_id == uniq_sig_row_ids[i], ]
   # Recreate a full signature in one row
   base_row <- df2tmp[1, ] # get first row for this uniqID
 
-  response_rowname     <- paste(base_row$publication_reference_id, base_row$sig_subm_id, uniqIDs[i], sep = "_")
-  response_description <- paste("PMID", base_row$publication_reference_id, "submission", base_row$sig_subm_id, "row", uniqIDs[i], sep = " ")
-
+  response_rowname     <- paste(base_row$publication_reference_id, base_row$sig_subm_id, uniq_sig_row_ids[i], sep = "_")
+#  response_description <- paste("PMID", base_row$publication_reference_id, "submission", base_row$sig_subm_id, "row", uniq_sig_row_ids[i], sep = " ")
+  response_description <- paste("PMID", base_row$publication_reference_id, response_behavior_type_var, base_row$sig_subm_id, sep = " ")
+  
   # Use the full original set of response components rather than just those
   # for which a valid symbol was found.
   base_row$response_component_original <- paste(unique(df2tmp$response_component_original), collapse = "; ")
@@ -1013,7 +1031,7 @@ for (i in 1:length(uniqIDs)) {
 
     w <- which(titles_and_dates_df$pmid == base_row$publication_reference_id)
     if (length(w) != 1) {
-      stop(paste("unexpected PMID result: uniqID = ", uniqIDs[i], ", pmid = ", base_row$publication_reference_id))
+      stop(paste("unexpected PMID result: uniqID = ", uniq_sig_row_ids[i], ", pmid = ", base_row$publication_reference_id))
     }
     titles_and_dates_row <- titles_and_dates_df[w, ]
 
@@ -1033,7 +1051,7 @@ for (i in 1:length(uniqIDs)) {
   tmp <- data.frame(rowname = response_rowname,
                     pmid = base_row$publication_reference_id,
                     sig_subm_id = base_row$sig_subm_id,
-                    sig_row_id = uniqIDs[i],
+                    sig_row_id = uniq_sig_row_ids[i],
                     count = length(resp_components_collected[[i]]))
   resp_components_cnt_df <- rbind(resp_components_cnt_df, tmp)
 
@@ -1047,9 +1065,9 @@ for (i in 1:length(uniqIDs)) {
 
   recreated_template[[i]] <- base_row
 }
-names(resp_components_collected) <- uniqIDs  # name not actually used again?
-names(resp_components_full_sig)  <- uniqIDs  # name not actually used again?
-names(resp_components_annotated) <- uniqIDs  # name is used for this one.
+names(resp_components_collected) <- uniq_sig_row_ids  # name not actually used again?
+names(resp_components_full_sig)  <- uniq_sig_row_ids  # name not actually used again?
+names(resp_components_annotated) <- uniq_sig_row_ids  # name is used for this one.
 
 recreated_template_df <- as.data.frame(rbindlist(recreated_template))  # consolidate to a single data.frame
 if(any(colnames(header_rows) != colnames(recreated_template_df))) {
@@ -1062,24 +1080,33 @@ if (response_type == "GENE" && CREATE_MSIGDB) {
   summary_df <- write_msigdb_submission(msigdb_list, summary_df)
 }
 
-# Delete unneeded columns from the recreated template
+
 if (response_type == "GENE") {
   # do nothing
 } else if (response_type == "CELLTYPE_FREQUENCY") {
-  del_cols <- c("proterm_and_extra", "fully_qualified_response_component")
-  recreated_template_df <- recreated_template_df[!colnames(recreated_template_df) %in% del_cols]
+#  del_cols <- c("proterm_and_extra", "fully_qualified_response_component")
+#  recreated_template_df <- recreated_template_df[!colnames(recreated_template_df) %in% del_cols]
 }
 
-del_cols <- c("submission_name", "submission_date", "template_name", "short_comment", "process_note")
+# First save a complete version for use in debugging/logging
+del_cols <- c("submission_name", "submission_date", "template_name")
 recreated_template_df <- recreated_template_df[!colnames(recreated_template_df) %in% del_cols]
 
 # Set that first column name back to blank
 colnames(recreated_template_df)[1] <- ""
 # Write out the recreated upload template in tab-delimited format
-write.table(recreated_template_df,
-            file = logfile_path(standardized_curations, base_filename, "standardized_curations.tsv"),
-            sep = "\t", row.names = FALSE)
+# write.table(recreated_template_df,
+#            file = logfile_path(log_files, base_filename, "standardized_curation_template_full.tsv"),
+#            sep = "\t", row.names = FALSE)
 
+# Save a reduced version for public use
+# del_cols <- c("sig_subm_id",	"sig_row_id",	"row_key")
+del_cols <- c("sig_subm_id",	"sig_row_id")
+
+recreated_template_df <- recreated_template_df[!colnames(recreated_template_df) %in% del_cols]
+write.table(recreated_template_df,
+            file = logfile_path(convenience_files, base_filename, "standardized_curation_template.tsv"),
+            sep = "\t", row.names = FALSE)
 
 ########################################
 ##### Prepare submission templates #####
@@ -1113,11 +1140,11 @@ df2 <- df2[!colnames(df2) %in% del_cols]
 header_rows <- header_rows[!colnames(header_rows) %in% del_cols]
 
 if (response_type == "GENE") {
-  write_submission_template(df2, header_rows, release_files, csv_files, template_name, titles_and_dates_df,
+  write_submission_template(df2, header_rows, release_files, csv_submission_files, template_name, titles_and_dates_df,
                             resp_components_collected, unmatched_symbols_map,
                             response_type, exposure_type, project)
 } else if (response_type == "CELLTYPE_FREQUENCY") {
-  write_submission_template(df2, header_rows, release_files, csv_files, template_name, titles_and_dates_df,
+  write_submission_template(df2, header_rows, release_files, csv_submission_files, template_name, titles_and_dates_df,
                             resp_components_full_sig, unmatched_symbols_map = NULL,
                             response_type, exposure_type, project)
 }
@@ -1160,7 +1187,7 @@ write.csv(resp_components_cnt_df,
           file = logfile_path(log_files, base_filename, "response_component_counts_by_row.csv"),
           row.names = FALSE)
 
-outfile = logfile_path(standardized_curations, base_filename, "response_components.gmt.txt")
+outfile = logfile_path(convenience_files, base_filename, "response_components.gmt.txt")
 if(file.exists(outfile)) file.remove(outfile)
 d <- lapply(resp_components_annotated,
             function(x) write.table(paste(x, collapse = "\t"),
@@ -1176,6 +1203,7 @@ signatures_uniq_gmt <- mapply(function(x, n) {
                          c(x[1], x[2], n)
                        }, resp_components_annotated, signatures_uniq)
 
+# For mSigDB they wanted the original, not the standardized, gene symbols
 outfile = logfile_path(log_files, base_filename, "response_components_original.gmt.txt")
 if(file.exists(outfile)) file.remove(outfile)
 d <- lapply(signatures_uniq_gmt,
@@ -1208,7 +1236,7 @@ summary_df <- add_to_summary(summary_df, "min signature size", min(resp_componen
 summary_df <- add_to_summary(summary_df, "max signature size", max(resp_components_cnt_df$count))
 
 # sig_row_ids that got deleted because no valid response_component
-s <- subset(sig_row_id_orig, !(sig_row_id_orig %in% uniqIDs))
+s <- subset(sig_row_id_orig, !(sig_row_id_orig %in% uniq_sig_row_ids))
 s <- paste(s, collapse = " ")
 summary_df <- add_to_summary(summary_df, "original template rows deleted", s)
 
