@@ -1,5 +1,10 @@
 HIPC Dashboard Pipeline
 
+Changes in development version
+- Add processing Hancock lab covid-19 curations.
+- Add creating additional PMID output table with results from ALL PMIDs, not just current exposure_type.
+- Move PMID lookup handling to separate routine to support different scenarios.
+
 Changes in version 1.4.0
 - Add splitting on tissue_type_term_id (split 4).
 -- Split tissue_type_term_ids get individual columns in Dashboard submission files
