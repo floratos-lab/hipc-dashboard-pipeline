@@ -36,11 +36,9 @@ The repository contents are as follows:
       - **./data/source_curations**: source curation spreadsheets, as
         provided by curators.
     
-      - **./data/standardized_curations**: A fully denormalized representation of the standardized curated data.  This is the state from which all other files are created, i.e. the convenience files and release files.  The denormalized files can easily be read into a spreadsheet or database for further analysis.  All rows derived from one signature share the same row key, to allow identification and reconstruction of signatures as desired.
-
-      - **./data/convenience_files**: 
-         (1) the standardized curations cast back into the format of the curation templates for easy inspection.  Row keys are included to allow signature identification.
-         (2) signature response component (e.g. gene symbols, cell-types) files in Broad Inst. GMT format.  Row keys are included to allow signature identification.
+      - **./data/standardized_curations**: curation spreadsheets in denormalized form, after
+        undergoing processing for quality control and standardization. This is the state from 
+        which all other files are created, i.e. the convenience files and release files. 
     
       - **./data/reference_files**: resources used to support the
         standardization process, including controlled vocabularies from
@@ -49,9 +47,10 @@ The repository contents are as follows:
       - **./data/release_files**: Dashboard release files. These are
         transformed, partially denormalized spreadsheet files generated from the standardized
         curations. They are formatted as needed for uploading to the
-        Dashboard.  Key controlled vocabulary data columns, such as exposure_material_id and target_pathogen_id, are not denormalized, but instead each entry for one signature is placed in a separate column.  The response_component column is always denormalized, e.g. to one gene symbol per row.
-
-      - **NOTE on row_keys**: row keys are formed by concatentating the following: PMID, count of this signatue within that PMID, and the original row within the curation sheet in which the signature was curated.
+        Dashboard.
+        
+      - **./data/convenience_files**: the standardized curations conveniently reformatted to support 
+        human inspection and downstream computational analysis.
         
   - **./docs**: curation templates and column specification.
 
@@ -158,23 +157,23 @@ and are updated with the latest versions prior to a Dashboard release.
 
 ### Release Preparation
 
-The quality control and standardization process produces new versions of
-the source spreadsheets which are placed under **./data/standardized_curations**. These files then undergo further processing to generate the
+The quality control and standardization process produces new, denormalized versions of
+the source spreadsheets which are placed under **./data/standardized_curations**. 
+These files then undergo further processing to generate the
 final data release files which will be uploaded to the Dashboard. This
 processing is essentially a straightforward repackaging of the
 spreadsheets into a format appropriate for the upload scripts. It
-involves the following steps:
-
-  - Splitting immune signatures into individual spreadsheet files, one
-    signature per file.
-
-  - Denormalizing signatures involving multiple response components so
-    that each component is listed on a separate spreadsheet row.
-
-The final release files are stored under **./data/release_files** and
-have the same columns as the source curation files, with some additions
+involves splitting immune signatures into individual spreadsheet files, one
+signature per file. The final release files are stored under **./data/release_files** and
+have the same columns as the standardized curation files, with some additions
 to support the requirements of the Dashboard itself and to preserve
 original curated values for fields updated by the pipeline.
+
+The release preparation process also generates a number of convenience files, i.e., 
+partially re-normalized versions of the standardized curations. These files are available 
+in spreadsheet format, to facilitate human inspection; and in the Broad GMT tab delimited file format, 
+to support downstream computational processing. The files are stored under 
+**./data/convenience_files**  
 
 Additional details about the processing pipeline can be found under the
 **./data** directory.
