@@ -5,7 +5,8 @@ Changes in version 1.4.0
 -- Split tissue_type_term_ids get individual columns in Dashboard submission files
 - Add splitting on comparison field entries (split 5)
 - Adapt code to new directory structure in github repository
-- change "recreated_templates" to "standardized_curations" in output file names
+- Change "recreated_templates" to "standardized_curation_templates" in output file names
+- Add writing of standardized, fully denormalized versions of data for easy reuse
 - Rename submission id variables in code and standardized files for clarity
 -- subm_obs_id -> sig_subm_id, uniq_obs_id -> sig_row_id
 - Revise messages in code for clarity
