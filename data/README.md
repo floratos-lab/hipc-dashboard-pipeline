@@ -100,9 +100,9 @@ to e.g. thousands of gene symbols, this element of the signature is treated diff
 * multi-valued "subject" fields other than "response_component" (genes or vaccines) are 
 split into as many columns as needed to represent each entry in single-valued fashion.  
 For example, a spreadsheet target_pathogen field containing three pathogens would be split 
-into three separate columns on the same row, "target_pathogen_1", "target_pathogen_2" and 
-"target_pathogen_3".  This currently applies to the fields "exposure_material" and "target_pathogen".
-* "response_component" fields are split into a new row for each entry. For example, a signature 
+into three separate columns on the same row, "target_pathogen_taxonid_1", "target_pathogen_taxonid_2" and 
+"target_pathogen_taxonid_3".  This currently applies to the fields "tissue_type_term_id", "exposure_material_id" and "target_pathogen_taxonid".
+* "response_component" and "comparison" fields are split into a new row for each entry. For example, a signature 
 with 100 genes will be expanded to 100 rows, each with 1 gene symbol in the 
 response_component column. All other columns will be the same for each row. 
 (This aspect of the Dashboard design allows in principle additional unique supporting evidence 
