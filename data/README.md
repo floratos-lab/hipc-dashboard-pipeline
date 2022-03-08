@@ -15,7 +15,7 @@
 * **./release_files**: Dashboard release files. These are
         transformed, partially denormalized spreadsheet files generated from the standardized
         curations. They are formatted as needed for uploading to the
-        Dashboard.  Key controlled vocabulary data columns, such as exposure_material_id and target_pathogen_id, are not denormalized, but instead each entry for one signature is placed in a separate column.  The response_component column is always denormalized, e.g. to one gene symbol per row.
+        Dashboard.  Key controlled vocabulary data columns, such as exposure_material_id and target_pathogen_id, are not denormalized, but instead each entry for one signature is placed in a separate column.  The response_component column is always denormalized, e.g. to one gene symbol per row.  Further details below under "Submission File Format".
 
 * **NOTE on row_keys**: row keys are formed by concatentating the following: PMID, count of this signatue within that PMID, and the original row within the curation sheet in which the signature was curated.
         
