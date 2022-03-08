@@ -36,18 +36,23 @@ The repository contents are as follows:
       - **./data/source_curations**: source curation spreadsheets, as
         provided by curators.
     
-      - **./data/standardized_curations**: curation spreadsheets after
-        undergoing processing for quality control and standardization.
+      - **./data/standardized_curations**: A fully denormalized representation of the standardized curated data.  This is the state from which all other files are created, i.e. the convenience files and release files.  The denormalized files can easily be read into a spreadsheet or database for further analysis.  All rows derived from one signature share the same row key, to allow identification and reconstruction of signatures as desired.
+
+      - **./data/convenience_files**: 
+         (1) the standardized curations cast back into the format of the curation templates for easy inspection.  Row keys are included to allow signature identification.
+         (2) signature response component (e.g. gene symbols, cell-types) files in Broad Inst. GMT format.  Row keys are included to allow signature identification.
     
       - **./data/reference_files**: resources used to support the
         standardization process, including controlled vocabularies from
         external sources and mapping files maintained by the project.
     
       - **./data/release_files**: Dashboard release files. These are
-        denormalized spreadsheet files generated from the standardized
+        transformed, partially denormalized spreadsheet files generated from the standardized
         curations. They are formatted as needed for uploading to the
-        Dashboard.
+        Dashboard.  Key controlled vocabulary data columns, such as exposure_material_id and target_pathogen_id, are not denormalized, but instead each entry for one signature is placed in a separate column.  The response_component column is always denormalized, e.g. to one gene symbol per row.
 
+      - **NOTE on row_keys**: row keys are formed by concatentating the following: PMID, count of this signatue within that PMID, and the original row within the curation sheet in which the signature was curated.
+        
   - **./docs**: curation templates and column specification.
 
 The overall workflow of the project is depicted below.
