@@ -65,7 +65,7 @@ source("write_joint_summary.R")
 # Available response_type values are "GENE", "CELLTYPE_FREQUENCY"
 response_type <- "CELLTYPE_FREQUENCY"
 # Available exposure_type values are "VACCINE", "INFECTION" (covid-19)
-exposure_type <- "INFECTION"
+exposure_type <- "VACCINE"
 
 # Assume executing from the ./code directory
 source_curations       <- "../data/source_curations"
@@ -107,6 +107,7 @@ CREATE_MSIGDB           <- FALSE
 # VO_0004903: Inactivated monovalent influenza A/H5N1
 #     (3.75 mcg hemagglutinin [HA] A/Indonesia/05/2005) split-virus (SV) vaccine (Sanofi)
 vaccine_VO_has_pathogens <- c("VO_0004810", "VO_0004899", "VO_0004903")
+exclude_pmid <- "33361761"  # PMID(s) that are not suitable for processing
 
 ##############################
 ##### Initial data setup #####
@@ -316,17 +317,16 @@ if (response_type == "GENE") {
 insub$response_comp_orig_cnt  <- ""
 insub$response_comp_cnt       <- ""
 insub$sig_subm_id             <- ""
-insub$sig_row_id             <- ""
+insub$sig_row_id              <- ""
 insub$row_key                 <- ""
 
 insub$submission_name[1:6]    <- c("", "label", "background", "", "", "submission name")
 insub$submission_date[1:6]    <- c("", "label", "background", "", "", "submission_date")
 insub$template_name[1:6]      <- c("", "label", "background", "", "", "template_name")
-insub$response_comp_orig_cnt[1:6]  <-
-                                 c("", "label", "observed",   "", "", "response component (original) count")
+insub$response_comp_orig_cnt[1:6]  <- c("", "label", "observed",   "", "", "response component (original) count")
 insub$response_comp_cnt[1:6]  <- c("", "label", "observed",   "", "", "response component count")
 insub$sig_subm_id[1:6]        <- c("", "label", "background", "", "", "sequential ID of signature within a publication (PMID) and for its response_type ")
-insub$sig_row_id[1:6]        <- c("", "label", "background", "", "", "row ID of signature within its submission data file(s)")
+insub$sig_row_id[1:6]         <- c("", "label", "background", "", "", "row ID of signature within its submission data file(s)")
 insub$row_key[1:6]            <- c("", "label", "background", "", "", "row key")
 
 if (response_type == "CELLTYPE_FREQUENCY") {
@@ -371,8 +371,8 @@ if (!all(s)) {
 # For INFECTION, first get a table of all PMIDs, not just current exposure type
 if(exposure_type == "INFECTION") {
   titles_and_dates_df <- get_titles_and_dates(df2, RENEW_PMIDS, pmid_file_infection, log_files, base_filename_infection)
+  nrow(titles_and_dates_df)
 }
-nrow(titles_and_dates_df)
 
 
 # Special handling for INFECTION templates
@@ -388,7 +388,13 @@ if(exposure_type == "INFECTION") {
 nrow(df2)
 df2 <- df2[df2$publication_reference_id != "", ]
 nrow(df2)
+
+# remove signatures from unusable PMIDs
+df2 <- df2[!(df2$publication_reference_id %in% exclude_pmid), ]
+nrow(df2)
+
 summary_df <- add_to_summary(summary_df, "available data rows in original sheet", nrow(df2))
+
 
 
 # Generate observation IDs based on the PMID field value and on original row number,
@@ -542,7 +548,6 @@ if (response_type == "GENE") {
   #   'as.is' should be specified by the caller; using TRUE
   df2 <- cSplit(df2, "response_component_original", sep = "[/]{3}", direction = "long", fixed = FALSE)
   # the curated data does in places have spaces as separators
-  df2 <- cSplit(df2, "response_component_original", sep = " ", direction = "long")
 } else if (response_type == "CELLTYPE_FREQUENCY") {
   df2 <- cSplit(df2, "response_component_original", sep = ";", direction = "long")
 }
@@ -552,7 +557,7 @@ df2 <- as.data.frame(df2)
 
 # remove factors from df2$response component so that for genes, can alter values.
 # FIXME - any way to gain better control of this?
-df2$response_component_original <- as.character(df2$response_component_original)
+df2$response_component_original <- trimws(as.character(df2$response_component_original))
 
 
 if (response_type == "GENE") {
@@ -727,6 +732,7 @@ if (response_type == "GENE") {
                 file = logfile_path(log_files, base_filename, "missing_mappings_unique.tsv"),
                 sep = "\t", row.names = FALSE, col.names = FALSE, quote = FALSE)
 
+    df2 <- df2[!is.na(ctf_match), ]
     stop("cell type mapping not found")
   } else {
     print("all cell types matched")
