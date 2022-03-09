@@ -408,7 +408,7 @@ log_no_valid_symbol_vs_pmid <- function(noValidSymbols_df, log_files, base_filen
   # contains the following columns: c("response_component", "publication_reference", "subObsID", "uniqObsID")
   write.table(noValidSymbols_df,
               file = logfile_path(log_files, base_filename, "no_substitute_genes_with_PMIDs.txt"),
-              row.names = FALSE, col.names = TRUE,  quote = FALSE)
+              row.names = FALSE, col.names = TRUE,  quote = FALSE, sep = "\t")
 
   pmids_with_invalid_gene_symbols <- unique(noValidSymbols_df$publication_reference)
   write.table(pmids_with_invalid_gene_symbols,
