@@ -85,7 +85,10 @@ manual_gene_corrections_txt <- "manual_gene_symbol_corrections.txt"
 #   set to FALSE to reuse existing file
 #   Run this every time new publications are added to the spreadsheet,
 #   for each response_component type.
-RENEW_PMIDS             <- FALSE
+# Note - If set to TRUE, for type infection, 
+#        run CELLTYPE_FREQUENCY first and GENE second to get all PMIDs,
+#        as long as use_covid_v2 mechanism being used to skip cell-type curations.
+RENEW_PMIDS             <- FALSE  
 
 ## Please update gene files before each release
 ## These files will be overwritten if update is requested
