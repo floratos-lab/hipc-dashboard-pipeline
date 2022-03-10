@@ -1,7 +1,8 @@
 HIPC data/curation sheet-related changes
 
 Changes in development version
-- Add Hancock lab covid-19 curations.
+- Add Hancock lab covid-19 gene curations.
+- No longer accept spaces as separators for gene lists, update curations accordingly
 
 Changes in version 1.4.0
 - Add additional gene expression signatures from Arunachalam et al., 2020
