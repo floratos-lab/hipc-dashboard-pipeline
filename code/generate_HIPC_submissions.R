@@ -63,7 +63,7 @@ source("msigdb_submission_utils.R")
 source("write_joint_summary.R")
 
 # Available response_type values are "GENE", "CELLTYPE_FREQUENCY"
-response_type <- "CELLTYPE_FREQUENCY"
+response_type <- "GENE"
 # Available exposure_type values are "VACCINE", "INFECTION" (covid-19)
 exposure_type <- "INFECTION"
 
@@ -1045,6 +1045,10 @@ for (i in 1:length(uniq_sig_row_ids)) {
   # The "updated" (gene or cell types after fixes) response_components
   resp_components_collected[[i]] <- unique(df2tmp$response_component)  # genes or base cell types
 
+  base_row$response_component_id <- paste(unique(df2tmp$response_component_id), collapse = "; ")
+  base_row$exposure_material_id  <- paste(unique(df2tmp$exposure_material_id), collapse = "; ")
+  base_row$tissue_type_term_id   <- paste(unique(df2tmp$tissue_type_term_id), collapse = "; ")
+  
   if (response_type == "GENE") {
     base_row$response_component <- paste(unique(df2tmp$response_component), collapse = "; ")
     resp_components_annotated[[i]] <- c(response_rowname, response_description, unique(df2tmp$response_component))
@@ -1066,6 +1070,13 @@ for (i in 1:length(uniq_sig_row_ids)) {
     full_sig <- unique(df2tmp$fully_qualified_response_component)
     # FIXME - only response_component is getting put back together?
     base_row$response_component    <- paste(full_sig, collapse = "; ")
+    base_row$proterm_and_extra     <- paste(unique(df2tmp$proterm_and_extra), collapse = "; ")
+    base_row$fully_qualified_response_component <- paste(unique(df2tmp$fully_qualified_response_component), collapse = "; ")
+    # The pro_ontology_id values are already separated by semicolons, so change to commas
+    # before potentially joining two lists of pro-terms.  
+    df2tmp$pro_ontology_id <- sapply(df2tmp$pro_ontology_id, function(x) {gsub(";", ",", x)})
+    base_row$pro_ontology_id <- paste(unique(df2tmp$pro_ontology_id), collapse = "; ")
+    
     resp_components_full_sig[[i]]  <- full_sig
     resp_components_annotated[[i]] <- c(response_rowname, response_description, full_sig)
   }
@@ -1081,19 +1092,10 @@ for (i in 1:length(uniq_sig_row_ids)) {
   if(exposure_type == "VACCINE") {
     base_row$target_pathogen_taxonid   <- paste(unique(df2tmp$target_pathogen_taxonid), collapse = "; ")
   }
-  base_row$response_component_id <- paste(unique(df2tmp$response_component_id), collapse = "; ")
-  base_row$exposure_material_id  <- paste(unique(df2tmp$exposure_material_id), collapse = "; ")
-  base_row$tissue_type_term_id   <- paste(unique(df2tmp$tissue_type_term_id), collapse = "; ")
-  base_row$proterm_and_extra     <- paste(unique(df2tmp$proterm_and_extra), collapse = "; ")
-  base_row$fully_qualified_response_component <- paste(unique(df2tmp$fully_qualified_response_component), collapse = "; ")
-  # The pro_ontology_id values are already separated by semicolons, so change to commas
-  # before potentially joining two lists of pro-terms.  
-  df2tmp$pro_ontology_id <- sapply(df2tmp$pro_ontology_id, function(x) {
-                                    gsub(";", ",", x)})
-  base_row$pro_ontology_id <- paste(unique(df2tmp$pro_ontology_id), collapse = "; ")
   
   recreated_template[[i]] <- base_row
 }
+
 names(resp_components_collected) <- uniq_sig_row_ids  # name not actually used again?
 names(resp_components_full_sig)  <- uniq_sig_row_ids  # name not actually used again?
 names(resp_components_annotated) <- uniq_sig_row_ids  # name is used for this one.
