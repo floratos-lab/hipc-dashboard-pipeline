@@ -1,5 +1,22 @@
 HIPC Dashboard Pipeline
 
+Changes in development version
+- Add processing Hancock lab covid-19 (covid_v2) curations.
+-- Add code to allow skipping cell-type curations in covid_v2 file.
+- Add creating additional PMID output table with results from ALL PMIDs in curated file, 
+    not just current response_type.
+- Move PMID lookup handling to separate routine to support different scenarios.
+- Write out denormalized data files, gzipped.
+- Change gmt file description column to show signature type.
+- Add feature to remove signatures from unusable PMIDs before processing if needed.
+- No longer accept space as a valid separator character for gene symbols.
+- Remove sig_subm_id and sig_row_id as separate columns in standardized_curation_template files.
+- Write gmt and standardized_curation_template files to "convenience_files" directory.
+- Allow to complete cell-type runs even if some cell-types not mapped.
+- Correctly reassemble various cell-type terms when more than one response_component in a signature 
+    for building standardized_curation_templates.tsv.
+- Simplify various code sections
+
 Changes in version 1.4.0
 - Add splitting on tissue_type_term_id (split 4).
 -- Split tissue_type_term_ids get individual columns in Dashboard submission files

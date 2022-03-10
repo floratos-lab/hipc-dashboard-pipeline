@@ -21,7 +21,8 @@ use_consortium <- rbind(c("28854372", "Rechtien", FALSE),
                         c("24725414", "Tsang", FALSE),
                         c("32826343", "Maucourant", FALSE),
                         c("32717743", "Lucas", FALSE),
-                        c("33846275", "Saris", FALSE))
+                        c("33846275", "Saris", FALSE),
+                        c("32856707", "Young", FALSE))
 
 use_consortium <- as.data.frame(use_consortium, stringsAsFactors = FALSE)
 colnames(use_consortium) <- c("pmid", "author", "use")
@@ -179,5 +180,30 @@ pmid_to_title_easy <- function(pmid, print_pub_year) {
   date <- paste(pubYear, pubMonth, pubDay, sep = ".")
   abstract <- ""
   return(data.frame(pmid, author = aname, article_title, dashboard_title, date, abstract, stringsAsFactors = FALSE))
+}
+
+get_titles_and_dates <- function(df2, renew_pmids, pmid_file, log_files, pmid_logfile_basename) {
+  pmids_uniq <- unique(df2$publication_reference_id)
+  
+  summary_df <- add_to_summary(summary_df, "Unique PMIDs", length(pmids_uniq))
+  # Get user-entered year for each pmid
+  # FIXME - need to catch if user did not enter year.
+  print_pub_year <- df2$publication_date[match(pmids_uniq, df2$publication_reference_id)]
+  # FIXME - need to check date format valid
+  print_pub_year <- stri_sub(print_pub_year, 1, 4)
+  
+  if (renew_pmids || !file.exists(pmid_file)) {
+    td <- mapply(pmid_to_title_easy, pmids_uniq, print_pub_year, SIMPLIFY = FALSE)
+    titles_and_dates_df <- as.data.frame(rbindlist(td))
+    save(titles_and_dates_df, file = pmid_file)
+    write.table(titles_and_dates_df,
+                file = paste(log_files,
+                             paste(pmid_logfile_basename, "titles_and_dates_df.tsv", sep = "-"),
+                             sep = "/"), 
+                row.names = FALSE, col.names = TRUE, sep = "\t")
+  } else {
+    load(file = pmid_file)
+  }
+  return(titles_and_dates_df)
 }
 
