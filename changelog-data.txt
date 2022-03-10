@@ -1,7 +1,7 @@
 HIPC data/curation sheet-related changes
 
 Changes in development version
-- Add Hancock lab covid-19 gene curations.
+- Add Hancock lab covid-19 gene curations, 10 new PMIDs.
 - No longer accept spaces as separators for gene lists, update curations accordingly
 
 Changes in version 1.4.0
