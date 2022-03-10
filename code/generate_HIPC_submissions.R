@@ -63,7 +63,7 @@ source("msigdb_submission_utils.R")
 source("write_joint_summary.R")
 
 # Available response_type values are "GENE", "CELLTYPE_FREQUENCY"
-response_type <- "GENE"
+response_type <- "CELLTYPE_FREQUENCY"
 # Available exposure_type values are "VACCINE", "INFECTION" (covid-19)
 exposure_type <- "INFECTION"
 
@@ -157,6 +157,7 @@ if (exposure_type == "VACCINE") {
 } else if (exposure_type == "INFECTION") {
   first_data_row <- 9  # not counting the first row, which becomes a column header.
   if (response_type == "GENE") {
+    use_covid_v2   <- TRUE
     sheet_file     <- "COVID-19 curation template - example curation.tsv"
     sheet_file2    <- "Odak_2020_pmid_32650275 - covid19.tsv"
     sheet_file3    <- "hipc_infection_covid_v2 - multiple_types.tsv"
@@ -164,6 +165,7 @@ if (exposure_type == "VACCINE") {
     template_name  <- "hipc_inf_gene"
     project        <- "Gene expression response to infection"
   } else if (response_type == "CELLTYPE_FREQUENCY") {
+    use_covid_v2   <- FALSE
     sheet_file     <- "COVID-19 curation template - example curation.tsv"
     sheet_file2    <- "Odak_2020_pmid_32650275 - covid19.tsv"
     sheet_file3    <- "hipc_infection_covid_v2 - multiple_types.tsv"
@@ -231,12 +233,14 @@ if (exposure_type == "VACCINE") {
   nrow(insub2)
   insub2 <- insub2[!(colnames(insub2) %in% del_cols_common)]
 
-  insub3 <- read.delim(file =  paste(source_curations, sheet_file3, sep = "/"),
-                       strip.white = TRUE,
-                       stringsAsFactors = FALSE,
-                       quote = "")
-  nrow(insub3)
-  insub3 <- insub3[!(colnames(insub3) %in% del_cols_common)]
+  if (use_covid_v2) {
+    insub3 <- read.delim(file =  paste(source_curations, sheet_file3, sep = "/"),
+                         strip.white = TRUE,
+                         stringsAsFactors = FALSE,
+                         quote = "")
+    nrow(insub3)
+    insub3 <- insub3[!(colnames(insub3) %in% del_cols_common)]
+  }
 
   del_cols <- c("route",
                 "addntl_time_point_units",
@@ -246,21 +250,26 @@ if (exposure_type == "VACCINE") {
   colnames(insub2)[(colnames(insub2) %in% del_cols)]
   insub2 <- insub2[!(colnames(insub2) %in% del_cols)]
 
-  colnames(insub3)[(colnames(insub3) %in% del_cols)]
-  insub3 <- insub3[!(colnames(insub3) %in% del_cols)]
-
-  colnames(insub3)[!(colnames(insub3) %in% (colnames(insub2)))]
-  colnames(insub2)[!(colnames(insub2) %in% (colnames(insub3)))]
+  if (use_covid_v2) {
+    colnames(insub3)[(colnames(insub3) %in% del_cols)]
+    insub3 <- insub3[!(colnames(insub3) %in% del_cols)]
+  
+    colnames(insub3)[!(colnames(insub3) %in% (colnames(insub2)))]
+    colnames(insub2)[!(colnames(insub2) %in% (colnames(insub3)))]
+    all(colnames(insub2) == colnames(insub3))
+  }
 
   all(colnames(insub) == colnames(insub2))
-  all(colnames(insub2) == colnames(insub3))
 
   # stitch together the data sections
   nrow(insub)
   insub <- rbind(insub, insub2[first_data_row:nrow(insub2),])
   nrow(insub)
-  insub <- rbind(insub, insub3[first_data_row:nrow(insub3),])
-  nrow(insub)
+  
+  if (use_covid_v2) {
+    insub <- rbind(insub, insub3[first_data_row:nrow(insub3),])
+    nrow(insub)
+  }
 
 }
 
@@ -1045,7 +1054,6 @@ for (i in 1:length(uniq_sig_row_ids)) {
   # The "updated" (gene or cell types after fixes) response_components
   resp_components_collected[[i]] <- unique(df2tmp$response_component)  # genes or base cell types
 
-  base_row$response_component_id <- paste(unique(df2tmp$response_component_id), collapse = "; ")
   base_row$exposure_material_id  <- paste(unique(df2tmp$exposure_material_id), collapse = "; ")
   base_row$tissue_type_term_id   <- paste(unique(df2tmp$tissue_type_term_id), collapse = "; ")
   
@@ -1070,6 +1078,7 @@ for (i in 1:length(uniq_sig_row_ids)) {
     full_sig <- unique(df2tmp$fully_qualified_response_component)
     # FIXME - only response_component is getting put back together?
     base_row$response_component    <- paste(full_sig, collapse = "; ")
+    base_row$response_component_id <- paste(unique(df2tmp$response_component_id), collapse = "; ")
     base_row$proterm_and_extra     <- paste(unique(df2tmp$proterm_and_extra), collapse = "; ")
     base_row$fully_qualified_response_component <- paste(unique(df2tmp$fully_qualified_response_component), collapse = "; ")
     # The pro_ontology_id values are already separated by semicolons, so change to commas
