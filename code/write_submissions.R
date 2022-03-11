@@ -157,6 +157,7 @@ write_submission_template <- function(df2_cpy, header_rows, release_files, csv_f
     }
 
     # Add new columns for multiple exposure materials
+    # FIXME - same code repeated three times in following sections, should make function
     expMatCnt <- length(uniqExpMat)
     if(expMatCnt > 1) {
       newCols <- paste("exposure_material_id", 1:expMatCnt, sep = "_")
@@ -208,8 +209,8 @@ write_submission_template <- function(df2_cpy, header_rows, release_files, csv_f
       newCols <- paste("tissue_type_term_id", 1:tissue_cnt, sep = "_")
       dftmp[newCols] <- ""
 
-      for (j in 1:expMatCnt) {
-          dftmp[1:6, newCols[j]] <- c("cell subset", "", "tissue", "", "", paste("tissue (Cell Ontology)", j))
+      for (j in 1:tissue_cnt) {
+          dftmp[1:6, newCols[j]] <- c("cell_subset", "", "tissue", "", "", paste("tissue (Cell Ontology)", j))
         dftmp[7:nrow(dftmp), newCols[j]] <- uniq_tissue_vals[j]
       }
 
