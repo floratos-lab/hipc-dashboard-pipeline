@@ -63,7 +63,7 @@ source("msigdb_submission_utils.R")
 source("write_joint_summary.R")
 
 # Available response_type values are "GENE", "CELLTYPE_FREQUENCY"
-response_type <- "CELLTYPE_FREQUENCY"
+response_type <- "GENE"
 # Available exposure_type values are "VACCINE", "INFECTION" (covid-19)
 exposure_type <- "INFECTION"
 
@@ -345,13 +345,6 @@ if (response_type == "CELLTYPE_FREQUENCY") {
   ctf_fixes <- read.delim(file = paste(reference_files, ctf_fixes_tsv, sep = "/"),
                           stringsAsFactors = FALSE)
   dim(ctf_fixes)
-  # The below lines were to handle enorous number of extra rows and columns that were in the Excel source.  Now fixed.
-  # Maybe from a passage through Excel on Mac?
-#  ctf_fixes <- ctf_fixes[1:6] 
-#  nrow(ctf_fixes)
-#  ctf_fixes <- subset(ctf_fixes, original_annotation != "")
-#  nrow(ctf_fixes)
-  
   # FIXME - this is probably not doing anything
   s <- strict_char_check(ctf_fixes, "\xa0")  # character 160.  Dashboard loader does not like it.
   if(!is.null(s)) {
