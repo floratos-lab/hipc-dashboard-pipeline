@@ -270,7 +270,7 @@ write_submission_template <- function(df2_cpy, header_rows, release_files, csv_f
     # Write out the actual submission template in tab-delimited format
     write.table(dftmp,
                 file = paste(release_files, template_name, paste0(submission_name, ".txt"), sep = "/"),
-                sep = "\t", row.names = FALSE)
+                sep = "\t", row.names = FALSE, qmethod = "double")
 
     # For convenience, write out CSV version
     write.csv(dftmp,
