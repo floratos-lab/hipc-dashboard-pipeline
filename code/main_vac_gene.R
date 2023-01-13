@@ -126,6 +126,21 @@ summary_df <- data.frame()  # initialize summary log
 
 ##### Set up file and template name components #####
 # change sheet name spaces to underscores
+if (exposure_type == "VACCINE") {
+  first_data_row <- 7  # not counting the first row, which becomes a column header.
+  if (response_type == "GENE") {
+    sheet_file     <- "hipc_vaccine - gene_expression.tsv"
+    base_filename  <- "vac_gene_expression"
+    template_name  <- "hipc_vac_gene"
+    project        <- "Gene expression response to vaccine exposure"
+  } else if (response_type == "CELLTYPE_FREQUENCY") {
+    sheet_file     <- "hipc_vaccine - cell_type_frequency.tsv"
+    base_filename  <- "vac_cell_type"
+    template_name  <- "hipc_vac_ctf"
+    cell_mapping_sheet_name   <- "HIPC_Dashboard-Cell_type_Freque"
+    project        <- "Immune cell-type frequency response to vaccine exposure"
+  }
+} else if (exposure_type == "INFECTION") {
   first_data_row <- 9  # not counting the first row, which becomes a column header.
   if (response_type == "GENE") {
     use_covid_v2   <- TRUE
@@ -145,6 +160,9 @@ summary_df <- data.frame()  # initialize summary log
     cell_mapping_sheet_name   <- "HIPC_Dashboard-Cell_type_Freque"
     project        <- "Immune cell-type frequency response to infection"
   }
+} else {
+  stop("unknown exposure type")
+}
 
 # used to filter sheet rows
 if (response_type == "GENE") {
@@ -154,8 +172,11 @@ if (response_type == "GENE") {
 }
 
 # for joint summary, list all possible values of base_filename from above
-all_response_types <- c("inf_gene_expression", "inf_cell_type")
-
+if (exposure_type == "VACCINE") {
+  all_response_types <- c("vac_gene_expression", "vac_cell_type")
+} else if (exposure_type == "INFECTION") {
+  all_response_types <- c("inf_gene_expression", "inf_cell_type")
+}
 pmid_file <- paste(reference_files,
                    paste(base_filename, "titles_and_dates_df.RData", sep = "-"),
                    sep = "/")
@@ -164,6 +185,11 @@ base_filename_infection <- "INFECTION_ALL"
 pmid_file_infection <- paste(reference_files,
                                 paste(base_filename_infection, "titles_and_dates_df.RData", sep = "-"),
                                 sep = "/")
+
+if (exposure_type == "VACCINE") {
+  vaccines_by_year <- read.delim(file = paste(reference_files, vaccine_tsv, sep = "/"),
+                                 stringsAsFactors = FALSE)
+}
 
 insub <- read.delim(file =  paste(source_curations, sheet_file, sep = "/"),
                     strip.white = TRUE,
@@ -180,6 +206,11 @@ del_cols_common <- c("submission_name", "template_name", # should not appear any
               "curator_comments")
 insub <- insub[!(colnames(insub) %in% del_cols_common)]
 
+if (exposure_type == "VACCINE") {
+  del_cols <- c("method")  # not filled in
+  insub <- insub[!(colnames(insub) %in% del_cols)]
+
+} else if(exposure_type == "INFECTION") {
   # read additional file
   # FIXME - a more general solution will be needed for handling multiple files
   insub2 <- read.delim(file =  paste(source_curations, sheet_file2, sep = "/"),
@@ -225,6 +256,8 @@ insub <- insub[!(colnames(insub) %in% del_cols_common)]
     insub <- rbind(insub, insub3[first_data_row:nrow(insub3),])
     nrow(insub)
   }
+
+}
 
 ### Make any changes to headers right at the beginning,
 ### before separating headers and data
@@ -329,15 +362,19 @@ if (!all(s)) {
 ##########################################################
 
 # For INFECTION, first get a table of all PMIDs, not just current exposure type
-titles_and_dates_df <- get_titles_and_dates(df2, RENEW_PMIDS, pmid_file_infection, log_files, base_filename_infection)
-nrow(titles_and_dates_df)
+if(exposure_type == "INFECTION") {
+  titles_and_dates_df <- get_titles_and_dates(df2, RENEW_PMIDS, pmid_file_infection, log_files, base_filename_infection)
+  nrow(titles_and_dates_df)
+}
 
 
 # Special handling for INFECTION templates
 # FIXME - if vaccine templates have these values too, can remove exposure_type restriction
 # Infection templates contain more than one response_behavior_type, filter out all but current type
-w <- df2$response_behavior_type == response_behavior_type_var
-df2 <- df2[w, ]
+if(exposure_type == "INFECTION") {
+  w <- df2$response_behavior_type == response_behavior_type_var
+  df2 <- df2[w, ]
+}
 
 # Depending on how the text file is created, the sheet may have blank rows at bottom.
 # NOTE - the step above for INFECTION deals with this problem already
@@ -391,6 +428,9 @@ if(response_type == "GENE") {
 }
 
 # Write list of pathogens before any substitutions
+if(exposure_type == "VACCINE") {
+  write_unique_list(df2$target_pathogen, log_files, base_filename, "target_pathogens_before_fixes", do_split = TRUE)
+}
 
 # fix capitalization (should fix in source google sheet)
 df2$response_behavior_type <- tolower(df2$response_behavior_type)
@@ -439,6 +479,7 @@ write.table(response_behavior_strings,
 ## Both columns must have the same number of values per row
 codes <- strsplit(df2$exposure_material_id,";")  # returns a list if multiple values per row
 # in Infection template, have allowed extra text in exposure_material_id column, need to handle
+if(exposure_type == "INFECTION") {
   codes <- sub(" .*$", "", codes)
   codes <- sub("ncbi_taxid:", "", codes)
   s <- sapply(as.integer(codes), is.integer)
@@ -447,6 +488,7 @@ codes <- strsplit(df2$exposure_material_id,";")  # returns a list if multiple va
   }
   # FIXME - this only works because only one entry per row
   df2$exposure_material_id <- codes
+}
 
 text  <- strsplit(df2$exposure_material, ";") # returns a list
 m <- mapply(function(x, y) {length(x) == length(y)}, codes, text)
@@ -815,6 +857,71 @@ start_cnt <- end_cnt
 df2 <- as.data.frame(df2, stringsAsFactors = FALSE)
 
 ###############################################################
+##### Data splitting (3): target pathogens (VACCINE ONLY) #####
+###############################################################
+
+if (exposure_type == "VACCINE") {
+
+  # Substitute in actual virus components for influenza pathogens only.
+  # Note - this is done before the real splitting below because the
+  # lookup_vaccine() function needs all codes at once for an observation.
+  for (i in 1:nrow(df2)) {
+    if(grepl("influ:", df2$target_pathogen_taxonid[i])) {
+      codes <- unlist(strsplit(df2$target_pathogen_taxonid[i],";"))
+      codes <- sub("influ:", "", codes)
+      codes <- trimws(codes)
+      codes <- paste(codes, collapse = ", ")
+      df2$target_pathogen[i]         <- lookup_vaccine(codes, type = "name")
+      df2$target_pathogen_taxonid[i] <- lookup_vaccine(codes, type = "taxid")
+    }
+  }
+
+  # Substitute in actual pathogens for measles + DPT vaccination
+  # Note - the specific pathogen strains below are not specified by the VO codes used.
+  # These are the only case in Gene and Cell-type where there are more than a single pathogen,
+  # other than for influenza, so have to rewrite the pathogen entries to match split vaccine VO codes
+  w <- which(df2$exposure_material_id == "VO_0000654")
+  df2[w, "target_pathogen"] <- "Measles virus strain Edmonston-Zagreb"
+  df2[w, "target_pathogen_taxonid"] <- "70149"
+  w <- which(df2$exposure_material_id == "VO_0000738")
+  df2[w, "target_pathogen"] <- "Corynebacterium diphtheriae; Clostridium tetani; Human poliovirus 1; Human poliovirus 2; Human poliovirus 3"
+  df2[w, "target_pathogen_taxonid"] <- "1717; 1513; 12080; 12083; 12086"
+
+  ##### split ######
+  df2 <- cSplit(df2, "target_pathogen_taxonid", sep = ";", direction = "long")
+
+  # class(df2)  # "data.table" "data.frame"
+  df2 <- as.data.frame(df2)
+
+  end_cnt <- nrow(df2)
+  summary_df <- add_to_summary(summary_df, "Split 3, on pathogens, rows added", end_cnt - start_cnt)
+  summary_df <- add_to_summary(summary_df, "Split 3, on pathogens, total rows", end_cnt)
+  start_cnt <- end_cnt
+
+  # in Infection template, have allowed "(name)" exposure_material_id column.  Remove.
+  codes <- sub(" .*$", "", df2$target_pathogen_taxonid)
+  codes <- sub("ncbi_taxid:", "", codes)
+  s <- sapply(as.integer(codes), is.integer)
+  if (!all(s)) {
+    print("target_pathogen_taxonid: unexpected namespace tag")
+  }
+  df2$target_pathogen_taxonid <- codes
+
+  # Write unique list of target pathogens after substitutions
+  text  <- strsplit(df2$target_pathogen, ";") # returns a list
+  text <- unique(trimws(unlist(text)))
+
+  # lowercase first letter of each pathogen
+#  substr(text, 1, 1) <- tolower(substr(text, 1,1))
+  write_unique_list(text, log_files, base_filename, "target_pathogens_after_fixes")
+  summary_df <- add_to_summary(summary_df, "target_pathogens_after_fixes", length(text))
+
+  write_unique_list(df2$target_pathogen_taxonid, log_files, base_filename, "target_pathogen_taxonid")
+  summary_df <- add_to_summary(summary_df, "target_pathogen_taxonid", length(unique(df2$target_pathogen_taxonid)))
+}
+
+
+###############################################################
 ##### Data splitting (4): tissue_type_term_id             #####
 ###############################################################
 
@@ -969,6 +1076,11 @@ for (i in 1:length(uniq_sig_row_ids)) {
                     count = length(resp_components_collected[[i]]))
   resp_components_cnt_df <- rbind(resp_components_cnt_df, tmp)
 
+  # Reconstitute target_pathogen and exposure_material_id
+  if(exposure_type == "VACCINE") {
+    base_row$target_pathogen_taxonid   <- paste(unique(df2tmp$target_pathogen_taxonid), collapse = "; ")
+  }
+  
   recreated_template[[i]] <- base_row
 }
 
@@ -1036,7 +1148,12 @@ if(!is.null(s)) {
   print(paste("for df2, found problems in column (row numbers do not include any header)", s))
 }
 
-del_cols <- c("exposure_material", "short_comment", "process_note")
+# Remove columns not needed for Dashboard.
+if (exposure_type == "VACCINE") {
+   del_cols <- c("exposure_material", "target_pathogen", "short_comment", "process_note")
+} else {
+  del_cols <- c("exposure_material", "short_comment", "process_note")
+}
 
 df2 <- df2[!colnames(df2) %in% del_cols]
 header_rows <- header_rows[!colnames(header_rows) %in% del_cols]
