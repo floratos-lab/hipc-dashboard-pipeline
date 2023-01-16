@@ -83,26 +83,6 @@ CREATE_MSIGDB           <- FALSE
 
 exclude_pmid <- "33361761"  # PMID(s) that are not suitable for processing
 
-##############################
-##### Initial data setup #####
-##############################
-if(!dir.exists(reference_files)) {
-  stop(paste("source data directory not found:", reference_files))
-}
-
-# create log files directory
-if(!dir.exists(log_files)) {
-  dir.create(log_files)
-}
-
-# create submission files directory
-if(!dir.exists(release_files)) {
-  dir.create(release_files)
-}
-
-# Note - if running interactively, will exit script in release_files
-# setwd(release_files)
-
 if ( DOWNLOAD_NEW_NCBI_GENES) {
   if(!update_ncbi_homo_sapiens_gene_info(reference_files)) {
     print("update of NCBI gene info file failed")
