@@ -42,8 +42,6 @@ source("gene_routines.R")
 source("vaccines_pathogens.R")
 source("pmid_to_title_easy.R")
 source("write_submissions.R")
-source("msigdb_submission_utils.R")
-source("write_joint_summary.R")
 
 # Available response_type values are "GENE", "CELLTYPE_FREQUENCY"
 response_type <- "GENE"
@@ -93,10 +91,6 @@ options(stringsAsFactors = FALSE)  # unfortunately doesn't help with cSplit outp
 
 # used to filter sheet rows
 response_behavior_type_var <- "gene expression"
-
-
-# for joint summary, list all possible values of base_filename from above
-all_response_types <- c("inf_gene_expression", "inf_cell_type")
 
 pmid_file <- paste(reference_files,
                    paste(base_filename, "titles_and_dates_df.RData", sep = "-"),
@@ -829,6 +823,3 @@ rc_cnt_by_pmid_uniq <- rc_cnt_by_pmid_uniq[order(rc_cnt_by_pmid_uniq$count, decr
 write.csv(rc_cnt_by_pmid_uniq,
           file = logfile_path(log_files, base_filename, "response_component_unique_count_by_PMID.csv"),
           row.names = FALSE)
-
-# if have all available response types, write a joint summary
-write_joint_summary(all_response_types, exposure_type, log_files)
