@@ -74,8 +74,6 @@ DOWNLOAD_NEW_HGNC       <- FALSE
 
 exclude_pmid <- "33361761"  # PMID(s) that are not suitable for processing
 
-options(stringsAsFactors = FALSE)  # unfortunately doesn't help with cSplit output
-
 ##### Set up file and template name components #####
 # change sheet name spaces to underscores
   first_data_row <- 9  # not counting the first row, which becomes a column header.
