@@ -66,7 +66,6 @@ manual_gene_corrections_txt <- "manual_gene_symbol_corrections.txt"
 #   for each response_component type.
 # Note - If set to TRUE, for type infection, 
 #        run CELLTYPE_FREQUENCY first and GENE second to get all PMIDs,
-#        as long as use_covid_v2 mechanism being used to skip cell-type curations.
 RENEW_PMIDS             <- FALSE  
 
 # Download a new copy of the official HGNC gene mapping
@@ -78,7 +77,6 @@ exclude_pmid <- "33361761"  # PMID(s) that are not suitable for processing
 # change sheet name spaces to underscores
   first_data_row <- 9  # not counting the first row, which becomes a column header.
 
-    use_covid_v2   <- TRUE
     sheet_file     <- "COVID-19 curation template - example curation.tsv"
     sheet_file2    <- "Odak_2020_pmid_32650275 - covid19.tsv"
     sheet_file3    <- "hipc_infection_covid_v2 - multiple_types.tsv"
@@ -122,14 +120,12 @@ insub <- insub[!(colnames(insub) %in% del_cols_common)]
   nrow(insub2)
   insub2 <- insub2[!(colnames(insub2) %in% del_cols_common)]
 
-  if (use_covid_v2) {
-    insub3 <- read.delim(file =  paste(source_curations, sheet_file3, sep = "/"),
+  insub3 <- read.delim(file =  paste(source_curations, sheet_file3, sep = "/"),
                          strip.white = TRUE,
                          stringsAsFactors = FALSE,
                          quote = "")
-    nrow(insub3)
-    insub3 <- insub3[!(colnames(insub3) %in% del_cols_common)]
-  }
+  nrow(insub3)
+  insub3 <- insub3[!(colnames(insub3) %in% del_cols_common)]
 
   del_cols <- c("route",
                 "addntl_time_point_units",
@@ -139,14 +135,12 @@ insub <- insub[!(colnames(insub) %in% del_cols_common)]
   colnames(insub2)[(colnames(insub2) %in% del_cols)]
   insub2 <- insub2[!(colnames(insub2) %in% del_cols)]
 
-  if (use_covid_v2) {
-    colnames(insub3)[(colnames(insub3) %in% del_cols)]
-    insub3 <- insub3[!(colnames(insub3) %in% del_cols)]
+  colnames(insub3)[(colnames(insub3) %in% del_cols)]
+  insub3 <- insub3[!(colnames(insub3) %in% del_cols)]
   
-    colnames(insub3)[!(colnames(insub3) %in% (colnames(insub2)))]
-    colnames(insub2)[!(colnames(insub2) %in% (colnames(insub3)))]
-    all(colnames(insub2) == colnames(insub3))
-  }
+  colnames(insub3)[!(colnames(insub3) %in% (colnames(insub2)))]
+  colnames(insub2)[!(colnames(insub2) %in% (colnames(insub3)))]
+  all(colnames(insub2) == colnames(insub3))
 
   all(colnames(insub) == colnames(insub2))
 
@@ -155,10 +149,8 @@ insub <- insub[!(colnames(insub) %in% del_cols_common)]
   insub <- rbind(insub, insub2[first_data_row:nrow(insub2),])
   nrow(insub)
   
-  if (use_covid_v2) {
-    insub <- rbind(insub, insub3[first_data_row:nrow(insub3),])
-    nrow(insub)
-  }
+  insub <- rbind(insub, insub3[first_data_row:nrow(insub3),])
+  nrow(insub)
 
 ### Make any changes to headers right at the beginning,
 ### before separating headers and data
