@@ -59,8 +59,6 @@ convenience_files      <- "../data/convenience_files"
 log_files              <- "../logfiles"
 csv_submission_files   <- "../logfiles"
 
-vaccine_tsv                 <- "vaccine_years.txt"
-ctf_fixes_tsv               <- "cell_type_frequency-response_components_mapping.txt"
 manual_gene_corrections_txt <- "manual_gene_symbol_corrections.txt"
 
 ##### Set runtime parameters #####
@@ -83,16 +81,6 @@ DOWNLOAD_NEW_HGNC       <- FALSE
 # Generate a new copy of the mSigDB submission file
 CREATE_MSIGDB           <- FALSE
 
-# In the observation summary, do not display pathogens if the vaccine already
-# uses the pathogen in its name:
-# VO_0004810: 2011-2012 trivalent inactivated vaccine (A/California/7/09 (H1N1,),
-#     A/Perth /16/2009 (H3N2), and B/Brisbane/60/2008).
-# VO_0004899: 2012-2013 seasonal trivalent inactivated influenza vaccine
-#     (A/California/7/2009 (H1N1), A/Victoria/361/2011 (H3N2),
-#     and B/Wisconsin/1/2010)
-# VO_0004903: Inactivated monovalent influenza A/H5N1
-#     (3.75 mcg hemagglutinin [HA] A/Indonesia/05/2005) split-virus (SV) vaccine (Sanofi)
-vaccine_VO_has_pathogens <- c("VO_0004810", "VO_0004899", "VO_0004903")
 exclude_pmid <- "33361761"  # PMID(s) that are not suitable for processing
 
 ##############################
