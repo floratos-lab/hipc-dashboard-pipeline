@@ -71,10 +71,6 @@ manual_gene_corrections_txt <- "manual_gene_symbol_corrections.txt"
 #        as long as use_covid_v2 mechanism being used to skip cell-type curations.
 RENEW_PMIDS             <- FALSE  
 
-## Please update gene files before each release
-## These files will be overwritten if update is requested
-# Download a new copy of NCBI gene info file
-DOWNLOAD_NEW_NCBI_GENES <- FALSE
 # Download a new copy of the official HGNC gene mapping
 DOWNLOAD_NEW_HGNC       <- FALSE
 
@@ -82,12 +78,6 @@ DOWNLOAD_NEW_HGNC       <- FALSE
 CREATE_MSIGDB           <- FALSE
 
 exclude_pmid <- "33361761"  # PMID(s) that are not suitable for processing
-
-if ( DOWNLOAD_NEW_NCBI_GENES) {
-  if(!update_ncbi_homo_sapiens_gene_info(reference_files)) {
-    print("update of NCBI gene info file failed")
-  }
-}
 
 options(stringsAsFactors = FALSE)  # unfortunately doesn't help with cSplit output
 summary_df <- data.frame()  # initialize summary log
