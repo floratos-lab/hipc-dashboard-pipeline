@@ -43,15 +43,10 @@ source("vaccines_pathogens.R")
 source("pmid_to_title_easy.R")
 source("write_submissions.R")
 
-# Available response_type values are "GENE", "CELLTYPE_FREQUENCY"
-response_type <- "GENE"
-# Available exposure_type values are "VACCINE", "INFECTION" (covid-19)
-exposure_type <- "INFECTION"
-
 # Assume executing from the ./code directory
 source_curations       <- "../data/source_curations"
 reference_files        <- "../data/reference_files"
-release_files          <- "../data/release_files"
+
 standardized_curations <- "../data/standardized_curations"
 convenience_files      <- "../data/convenience_files"
 log_files              <- "../logfiles"
@@ -74,16 +69,13 @@ DOWNLOAD_NEW_HGNC       <- FALSE
 exclude_pmid <- "33361761"  # PMID(s) that are not suitable for processing
 
 ##### Set up file and template name components #####
-# change sheet name spaces to underscores
-  first_data_row <- 9  # not counting the first row, which becomes a column header.
+first_data_row <- 9  # not counting the first row, which becomes a column header.
 
-    sheet_file     <- "COVID-19 curation template - example curation.tsv"
-    sheet_file2    <- "Odak_2020_pmid_32650275 - covid19.tsv"
-    sheet_file3    <- "hipc_infection_covid_v2 - multiple_types.tsv"
-    base_filename  <- "inf_gene_expression"
-    template_name  <- "hipc_inf_gene"
-    project        <- "Gene expression response to infection"
+sheet_file     <- "COVID-19 curation template - example curation.tsv"
+sheet_file2    <- "Odak_2020_pmid_32650275 - covid19.tsv"
+sheet_file3    <- "hipc_infection_covid_v2 - multiple_types.tsv"
 
+base_filename  <- "inf_gene_expression"
 
 # used to filter sheet rows
 response_behavior_type_var <- "gene expression"
@@ -100,7 +92,6 @@ pmid_file_infection <- paste(reference_files,
 insub <- read.delim(file =  paste(source_curations, sheet_file, sep = "/"),
                     strip.white = TRUE,
                     stringsAsFactors = FALSE)
-nrow(insub)
 
 # Get rid of unused columns (empty in curated data) or those not meant to appear in the Dashboard.
 # No error if named column does not exist in a particular sheet.
@@ -112,45 +103,39 @@ del_cols_common <- c("submission_name", "template_name", # should not appear any
               "curator_comments")
 insub <- insub[!(colnames(insub) %in% del_cols_common)]
 
-  # read additional file
-  # FIXME - a more general solution will be needed for handling multiple files
-  insub2 <- read.delim(file =  paste(source_curations, sheet_file2, sep = "/"),
+# read additional file
+# FIXME - a more general solution will be needed for handling multiple files
+insub2 <- read.delim(file =  paste(source_curations, sheet_file2, sep = "/"),
                        strip.white = TRUE,
                        stringsAsFactors = FALSE)
-  nrow(insub2)
-  insub2 <- insub2[!(colnames(insub2) %in% del_cols_common)]
+insub2 <- insub2[!(colnames(insub2) %in% del_cols_common)]
 
-  insub3 <- read.delim(file =  paste(source_curations, sheet_file3, sep = "/"),
+insub3 <- read.delim(file =  paste(source_curations, sheet_file3, sep = "/"),
                          strip.white = TRUE,
                          stringsAsFactors = FALSE,
                          quote = "")
-  nrow(insub3)
-  insub3 <- insub3[!(colnames(insub3) %in% del_cols_common)]
+insub3 <- insub3[!(colnames(insub3) %in% del_cols_common)]
 
-  del_cols <- c("route",
+del_cols <- c("route",
                 "addntl_time_point_units",
                 "signature_source_url")  # discontinued in latest template
-  colnames(insub)[(colnames(insub) %in% del_cols)]
+colnames(insub)[(colnames(insub) %in% del_cols)]
 
-  colnames(insub2)[(colnames(insub2) %in% del_cols)]
-  insub2 <- insub2[!(colnames(insub2) %in% del_cols)]
+colnames(insub2)[(colnames(insub2) %in% del_cols)]
+insub2 <- insub2[!(colnames(insub2) %in% del_cols)]
 
-  colnames(insub3)[(colnames(insub3) %in% del_cols)]
-  insub3 <- insub3[!(colnames(insub3) %in% del_cols)]
-  
-  colnames(insub3)[!(colnames(insub3) %in% (colnames(insub2)))]
-  colnames(insub2)[!(colnames(insub2) %in% (colnames(insub3)))]
-  all(colnames(insub2) == colnames(insub3))
+colnames(insub3)[(colnames(insub3) %in% del_cols)]
+insub3 <- insub3[!(colnames(insub3) %in% del_cols)]
 
-  all(colnames(insub) == colnames(insub2))
+colnames(insub3)[!(colnames(insub3) %in% (colnames(insub2)))]
+colnames(insub2)[!(colnames(insub2) %in% (colnames(insub3)))]
+all(colnames(insub2) == colnames(insub3))
 
-  # stitch together the data sections
-  nrow(insub)
-  insub <- rbind(insub, insub2[first_data_row:nrow(insub2),])
-  nrow(insub)
-  
-  insub <- rbind(insub, insub3[first_data_row:nrow(insub3),])
-  nrow(insub)
+all(colnames(insub) == colnames(insub2))
+
+# stitch together the data sections
+insub <- rbind(insub, insub2[first_data_row:nrow(insub2),])
+insub <- rbind(insub, insub3[first_data_row:nrow(insub3),])
 
 ### Make any changes to headers right at the beginning,
 ### before separating headers and data
@@ -175,12 +160,11 @@ insub <- data.frame(donotuse = insub[ , 1],  # for some reason column 1 name has
 # and correct the headers for the response_component_original column
 # Add other new columns as needed per sheet type
 
-  # gene-specific headers
-  # Need to set for INFECTION type, will just overwrite existing for VACCINE
-  insub$response_component[1:6] <- c("gene", "", "gene_biomarker", "", "", "response component")
-  insub$response_component_original[1:6] <-
+# gene-specific headers
+# Need to set for INFECTION type, will just overwrite existing for VACCINE
+insub$response_component[1:6] <- c("gene", "", "gene_biomarker", "", "", "response component")
+insub$response_component_original[1:6] <-
     c("", "label", "observed", "", "", "response component (original gene symbol)")
-
 
 insub$response_comp_orig_cnt  <- ""
 insub$response_comp_cnt       <- ""
@@ -761,9 +745,10 @@ del_cols <- c("exposure_material", "short_comment", "process_note")
 df2 <- df2[!colnames(df2) %in% del_cols]
 header_rows <- header_rows[!colnames(header_rows) %in% del_cols]
 
-write_submission_template(df2, header_rows, release_files, csv_submission_files, template_name, titles_and_dates_df,
+# the real purpose of this script. the function name is misleading: this writes templates and all other release files.
+write_submission_template(df2, header_rows, "../data/release_files", csv_submission_files, "hipc_inf_gene", titles_and_dates_df,
                             resp_components_collected, unmatched_symbols_map,
-                            response_type, exposure_type, project)
+                            "GENE", "INFECTION", "Gene expression response to infection")
 
 write.csv(resp_components_cnt_df,
           file = logfile_path(log_files, base_filename, "response_component_counts_by_row.csv"),
