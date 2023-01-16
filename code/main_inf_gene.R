@@ -77,7 +77,6 @@ DOWNLOAD_NEW_HGNC       <- FALSE
 exclude_pmid <- "33361761"  # PMID(s) that are not suitable for processing
 
 options(stringsAsFactors = FALSE)  # unfortunately doesn't help with cSplit output
-summary_df <- data.frame()  # initialize summary log
 
 ##### Set up file and template name components #####
 # change sheet name spaces to underscores
@@ -262,10 +261,6 @@ nrow(df2)
 df2 <- df2[!(df2$publication_reference_id %in% exclude_pmid), ]
 nrow(df2)
 
-summary_df <- add_to_summary(summary_df, "available data rows in original sheet", nrow(df2))
-
-
-
 # Generate observation IDs based on the PMID field value and on original row number,
 # to allow e.g. response_components to be summarized by observation later.
 # These are generated before any row deletions so that can refer back to original template
@@ -445,7 +440,6 @@ df2$response_component_original <- trimws(as.character(df2$response_component_or
   rvl <- manual_gene_corrections(df2$response_component_original,
                                  paste(reference_files, manual_gene_corrections_txt, sep = "/"))
   genes <- rvl$genes
-  summary_df <- rbind(summary_df, rvl$summary)
 
   # Fix certain gene symbols containing "orf"
   genes <- fix_orf_symbols(genes)
@@ -497,10 +491,6 @@ if(any(s != 0)) {
   # only keep entries that have duplicates
   dup_resp_comps <- dups[sapply(dups, function(x) {length(x) > 0})]
 
-  # Duplicate symbols can appear e.g. when probesets are translated to gene symbols
-  summary_df <- add_to_summary(summary_df, "Number of signatures with duplicated items", length(dup_resp_comps))
-  summary_df <- add_to_summary(summary_df, "Total number of unique duplicated items", length(unlist(dup_resp_comps)))
-
   # Write out list of counts of duplicated response components by signature
   write.table(paste(names(dup_resp_comps), sapply(dup_resp_comps, length), sep = ", "),
               file = logfile_path(log_files, base_filename, "response_component_duplicates_count.csv"),
@@ -542,7 +532,6 @@ start_cnt <- nrow(df2)
                              reference_files,
                              DOWNLOAD_NEW_HGNC)
   genes_map <- rvl$genes_map
-  summary_df <- rbind(summary_df, rvl$summary)
   rm(rvl)
 
   # Save PMID info for unmapped symbols
@@ -563,25 +552,13 @@ start_cnt <- nrow(df2)
   # get rid of genes that had no valid symbol.
   df2 <- df2[!is.na(df2$response_component), ]
 
-  summary_df <- add_to_summary(summary_df,
-                               "Number of valid gene symbols" ,
-                               length(unique(df2$response_component)))
-
-
 end_cnt <- nrow(df2)
-summary_df <- add_to_summary(summary_df,
-                             "Split 1, first reduction, rows lost to unknown response component",
-                             start_cnt - end_cnt)
 
 # Remove exact duplicates (implies duplicate copies of response component in a signature)
 # This can happen when e.g. two or more original probesets get map to one symbol.
 start_cnt <- end_cnt
 df2 <- unique(df2)
 end_cnt <- nrow(df2)
-
-summary_df <- add_to_summary(summary_df, "Split 1, rows before removal" , start_cnt)
-summary_df <- add_to_summary(summary_df, "Split 1, rows with non-unique response component removed" , start_cnt - end_cnt)
-summary_df <- add_to_summary(summary_df, "Split 1, rows remaining", end_cnt)
 
 start_cnt <- end_cnt
 
@@ -613,9 +590,7 @@ df2 <- df2[df2$exposure_material_id != "", ]
 write_unique_list(df2$exposure_material_id, log_files, base_filename, "exposure_material_id", do_split = FALSE)
 
 end_cnt <- nrow(df2)
-summary_df <- add_to_summary(summary_df, "Split 2, on exposure material_id, rows added", end_cnt - start_cnt)
-summary_df <- add_to_summary(summary_df, "Split 2, on exposure material_id, total rows", end_cnt)
-summary_df <- add_to_summary(summary_df, "unique ID codes in exposure_material_id", length(unique(df2$exposure_material_id)))
+
 start_cnt <- end_cnt
 
 # The cSplit() calls produce a data.table of data.frame rows.  Coerce back to just data.frame.
@@ -632,8 +607,7 @@ df2 <- cSplit(df2, "tissue_type_term_id", sep = ";", direction = "long")
 df2 <- as.data.frame(df2)
 
 end_cnt <- nrow(df2)
-summary_df <- add_to_summary(summary_df, "Split 4, on tissues, rows added", end_cnt - start_cnt)
-summary_df <- add_to_summary(summary_df, "Split 4, on tissues, total rows", end_cnt)
+
 start_cnt <- end_cnt
 
 df2$tissue_type_term_id <- sub(" .*$", "", df2$tissue_type_term_id)
@@ -643,10 +617,8 @@ text  <- strsplit(df2$tissue_type, ";") # returns a list
 text <- unique(trimws(unlist(text)))
 
 write_unique_list(text, log_files, base_filename, "tissues_observed")
-summary_df <- add_to_summary(summary_df, "tissues_observed", length(text))
 
 write_unique_list(df2$tissue_type_term_id, log_files, base_filename, "tissue_type_term_id")
-summary_df <- add_to_summary(summary_df, "tissue_type_term_id", length(unique(df2$tissue_type_term_id)))
 
 ###############################################################
 ##### Data splitting (5): comparison                      #####
@@ -660,8 +632,7 @@ df2 <- as.data.frame(df2)
 df2$comparison <- trimws(df2$comparison)
 
 end_cnt <- nrow(df2)
-summary_df <- add_to_summary(summary_df, "Split 5, on comparison, rows added", end_cnt - start_cnt)
-summary_df <- add_to_summary(summary_df, "Split 5, on comparison, total rows", end_cnt)
+
 start_cnt <- end_cnt
 
 ####################################################################
@@ -810,17 +781,6 @@ write_submission_template(df2, header_rows, release_files, csv_submission_files,
                             resp_components_collected, unmatched_symbols_map,
                             response_type, exposure_type, project)
 
-###########################################
-##### Write out various summary files #####
-###########################################
-
-summary_df <- add_to_summary(summary_df, "total signatures", length(resp_components_collected))
-
-dd0 <- sum(duplicated(resp_components_collected))
-summary_df <- add_to_summary(summary_df, "duplicate signatures (response components only)", dd0)
-dd0 <- length(unique(resp_components_collected))
-summary_df <- add_to_summary(summary_df, "unique signatures (response components only)", dd0)
-
 write.csv(resp_components_cnt_df,
           file = logfile_path(log_files, base_filename, "response_component_counts_by_row.csv"),
           row.names = FALSE)
@@ -868,18 +828,6 @@ rc_cnt_by_pmid_uniq <- rc_cnt_by_pmid_uniq[order(rc_cnt_by_pmid_uniq$count, decr
 
 write.csv(rc_cnt_by_pmid_uniq,
           file = logfile_path(log_files, base_filename, "response_component_unique_count_by_PMID.csv"),
-          row.names = FALSE)
-
-summary_df <- add_to_summary(summary_df, "min signature size", min(resp_components_cnt_df$count))
-summary_df <- add_to_summary(summary_df, "max signature size", max(resp_components_cnt_df$count))
-
-# sig_row_ids that got deleted because no valid response_component
-s <- subset(sig_row_id_orig, !(sig_row_id_orig %in% uniq_sig_row_ids))
-s <- paste(s, collapse = " ")
-summary_df <- add_to_summary(summary_df, "original template rows deleted", s)
-
-write.csv(summary_df,
-          file = logfile_path(log_files, base_filename, "run_summary_counts.csv"),
           row.names = FALSE)
 
 # if have all available response types, write a joint summary
