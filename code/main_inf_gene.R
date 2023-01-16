@@ -74,9 +74,6 @@ RENEW_PMIDS             <- FALSE
 # Download a new copy of the official HGNC gene mapping
 DOWNLOAD_NEW_HGNC       <- FALSE
 
-# Generate a new copy of the mSigDB submission file
-CREATE_MSIGDB           <- FALSE
-
 exclude_pmid <- "33361761"  # PMID(s) that are not suitable for processing
 
 options(stringsAsFactors = FALSE)  # unfortunately doesn't help with cSplit output
@@ -714,13 +711,6 @@ recreated_template        <- vector("list", length(uniq_sig_row_ids))
 which(!(names(signatures_uniq) %in% uniq_sig_row_ids))
 signatures_uniq <- signatures_uniq[names(signatures_uniq) %in% uniq_sig_row_ids]
 
-
-# create data structures needed for mSigDB
-if (CREATE_MSIGDB) {
-  msigdb_empty <- msigdb_intialize()
-  msigdb_list <- vector("list", length(uniq_sig_row_ids))
-}
-
 for (i in 1:length(uniq_sig_row_ids)) {
   df2tmp <- df2[df2$sig_row_id == uniq_sig_row_ids[i], ]
   # Recreate a full signature in one row
@@ -749,13 +739,6 @@ for (i in 1:length(uniq_sig_row_ids)) {
     }
     titles_and_dates_row <- titles_and_dates_df[w, ]
 
-    if(CREATE_MSIGDB) {
-      # Create mSigDB submission row
-      msigdb_df <- msigdb_process_row(msigdb_empty, df2tmp)
-      msigdb_list[[i]] <- msigdb_df
-    }
-
-  
   tmp <- data.frame(rowname = response_rowname,
                     pmid = base_row$publication_reference_id,
                     sig_subm_id = base_row$sig_subm_id,
@@ -776,12 +759,6 @@ if(any(colnames(header_rows) != colnames(recreated_template_df))) {
 }
 
 recreated_template_df <- rbind(header_rows, recreated_template_df)
-
-# Finish up and write out mSigDB submission
-if (CREATE_MSIGDB) {
-  summary_df <- write_msigdb_submission(msigdb_list, summary_df)
-}
-
 
 # First save a complete version for use in debugging/logging
 del_cols <- c("submission_name", "submission_date", "template_name")
