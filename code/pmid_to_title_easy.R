@@ -184,8 +184,7 @@ pmid_to_title_easy <- function(pmid, print_pub_year) {
 
 get_titles_and_dates <- function(df2, renew_pmids, pmid_file, log_files, pmid_logfile_basename) {
   pmids_uniq <- unique(df2$publication_reference_id)
-  
-  summary_df <- add_to_summary(summary_df, "Unique PMIDs", length(pmids_uniq))
+
   # Get user-entered year for each pmid
   # FIXME - need to catch if user did not enter year.
   print_pub_year <- df2$publication_date[match(pmids_uniq, df2$publication_reference_id)]
