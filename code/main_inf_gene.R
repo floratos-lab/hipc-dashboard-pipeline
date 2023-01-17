@@ -141,10 +141,10 @@ colnames(insub)[colnames(insub) == "response_component"] <- "response_component_
 # cSplit() changes split column values to NA if first column named "X"!
 # The column name of the first column is removed
 # before templates are written in write_submission_template()
-colnames(insub)[1] <- "donotuse"
+
 # Add back in the columns no longer included in the curation template,
 # plus response_component to position it more towards begin
-insub <- data.frame(donotuse = insub[ , 1],  # for some reason column 1 name has to be respecified
+insub <- data.frame(donotuse = insub[ , 1],
                     submission_name = "",
                     submission_date = "",
                     template_name = "",
