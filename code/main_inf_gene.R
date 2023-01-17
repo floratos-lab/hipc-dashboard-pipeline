@@ -46,7 +46,6 @@ source_curations       <- "../data/source_curations"
 reference_files        <- "../data/reference_files"
 
 standardized_curations <- "../data/standardized_curations"
-convenience_files      <- "../data/convenience_files"
 log_files              <- "../logfiles"
 csv_submission_files   <- "../logfiles"
 
@@ -616,8 +615,6 @@ write.table(response_df,
             file = logfile_path(log_files, base_filename, "response_component_counts.txt"),
             sep = "\t", row.names = FALSE)
 
-df2$exposure_material <- NULL
-
 #############################################################
 #### Write out full denormalized data                    ####
 #############################################################
@@ -642,7 +639,6 @@ resp_components_cnt_df    <- data.frame()
 resp_components_annotated <- vector("list", length(uniq_sig_row_ids))
 resp_components_collected <- vector("list", length(uniq_sig_row_ids))
 resp_components_full_sig  <- vector("list", length(uniq_sig_row_ids))   # used for cell types only
-recreated_template        <- vector("list", length(uniq_sig_row_ids))
 
 # Some signatures are lost entirely during cleaning
 # FIXME - this is also logged below at comment "original template rows deleted"
@@ -683,40 +679,11 @@ for (i in 1:length(uniq_sig_row_ids)) {
                     sig_row_id = uniq_sig_row_ids[i],
                     count = length(resp_components_collected[[i]]))
   resp_components_cnt_df <- rbind(resp_components_cnt_df, tmp)
-
-  recreated_template[[i]] <- base_row
 }
 
 names(resp_components_collected) <- uniq_sig_row_ids  # name not actually used again?
 names(resp_components_full_sig)  <- uniq_sig_row_ids  # name not actually used again?
 names(resp_components_annotated) <- uniq_sig_row_ids  # name is used for this one.
-
-recreated_template_df <- as.data.frame(rbindlist(recreated_template))  # consolidate to a single data.frame
-if(any(colnames(header_rows) != colnames(recreated_template_df))) {
-  stop("mismatch between header rows and recreated_template_df rows")
-}
-
-recreated_template_df <- rbind(header_rows, recreated_template_df)
-
-# First save a complete version for use in debugging/logging
-del_cols <- c("submission_name", "submission_date", "template_name")
-recreated_template_df <- recreated_template_df[!colnames(recreated_template_df) %in% del_cols]
-
-# Set that first column name back to blank
-colnames(recreated_template_df)[1] <- ""
-# Write out the recreated upload template in tab-delimited format
-# write.table(recreated_template_df,
-#            file = logfile_path(log_files, base_filename, "standardized_curation_template_full.tsv"),
-#            sep = "\t", row.names = FALSE)
-
-# Save a reduced version for public use
-# del_cols <- c("sig_subm_id",	"sig_row_id",	"row_key")
-del_cols <- c("sig_subm_id",	"sig_row_id")
-
-recreated_template_df <- recreated_template_df[!colnames(recreated_template_df) %in% del_cols]
-write.table(recreated_template_df,
-            file = logfile_path(convenience_files, base_filename, "standardized_curation_template.tsv"),
-            sep = "\t", row.names = FALSE)
 
 ########################################
 ##### Prepare submission templates #####
@@ -739,6 +706,7 @@ if(!is.null(s)) {
   print(paste("for df2, found problems in column (row numbers do not include any header)", s))
 }
 
+df2$exposure_material <- NULL
 # the real purpose of this script. the function name is misleading: this writes templates and all other release files.
 write_submission_template(df2, header_rows, "../data/release_files", csv_submission_files, "hipc_inf_gene", titles_and_dates_df,
                             resp_components_collected, unmatched_symbols_map,
@@ -747,14 +715,6 @@ write_submission_template(df2, header_rows, "../data/release_files", csv_submiss
 write.csv(resp_components_cnt_df,
           file = logfile_path(log_files, base_filename, "response_component_counts_by_row.csv"),
           row.names = FALSE)
-
-outfile = logfile_path(convenience_files, base_filename, "response_components.gmt.txt")
-if(file.exists(outfile)) file.remove(outfile)
-d <- lapply(resp_components_annotated,
-            function(x) write.table(paste(x, collapse = "\t"),
-                        file = outfile, row.names = FALSE, col.names = FALSE,
-                        quote = FALSE, append = TRUE))
-
 
 # Convert to GMT format using same first two columns as resp_components_annotated.
 # Using "c()" encloses each item or phrase in quotes.
