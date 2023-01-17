@@ -31,8 +31,6 @@ library(uniqtag)          # for cumcount()
 # Note that rbindlist() tends to return a data.table with a data.frame, which causes
 # no end of problems if not cast back to just a data.frame.
 library(data.table)       # for rbindlist()
-library(ggplot2)
-library(stringi)
 library(stringr)
 library(R.utils)
 

@@ -7,6 +7,7 @@
 
 library(xml2)
 library(easyPubMed)
+library(stringi)
 
 ### DATA ###
 # Special cases for consortia as first author:
