@@ -155,34 +155,40 @@ insub <- data.frame(donotuse = insub[ , 1],
 # Add other new columns as needed per sheet type
 
 # gene-specific headers
-# Need to set for INFECTION type, will just overwrite existing for VACCINE
-insub$response_component[1:6] <- c("gene", "", "gene_biomarker", "", "", "response component")
-insub$response_component_original[1:6] <-
+COLUMN_NAMES = c("donotuse", "submission_name", "submission_date", "template_name", "response_component",
+  "curation_date", "cohort", "age_min", "age_max", "age_units", "number_subjects", "tissue_type", 
+  "tissue_type_term_id", "method", "response_component_original", "is_model", "response_behavior_type", 
+  "response_behavior", "comparison", "baseline_time_event", "time_point", "time_point_units", 
+  "exposure_material_id", "exposure_process", "disease_name", "disease_stage", "publication_reference_id", 
+  "publication_date", "publication_reference_url", "signature_source", "comments", 
+  "response_comp_orig_cnt", "response_comp_cnt", "sig_subm_id", "sig_row_id", "row_key")
+header_rows = insub[colnames(insub) %in% COLUMN_NAMES][1:6,]
+header_rows$response_component <- c("gene", "", "gene_biomarker", "", "", "response component")
+header_rows$response_component_original <-
     c("", "label", "observed", "", "", "response component (original gene symbol)")
 
-insub$response_comp_orig_cnt  <- ""
-insub$response_comp_cnt       <- ""
-insub$sig_subm_id             <- ""
-insub$sig_row_id              <- ""
-insub$row_key                 <- ""
+header_rows$response_comp_orig_cnt  <- ""
+header_rows$response_comp_cnt       <- ""
+header_rows$sig_subm_id             <- ""
+header_rows$sig_row_id              <- ""
+header_rows$row_key                 <- ""
 
-insub$submission_name[1:6]    <- c("", "label", "background", "", "", "submission name")
-insub$submission_date[1:6]    <- c("", "label", "background", "", "", "submission_date")
-insub$template_name[1:6]      <- c("", "label", "background", "", "", "template_name")
-insub$response_comp_orig_cnt[1:6]  <- c("", "label", "observed",   "", "", "response component (original) count")
-insub$response_comp_cnt[1:6]  <- c("", "label", "observed",   "", "", "response component count")
-insub$sig_subm_id[1:6]        <- c("", "label", "background", "", "", "sequential ID of signature within a publication (PMID) and for its response_type ")
-insub$sig_row_id[1:6]         <- c("", "label", "background", "", "", "row ID of signature within its submission data file(s)")
-insub$row_key[1:6]            <- c("", "label", "background", "", "", "row key")
+header_rows$submission_name         <- c("", "label", "background", "", "", "submission name")
+header_rows$submission_date         <- c("", "label", "background", "", "", "submission_date")
+header_rows$template_name           <- c("", "label", "background", "", "", "template_name")
+header_rows$response_comp_orig_cnt  <- c("", "label", "observed",   "", "", "response component (original) count")
+header_rows$response_comp_cnt       <- c("", "label", "observed",   "", "", "response component count")
+header_rows$sig_subm_id             <- c("", "label", "background", "", "", "sequential ID of signature within a publication (PMID) and for its response_type ")
+header_rows$sig_row_id              <- c("", "label", "background", "", "", "row ID of signature within its submission data file(s)")
+header_rows$row_key                 <- c("", "label", "background", "", "", "row key")
 
-
-#########################################
-##### Separate header and data rows #####
-#########################################
-# Separate the Dashboard header rows and the data rows, as the data rows will be split on several columns.
-header_rows <- insub[1:6,]
-# omit the extra two descriptive rows of headers in the curation sheets
+# header_rows and df2 should have the same column names (eventually)
 df2 <- insub[first_data_row:nrow(insub),]
+df2$response_comp_orig_cnt  <- ""
+df2$response_comp_cnt       <- ""
+df2$sig_subm_id             <- ""
+df2$sig_row_id              <- ""
+df2$row_key                 <- ""
 
 # unique observation ID (row number in original template) within this sheet
 df2$sig_row_id  <- seq(from = first_data_row + 1, length.out = nrow(df2))
@@ -204,7 +210,7 @@ if (!all(s)) {
 
 # For INFECTION, first get a table of all PMIDs, not just current exposure type
 titles_and_dates_df <- get_titles_and_dates(df2, RENEW_PMIDS, pmid_file_infection, log_files, base_filename_infection)
-nrow(titles_and_dates_df)
+message("number of titles/dates: ", nrow(titles_and_dates_df))
 
 
 # Special handling for INFECTION templates
@@ -215,13 +221,11 @@ df2 <- df2[w, ]
 
 # Depending on how the text file is created, the sheet may have blank rows at bottom.
 # NOTE - the step above for INFECTION deals with this problem already
-nrow(df2)
 df2 <- df2[df2$publication_reference_id != "", ]
-nrow(df2)
 
 # remove signatures from unusable PMIDs
 df2 <- df2[!(df2$publication_reference_id %in% exclude_pmid), ]
-nrow(df2)
+message("number of rows in df2: ", nrow(df2))
 
 # Generate observation IDs based on the PMID field value and on original row number,
 # to allow e.g. response_components to be summarized by observation later.
@@ -240,7 +244,7 @@ df2$row_key      <- paste(df2$publication_reference_id, df2$sig_subm_id, df2$sig
 
 #  This time, titles_and_dates_df will only have the PMIDs for the current exposure_type
 titles_and_dates_df <- get_titles_and_dates(df2, RENEW_PMIDS, pmid_file, log_files, base_filename)
-nrow(titles_and_dates_df)
+message("number of titles/dates - second round: ", nrow(titles_and_dates_df))
 
 ########################################################
 ##### Fix temporary problems with the curated data #####
@@ -612,6 +616,7 @@ write.table(response_df,
             file = logfile_path(log_files, base_filename, "response_component_counts.txt"),
             sep = "\t", row.names = FALSE)
 
+df2$exposure_material <- NULL
 
 #############################################################
 #### Write out full denormalized data                    ####
@@ -733,11 +738,6 @@ s <- strict_char_check(df2, "\n")    # embedded newlines
 if(!is.null(s)) {
   print(paste("for df2, found problems in column (row numbers do not include any header)", s))
 }
-
-del_cols <- c("exposure_material", "short_comment", "process_note")
-
-df2 <- df2[!colnames(df2) %in% del_cols]
-header_rows <- header_rows[!colnames(header_rows) %in% del_cols]
 
 # the real purpose of this script. the function name is misleading: this writes templates and all other release files.
 write_submission_template(df2, header_rows, "../data/release_files", csv_submission_files, "hipc_inf_gene", titles_and_dates_df,
