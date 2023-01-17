@@ -120,12 +120,12 @@ The following additional fields are added by the pipeline
 * **response_comp_orig_cnt** - the number of response components in originally curated signature (e.g. gene symbols)
 * **response_comp_cnt** - the number of response components in the updated signature.
 * **subm_obs_id** - the sequential count of a signature within all signatures of this type for a 
-particular publication_reference_id (PMID).      
-* **uniq_obs_id** - the original row number of a signature in the curation sheet.         
+particular publication_reference_id (PMID).
+* **uniq_obs_id** - the original row number of a signature in the curation sheet.
 * **row_key** - the concatenation of the publication_reference_id, the subm_obs_id and the uniq_obs_id.
-	
+
 Files containing just the complete list of response components for each signature are located in a 
-further subdirectory, "files", for reach response component type, e.g. "./release_files/hipc_gene/files".  
+further subdirectory, "files", for each response component type, e.g. "./release_files/hipc_gene/files".
 An example is the file **hipc_gene_sig_21357945_3.txt** which lists six genes, one per line, 
 that make up the third signature for that PMID.
 
