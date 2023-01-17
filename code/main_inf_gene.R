@@ -147,11 +147,12 @@ insub <- data.frame(donotuse = insub[ , 1],
                     template_name = "",
                     response_component = "",
                     insub[ , 2:ncol(insub)],
+                    response_comp_orig_cnt = "",
+                    response_comp_cnt = "",
+                    sig_subm_id = "",
+                    sig_row_id = "",
+                    row_key = "",
                     stringsAsFactors = FALSE)
-
-# Create a new column for the corrected response_component values
-# and correct the headers for the response_component_original column
-# Add other new columns as needed per sheet type
 
 # gene-specific headers
 COLUMN_NAMES = c("donotuse", "submission_name", "submission_date", "template_name", "response_component",
@@ -162,16 +163,10 @@ COLUMN_NAMES = c("donotuse", "submission_name", "submission_date", "template_nam
   "publication_date", "publication_reference_url", "signature_source", "comments", 
   "response_comp_orig_cnt", "response_comp_cnt", "sig_subm_id", "sig_row_id", "row_key")
 header_rows = insub[colnames(insub) %in% COLUMN_NAMES][1:6,]
-header_rows$response_component <- c("gene", "", "gene_biomarker", "", "", "response component")
-header_rows$response_component_original <-
-    c("", "label", "observed", "", "", "response component (original gene symbol)")
 
-header_rows$response_comp_orig_cnt  <- ""
-header_rows$response_comp_cnt       <- ""
-header_rows$sig_subm_id             <- ""
-header_rows$sig_row_id              <- ""
-header_rows$row_key                 <- ""
-
+# set header values in 10 columns
+header_rows$response_component      <- c("gene", "", "gene_biomarker", "", "", "response component")
+header_rows$response_component_original <- c("", "label", "observed", "", "", "response component (original gene symbol)")
 header_rows$submission_name         <- c("", "label", "background", "", "", "submission name")
 header_rows$submission_date         <- c("", "label", "background", "", "", "submission_date")
 header_rows$template_name           <- c("", "label", "background", "", "", "template_name")
@@ -183,11 +178,6 @@ header_rows$row_key                 <- c("", "label", "background", "", "", "row
 
 # header_rows and df2 should have the same column names (eventually)
 df2 <- insub[first_data_row:nrow(insub),]
-df2$response_comp_orig_cnt  <- ""
-df2$response_comp_cnt       <- ""
-df2$sig_subm_id             <- ""
-df2$sig_row_id              <- ""
-df2$row_key                 <- ""
 
 # unique observation ID (row number in original template) within this sheet
 df2$sig_row_id  <- seq(from = first_data_row + 1, length.out = nrow(df2))
@@ -431,19 +421,13 @@ for (i in 1:length(uids_list)) {
 
 changed <- mapply(function(x, n) {length(x) != length(n)}, signatures, signatures_uniq)
 if (length(changed) > 0) {
-  print(sum(changed))
+  message("number of 'changed' signatures: ", sum(changed))
 }
-
-# if want to see that actual number of changes per signature
-# tt <- mapply(function(x, n) {if(length(x) != length(n)) {
-#                              print(paste(length(x), length(n), length(x) - length(n)))
-#                             }}, signatures, signatures_uniq)
-
 
 # find all duplicate symbols per signature
 dups <- lapply(signatures, function(x) {unique(x[duplicated(x)])})
 s <- sapply(dups, length)
-which(s != 0)
+cat("index of duplicated symbols: ", which(s != 0))
 
 # FIXME - should remove old log files each time before new run
 if(any(s != 0)) {
