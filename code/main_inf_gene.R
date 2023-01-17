@@ -103,8 +103,7 @@ del_cols_common <- c("submission_name", "template_name", # should not appear any
               "curator_comments")
 insub <- insub[!(colnames(insub) %in% del_cols_common)]
 
-# read additional file
-# FIXME - a more general solution will be needed for handling multiple files
+# read two other source curation files
 insub2 <- read.delim(file =  paste(source_curations, sheet_file2, sep = "/"),
                        strip.white = TRUE,
                        stringsAsFactors = FALSE)
@@ -119,19 +118,16 @@ insub3 <- insub3[!(colnames(insub3) %in% del_cols_common)]
 del_cols <- c("route",
                 "addntl_time_point_units",
                 "signature_source_url")  # discontinued in latest template
-colnames(insub)[(colnames(insub) %in% del_cols)]
 
-colnames(insub2)[(colnames(insub2) %in% del_cols)]
 insub2 <- insub2[!(colnames(insub2) %in% del_cols)]
-
-colnames(insub3)[(colnames(insub3) %in% del_cols)]
 insub3 <- insub3[!(colnames(insub3) %in% del_cols)]
 
-colnames(insub3)[!(colnames(insub3) %in% (colnames(insub2)))]
-colnames(insub2)[!(colnames(insub2) %in% (colnames(insub3)))]
-all(colnames(insub2) == colnames(insub3))
-
-all(colnames(insub) == colnames(insub2))
+if( !all(colnames(insub2) == colnames(insub3)) || !all(colnames(insub) == colnames(insub2)) ) {
+  colnames(insub)
+  colnames(insub2)
+  colnames(insub3)
+  stop("column names do not match in the three source duration files")
+}
 
 # stitch together the data sections
 insub <- rbind(insub, insub2[first_data_row:nrow(insub2),])
