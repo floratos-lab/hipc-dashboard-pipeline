@@ -56,8 +56,6 @@ manual_gene_corrections_txt <- "manual_gene_symbol_corrections.txt"
 #   set to FALSE to reuse existing file
 #   Run this every time new publications are added to the spreadsheet,
 #   for each response_component type.
-# Note - If set to TRUE, for type infection, 
-#        run CELLTYPE_FREQUENCY first and GENE second to get all PMIDs,
 RENEW_PMIDS             <- FALSE  
 
 # Download a new copy of the official HGNC gene mapping
@@ -80,11 +78,6 @@ response_behavior_type_var <- "gene expression"
 pmid_file <- paste(reference_files,
                    paste(base_filename, "titles_and_dates_df.RData", sep = "-"),
                    sep = "/")
-
-base_filename_infection <- "INFECTION_ALL"
-pmid_file_infection <- paste(reference_files,
-                                paste(base_filename_infection, "titles_and_dates_df.RData", sep = "-"),
-                                sep = "/")
 
 insub <- read.delim(file =  paste(source_curations, sheet_file, sep = "/"),
                     strip.white = TRUE,
@@ -189,18 +182,6 @@ s <- sapply(as.integer(df2$publication_reference_id), is.integer)
 if (!all(s)) {
   stop("unexpected namespace tag")
 }
-
-# Here we can still get a list of PMIDs and info for all INFECTION curations, before separate.
-
-##########################################################
-####  Collect publication titles, dates and abstracts ####
-####  VACCINE and INFECTION are handled differently   ####
-##########################################################
-
-# For INFECTION, first get a table of all PMIDs, not just current exposure type
-titles_and_dates_df <- get_titles_and_dates(df2, RENEW_PMIDS, pmid_file_infection, log_files, base_filename_infection)
-message("number of titles/dates: ", nrow(titles_and_dates_df))
-
 
 # Special handling for INFECTION templates
 # FIXME - if vaccine templates have these values too, can remove exposure_type restriction
