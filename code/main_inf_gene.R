@@ -242,23 +242,17 @@ df2$exposure_material_id <- codes
 ##### Data substitution and splitting (1): response_component_original #####
 ############################################################################
 
+# df2$response_component_original values become factors!
+df2 <- cSplit(df2, "response_component_original", sep = ",", direction = "long")
+df2 <- cSplit(df2, "response_component_original", sep = ";", direction = "long")
 
-  # df2$response_component_original values become factors!
-  df2 <- cSplit(df2, "response_component_original", sep = ",", direction = "long")
-  df2 <- cSplit(df2, "response_component_original", sep = ";", direction = "long")
-  affyHits <- grep("///", df2$response_component_original)
-  write.csv(df2[affyHits, c("response_component_original", "publication_reference_id", "sig_subm_id")],
-            file = logfile_path(log_files, base_filename, "affyHits.csv"),
-            row.names = FALSE)
-
-  # using " /// " leaves extra slashes, regexp "[/]{3}" does not
-  # FIXME - getting warnings since updated to R 4.1:
-  # Warning message:
-  #   In type.convert.default(unlist(x, use.names = FALSE)) :
-  #   'as.is' should be specified by the caller; using TRUE
-  df2 <- cSplit(df2, "response_component_original", sep = "[/]{3}", direction = "long", fixed = FALSE)
-  # the curated data does in places have spaces as separators
-
+# using " /// " leaves extra slashes, regexp "[/]{3}" does not
+# FIXME - getting warnings since updated to R 4.1:
+# Warning message:
+#   In type.convert.default(unlist(x, use.names = FALSE)) :
+#   'as.is' should be specified by the caller; using TRUE
+df2 <- cSplit(df2, "response_component_original", sep = "[/]{3}", direction = "long", fixed = FALSE)
+# the curated data does in places have spaces as separators
 
 # The cSplit() calls produce a data.table of data.frame rows.  Coerce back to just data.frame.
 df2 <- as.data.frame(df2)
