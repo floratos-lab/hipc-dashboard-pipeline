@@ -261,40 +261,21 @@ df2 <- as.data.frame(df2)
 # FIXME - any way to gain better control of this?
 df2$response_component_original <- trimws(as.character(df2$response_component_original))
 
-
-  # check for lists of response components within one PMID that have a large overlap with one another.
-  # This is intended to catch the case were one set was accidentally appended to another.
-  # (It happens!)
-  ft <- check_response_components_overlap(df2, unique(df2$publication_reference_id),
-                                          min_intersection = 10, min_overlap_fraction = 0.75,
-                                          require_different_behaviors = TRUE, max_hits = 100)
-
-  file <- logfile_path(log_files, base_filename, "overlapping_signatures.csv")
-  if(length(ft) > 0) {
-    write.csv(ft, file = file, row.names = FALSE)
-  } else {
-    print("no signature overlaps found...")
-    if(file.exists(file)) {
-      file.remove(file = file)
-    }
-  }
-
 # create original gene symbols "signature" list after applying manual corrections
 # FIXME - need better variable name than "signatures"
 
-  # Apply manual gene corrections
-  rvl <- manual_gene_corrections(df2$response_component_original,
+# Apply manual gene corrections
+rvl <- manual_gene_corrections(df2$response_component_original,
                                  paste(reference_files, manual_gene_corrections_txt, sep = "/"))
-  genes <- rvl$genes
+genes <- rvl$genes
 
-  # Fix certain gene symbols containing "orf"
-  genes <- fix_orf_symbols(genes)
+# Fix certain gene symbols containing "orf"
+genes <- fix_orf_symbols(genes)
 
-  # Reconstruct original signatures, after splitting by various separators
-  signatures <- lapply(unique(df2$sig_row_id), function(uniqID) {
-    genes[df2$sig_row_id == uniqID]
-  })
-
+# Reconstruct original signatures, after splitting by various separators
+signatures <- lapply(unique(df2$sig_row_id), function(uniqID) {
+  genes[df2$sig_row_id == uniqID]
+})
 
 # list of original response components before main changes, with duplicates per signature removed
 signatures_uniq <- lapply(signatures, unique)
