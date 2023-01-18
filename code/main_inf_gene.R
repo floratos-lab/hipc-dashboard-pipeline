@@ -227,53 +227,16 @@ if(any(w)) {
   stop(paste("signature_source has non-ascii character in row(s)", paste(df2$row_key[w], collapse = ", ")))
 }
 
-##########################################################
-##### Other global changes to template before splits #####
-##########################################################
-
-## Create a map of VO codes to text equivalents
-## Both columns must have the same number of values per row
 codes <- strsplit(df2$exposure_material_id,";")  # returns a list if multiple values per row
 # in Infection template, have allowed extra text in exposure_material_id column, need to handle
-  codes <- sub(" .*$", "", codes)
-  codes <- sub("ncbi_taxid:", "", codes)
-  s <- sapply(as.integer(codes), is.integer)
-  if (!all(s)) {
-    print("unexpected namespace tag")
-  }
-  # FIXME - this only works because only one entry per row
-  df2$exposure_material_id <- codes
-
-text  <- strsplit(df2$exposure_material, ";") # returns a list
-m <- mapply(function(x, y) {length(x) == length(y)}, codes, text)
-if (!all(m)) {
-  # FIXME - should just stop, no reason to continue
-  warning(paste("exposure code vs text length mismatch for rows rowkeys:", paste(df2$row_key[!m], collapse = ", ")))
-  warning(paste("removing non-matching rows"))
-  df2 <- df2[m, ]
-  codes <- codes[m]
-  text <- text[m]
+codes <- sub(" .*$", "", codes)
+codes <- sub("ncbi_taxid:", "", codes)
+s <- sapply(as.integer(codes), is.integer)
+if (!all(s)) {
+  print("unexpected namespace tag")
 }
-codes <- trimws(unlist(codes))
-text <- trimws(unlist(text))
-
-exposure_code_map <- unique(data.frame(codes, text, stringsAsFactors = FALSE))
-exposure_code_map <- exposure_code_map[order(exposure_code_map$codes), ]
-
-write.table(exposure_code_map,
-            file = logfile_path(log_files, base_filename, "exposure_material_code_mapping.txt"),
-            sep = "\t", row.names = FALSE, col.names = FALSE)
-
-dupcodes <- exposure_code_map[duplicated(exposure_code_map$codes), ]$codes
-w <- which(exposure_code_map$codes %in% dupcodes)
-write.table(exposure_code_map[w, ],
-            file = logfile_path(log_files, base_filename, "exposure_material_code_duplicates.txt"),
-            sep = "\t", row.names = FALSE, col.names = FALSE)
-
-write.table(unique(text),
-            file = logfile_path(log_files, base_filename, "exposure_materials.txt"),
-            sep = "\t", row.names = FALSE, col.names = FALSE)
-
+# this only works because only one entry per row
+df2$exposure_material_id <- codes
 
 ############################################################################
 ##### Data substitution and splitting (1): response_component_original #####
