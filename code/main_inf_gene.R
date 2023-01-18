@@ -215,13 +215,6 @@ if(any(w)) {
   print(paste("some comments were too long for row(s), truncated:", paste(df2$row_key[w], collapse = ", ")))
 }
 
-# check if comment column has non-UTF8 characters
-# FIXME - don't think this is working...
-w <- !stri_enc_isutf8(df2$comments)
-if(any(w)) {
-  stop(paste("comment has non-utf8 character in row(s)", paste(df2$row_key[w], collapse = ", ")))
-}
-
 # remove any period from end of comparison (so works in observation summaries)
 df2$comparison <- trimws(df2$comparison)
 if (any(grepl("\\.$", df2$comparison))) {
