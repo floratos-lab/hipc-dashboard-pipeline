@@ -227,15 +227,6 @@ if(any(w)) {
   stop(paste("signature_source has non-ascii character in row(s)", paste(df2$row_key[w], collapse = ", ")))
 }
 
-# Summarize response behavior strings
-response_behavior_strings <- sort(unique(df2$response_behavior))
-
-write.table(response_behavior_strings,
-            file = logfile_path(log_files, base_filename, "response_behavior_strings.txt"),
-            sep = "\t", row.names = FALSE, col.names = FALSE)
-
-
-
 ##########################################################
 ##### Other global changes to template before splits #####
 ##########################################################
