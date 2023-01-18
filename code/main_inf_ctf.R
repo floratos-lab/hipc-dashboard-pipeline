@@ -353,9 +353,6 @@ if("process_note" %in% names(df2)) {
   df2 <- df2[!skip, ]
 }
 
-
-# Write list of pathogens before any substitutions
-
 # fix capitalization (should fix in source google sheet)
 df2$response_behavior_type <- tolower(df2$response_behavior_type)
 df2$response_behavior      <- tolower(df2$response_behavior)

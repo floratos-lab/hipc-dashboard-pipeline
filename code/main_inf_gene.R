@@ -25,7 +25,6 @@
 #   * CV-per-template file for all signatures of a type (gene, cell-type)
 #   * Numerous log files with details of each stage of processing.
 
-
 library(splitstackshape)  # for cSplit()
 library(uniqtag)          # for cumcount()
 # Note that rbindlist() tends to return a data.table with a data.frame, which causes
@@ -34,10 +33,8 @@ library(data.table)       # for rbindlist()
 library(stringr)
 library(R.utils)
 
-
 source("hipc_utils.R")
 source("gene_routines.R")
-source("vaccines_pathogens.R")
 source("pmid_to_title_easy.R")
 source("write_submissions.R")
 
@@ -85,7 +82,6 @@ insub <- read.delim(file =  paste(source_curations, sheet_file, sep = "/"),
 
 # Get rid of unused columns (empty in curated data) or those not meant to appear in the Dashboard.
 # No error if named column does not exist in a particular sheet.
-# Note - columns "short_comment" and "process_note" are removed later after not needed anymore
 del_cols_common <- c("submission_name", "template_name", # should not appear anymore
               "spot_check", "Spot.check",
               "second_spot_check",
@@ -175,7 +171,6 @@ df2 <- insub[first_data_row:nrow(insub),]
 # unique observation ID (row number in original template) within this sheet
 df2$sig_row_id  <- seq(from = first_data_row + 1, length.out = nrow(df2))
 
-
 # The "pmid:" tag is not currently required, but check if anything was entered
 df2$publication_reference_id <- sub("pmid:", "", df2$publication_reference_id)
 s <- sapply(as.integer(df2$publication_reference_id), is.integer)
@@ -183,15 +178,8 @@ if (!all(s)) {
   stop("unexpected namespace tag")
 }
 
-# Special handling for INFECTION templates
-# FIXME - if vaccine templates have these values too, can remove exposure_type restriction
 # Infection templates contain more than one response_behavior_type, filter out all but current type
-w <- df2$response_behavior_type == response_behavior_type_var
-df2 <- df2[w, ]
-
-# Depending on how the text file is created, the sheet may have blank rows at bottom.
-# NOTE - the step above for INFECTION deals with this problem already
-df2 <- df2[df2$publication_reference_id != "", ]
+df2 <- df2[df2$response_behavior_type == response_behavior_type_var, ]
 
 # remove signatures from unusable PMIDs
 df2 <- df2[!(df2$publication_reference_id %in% exclude_pmid), ]
@@ -208,32 +196,13 @@ df2$sig_subm_id  <- cumcount(df2$publication_reference_id)
 sig_row_id_orig <- df2$sig_row_id
 df2$row_key      <- paste(df2$publication_reference_id, df2$sig_subm_id, df2$sig_row_id, sep = "_")
 
-##########################################################
-####  Collect publication titles, dates and abstracts ####
-##########################################################
-
 #  This time, titles_and_dates_df will only have the PMIDs for the current exposure_type
 titles_and_dates_df <- get_titles_and_dates(df2, RENEW_PMIDS, pmid_file, log_files, base_filename)
-message("number of titles/dates - second round: ", nrow(titles_and_dates_df))
+message("number of titles/dates: ", nrow(titles_and_dates_df))
 
-########################################################
-##### Fix temporary problems with the curated data #####
-########################################################
-
-# Remove rows marked "skip" in optional column "process_note"
-# FIXME - not being used anymore in HIPC Dashboard source
-if("process_note" %in% names(df2)) {
-  skip <- grepl("^skip", df2$process_note, ignore.case = TRUE)
-  df2 <- df2[!skip, ]
-}
-
-# FIXME - Most values are empty, not "Y" or "N".
-#         Empty is not necessarily the same as "N".
+# Most values are empty, not "Y" or "N".
 # Currently only used for type GENE
 df2$is_model[df2$is_model == ""] <- "N"
-
-
-# Write list of pathogens before any substitutions
 
 # fix capitalization (should fix in source google sheet)
 df2$response_behavior_type <- tolower(df2$response_behavior_type)
@@ -583,7 +552,7 @@ write.table(response_df,
 #############################################################
 #### Write out full denormalized data                    ####
 #############################################################
-del_cols <- c("submission_name", "submission_date", "template_name", "short_comment", "process_note")
+del_cols <- c("submission_name", "submission_date", "template_name", "short_comment")
 df2tmp <- df2[!colnames(df2) %in% del_cols]
 
 df2tmp <- df2tmp[-1]
