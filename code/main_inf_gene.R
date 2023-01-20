@@ -572,23 +572,6 @@ write.csv(resp_components_cnt_df,
           file = logfile_path(log_files, base_filename, "response_component_counts_by_row.csv"),
           row.names = FALSE)
 
-# Convert to GMT format using same first two columns as resp_components_annotated.
-# Using "c()" encloses each item or phrase in quotes.
-# verify order unchanged
-all(names(signatures_uniq) == names(resp_components_annotated))
-signatures_uniq_gmt <- mapply(function(x, n) {
-                         c(x[1], x[2], n)
-                       }, resp_components_annotated, signatures_uniq)
-
-# For mSigDB they wanted the original, not the standardized, gene symbols
-outfile = logfile_path(log_files, base_filename, "response_components_original.gmt.txt")
-if(file.exists(outfile)) file.remove(outfile)
-d <- lapply(signatures_uniq_gmt,
-            function(x) write.table(paste(x, collapse = "\t"),
-                                    file = outfile, row.names = FALSE, col.names = FALSE,
-                                    quote = FALSE, append = TRUE))
-
-
 # totals by PMID
 rc_cnt_by_pmid <- lapply(unique(df2$publication_reference_id), function(pmid) {
   vals <- resp_components_cnt_df[resp_components_cnt_df$pmid == pmid, "count"]
