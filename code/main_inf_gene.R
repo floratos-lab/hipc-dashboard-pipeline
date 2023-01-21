@@ -350,7 +350,6 @@ df2$comparison <- trimws(df2$comparison)
 
 # Collect multi-valued columns by unique observation ID (each row in original spreadsheet)
 uniq_sig_row_ids          <- unique(df2$sig_row_id)
-resp_components_cnt_df    <- data.frame()
 resp_components_annotated <- vector("list", length(uniq_sig_row_ids))
 resp_components_collected <- vector("list", length(uniq_sig_row_ids))
 
@@ -381,13 +380,6 @@ for (i in 1:length(uniq_sig_row_ids)) {
       stop(paste("unexpected PMID result: uniqID = ", uniq_sig_row_ids[i], ", pmid = ", base_row$publication_reference_id))
     }
     titles_and_dates_row <- titles_and_dates_df[w, ]
-
-  tmp <- data.frame(rowname = response_rowname,
-                    pmid = base_row$publication_reference_id,
-                    sig_subm_id = base_row$sig_subm_id,
-                    sig_row_id = uniq_sig_row_ids[i],
-                    count = length(resp_components_collected[[i]]))
-  resp_components_cnt_df <- rbind(resp_components_cnt_df, tmp)
 }
 
 names(resp_components_collected) <- uniq_sig_row_ids  # name not actually used again?
@@ -419,10 +411,6 @@ df2$exposure_material <- NULL
 write_submission_template(df2, header_rows, "../data/release_files", csv_submission_files, "hipc_inf_gene", titles_and_dates_df,
                             resp_components_collected, unmatched_symbols_map,
                             "GENE", "INFECTION", "Gene expression response to infection")
-
-write.csv(resp_components_cnt_df,
-          file = logfile_path(log_files, base_filename, "response_component_counts_by_row.csv"),
-          row.names = FALSE)
 
 # Unique response component count by PMID
 # ordered by count, but could as well be ordered by PMID
