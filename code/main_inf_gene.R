@@ -262,7 +262,6 @@ df2 <- as.data.frame(df2)
 df2$response_component_original <- trimws(as.character(df2$response_component_original))
 
 # create original gene symbols "signature" list after applying manual corrections
-# FIXME - need better variable name than "signatures"
 
 # Apply manual gene corrections
 rvl <- manual_gene_corrections(df2$response_component_original,
@@ -271,11 +270,6 @@ genes <- rvl$genes
 
 # Fix certain gene symbols containing "orf"
 genes <- fix_orf_symbols(genes)
-
-# Reconstruct original signatures, after splitting by various separators
-signatures <- lapply(unique(df2$sig_row_id), function(uniqID) {
-  genes[df2$sig_row_id == uniqID]
-})
 
 uids_list <- unique(df2$sig_row_id)
 # get original count of rows for each sig_row_id.
