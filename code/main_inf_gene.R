@@ -277,11 +277,6 @@ signatures <- lapply(unique(df2$sig_row_id), function(uniqID) {
   genes[df2$sig_row_id == uniqID]
 })
 
-# list of original response components before main changes, with duplicates per signature removed
-signatures_uniq <- lapply(signatures, unique)
-# name for indexing into signatures_uniq
-names(signatures_uniq) <- unique(df2$sig_row_id)
-
 uids_list <- unique(df2$sig_row_id)
 # get original count of rows for each sig_row_id.
 uids_cnt  <- sapply(uids_list, function(x) {sum(df2$sig_row_id == x)})
