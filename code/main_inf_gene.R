@@ -191,9 +191,6 @@ message("number of rows in df2: ", nrow(df2))
 
 # ID number of observation within its submission (based on PMID)
 df2$sig_subm_id  <- cumcount(df2$publication_reference_id)
-
-# save so can check later for  observations removed below during processing
-sig_row_id_orig <- df2$sig_row_id
 df2$row_key      <- paste(df2$publication_reference_id, df2$sig_subm_id, df2$sig_row_id, sep = "_")
 
 #  This time, titles_and_dates_df will only have the PMIDs for the current exposure_type
@@ -280,8 +277,6 @@ for (i in 1:length(uids_list)) {
   df2$response_comp_orig_cnt[df2$sig_row_id == uids_list[i]] <- uids_cnt[i]
 }
 
-start_cnt <- nrow(df2)
-
 # Update original gene symbols to latest versions (NCBI/HGNC)
 
 # starts with "genes" manually corrected list from above
@@ -307,15 +302,9 @@ df2$response_component <- genes_map$Symbol
 # get rid of genes that had no valid symbol.
 df2 <- df2[!is.na(df2$response_component), ]
 
-end_cnt <- nrow(df2)
-
 # Remove exact duplicates (implies duplicate copies of response component in a signature)
 # This can happen when e.g. two or more original probesets get map to one symbol.
-start_cnt <- end_cnt
 df2 <- unique(df2)
-end_cnt <- nrow(df2)
-
-start_cnt <- end_cnt
 
 # get count of rows for each sig_row_id.
 uids_list <- unique(df2$sig_row_id)
@@ -324,8 +313,6 @@ uids_cnt  <- sapply(uids_list, function(x) {sum(df2$sig_row_id == x)})
 for (i in 1:length(uids_list)) {
   df2$response_comp_cnt[df2$sig_row_id == uids_list[i]] <- uids_cnt[i]
 }
-
-start_cnt <- end_cnt
 
 write_unique_list(df2$response_component, log_files, base_filename, "response_component_list")
 
@@ -344,10 +331,6 @@ df2 <- df2[df2$exposure_material_id != "", ]
 
 write_unique_list(df2$exposure_material_id, log_files, base_filename, "exposure_material_id", do_split = FALSE)
 
-end_cnt <- nrow(df2)
-
-start_cnt <- end_cnt
-
 # The cSplit() calls produce a data.table of data.frame rows.  Coerce back to just data.frame.
 df2 <- as.data.frame(df2, stringsAsFactors = FALSE)
 
@@ -360,10 +343,6 @@ df2 <- cSplit(df2, "tissue_type_term_id", sep = ";", direction = "long")
 
 # class(df2)  # "data.table" "data.frame"
 df2 <- as.data.frame(df2)
-
-end_cnt <- nrow(df2)
-
-start_cnt <- end_cnt
 
 df2$tissue_type_term_id <- sub(" .*$", "", df2$tissue_type_term_id)
 
@@ -385,10 +364,6 @@ df2 <- cSplit(df2, "comparison", sep = ";", direction = "long")
 # class(df2)  # "data.table" "data.frame"
 df2 <- as.data.frame(df2)
 df2$comparison <- trimws(df2$comparison)
-
-end_cnt <- nrow(df2)
-
-start_cnt <- end_cnt
 
 ####################################################################
 #### Get counts of each response component for e.g. word cloud #####
