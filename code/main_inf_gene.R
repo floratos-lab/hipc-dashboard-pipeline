@@ -291,15 +291,10 @@ for (i in 1:length(uids_list)) {
   df2$response_comp_orig_cnt[df2$sig_row_id == uids_list[i]] <- uids_cnt[i]
 }
 
-changed <- mapply(function(x, n) {length(x) != length(n)}, signatures, signatures_uniq)
-if (length(changed) > 0) {
-  message("number of 'changed' signatures: ", sum(changed))
-}
-
 # find all duplicate symbols per signature
 dups <- lapply(signatures, function(x) {unique(x[duplicated(x)])})
 s <- sapply(dups, length)
-cat("index of duplicated symbols: ", which(s != 0))
+cat("index of duplicated symbols: ", which(s != 0), "\n")
 
 # FIXME - should remove old log files each time before new run
 if(any(s != 0)) {
@@ -346,32 +341,28 @@ start_cnt <- nrow(df2)
 
 # Update original gene symbols to latest versions (NCBI/HGNC)
 
-  # starts with "genes" manually corrected list from above
-  # make sure "genes" is still in synch with df2.
-  length(genes) == nrow(df2)
-  rvl <- update_gene_symbols(genes, log_files, base_filename,
+# starts with "genes" manually corrected list from above
+rvl <- update_gene_symbols(genes, log_files, base_filename,
                              reference_files,
                              DOWNLOAD_NEW_HGNC)
-  genes_map <- rvl$genes_map
-  rm(rvl)
+genes_map <- rvl$genes_map
+rm(rvl)
 
-  # Save PMID info for unmapped symbols
-  no_valid_symbols_df <- df2[is.na(genes_map$Symbol), names(df2) %in%
+# Save PMID info for unmapped symbols
+no_valid_symbols_df <- df2[is.na(genes_map$Symbol), names(df2) %in%
                              c("response_component_original", "publication_reference_id", "sig_subm_id", "sig_row_id")]
-  log_no_valid_symbol_vs_pmid(no_valid_symbols_df, log_files, base_filename)
+log_no_valid_symbol_vs_pmid(no_valid_symbols_df, log_files, base_filename)
 
-  # w <- which(genes_map$Symbol != genes_map$alias)
+# Save the gene map for the unmatched symbols with their sig_row_id
+# to add them back to complete signatures later
+unmatched_symbols_map <- cbind(genes_map, sig_row_id = df2$sig_row_id)
+unmatched_symbols_map <- unmatched_symbols_map[is.na(unmatched_symbols_map$Symbol), ]
 
-  # Save the gene map for the unmatched symbols with their sig_row_id
-  # to add them back to complete signatures later
-  unmatched_symbols_map <- cbind(genes_map, sig_row_id = df2$sig_row_id)
-  unmatched_symbols_map <- unmatched_symbols_map[is.na(unmatched_symbols_map$Symbol), ]
+# copy the fixed symbols back to the main data structure df2
+df2$response_component <- genes_map$Symbol
 
-  # copy the fixed symbols back to the main data structure df2
-  df2$response_component <- genes_map$Symbol
-
-  # get rid of genes that had no valid symbol.
-  df2 <- df2[!is.na(df2$response_component), ]
+# get rid of genes that had no valid symbol.
+df2 <- df2[!is.na(df2$response_component), ]
 
 end_cnt <- nrow(df2)
 
