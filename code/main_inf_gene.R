@@ -364,7 +364,6 @@ for (i in 1:length(uniq_sig_row_ids)) {
   if (length(w) != 1) {
     stop(paste("unexpected PMID result: uniqID = ", uniq_sig_row_ids[i], ", pmid = ", base_row$publication_reference_id))
   }
-  titles_and_dates_row <- titles_and_dates_df[w, ]
 }
 
 names(resp_components_collected) <- uniq_sig_row_ids  # name not actually used again?
