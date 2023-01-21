@@ -356,7 +356,6 @@ uniq_sig_row_ids          <- unique(df2$sig_row_id)
 resp_components_cnt_df    <- data.frame()
 resp_components_annotated <- vector("list", length(uniq_sig_row_ids))
 resp_components_collected <- vector("list", length(uniq_sig_row_ids))
-resp_components_full_sig  <- vector("list", length(uniq_sig_row_ids))   # used for cell types only
 
 for (i in 1:length(uniq_sig_row_ids)) {
   df2tmp <- df2[df2$sig_row_id == uniq_sig_row_ids[i], ]
@@ -395,7 +394,6 @@ for (i in 1:length(uniq_sig_row_ids)) {
 }
 
 names(resp_components_collected) <- uniq_sig_row_ids  # name not actually used again?
-names(resp_components_full_sig)  <- uniq_sig_row_ids  # name not actually used again?
 names(resp_components_annotated) <- uniq_sig_row_ids  # name is used for this one.
 
 ########################################
