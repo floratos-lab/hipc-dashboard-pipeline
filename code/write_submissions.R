@@ -81,13 +81,6 @@ write_submission_template <- function(df2_cpy, header_rows, release_files, csv_f
     dir.create(double_path, recursive = TRUE)
   }
 
-  # A place to keep csv format copies of the templates for easy inspection in Excel
-  template_name_csv <- paste(template_name, "csv", sep = "_")
-  double_path <- paste(csv_files, template_name_csv, "files", sep = "/")
-  if (!dir.exists(double_path)) {
-    dir.create(double_path, recursive = TRUE)
-  }
-
   cv <- data.frame()  # initialize
   uniq_ids_local <- as.character(unique(df2_cpy$sig_row_id))
   print(paste("uniq_ids match:", all(names(resp_components) == uniq_ids_local), collapse = ", "))
@@ -253,29 +246,10 @@ write_submission_template <- function(df2_cpy, header_rows, release_files, csv_f
       # do nothing
     }
 
-    # Write a copy of the response components to the submission CSV directory
-    # Only difference is the files end in .csv so can automatically open in Excel
-    # For internal use only, not for users as Excel will alter some gene symbols.
-    write.table(resp_components[[uil]],
-                file = paste(csv_files, template_name_csv, "files", signatureFilename, sep = "/"),
-                row.names = FALSE, col.names = FALSE, quote = FALSE)
-    if (sheet_type == "GENE") {
-      write.table(completeGenes,
-                  file = paste(csv_files, template_name_csv, "files", completeSignatureFilename, sep = "/"),
-                  row.names = FALSE, col.names = FALSE, quote = FALSE)
-    } else if (sheet_type == "CELLTYPE_FREQUENCY") {
-      # do nothing
-    }
-
     # Write out the actual submission template in tab-delimited format
     write.table(dftmp,
                 file = paste(release_files, template_name, paste0(submission_name, ".txt"), sep = "/"),
                 sep = "\t", row.names = FALSE, qmethod = "double")
-
-    # For convenience, write out CSV version
-    write.csv(dftmp,
-              file = paste(csv_files, template_name_csv, paste0(submission_name, ".csv"), sep = "/"),
-              row.names = FALSE)
 
     if(exposure_type == "VACCINE") {
       # FIXME - vaccine_VO_has_pathogens is a global variable defined in main routine
@@ -350,9 +324,4 @@ write_submission_template <- function(df2_cpy, header_rows, release_files, csv_f
   write.table(cv,
               paste(release_files, template_name, paste0(template_name, "-CV-per-template.txt"), sep = "/"),
               sep = "\t", row.names = FALSE)
-
-  # Write out the actual dashboard-CV-per-template template in csv format
-  write.csv(cv,
-            paste(csv_files, template_name_csv, paste0(template_name, "-CV-per-template.csv"), sep = "/"),
-            row.names = FALSE)
 }

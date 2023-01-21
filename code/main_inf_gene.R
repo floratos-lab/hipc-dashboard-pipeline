@@ -1,12 +1,11 @@
 # Description:
 #  Starting with curated HIPC data, prepare Dashboard submission templates.
-#  Types currently explicitly supported: Gene, Cell type frequency.
+#  Type: Gene
 #  * Perform gene symbol updates to conform to HGNC.
 #    * Fix up temporary term problems pending e.g. ontology updates
 #    * When exposure material is an influenza vaccine,
 #        substitute the actual virus components for the listed vaccine year
 #        into the target pathogen field.
-#    * Substitute in corrected cell type and cell type details from external sheet.
 #    * Retrieve publication title and abstract etc. based on PMID
 #    * Create individual submission files by publication
 #    * Create CV-per-template file for set of submissions
@@ -14,21 +13,15 @@
 # Input files (must be in current directory):
 #   * "vaccine_years.txt" - maps vaccine season year to vaccine viral components
 #   * "manual_gene_symbol_corrections.txt" - maps invalid symbols  to known valid sybmols
-#   * "cell_type_frequency-response_components_mapping.txt" - corrections to exposure_material
-#        terms for cell type frequency sheet.  These corrections will in the end be added
-#        directly into the HIPC Dashboard spreadsheet.
 #
 # Output files:
 #   * Submission file for each signature
 #   * Files containing the list of response_components for each signature.
 #       One file has only the HGNC symbols, the other has all original symbols.
 #   * CV-per-template file for all signatures of a type (gene, cell-type)
-#   * Numerous log files with details of each stage of processing.
 
 library(splitstackshape)  # for cSplit()
 library(uniqtag)          # for cumcount()
-library(stringr)
-library(R.utils)
 
 source("hipc_utils.R")
 source("gene_routines.R")
@@ -40,7 +33,6 @@ source_curations       <- "../data/source_curations"
 reference_files        <- "../data/reference_files"
 
 log_files              <- "../logfiles"
-csv_submission_files   <- "../logfiles"
 
 manual_gene_corrections_txt <- "manual_gene_symbol_corrections.txt"
 
@@ -400,6 +392,6 @@ if(!is.null(s)) {
 
 df2$exposure_material <- NULL
 # the real purpose of this script. the function name is misleading: this writes templates and all other release files.
-write_submission_template(df2, header_rows, "../data/release_files", csv_submission_files, "hipc_inf_gene", titles_and_dates_df,
+write_submission_template(df2, header_rows, "../data/release_files", NULL, "hipc_inf_gene", titles_and_dates_df,
                             resp_components_collected, unmatched_symbols_map,
                             "GENE", "INFECTION", "Gene expression response to infection")
