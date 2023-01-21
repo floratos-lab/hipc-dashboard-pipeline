@@ -286,52 +286,6 @@ for (i in 1:length(uids_list)) {
   df2$response_comp_orig_cnt[df2$sig_row_id == uids_list[i]] <- uids_cnt[i]
 }
 
-# find all duplicate symbols per signature
-dups <- lapply(signatures, function(x) {unique(x[duplicated(x)])})
-s <- sapply(dups, length)
-cat("index of duplicated symbols: ", which(s != 0), "\n")
-
-# FIXME - should remove old log files each time before new run
-if(any(s != 0)) {
-
-  # assign each dup its row_key as name
-  names(dups) <- sapply(unique(df2$sig_row_id), function(x) {
-    unique(df2[df2$sig_row_id == x, "row_key"])
-  })
-
-  # only keep entries that have duplicates
-  dup_resp_comps <- dups[sapply(dups, function(x) {length(x) > 0})]
-
-  # Write out list of counts of duplicated response components by signature
-  write.table(paste(names(dup_resp_comps), sapply(dup_resp_comps, length), sep = ", "),
-              file = logfile_path(log_files, base_filename, "response_component_duplicates_count.csv"),
-              row.names = FALSE, col.names = FALSE, quote = FALSE)
-
-  # Write out list of duplicated response components by signature
-  # Have to write in loop because varying number of elements per row
-  outfile = logfile_path(log_files, base_filename, "response_component_duplicates.txt")
-  if(file.exists(outfile)) {
-    file.remove(outfile)
-  }
-  d <- mapply(function(x, n) {
-         write.table(paste(c(x, n), collapse = "\t"),
-                file = outfile,
-                row.names = FALSE, col.names = FALSE, quote = FALSE, append = TRUE)
-         }, names(dup_resp_comps),  dup_resp_comps)
-
-
-  # Write out sorted list of duplicated response components by signature
-  outfile = logfile_path(log_files, base_filename, "response_component_duplicates_sorted.txt")
-  if(file.exists(outfile)) {
-    file.remove(outfile)
-  }  
-  d <- mapply(function(x, n) {
-         write.table(paste(c(x, sort(n)), collapse = "\t"),
-                file = outfile,
-                row.names = FALSE, col.names = FALSE, quote = FALSE, append = TRUE)
-         }, names(dup_resp_comps), dup_resp_comps)
-}
-
 start_cnt <- nrow(df2)
 
 # Update original gene symbols to latest versions (NCBI/HGNC)
