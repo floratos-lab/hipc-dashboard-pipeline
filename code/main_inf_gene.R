@@ -286,11 +286,6 @@ rvl <- update_gene_symbols(genes, log_files, base_filename,
 genes_map <- rvl$genes_map
 rm(rvl)
 
-# Save PMID info for unmapped symbols
-no_valid_symbols_df <- df2[is.na(genes_map$Symbol), names(df2) %in%
-                             c("response_component_original", "publication_reference_id", "sig_subm_id", "sig_row_id")]
-log_no_valid_symbol_vs_pmid(no_valid_symbols_df, log_files, base_filename)
-
 # Save the gene map for the unmatched symbols with their sig_row_id
 # to add them back to complete signatures later
 unmatched_symbols_map <- cbind(genes_map, sig_row_id = df2$sig_row_id)
