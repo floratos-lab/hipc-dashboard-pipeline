@@ -496,11 +496,6 @@ resp_components_annotated <- vector("list", length(uniq_sig_row_ids))
 resp_components_collected <- vector("list", length(uniq_sig_row_ids))
 resp_components_full_sig  <- vector("list", length(uniq_sig_row_ids))   # used for cell types only
 
-# Some signatures are lost entirely during cleaning
-# FIXME - this is also logged below at comment "original template rows deleted"
-which(!(names(signatures_uniq) %in% uniq_sig_row_ids))
-signatures_uniq <- signatures_uniq[names(signatures_uniq) %in% uniq_sig_row_ids]
-
 for (i in 1:length(uniq_sig_row_ids)) {
   df2tmp <- df2[df2$sig_row_id == uniq_sig_row_ids[i], ]
   # Recreate a full signature in one row
