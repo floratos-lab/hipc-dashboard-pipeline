@@ -42,7 +42,6 @@ source("write_submissions.R")
 source_curations       <- "../data/source_curations"
 reference_files        <- "../data/reference_files"
 
-standardized_curations <- "../data/standardized_curations"
 log_files              <- "../logfiles"
 csv_submission_files   <- "../logfiles"
 
@@ -347,35 +346,6 @@ df2 <- cSplit(df2, "comparison", sep = ";", direction = "long")
 # class(df2)  # "data.table" "data.frame"
 df2 <- as.data.frame(df2)
 df2$comparison <- trimws(df2$comparison)
-
-####################################################################
-#### Get counts of each response component for e.g. word cloud #####
-####################################################################
-
-response_df <- unique(df2[ , c("response_component", "sig_row_id")])
-response_df <- as.data.frame(table(response_df$response_component))
-colnames(response_df) <- c("response_component", "count")
-response_df <- response_df[order(response_df$count, decreasing = TRUE), ]
-
-# Write out counts in tab-delimited format
-# Use .txt extension rather than .tsv to thwart Excel auto-change of symbols
-write.table(response_df,
-            file = logfile_path(log_files, base_filename, "response_component_counts.txt"),
-            sep = "\t", row.names = FALSE)
-
-#############################################################
-#### Write out full denormalized data                    ####
-#############################################################
-del_cols <- c("submission_name", "submission_date", "template_name", "short_comment")
-df2tmp <- df2[!colnames(df2) %in% del_cols]
-
-df2tmp <- df2tmp[-1]
-
-filename <- logfile_path(standardized_curations, base_filename, "standardized_denormalized.tsv")
-write.table(df2tmp,
-            file = filename,
-            sep = "\t", row.names = FALSE, col.names = TRUE)
-gzip(filename, destname=paste0(filename, ".gz"), overwrite=TRUE, remove=TRUE)
 
 #############################################################
 #### Recreate original spreadsheet with all corrections #####
