@@ -350,7 +350,6 @@ df2$comparison <- trimws(df2$comparison)
 
 # Collect multi-valued columns by unique observation ID (each row in original spreadsheet)
 uniq_sig_row_ids          <- unique(df2$sig_row_id)
-resp_components_annotated <- vector("list", length(uniq_sig_row_ids))
 resp_components_collected <- vector("list", length(uniq_sig_row_ids))
 
 for (i in 1:length(uniq_sig_row_ids)) {
@@ -358,9 +357,6 @@ for (i in 1:length(uniq_sig_row_ids)) {
   # Recreate a full signature in one row
   base_row <- df2tmp[1, ] # get first row for this uniqID
 
-  response_rowname     <- paste(base_row$publication_reference_id, base_row$sig_subm_id, uniq_sig_row_ids[i], sep = "_")
-  response_description <- paste("PMID", base_row$publication_reference_id, response_behavior_type_var, base_row$sig_subm_id, sep = " ")
-  
   # Use the full original set of response components rather than just those
   # for which a valid symbol was found.
   base_row$response_component_original <- paste(unique(df2tmp$response_component_original), collapse = "; ")
@@ -370,20 +366,16 @@ for (i in 1:length(uniq_sig_row_ids)) {
 
   base_row$exposure_material_id  <- paste(unique(df2tmp$exposure_material_id), collapse = "; ")
   base_row$tissue_type_term_id   <- paste(unique(df2tmp$tissue_type_term_id), collapse = "; ")
-  
-  
-    base_row$response_component <- paste(unique(df2tmp$response_component), collapse = "; ")
-    resp_components_annotated[[i]] <- c(response_rowname, response_description, unique(df2tmp$response_component))
+  base_row$response_component <- paste(unique(df2tmp$response_component), collapse = "; ")
 
-    w <- which(titles_and_dates_df$pmid == base_row$publication_reference_id)
-    if (length(w) != 1) {
-      stop(paste("unexpected PMID result: uniqID = ", uniq_sig_row_ids[i], ", pmid = ", base_row$publication_reference_id))
-    }
-    titles_and_dates_row <- titles_and_dates_df[w, ]
+  w <- which(titles_and_dates_df$pmid == base_row$publication_reference_id)
+  if (length(w) != 1) {
+    stop(paste("unexpected PMID result: uniqID = ", uniq_sig_row_ids[i], ", pmid = ", base_row$publication_reference_id))
+  }
+  titles_and_dates_row <- titles_and_dates_df[w, ]
 }
 
 names(resp_components_collected) <- uniq_sig_row_ids  # name not actually used again?
-names(resp_components_annotated) <- uniq_sig_row_ids  # name is used for this one.
 
 ########################################
 ##### Prepare submission templates #####
@@ -411,12 +403,3 @@ df2$exposure_material <- NULL
 write_submission_template(df2, header_rows, "../data/release_files", csv_submission_files, "hipc_inf_gene", titles_and_dates_df,
                             resp_components_collected, unmatched_symbols_map,
                             "GENE", "INFECTION", "Gene expression response to infection")
-
-# Unique response component count by PMID
-# ordered by count, but could as well be ordered by PMID
-rc_cnt_by_pmid_uniq <- resp_comps_by_pmid(resp_components_annotated, unique(df2$publication_reference_id))
-rc_cnt_by_pmid_uniq <- rc_cnt_by_pmid_uniq[order(rc_cnt_by_pmid_uniq$count, decreasing = TRUE), ]
-
-write.csv(rc_cnt_by_pmid_uniq,
-          file = logfile_path(log_files, base_filename, "response_component_unique_count_by_PMID.csv"),
-          row.names = FALSE)
