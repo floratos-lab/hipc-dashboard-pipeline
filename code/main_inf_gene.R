@@ -309,8 +309,6 @@ for (i in 1:length(uids_list)) {
   df2$response_comp_cnt[df2$sig_row_id == uids_list[i]] <- uids_cnt[i]
 }
 
-write_unique_list(df2$response_component, log_files, base_filename, "response_component_list")
-
 #################################################
 ##### Data splitting (2): exposure material #####
 #################################################
@@ -323,8 +321,6 @@ if(any(df2$exposure_material_id == "")) {
 }
 # In case we forget to stop...
 df2 <- df2[df2$exposure_material_id != "", ]
-
-write_unique_list(df2$exposure_material_id, log_files, base_filename, "exposure_material_id", do_split = FALSE)
 
 # The cSplit() calls produce a data.table of data.frame rows.  Coerce back to just data.frame.
 df2 <- as.data.frame(df2, stringsAsFactors = FALSE)
@@ -340,14 +336,6 @@ df2 <- cSplit(df2, "tissue_type_term_id", sep = ";", direction = "long")
 df2 <- as.data.frame(df2)
 
 df2$tissue_type_term_id <- sub(" .*$", "", df2$tissue_type_term_id)
-
-# Write unique list of observed tissues
-text  <- strsplit(df2$tissue_type, ";") # returns a list
-text <- unique(trimws(unlist(text)))
-
-write_unique_list(text, log_files, base_filename, "tissues_observed")
-
-write_unique_list(df2$tissue_type_term_id, log_files, base_filename, "tissue_type_term_id")
 
 ###############################################################
 ##### Data splitting (5): comparison                      #####
