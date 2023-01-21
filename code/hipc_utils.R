@@ -1,4 +1,5 @@
 library(pracma)
+library(data.table)       # for rbindlist()
 
 # Not really just logging, can be anything needing a parent directory
 # and a filename

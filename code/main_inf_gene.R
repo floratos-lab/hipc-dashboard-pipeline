@@ -27,9 +27,6 @@
 
 library(splitstackshape)  # for cSplit()
 library(uniqtag)          # for cumcount()
-# Note that rbindlist() tends to return a data.table with a data.frame, which causes
-# no end of problems if not cast back to just a data.frame.
-library(data.table)       # for rbindlist()
 library(stringr)
 library(R.utils)
 
@@ -425,17 +422,6 @@ write_submission_template(df2, header_rows, "../data/release_files", csv_submiss
 
 write.csv(resp_components_cnt_df,
           file = logfile_path(log_files, base_filename, "response_component_counts_by_row.csv"),
-          row.names = FALSE)
-
-# totals by PMID
-rc_cnt_by_pmid <- lapply(unique(df2$publication_reference_id), function(pmid) {
-  vals <- resp_components_cnt_df[resp_components_cnt_df$pmid == pmid, "count"]
-  return(list(pmid = pmid, sum = sum(vals)))
-})
-rc_cnt_by_pmid <- rbindlist(rc_cnt_by_pmid)
-# Note that response components can appear in more than one signature per PMID.  These are not unique counts.
-write.csv(rc_cnt_by_pmid,
-          file = logfile_path(log_files, base_filename, "response_component_non-unique_count_by_PMID.csv"),
           row.names = FALSE)
 
 # Unique response component count by PMID
