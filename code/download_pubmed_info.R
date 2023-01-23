@@ -4,6 +4,7 @@
 
 # exposure type decides which source curation files to use; response type decides which rows to use
 
+library(data.table)       # for rbindlist()
 source("pmid_to_title_easy.R") # for pmid_to_title_easy
 
 # Assume executing from the ./code directory
@@ -79,9 +80,8 @@ message("number of unique pmids: ", nrow(df2))
 
 print_pub_year <- substring(df2$publication_date, 1, 4)
 
-td <- mapply(pmid_to_title_easy, df2$publication_reference_id, print_pub_year)
-td <- t(td)
-titles_and_dates_df <- as.data.frame(td)
+td <- mapply(pmid_to_title_easy, df2$publication_reference_id, print_pub_year, SIMPLIFY = FALSE)
+titles_and_dates_df <- as.data.frame(rbindlist(td))
 
 # there are six columns in this data frame: "pmid", "author", "article_title", "dashboard_title", "date", "abstract"
 # only three are used: pmid, dashboard_title, date
