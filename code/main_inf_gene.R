@@ -36,13 +36,6 @@ log_files              <- "../logfiles"
 
 manual_gene_corrections_txt <- "manual_gene_symbol_corrections.txt"
 
-##### Set runtime parameters #####
-# Download publication references again using PMIDs,
-#   set to FALSE to reuse existing file
-#   Run this every time new publications are added to the spreadsheet,
-#   for each response_component type.
-RENEW_PMIDS             <- FALSE  
-
 # Download a new copy of the official HGNC gene mapping
 DOWNLOAD_NEW_HGNC       <- FALSE
 
@@ -59,10 +52,6 @@ base_filename  <- "inf_gene_expression"
 
 # used to filter sheet rows
 response_behavior_type_var <- "gene expression"
-
-pmid_file <- paste(reference_files,
-                   paste(base_filename, "titles_and_dates_df.RData", sep = "-"),
-                   sep = "/")
 
 insub <- read.delim(file =  paste(source_curations, sheet_file, sep = "/"),
                     strip.white = TRUE,
@@ -181,8 +170,8 @@ message("number of rows in df2: ", nrow(df2))
 df2$sig_subm_id  <- cumcount(df2$publication_reference_id)
 df2$row_key      <- paste(df2$publication_reference_id, df2$sig_subm_id, df2$sig_row_id, sep = "_")
 
-#  This time, titles_and_dates_df will only have the PMIDs for the current exposure_type
-titles_and_dates_df <- get_titles_and_dates(df2, RENEW_PMIDS, pmid_file, log_files, base_filename)
+# get titles_and_dates_df
+load(file = paste0(reference_files, "/", base_filename, "-titles_and_dates_df.RData"))
 message("number of titles/dates: ", nrow(titles_and_dates_df))
 
 # Most values are empty, not "Y" or "N".
