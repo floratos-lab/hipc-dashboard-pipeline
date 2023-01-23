@@ -204,6 +204,14 @@ get_titles_and_dates <- function(df2, renew_pmids, pmid_file, log_files, pmid_lo
   } else {
     load(file = pmid_file)
   }
+
+  # there are six columns in this data frame: "pmid", "author", "article_title", "dashboard_title", "date", "abstract"
+  # only three are used: pmid, dashboard_title, date
+  # temporarily eliminate unnecessary dependency. eventually those columns should be removed permanently
+  titles_and_dates_df$author = NULL
+  titles_and_dates_df$article_title = NULL
+  titles_and_dates_df$abstract = NULL
+
   return(titles_and_dates_df)
 }
 
