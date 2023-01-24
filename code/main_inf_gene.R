@@ -36,9 +36,6 @@ log_files              <- "../logfiles"
 
 manual_gene_corrections_txt <- "manual_gene_symbol_corrections.txt"
 
-# Download a new copy of the official HGNC gene mapping
-DOWNLOAD_NEW_HGNC       <- FALSE
-
 exclude_pmid <- "33361761"  # PMID(s) that are not suitable for processing
 
 ##### Set up file and template name components #####
@@ -257,9 +254,7 @@ for (i in 1:length(uids_list)) {
 # Update original gene symbols to latest versions (NCBI/HGNC)
 
 # starts with "genes" manually corrected list from above
-rvl <- update_gene_symbols(genes, log_files, base_filename,
-                             reference_files,
-                             DOWNLOAD_NEW_HGNC)
+rvl <- update_gene_symbols(genes, log_files, base_filename, reference_files)
 genes_map <- rvl$genes_map
 rm(rvl)
 

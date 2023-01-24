@@ -140,16 +140,11 @@ update_symbols_ncbi <- function(genes, source_data_dir, log_files, base_filename
   return(list(genes_map = genes_map, failed_symbols = failed_symbols, summary = summary_df))
 }
 
-update_symbols_using_hgnc_helper <- function(genes_map, source_data_dir, log_files, base_filename, download_new_hgnc) {
+update_symbols_using_hgnc_helper <- function(genes_map, source_data_dir, log_files, base_filename) {
   summary_df <- data.frame()  # initialize summary log
   hgnc_file_path <- paste(source_data_dir, hgnc_file, sep = "/")
-  if (download_new_hgnc) {
-    # Data source is "ftp://ftp.ebi.ac.uk/pub/databases/genenames/new/tsv/hgnc_complete_set.txt"
-    new.hgnc.table <- getCurrentHumanMap()
-    save(new.hgnc.table, file = hgnc_file_path, compress="bzip2")
-  }
   if(file.exists(hgnc_file_path)) {
-    load(hgnc_file_path)  # assumes it was previously downloaded
+    load(hgnc_file_path)  # load new.hgnc.table
     genes.retried <- checkGeneSymbols(genes_map$alias, map=new.hgnc.table, species="human")
   } else {
     # HGNChelper includes its own internal data if no file provided.
@@ -417,7 +412,7 @@ log_no_valid_symbol_vs_pmid <- function(noValidSymbols_df, log_files, base_filen
 }
 
 # Run all symbol updates
-update_gene_symbols <- function(genes, log_files, base_filename, source_data_dir, download_new_hgnc) {
+update_gene_symbols <- function(genes, log_files, base_filename, source_data_dir, download_new_hgnc=FALSE) {
   summary_df <- data.frame()  # initialize summary log
 
   genes <- gsub("[()]", "", genes)
@@ -435,8 +430,7 @@ update_gene_symbols <- function(genes, log_files, base_filename, source_data_dir
   #  x contains non-approved gene symbols
 
   # See how many NAs can be fixed
-  rvl            <- update_symbols_using_hgnc_helper(genes_map, source_data_dir, log_files, base_filename,
-                                                     download_new_hgnc)
+  rvl            <- update_symbols_using_hgnc_helper(genes_map, source_data_dir, log_files, base_filename)
   genes_map      <- rvl$genes_map
   failed_symbols <- rvl$failed_symbols
   summary_df     <- rbind(summary_df, rvl$summary)
