@@ -42,7 +42,6 @@ exclude_pmid <- "33361761"  # PMID(s) that are not suitable for processing
 
 ##### Set up file and template name components #####
 first_data_row <- 9  # not counting the first row, which becomes a column header.
-    use_covid_v2   <- FALSE
 sheet_file     <- "COVID-19 curation template - example curation.tsv"
 sheet_file2    <- "Odak_2020_pmid_32650275 - covid19.tsv"
 sheet_file3    <- "hipc_infection_covid_v2 - multiple_types.tsv"
@@ -71,40 +70,29 @@ insub2 <- read.delim(file =  paste(source_curations, sheet_file2, sep = "/"),
                        stringsAsFactors = FALSE)
 insub2 <- insub2[!(colnames(insub2) %in% del_cols_common)]
 
-  if (use_covid_v2) {
-    insub3 <- read.delim(file =  paste(source_curations, sheet_file3, sep = "/"),
+insub3 <- read.delim(file =  paste(source_curations, sheet_file3, sep = "/"),
                          strip.white = TRUE,
                          stringsAsFactors = FALSE,
                          quote = "")
-    nrow(insub3)
-    insub3 <- insub3[!(colnames(insub3) %in% del_cols_common)]
-  }
+insub3 <- insub3[!(colnames(insub3) %in% del_cols_common)]
 
 del_cols <- c("route",
                 "addntl_time_point_units",
                 "signature_source_url")  # discontinued in latest template
 
-
-
 insub2 <- insub2[!(colnames(insub2) %in% del_cols)]
+insub3 <- insub3[!(colnames(insub3) %in% del_cols)]
 
-  if (use_covid_v2) {
-    colnames(insub3)[(colnames(insub3) %in% del_cols)]
-    insub3 <- insub3[!(colnames(insub3) %in% del_cols)]
-  
-    colnames(insub3)[!(colnames(insub3) %in% (colnames(insub2)))]
-    colnames(insub2)[!(colnames(insub2) %in% (colnames(insub3)))]
-    all(colnames(insub2) == colnames(insub3))
-  }
-
-  all(colnames(insub) == colnames(insub2))
+if( !all(colnames(insub2) == colnames(insub3)) || !all(colnames(insub) == colnames(insub2)) ) {
+  colnames(insub)
+  colnames(insub2)
+  colnames(insub3)
+  stop("column names do not match in the three source duration files")
+}
 
 # stitch together the data sections
 insub <- rbind(insub, insub2[first_data_row:nrow(insub2),])
-  if (use_covid_v2) {
-    insub <- rbind(insub, insub3[first_data_row:nrow(insub3),])
-    nrow(insub)
-  }
+insub <- rbind(insub, insub3[first_data_row:nrow(insub3),])
 
 ### Make any changes to headers right at the beginning,
 ### before separating headers and data
@@ -212,12 +200,12 @@ if(any(w)) {
 
 codes <- strsplit(df2$exposure_material_id,";")  # returns a list if multiple values per row
 # in Infection template, have allowed extra text in exposure_material_id column, need to handle
-  codes <- sub(" .*$", "", codes)
-  codes <- sub("ncbi_taxid:", "", codes)
-  s <- sapply(as.integer(codes), is.integer)
-  if (!all(s)) {
-    print("unexpected namespace tag")
-  }
+codes <- sub(" .*$", "", codes)
+codes <- sub("ncbi_taxid:", "", codes)
+s <- sapply(as.integer(codes), is.integer)
+if (!all(s)) {
+  print("unexpected namespace tag")
+}
 # this only works because only one entry per row
 df2$exposure_material_id <- codes
 
