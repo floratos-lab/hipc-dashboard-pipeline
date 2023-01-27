@@ -1,7 +1,7 @@
 # depends on "source("hipc_utils.R")"  having been called in main routine
 library(HGNChelper)
 library(org.Hs.eg.db)
-library(limma)
+library(limma) # for alias2Symbol . see http://web.mit.edu/~r/current/arch/i386_linux26/lib/R/library/limma/html/alias2Symbol.html
 library(annotate)
 library(RCurl)
 
