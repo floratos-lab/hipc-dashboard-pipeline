@@ -142,7 +142,7 @@ header_rows$row_key                 <- c("", "label", "background", "", "", "row
 
 ctf_fixes <- read.delim(file = paste(reference_files, ctf_fixes_tsv, sep = "/"),
                           stringsAsFactors = FALSE)
-message("dim(ctf_fixes) = ", dim(ctf_fixes))
+message("number of rows in the ctf mapping file ", nrow(ctf_fixes))
 
 df2 <- insub[first_data_row:nrow(insub),]
 
@@ -238,7 +238,9 @@ for (i in 1:length(uids_list)) {
 ctf_match <- match(df2$response_component_original, ctf_fixes$original_annotation)
 
 failed_matches <- df2$response_component_original[is.na(ctf_match)]
+message("unique response_component not in the ctf mapping file ", length(unique(failed_matches)))
 successful_matches <- df2$response_component_original[!is.na(ctf_match)]
+message("number of rows with response_component in the ctd mapping file ", length(successful_matches))
 
 # combine proterm(s) and extra together.  All same length as df2.
 proterm <- ctf_fixes$PRO_term_w_intensity[ctf_match]
