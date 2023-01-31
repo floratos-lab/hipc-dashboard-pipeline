@@ -51,37 +51,30 @@ base_filename  <- "inf_cell_type"
 # used to filter sheet rows
 response_behavior_type_var <- "cell-type frequency"
 
+COLUMN_NAMES = c("X", "submission_name", "submission_date", "template_name", "response_component",
+  "curation_date", "cohort", "age_min", "age_max", "age_units", "number_subjects", "tissue_type", 
+  "tissue_type_term_id", "method", "response_component_original", "is_model", "response_behavior_type", 
+  "response_behavior", "comparison", "baseline_time_event", "time_point", "time_point_units", 
+  "exposure_material_id", "exposure_process", "disease_name", "disease_stage", "publication_reference_id", 
+  "publication_date", "publication_reference_url", "signature_source", "comments", 
+  "response_comp_orig_cnt", "response_comp_cnt", "sig_subm_id", "sig_row_id", "row_key")
+
 insub <- read.delim(file =  paste(source_curations, sheet_file, sep = "/"),
                     strip.white = TRUE,
                     stringsAsFactors = FALSE)
-
-# Get rid of unused columns (empty in curated data) or those not meant to appear in the Dashboard.
-# No error if named column does not exist in a particular sheet.
-del_cols_common <- c("submission_name", "template_name", # should not appear anymore
-              "spot_check", "Spot.check",
-              "second_spot_check",
-              "Curator",
-              "curator_comments")
-insub <- insub[!(colnames(insub) %in% del_cols_common)]
+insub <- insub[colnames(insub) %in% COLUMN_NAMES]
 
 # read two other source curation files
 insub2 <- read.delim(file =  paste(source_curations, sheet_file2, sep = "/"),
                        strip.white = TRUE,
                        stringsAsFactors = FALSE)
-insub2 <- insub2[!(colnames(insub2) %in% del_cols_common)]
+insub2 <- insub2[colnames(insub2) %in% COLUMN_NAMES]
 
 insub3 <- read.delim(file =  paste(source_curations, sheet_file3, sep = "/"),
                          strip.white = TRUE,
                          stringsAsFactors = FALSE,
                          quote = "")
-insub3 <- insub3[!(colnames(insub3) %in% del_cols_common)]
-
-del_cols <- c("route",
-                "addntl_time_point_units",
-                "signature_source_url")  # discontinued in latest template
-
-insub2 <- insub2[!(colnames(insub2) %in% del_cols)]
-insub3 <- insub3[!(colnames(insub3) %in% del_cols)]
+insub3 <- insub3[colnames(insub3) %in% COLUMN_NAMES]
 
 if( !all(colnames(insub2) == colnames(insub3)) || !all(colnames(insub) == colnames(insub2)) ) {
   colnames(insub)
@@ -105,7 +98,7 @@ colnames(insub)[colnames(insub) == "response_component"] <- "response_component_
 
 # Add back in the columns no longer included in the curation template,
 # plus response_component to position it more towards begin
-insub <- data.frame(donotuse = insub[ , 1],
+insub <- data.frame(insub[, 1],
                     submission_name = "",
                     submission_date = "",
                     template_name = "",
@@ -355,9 +348,6 @@ s <- strict_char_check(df2, "\n")    # embedded newlines
 if(!is.null(s)) {
   print(paste("for df2, found problems in column (row numbers do not include any header)", s))
 }
-
-df2$exposure_material <- NULL
-header_rows$exposure_material <- NULL
 
 write_submission_template(df2, header_rows, "../data/release_files", NULL, "hipc_inf_ctf", titles_and_dates_df,
                             resp_components_full_sig, unmatched_symbols_map = NULL,
