@@ -245,23 +245,11 @@ message("number of rows with response_component in the ctd mapping file ", lengt
 # combine proterm(s) and extra together.  All same length as df2.
 proterm <- ctf_fixes$PRO_term_w_intensity[ctf_match]
 extra <- ctf_fixes$extra[ctf_match]
-# vector initialized with ""
-proterm_and_extra <- vector(mode = "character", length = length(proterm))
-
-for (i in 1:length(proterm)) {
-  if(is.na(ctf_match[i])) {
-    next
-  } 
-  # insert comma between non-empty terms
-  a <- c(proterm[i], extra[i])
-  a <- a[a!=""]                   # returns char(0) if both empty
-  a <- paste(a, collapse = ", ")  # returns "" on empty
-  proterm_and_extra[i] <- ifelse(a != "", paste("&", a), "")
-}
-
 df2$response_component <- ctf_fixes$CL_term[ctf_match]
 df2$response_component_id   <- ctf_fixes$CL_ID[ctf_match]
-df2$proterm_and_extra  <- proterm_and_extra
+df2$proterm_and_extra  <- ifelse(proterm!="" & extra!="", paste0("& ", proterm, ", ", extra), 
+    ifelse(proterm!="", paste("&", proterm), "")
+)
 df2$pro_ontology_id    <- ctf_fixes$PRO_ID[ctf_match]
 df2$fully_qualified_response_component <- ""
 
