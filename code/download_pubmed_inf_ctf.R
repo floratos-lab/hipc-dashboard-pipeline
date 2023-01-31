@@ -5,7 +5,6 @@
 # exposure type decides which source curation files to use; response type decides which rows to use
 
 library(textutils)
-source("pmid_to_title_easy.R") # for pmid_to_title_easy
 
 # Assume executing from the ./code directory
 source_curations       <- "../data/source_curations"
@@ -31,7 +30,6 @@ insub <- read.delim(file =  paste(source_curations, sheet_file, sep = "/"),
                     strip.white = TRUE,
                     stringsAsFactors = FALSE)
 insub  <- insub[names(insub) %in% relevant_columns]
-
 
 # read two other source curation files
 insub2 <- read.delim(file =  paste(source_curations, sheet_file2, sep = "/"),
