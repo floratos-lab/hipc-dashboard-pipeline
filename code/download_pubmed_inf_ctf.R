@@ -4,7 +4,7 @@
 
 # exposure type decides which source curation files to use; response type decides which rows to use
 
-library(textutils)
+source("pmid_to_title_easy.R") # for pmid_to_title_easy
 
 # Assume executing from the ./code directory
 source_curations       <- "../data/source_curations"
@@ -88,8 +88,6 @@ titles_and_dates_df <- as.data.frame(t(td))
 titles_and_dates_df$author <- NULL
 titles_and_dates_df$article_title <- NULL
 titles_and_dates_df$abstract <- NULL
-
-titles_and_dates_df$dashboard_title <- HTMLdecode(titles_and_dates_df$dashboard_title)
 
 message("number of titles/dates: ", nrow(titles_and_dates_df))
 save(titles_and_dates_df, file = paste0(reference_files, "/", base_filename, "-titles_and_dates_df.RData"))
