@@ -1,2 +1,5 @@
+b cell
+natural killer cell
+mature nk t cell
 CD8-positive, alpha-beta T cell
 CD4-positive, alpha-beta T cell

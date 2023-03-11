@@ -1,0 +1,3 @@
+memory b cell & CD19+,CD27+,CD21-, activated memory B cell
+plasmablast & CD19+,CD38+,CD27+
+b cell & CD19+,CD27-,CD21-, exchausted B cell

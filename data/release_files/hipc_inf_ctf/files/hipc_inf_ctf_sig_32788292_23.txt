@@ -1,0 +1,5 @@
+monocyte & IL1B+, IL1B+(PR:000001136)
+monocyte & TNFA+
+monocyte & IL6+, IL6+(PR:000001393)
+monocyte & IL6+,TNFA+
+monocyte & MCP1+, MCP1+(PR:000002122)

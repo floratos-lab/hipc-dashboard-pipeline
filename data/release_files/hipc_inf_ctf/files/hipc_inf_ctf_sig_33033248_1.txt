@@ -1,0 +1,3 @@
+alpha-beta t cell & CD3+
+monocyte & CD68+
+monocyte & CD163+, CD163+(PR:000001925)

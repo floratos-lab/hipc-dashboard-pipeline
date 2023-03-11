@@ -1,0 +1,2 @@
+natural killer cell & NKG2D+,NKP46+
+natural killer cell & CD16+,CD56+,CD3+-, undefined

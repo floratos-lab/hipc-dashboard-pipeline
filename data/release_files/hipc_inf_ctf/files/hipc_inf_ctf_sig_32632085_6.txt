@@ -1,0 +1,3 @@
+cd4-positive, alpha-beta t cell & CCR6+
+cd4-positive, alpha-beta t cell & CXCR3+
+cd4-positive, alpha-beta t cell & CD161+,CCR6+

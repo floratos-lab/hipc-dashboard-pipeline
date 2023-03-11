@@ -1,0 +1,6 @@
+lymphocyte
+b cell
+cd8-positive, alpha-beta t cell
+cd4-positive, alpha-beta t cell
+double-positive, alpha-beta thymocyte & CD4+,CD8+
+t cell & CD4-,CD8-, double-negative
