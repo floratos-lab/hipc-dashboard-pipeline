@@ -208,3 +208,285 @@ IFN-gamma+ antigen specific T cell	T cell	CL:0000084	IFNG+	PR:000000017
 all T-cells	T cell	CL:0000084				
 "transitional B cells (CD19+, CD24+, CD38+) (CL:0000818)"	transitional stage B cell	CL:0000818	"CD19+, CD24+, CD38+"	"PR:000001002, PR:000001932, PR:000001408"		
 CD38+ of transitional B cells	transitional stage B cell	CL:0000818	CD38+	PR:000001408		
+CD56dim Natural Killer cells	natural killer cell	CL_0000623	CD56+-	PR:000001024		
+CD56bright Natural Killer cells	natural killer cell	CL_0000623	CD56++	PR:000001024		
+NKG2C+ CD57+ CD56dim Natural Killer cells	natural killer cell	CL_0000623	"NKG2C+,CD57+,CD56+-"	"PR:000002024,PR:000001440,PR:000001024"		
+NKG2C- CD57- CD56dim Natural Killer cells	natural killer cell	CL_0000623	"NKG2C-,CD57-,CD56+-"	"PR:000002024,PR:000001440,PR:000001024"	undefined	
+NKG2C+CD57+ CD56dim NK cells	natural killer cell	CL_0000623	"CD56+-,NKG2C+,CD57+"	"PR:000001024,PR:000002024,PR:000001440"		
+CD56bright natural killer cells	natural killer cell	CL_0000623	CD56++	PR:000001024		
+CD25 CD56bright NK cells	natural killer cell	CL_0000623	"CD25+,CD56++"	"PR:000001380,PR:000001024"		
+perforin CD56bright NK cells	natural killer cell	CL_0000623	"CD56++,PRF1+"	"PR:000001024,PR:000003466"		
+perforin CD56dim NK cells	natural killer cell	CL_0000623	"CD56+-,PRF1+"	"PR:000001024,PR:000003466"		
+Granzyme B CD56bright NK cells	natural killer cell	CL_0000623	"GZMB+,CD56++"	"PR:000003499,PR:000001024"		
+TIGIT CD56dim NK cells	natural killer cell	CL_0000623	"TIGIT+,CD56+-"	"PR:000033769,PR:000001024"		
+Granzyme B CD56dim NK cells	natural killer cell	CL_0000623	"GZMB+,CD56+-"	"PR:000003499,PR:000001024"		
+CD25 CD56dim NK cells	natural killer cell	CL_0000623	"CD25+,CD56+"	"PR:000001380,PR:000001024"		
+Ksp37 CD56bright NK cells	natural killer cell	CL_0000623	"KSP37+,CD56++"	"PR:000007502,PR:000001024"		
+CD3+ T cells	alpha-beta t cell	CL_0000789	CD3+	PR:000001020		
+CD68+ monocytes	monocyte	CL_0000576	CD68+	PR:000002064		
+CD163+ monocytes	monocyte	CL_0000576	CD163+	PR:000001925	CD163+(PR:000001925)	
+CD20+ B cells	b cell	CL_0000236	CD20+	PR:000001289		
+CD8+ PD1+ T cells	"cd8-positive, alpha-beta t cell"	CL_0000625	PD1+	PR:000001919	PD1+(PR:000001919)	
+plasmablasts of CD45 cells	plasmablast	CL_0000980				
+effector CD8 T cells of CD8 T cells	"effector cd8-positive, alpha-beta t cell"	CL_0001050				
+CD45 cells	leukocyte	CL_0000738				
+pDCs (plasmacytoid dendritic cells) of CD45 cells	"plasmacytoid dendritic cell, human"	CL_0001058				
+IL-1B CD14+ monocytes	monocyte	CL_0000576	IL1B+	PR:000001136	IL1B+(PR:000001136)	
+TNF-alpha CD14+ monocytes	monocyte	CL_0000576	TNFA+	PR:000000134		
+IL-6 CD14+ monocytes	monocyte	CL_0000576	IL6+	PR:000001393	IL6+(PR:000001393)	
+IL-6+ TNF+ CD14+ monocytes	monocyte	CL_0000576	"IL6+,TNFA+"	"PR:000001393,PR:000000134"		
+MCP-1 CD14+ monocytes	monocyte	CL_0000576	MCP1+	PR:000002122	MCP1+(PR:000002122)	
+pDCs (plasmacytoid dendritic cells)	"plasmacytoid dendritic cell, human"	CL_0001058				
+Effector_CD8_T_cells	"effector cd8-positive, alpha-beta t cell"	CL_0001050				
+CD45+ CD19+ IgD- CD71+ CD38+ CD20- plasmablasts	plasmablast	CL_0000980	"CD19+,IGD-,CD38+,CD20-,CD71+"	"PR:000001002,PR:000050170,PR:000001408,PR:000001289,PR:000001945"		
+CD45+ CD3+ CD8+ T cells	"cd8-positive, alpha-beta t cell"	CL_0000625	"CD45+,CD3+"	"PR:P08575,PR:000001020"		
+CD45+ CD3+ CD4+ T cells	"cd4-positive, alpha-beta memory t cell"	CL_0000897	"CD45+,CD3+"	"PR:P08575,PR:000001020"		
+CD45+ CD3- CD19- CD14++ CD16- classical monocytes	classical monocyte	CL_0000860	"CD45+,CD3-,CD19-,CD14++,CD16-"	"PR:P08575,PR:000001020,PR:000001002,PR:000001889,PR:000001483"		
+CD45+ CD3- CD19- CD14++ CD16+ intermediate monocytes	intermediate monocyte	CL_0002393	"CD45+,CD3-,CD19-,CD14++,CD16+"	"PR:P08575,PR:000001020,PR:000001002,PR:000001889,PR:000001483"		
+CD45+ CD3- CD19- CD14+ CD16+ non-classical monocytes	non-classical monocyte	CL_0000875	"CD45+,CD3-,CD19-,CD14+,CD16+"	"PR:P08575,PR:000001020,PR:000001002,PR:000001889,PR:000001483"		
+CD16+ monocyte	monocyte	CL_0000576	CD16+	PR:000001483		
+CD56+ CD16- NK cells	natural killer cell	CL_0000623	"CD56+,CD16-"	"PR:000001024,PR:000001483"		
+CD56+ CD16+ NK cells	natural killer cell	CL_0000623	"CD56+,CD16+"	"PR:000001024,PR:000001483"		
+B cells	b cell	CL_0000236				
+Dendritic Cells (DCs)	dendritic cell	CL_0000451				
+CD14+ monocyte	monocyte	CL_0000576	CD14+	PR:000001889		
+dendritic cells	dendritic cell	CL_0000451				
+CD38-expressing CD4+ T cells	"cd4-positive, alpha-beta memory t cell"	CL_0000897	CD38+	PR:000001408		
+lymphocytes	lymphocyte	CL_0000542				
+neutrophils	neutrophil	CL_0000775				
+PMN-MDSC (Myeloid-Derived Suppressor Cells)	myeloid suppressor cell	CL_0000889			"Polymorphonuclear (PMN), myeloid-derived"	
+eosinophils	eosinophil	CL_0000771				
+non-classical monocytes	non-classical monocyte	CL_0000875				
+classical monocytes	classical monocyte	CL_0000860				
+intermediate monocytes	intermediate monocyte	CL_0002393				
+type 1 dendritic cells	conventional dendritic cell	CL_0000990			type 1	
+type 2 dendritic cells	conventional dendritic cell	CL_0000990			type 2	
+plasmacytoid dendritic cells	"plasmacytoid dendritic cell, human"	CL_0001058				
+natural killer T cells	mature nk t cell	CL_0000814				
+natural killer cells	natural killer cell	CL_0000623				
+T cells	t cell	CL_0000084				
+non-conventional monocytes	non-classical monocyte	CL_0000875				
+CD16high neutrophils	neutrophil	CL_0000775	CD16++	PR:000001483		
+CD16int neutrophils	neutrophil	CL_0000775	CD16+	PR:000001483		
+CD8 cells	"cd8-positive, alpha-beta cytotoxic t cell"	CL_0000794				
+CD4 cells	"cd4-positive, alpha-beta memory t cell"	CL_0000897				
+CD4+ Tfh cells	t follicular helper cell	CL_0002038	CD4+	PR:000001004		
+CD4+ TCR cells	"activated cd4-positive, alpha-beta t cell"	CL_0000896				
+CD8+ granzyme B cells	"cd8-positive, alpha-beta cytotoxic t cell"	CL_0000794				
+CD8+ TCR cells	"activated cd8-positive, alpha-beta t cell"	CL_0000906				
+naive CD4+ CD45RA+ CCR7+ T cells	"naive thymus-derived cd4-positive, alpha-beta t cell"	CL_0000895	"CD45RA+,CCR7+"	"PR:000001015,PR:000001203"		
+naive CD8+ CD45RA+ CCR7+ T cells	"naive thymus-derived cd8-positive, alpha-beta t cell"	CL_0000900	"CD45RA+,CCR7+"	"PR:000001015,PR:000001203"		
+activated CD8+ T cells	"activated cd8-positive, alpha-beta t cell"	CL_0000906				
+exhausted PD1+ CD57+ CD4+ T cells	exhausted t cell	CL_0011025	"CD4+,PD1+,CD57+"	"PR:000001004,PR:000001919,PR:000001440"		
+exhausted PD1+ CD57+ CD8+ T cells	exhausted t cell	CL_0011025	"CD8+,PD1+,CD57+"	"PR:000001084,PR:000001919,PR:000001440"		
+gamma delta CD3+ T cells	gamma-delta t cell	CL_0000798				
+activated memory CD19+ CD27+ CD21- B cells	memory b cell	CL_0000787	"CD19+,CD27+,CD21-"	"PR:000001002,PR:000001963,PR:000001338"	activated memory B cell	
+CD19+ CD38+ CD27+ plasmablasts/antibody-secreting cells (ASC)	plasmablast	CL_0000980	"CD19+,CD38+,CD27+"	"PR:000001002,PR:000001408,PR:000001963"		
+exhausted CD19+ CD27- CD21low/neg B cells	b cell	CL_0000236	"CD19+,CD27-,CD21-"	"PR:000001002,PR:000001963,PR:000001338"	exchausted B cell	
+NK CD56dim cells	natural killer cell	CL_0000623	CD56+	PR:000001024		
+NK CD56bright cells	natural killer cell	CL_0000623	CD56++	PR:000001024		
+differentiated Ki67+ CD56dim CD57+ NK cells	natural killer cell	CL_0000623				
+NKG2A+ NK cells	natural killer cell	CL_0000623				
+classical CD14+ CD16- monocytes	"cd14-positive, cd16-negative classical monocyte"	CL_0002057				
+intermediate CD16+ CD14+ monocytes	"cd14-positive, cd16-positive monocyte"	CL_0002397				
+non-classical CD14- CD16+ monocytes	non-classical monocyte	CL_0000875	"CD14-,CD16+"	"PR:000001889,PR:000001483"		
+whole blood cells (WBCs)	blood cell	CL_0000081			whole blood cell	
+platelets	platelet	CL_0000233				
+Dendritic cells (DC)	dendritic cell	CL_0000451				
+total T cells	t cell	CL_0000084				
+CD8+ mucosal-associated invariant T (MAIT) cells	mucosal invariant t cell	CL_0000940	CD8+	PR:000001084		
+total Natural Killer (NK) cells	natural killer cell	CL_0000623				
+Innate Lymphoid Cells (ILCs)	innate lymphoid cell	CL_0001065				
+CD27+ CD38+ B cells (B cell plasmablasts)	plasmablast	CL_0000980	"CD27+,CD38+"	"PR:000001963,PR:000001408"		
+CD21- CD27- B cells	b cell	CL_0000236	"CD27-,CD21-"	"PR:000001963,PR:000001338"		
+CD21+ CD27+ B cells	b cell	CL_0000236	"CD27+,CD21+"	"PR:000001963,PR:000001338"		
+CD16+ Natural Killer (NK) cells	natural killer cell	CL_0000623	CD16+	PR:000001483		
+CD38+ memory CD4+ T cells	"cd4-positive, alpha-beta memory t cell"	CL_0000897	CD38+	PR:000001408		
+HLA-DR+ CD38+ memory CD4+ T cells	"activated cd4-positive, alpha-beta t cell"	CL_0000896	"CD38+,HLADRA+"	"PR:000001408,PR:000002015"	memory CD4+ T cell	
+PD-1+ memory CD4+ T cells	"cd4-positive, alpha-beta memory t cell"	CL_0000897	PD1+	PR:000001919		
+HLA-DR+ CD38+ memory CD8+ T cells	"activated cd8-positive, alpha-beta t cell"	CL_0000906	"CD38+,HLADRA+"	"PR:000001408,PR:000002015"	memory CD8+ T cell	
+HLA-DR+ CD38+ CD8+ mucosal-associated invariant T (MAIT) cells	mucosal invariant t cell	CL_0000940	"CD38+,HLADRA+,CD8+"	"PR:000001408,PR:000002015,PR:000001084"		
+CD38+ memory CD8+ T cells	"cd8-positive, alpha-beta memory t cell"	CL_0000909	CD38+	PR:000001408		
+CD16p_MFI_inNK	natural killer cell	CL_0000623				
+Monocytes_inCD45	monocyte	CL_0000576				
+Tc_inCD45	t cell	CL_0000084				
+ILC_inCD45	innate lymphoid cell	CL_0001065				
+CD56hiCD16n_NK	natural killer cell	CL_0000623				
+Tem_CD8	"effector memory cd8-positive, alpha-beta t cell"	CL_0000913				
+Tem_CD4	"effector memory cd4-positive, alpha-beta t cell"	CL_0000905				
+Eosinophils_inCD45	eosinophil	CL_0000771				
+polymorphonuclear leukocytes (PMNs)	granulocyte	CL_0000094				
+PD-1+ Memory CD4+ T cells	"cd4-positive, alpha-beta memory t cell"	CL_0000897	PD1+	PR:000001919		
+Natural Killer (NK) cells	natural killer cell	CL_0000623				
+CD56bright CD16- Natural Killer (NK) cells	natural killer cell	CL_0000623	"CD56++,CD16-"	"PR:000001024,PR:000001483"		
+CD56dim CD16+ Natural Killer (NK) cells	natural killer cell	CL_0000623	"CD56+-,CD16+"	"PR:000001024,PR:000001483"	undefined	
+CD21+ CD27+ non-plasmablast B cells	b cell	CL_0000236	"CD27+,CD21+"	"PR:000001963,PR:000001338"	non-plasmablast B cells	
+CD45 monocytes	monocyte	CL_0000576				
+CD45 classical (CD14Hi CD16-) monocytes	"cd14-positive, cd16-negative classical monocyte"	CL_0002057				
+large (FSC-Hi) monocytes	monocyte	CL_0000576			"Large-size lymphocyets, as determined by forward scatter (FSC) statistics"	
+intermediate (CD14Hi CD16+) monocytes	"cd14-positive, cd16-positive monocyte"	CL_0002397				
+CD45 CD8+ monocytes	monocyte	CL_0000576	CD8+	PR:000001084		
+CD8+ lymphocytes	"cd8-positive, alpha-beta t cell"	CL_0000625				
+CD14Hi CD16- classical monocytes	"cd14-positive, cd16-negative classical monocyte"	CL_0002057				
+CD45 lymphocytes	lymphocyte	CL_0000542				
+CD45 B cells	b cell	CL_0000236				
+CD45 CD8+ lymphocytes	"cd8-positive, alpha-beta t cell"	CL_0000625				
+CD45 CD4+ lymphocytes	"cd4-positive, alpha-beta t cell"	CL_0000624				
+CD45 CD4+ CD8+ lymphocytes	"double-positive, alpha-beta thymocyte"	CL_0000809	"CD4+,CD8+"	"PR:000001004,PR:000001084"		
+CD45 CD4- CD8- lymphocytes	t cell	CL_0000084	"CD4-,CD8-"	"PR:000001004,PR:000001084"	double-negative	
+CD45 granulocytes	granulocyte	CL_0000094				
+basophil	basophil	CL_0000767				
+whole blood cell (WBC)	blood cell	CL_0000081				
+cytotoxic lymphocytes	cytotoxic t cell	CL_0000910				
+monocytic lineage	monocyte	CL_0000576				
+myeloid dendritic cells	myeloid dendritic cell	CL_0000782				
+CD8 T cells	"cd8-positive, alpha-beta t cell"	CL_0000625				
+NK cells	natural killer cell	CL_0000623				
+B lineage	lymphocyte of b lineage	CL_0000945				
+CD3+ cells	t cell	CL_0000084				
+CD3+ CD8+ cells	"cd8-positive, alpha-beta t cell"	CL_0000625				
+CD19+ cells	"b cell, cd19-positive"	CL_0001201				
+CD3+ CD4+ cells	"cd4-positive, alpha-beta t cell"	CL_0000624				
+PD-1+ CD3+ CD4+ cells	exhausted t cell	CL_0011025	"CD4+,PD1+"	"PR:000001004,PR:000001919"		
+PD-1+ CD3+ CD8+ cells	exhausted t cell	CL_0011025	"CD8+,PD1+"	"PR:000001084,PR:000001919"		
+Tim-3+ CD3+ CD4+ cells	exhausted t cell	CL_0011025	"CD4+,TIM3+"	"PR:000001004,PR:000008454"		
+Tim-3+ CD3+ CD8+ cells	exhausted t cell	CL_0011025	"CD8+,TIM3+"	"PR:000001084,PR:000008454"		
+CD38+ CD3+ CD8+ cells	"cd8-positive, alpha-beta t cell"	CL_0000625	CD38+	PR:000001408		
+CD38+ HLA-DR+ CD3+ CD8+ cells	"activated cd8-positive, alpha-beta t cell"	CL_0000906	"CD38+,HLADRA+"	"PR:000001408,PR:000002015"		
+CD45+ T cells	t cell	CL_0000084				
+CD45+ monocytes	monocyte	CL_0000576				
+CD45+ B cells	b cell	CL_0000236				
+CD45+ conventional dendritic cells (cDC)	conventional dendritic cell	CL_0000990				
+naive (CD45RA+ CD27+ CD28+ CD95-) CD4+ T cells	"naive thymus-derived cd4-positive, alpha-beta t cell"	CL_0000895	"CD45RA+,CD27+,CD28+,CD95-"	"PR:000001015,PR:000001963,PR:000001841,PR:000001962"		
+effector memory Ra+ (TEMRA) (CD45RA- CD27+ CD28+ CCR7-) CD4+ T cells	"effector memory cd4-positive, alpha-beta t cell"	CL_0000905	"CD45RA-,CD27+,CD28+,CCR7-"	"PR:000001015,PR:000001963,PR:000001841,PR:000001203"		
+CD4+ T regulatory cells (Tregs) (CD25+ CD127-)	"cd4-positive, cd25-positive, alpha-beta regulatory t cell"	CL_0000792	"CD25+,CD127-"	"PR:000001380,PR:000001869"		
+effector memory-4 (EM4) (CD45RA- CD27- CD28- CCR7-) CD4+ T cells	"effector memory cd4-positive, alpha-beta t cell"	CL_0000905	"CD45RA-,CD27-,CD28-,CCR7-"	"PR:000001015,PR:000001963,PR:000001841,PR:000001203"		
+effector memory-3 (EM3) (CD45RA- CD27- CD28+ CCR7-) CD4+ T cells	"effector memory cd4-positive, alpha-beta t cell"	CL_0000905	"CD45RA-,CD27-,CD28+,CCR7-"	"PR:000001015,PR:000001963,PR:000001841,PR:000001203"		
+effector memory-2 (EM2) (CD45RA- CD27- CD28+ CCR7+) CD4+ T cells	"effector memory cd4-positive, alpha-beta t cell"	CL_0000905	"CD45RA-,CD27-,CD28+,CCR7+"	"PR:000001015,PR:000001963,PR:000001841,PR:000001203"		
+effector memory-1 (EM1) (CD45RA- CD27+ CD28+ CCR7-) CD4+ T cells	"effector memory cd4-positive, alpha-beta t cell"	CL_0000905	"CD45RA-,CD27+,CD28+,CCR7-"	"PR:000001015,PR:000001963,PR:000001841,PR:000001203"		
+central memory (CM) (CD45RA- CD27+ CD28+ CCR7+) CD4+ T cells	"central memory cd4-positive, alpha-beta t cell"	CL_0000904	"CD45RA-,CD27+,CD28+,CCR7+"	"PR:000001015,PR:000001963,PR:000001841,PR:000001203"		
+Stem cell-like memory (SCM) (CD45RA+ CD27+ CD28+ CD95+) CD4+ T cells	"cd4-positive, alpha-beta memory t cell"	CL_0000897	"CD45RA+,CD27+,CD28+,CD95+"	"PR:000001015,PR:000001963,PR:000001841,PR:000001962"		
+naive (CD45RA+ CD27+ CD28+ CD95-) CD8+ T cells	"naive thymus-derived cd8-positive, alpha-beta t cell"	CL_0000900	"CD45RA+,CD27+,CD28+,CD95-"	"PR:000001015,PR:000001963,PR:000001841,PR:000001962"		
+Stem cell-like memory (SCM) (CD45RA+ CD27+ CD28+ CD95+) CD8+ T cells	"cd8-positive, alpha-beta memory t cell"	CL_0000909	"CD45RA+,CD27+,CD28+,CD95+"	"PR:000001015,PR:000001963,PR:000001841,PR:000001962"		
+central memory (CM) (CD45RA- CD27+ CD28+ CCR7+) CD8+ T cells	"central memory cd8-positive, alpha-beta t cell"	CL_0000907	"CD45RA-,CD27+,CD28+,CCR7+"	"PR:000001015,PR:000001963,PR:000001841,PR:000001203"		
+effector memory-4 (EM4) (CD45RA- CD27- CD28- CCR7-) CD8+ T cells	"effector memory cd8-positive, alpha-beta t cell"	CL_0000913	"CD45RA-,CD27-,CD28-,CCR7-"	"PR:000001015,PR:000001963,PR:000001841,PR:000001203"		
+effector memory-3 (EM3) (CD45RA- CD27- CD28+ CCR7-) CD8+ T cells	"effector memory cd8-positive, alpha-beta t cell"	CL_0000913	"CD45RA-,CD27-,CD28+,CCR7-"	"PR:000001015,PR:000001963,PR:000001841,PR:000001203"		
+effector memory-1 (EM1) (CD45RA- CD27+ CD28+ CCR7-) CD8+ T cells	"effector memory cd8-positive, alpha-beta t cell"	CL_0000913	"CD45RA-,CD27+,CD28+,CCR7-"	"PR:000001015,PR:000001963,PR:000001841,PR:000001203"		
+effector memory Ra+ (TEMRA) (CD45RA- CD27+ CD28+ CCR7-) CD8+ T cells	"effector memory cd8-positive, alpha-beta t cell"	CL_0000913	"CD45RA-,CD27+,CD28+,CCR7-"	"PR:000001015,PR:000001963,PR:000001841,PR:000001203"		
+effector memory-2 (EM2) (CD45RA- CD27- CD28+ CCR7+) CD8+ T cells	"effector memory cd8-positive, alpha-beta t cell"	CL_0000913	"CD45RA-,CD27-,CD28+,CCR7+"	"PR:000001015,PR:000001963,PR:000001841,PR:000001203"		
+T regulatory (Tregs) (CD25+ CD127-) cells	regulatory t cell	CL_0000815	"CD25+,CD127-"	"PR:000001380,PR:000001869"		
+TNF-alpha+ CD4+ T cells	"cd4-positive, alpha-beta t cell"	CL_0000624	TNFA+	PR:000000134		
+IL-2+ CD4+ T cells	"cd4-positive, alpha-beta t cell"	CL_0000624	IL2+	PR:000001379		
+IL-2+ CD4+ effector T cells	"effector cd4-positive, alpha-beta t cell"	CL_0001044	IL2+	PR:000001379		
+TNF-alpha+ IL-2+ IFN-gamma+ CD4+ T cell	"cd4-positive, alpha-beta t cell"	CL_0000624	"TNFA+,IL2+,IFNG+"	"PR:000000134,PR:000001379,PR:000000017"		
+TNF-alpha+ CD4+ effector T cells	"effector cd4-positive, alpha-beta t cell"	CL_0001044	TNFA+	PR:000000134		
+IFN-gamma & granzyme B-coproducing CD4+ T cells	"cd4-positive, alpha-beta t cell"	CL_0000624	"IFNG+,GZMB+"	"PR:000000017,PR:000003499"		
+CD4+ CD25+ CD127- CD3+ regulatory T cells	"cd4-positive, cd25-positive, alpha-beta regulatory t cell"	CL_0000792	"CD25+,CD127-"	"PR:000001380,PR:000001869"		
+CD62L-hi CD45RO-low CD4+ naive T cells	"naive thymus-derived cd4-positive, alpha-beta t cell"	CL_0000895	"CD62L++,CD45RO+-"	"PR:000001318,PR:000001017"		
+CD62L-low CD45RO-hi CD4+ effector memory T cells	"effector memory cd4-positive, alpha-beta t cell"	CL_0000905	"CD62L+-,CD45RO++"	"PR:000001318,PR:000001017"		
+CD62L-hi CD45RO-low CD8+ naive T cells	"naive thymus-derived cd8-positive, alpha-beta t cell"	CL_0000900	"CD62L++,CD45RO+-"	"PR:000001318,PR:000001017"		
+CD62L-low CD45RO-hi CD8+ effector memory T cells	"effector memory cd8-positive, alpha-beta t cell"	CL_0000913	"CD62L+-,CD45RO++"	"PR:000001318,PR:000001017"		
+MR1 5-OP-RU+ mucosal-associated invariant T (MAIT) cell	mucosal invariant t cell	CL_0000940			Mucosal-associated invariant T (MAIT) cells were identified via MR1 5-OP-RU BV421-labeled tetramer staining	
+CD8+/MR1 5-OP-RU+ mucosal-associated invariant T (MAIT) cell	mucosal invariant t cell	CL_0000940	CD8+	PR:000001084	Mucosal-associated invariant T (MAIT) cells were identified via MR1 5-OP-RU BV421-labeled tetramer staining	
+CD8+/CD161+/Valpha7.2+ mucosal-associated invariant T (MAIT) cell	mucosal invariant t cell	CL_0000940	"CD8+,CD161+"	"PR:000001084,PR:000025670"	Valpha7.2+	
+IL-12R+/MR1 5-OP-RU+ mucosal-associated invariant T (MAIT) cell	mucosal invariant t cell	CL_0000940	IL12R+	PR:000008980	Mucosal-associated invariant T (MAIT) cells were identified via MR1 5-OP-RU BV421-labeled tetramer staining	
+IL18R+/MR1 5-OP-RU+ mucosal-associated invariant T (MAIT) cell	mucosal invariant t cell	CL_0000940	IL18R1+	PR:000001377	Mucosal-associated invariant T (MAIT) cells were identified via MR1 5-OP-RU BV421-labeled tetramer staining	
+CD38+ CD161+ Valpha7.2+ mucosal-associated invariant T (MAIT) cell	mucosal invariant t cell	CL_0000940	"CD38+,CD161+"	"PR:000001408,PR:000025670"	Valpha7.2+	
+CD69+ CD161+ Valpha7.2+ mucosal-associated invariant T (MAIT) cell	mucosal invariant t cell	CL_0000940	"CD69+,CD161+"	"PR:000001343,PR:000025670"	Valpha7.2+	
+HLA-DR+ CD161+ Valpha7.2+ mucosal-associated invariant T (MAIT) cell	mucosal invariant t cell	CL_0000940	"HLADRA+,CD161+"	"PR:000002015,PR:000025670"	Valpha7.2+	
+CTLA-4+ CD161+ Valpha7.2+ mucosal-associated invariant T (MAIT) cell	mucosal invariant t cell	CL_0000940	"CD161+,CTLA4+"	"PR:000025670,PR:000001852"	Valpha7.2+	
+CD38+ CD161+ Valpha7.2+ mucosal-associated invariant T (MAIT) cells	mucosal invariant t cell	CL_0000940	"CD38+,CD161+"	"PR:000001408,PR:000025670"	Valpha7.2+	
+CD69+ CD161+ Valpha7.2+ mucosal-associated invariant T (MAIT)cells	mucosal invariant t cell	CL_0000940	"CD69+,CD161+"	"PR:000001343,PR:000025670"	Valpha7.2+	
+CTLA-4+ CD161+ Valpha7.2+ mucosal-associated invariant T (MAIT) cells	mucosal invariant t cell	CL_0000940	"CD161+,CTLA4+"	"PR:000025670,PR:000001852"	Valpha7.2+	
+IL-17A+ MR1 5-OP-RU+ mucosal-associated invariant T (MAIT)cells	mucosal invariant t cell	CL_0000940	IL17A+	PR:000001138	Mucosal-associated invariant T (MAIT) cells were identified via MR1 5-OP-RU BV421-labeled tetramer staining	
+TNFalpha+ MR1 5-OP-RU+ mucosal-associated invariant T (MAIT) cells	mucosal invariant t cell	CL_0000940	TNFA+	PR:000000134	Mucosal-associated invariant T (MAIT) cells were identified via MR1 5-OP-RU BV421-labeled tetramer staining	
+GrzB+ MR1 5-OP-RU+ mucosal-associated invariant T (MAIT) cells	mucosal invariant t cell	CL_0000940	GZMB+	PR:000003499	Mucosal-associated invariant T (MAIT) cells were identified via MR1 5-OP-RU BV421-labeled tetramer staining	
+Perforin+ MR1 5-OP-RU+ mucosal-associated invariant T (MAIT) cells	mucosal invariant t cell	CL_0000940	PRF1+	PR:000003466	Mucosal-associated invariant T (MAIT) cells were identified via MR1 5-OP-RU BV421-labeled tetramer staining	
+IFNgamma+ MR1 5-OP-RU+ mucosal-associated invariant T (MAIT) cells	mucosal invariant t cell	CL_0000940	IFNG+	PR:000000017	Mucosal-associated invariant T (MAIT) cells were identified via MR1 5-OP-RU BV421-labeled tetramer staining	
+absolute lymphocytes	lymphocyte	CL_0000542				
+CCR4+ T cells	"cd4-positive, alpha-beta t cell"	CL_0000624	CCR4+	PR:000001200		
+TNF+ CD4+ T cells	"cd4-positive, alpha-beta t cell"	CL_0000624	TNF+	PR:000000134		
+107+ IFN+ TNF+ CD4+ T cells	"cd4-positive, alpha-beta t cell"	CL_0000624	"TNF+,IFNG+,CD107A+"	"PR:000000134,PR:000000017,PR:000002060"		
+Monocytes	monocyte	CL_0000576				
+CD27high CD38high B cells	plasma cell	CL_0000786	"CD27++,CD38++"	"PR:000001963,PR:000001408"		
+IgA2+ CD27high CD38high B cells	plasma cell	CL_0000786	"CD27++,CD38++,IGA2+"	"PR:000001963,PR:000001408,PR:000050180"		
+NK T cells	mature nk t cell	CL_0000814				
+Eosinophils	eosinophil	CL_0000771				
+PD1+ CD56+ CD3- NK Cells	natural killer cell	CL_0000623	"CD56+,CD3-,PD1+"	"PR:000001024,PR:000001020,PR:000001919"		
+PD-L1+ CD56+ CD3- NK Cells	natural killer cell	CL_0000623	"CD56+,CD3-,PDL1+"	"PR:000001024,PR:000001020,PR:000001543"	undefined	
+NKG2D+ NKp46+ NK Cells	natural killer cell	CL_0000623	"NKG2D+,NKP46+"	"PR:000001828,PR:000001893"		
+CD16+ CD56+ CD3- NK Cells	natural killer cell	CL_0000623	"CD16+,CD56+,CD3+-"	"PR:000001483,PR:000001024,PR:000001020"	undefined	
+PDL1+ NK Cells	natural killer cell	CL_0000623	PDL1+	PR:000001543		
+CD3- CD56+ NK cells	natural killer cell	CL_0000623	"CD3-,CD56+"	"PR:000001020,PR:000001024"	undefined	
+immature CD56-bright NK cells	immature natural killer cell	CL_0000823	CD56++	PR:000001024		
+mature CD57+ NK cells	mature natural killer cell	CL_0000824	CD57+	PR:000001440		
+mature CD56-dim CD57+ NK cells	mature natural killer cell	CL_0000824	"CD57+,CD56+-"	"PR:000001440,PR:000001024"		
+FCepsilonRly- CD56+ CD57+ NK cells	natural killer cell	CL_0000623				
+CD69+ NK cells	natural killer cell	CL_0000623	CD69+	PR:000001343		
+TIM-3+ NK cells	natural killer cell	CL_0000623	TIM3+	PR:000008454		
+PD1+ NK cells	natural killer cell	CL_0000623	PD1+	PR:000001919		
+NKG2D+ NK cells	natural killer cell	CL_0000623	NKG2D+	PR:000001828		
+Siglec-7+ NK cells	natural killer cell	CL_0000623	SIGLEC7+	PR:000001929		
+DNAM-1+ NK cells	natural killer cell	CL_0000623	DNAM1+	PR:000001302		
+CXCR6+ NK cells	natural killer cell	CL_0000623	CXCR6+	PR:000001210		
+IFNgamma+ NK cells	natural killer cell	CL_0000623	IFNG+	PR:000000017		
+CD107a+ NK cells	natural killer cell	CL_0000623				
+IL-6+ CD14+ monocytes	monocyte	CL_0000576	IL6+	PR:000001393		
+IL-8+ CD14+ monocytes	monocyte	CL_0000576	IL8+	PR:000001395		
+IL-1beta+ CD14+ monocytes	monocyte	CL_0000576	IL1B+	PR:000001136		
+IL-6+ classical monocytes	classical monocyte	CL_0000860	IL6+	PR:000001393		
+IL-6+ non-classical monocytes	non-classical monocyte	CL_0000875	IL6+	PR:000001393		
+IL-6+ intermediate monocytes	intermediate monocyte	CL_0002393	IL6+	PR:000001393		
+IL-8+ classical monocytes	classical monocyte	CL_0000860	IL8+	PR:000001395		
+IL-8+ non-classical monocytes	non-classical monocyte	CL_0000875	IL8+	PR:000001395		
+IL-8+ intermediate monocytes	intermediate monocyte	CL_0002393	IL8+	PR:000001395		
+IL-1beta+ classical monocytes	classical monocyte	CL_0000860	IL1B+	PR:000001136		
+IL-1beta+ intermediate monocytes	intermediate monocyte	CL_0002393	IL1B+	PR:000001136		
+IL-1beta+ non-classical monocytes	non-classical monocyte	CL_0000875	IL1B+	PR:000001136		
+CD19+ CD45+ B cell	b cell	CL_0000236				
+CD21-low transitional B cell	transitional stage b cell	CL_0000818	CD21+-	PR:000001338		
+DN2 B cell	double negative memory b cell	CL_0000981	"CXCR5-,CD21-"	"PR:000001209,PR:000001338"		
+usM B cells	unswitched memory b cell	CL_0000970				
+aN naive B cell	naive b cell	CL_0000788			activated naive B cell	
+antibody-secreting cell	antibody secreting cell	CL_0000946				
+transitional B cell	transitional stage b cell	CL_0000818				
+DN3 B cell	double negative memory b cell	CL_0000981	"CD21-,CD11C-"	"PR:000001338,PR:000001013"		
+DN1 B cell	double negative memory b cell	CL_0000981	"CD21+,CD11C-"	"PR:000001338,PR:000001013"		
+uSM B cells	unswitched memory b cell	CL_0000970				
+CD14+ CD16++ non-classical monocytes	"cd14-positive, cd16-positive monocyte"	CL_0002397				
+CD3+ T cells of lymphocytes	t cell	CL_0000084				
+CD4+ T cells of CD3+ cells	"cd4-positive, alpha-beta t cell"	CL_0000624				
+CD8+ T cells of CD3+ cells	"cd8-positive, alpha-beta t cell"	CL_0000625				
+CD4+ HLADR+ T cells of CD4+ T cells	"activated cd4-positive, alpha-beta t cell"	CL_0000896	HLADRA+	PR:000002015		
+CD8+ HLADR+ T cells of CD8+ T cells	"activated cd4-positive, alpha-beta t cell"	CL_0000896	HLADRA+	PR:000002015		
+CD31+ CD45RA+ CCR7+ CD4+ T cells	"naive thymus-derived cd4-positive, alpha-beta t cell"	CL_0000895	"CD31+,CD45RA+,CCR7+"	"PR:000001904,PR:000001015,PR:000001203"		
+CD31- CD45RA+ CCR7+ CD4+ T cells	"naive thymus-derived cd4-positive, alpha-beta t cell"	CL_0000895	"CD31-,CD45RA+,CCR7+"	"PR:000001904,PR:000001015,PR:000001203"		
+CD31+ CD45RA+ CCR7+ CD8+ T cells	"naive thymus-derived cd8-positive, alpha-beta t cell"	CL_0000900	"CD31+,CD45RA+,CCR7+"	"PR:000001904,PR:000001015,PR:000001203"		
+CD31- CD45RA+ CCR7+ CD8+ T cells	"naive thymus-derived cd8-positive, alpha-beta t cell"	CL_0000900	"CD31-,CD45RA+,CCR7+"	"PR:000001904,PR:000001015,PR:000001203"		
+CD3+ CCR7- CD45RA+ CD4+ (TEMRA) T cells	"effector memory cd4-positive, alpha-beta t cell, terminally differentiated"	CL_0001087	"CD45RA+,CCR7-"	"PR:000001015,PR:000001203"		
+CD3+ CCR7- CD45RA+ CD8+ (TEMRA) T cells	"effector memory cd8-positive, alpha-beta t cell, terminally differentiated"	CL_0001062	"CD45RA+,CCR7-"	"PR:000001015,PR:000001203"		
+B cells of lymphocytes	b cell	CL_0000236				
+CD24- CD27++ CD38++ plasmablasts of B cells	plasmablast	CL_0000980	"CD27++,CD38++,CD24-"	"PR:000001963,PR:000001408,PR:000001932"		
+memory B cells of B cells	memory b cell	CL_0000787				
+IgM+ cells of CD27+ memory B cells	unswitched memory b cell	CL_0000970	"CD27+,IGM+"	"PR:000001963,PR:000050257"		
+IgM- (switched) cells of CD27+ memory B cells	class switched memory b cell	CL_0000972	"CD27+,IGM-"	"PR:000001963,PR:000050257"		
+IgG+ cells of memory B cells	class switched memory b cell	CL_0000972	IGG+	PR:000050252		
+IgG- IgM- cells of memory B cells	class switched memory b cell	CL_0000972	"IGM-,IGG-"	"PR:000050257,PR:000050252"		
+activated (HLA-DR+ CD38+) CD4+ T cells	"activated cd4-positive, alpha-beta t cell"	CL_0000896	"HLADRA+,CD38+"	"PR:000002015,PR:000001408"		
+PD1+ CD4+ T cells	"cd4-positive, alpha-beta t cell"	CL_0000624	PD1+	PR:000001919		
+regulatory (CD127- CD25+) CD4+ T cells	"cd4-positive, cd25-positive, alpha-beta regulatory t cell"	CL_0000792	"CD127-,CD25+"	"PR:000001869,PR:000001380"		
+exhausted/senescent (CD57+ PD1+) CD4+ T cells	exhausted t cell	CL_0011025	"CD57+,PD1+"	"PR:000001440,PR:000001919"		
+(CCR7+ CD45RA+ CD28+ CD27+) naive CD4+ T cells	"naive thymus-derived cd4-positive, alpha-beta t cell"	CL_0000895	"CCR7+,CD45RA+,CD28+,CD27+"	"PR:000001203,PR:000001015,PR:000001841,PR:000001963"		
+central memory (CCR7- CD45RA+ CD28+ CD27+-) CD4+ T cells	"central memory cd4-positive, alpha-beta t cell"	CL_0000904	"CCR7-,CD45RA+,CD28+,CD27+-"	"PR:000001203,PR:000001015,PR:000001841,PR:000001963"		
+effector memory (CCR7- CD45RA- CD28+- CD27+-) CD4+ T cells	"effector memory cd4-positive, alpha-beta t cell"	CL_0000905	"CCR7-,CD45RA-,CD28+-,CD27+-"	"PR:000001203,PR:000001015,PR:000001841,PR:000001963"		
+terminal effector (CCR7- CD45RA+ CD28- CD27+-) CD4+ T cells	"effector memory cd4-positive, alpha-beta t cell, terminally differentiated"	CL_0001087	"CCR7-,CD45RA+,CD28-,CD27+-"	"PR:000001203,PR:000001015,PR:000001841,PR:000001963"		
+naive CD4+ T regulatory cells	naive regulatory t cell	CL_0002677	CD4+	PR:000001004		
+central memory CD4+ T regulatory cells	"activated cd4-positive, alpha-beta t cell, human"	CL_0001043	CD4+	PR:000001004	central memory CD4+ T regulatory cells	
+PD1+ effector memory CD4+ T cells	"effector memory cd4-positive, alpha-beta t cell"	CL_0000905	PD1+	PR:000001919		
+PD1+ activated (HLA-DR+ CD38+) central memory CD4+ T cells	"activated cd4-positive, alpha-beta t cell, human"	CL_0001043	"PD1+,HLADRA+,CD38+"	"PR:000001919,PR:000002015,PR:000001408"	central memory CD4+ T cells	
+CD38+ central memory CD4+ T cells	"central memory cd4-positive, alpha-beta t cell"	CL_0000904	CD38+	PR:000001408		
+CCR6+ CD4+ T cells	"cd4-positive, alpha-beta t cell"	CL_0000624	CCR6+	PR:000001202		
+CXCR3+ CD4+ T cells	"cd4-positive, alpha-beta t cell"	CL_0000624	CXCR3+	PR:000001207		
+CCR6+ CD161+ CD4+ T cells	"cd4-positive, alpha-beta t cell"	CL_0000624	"CD161+,CCR6+"	"PR:000025670,PR:000001202"		
+CXCR4+ CD4+ T cells	"cd4-positive, alpha-beta t cell"	CL_0000624	CXCR4+	PR:000001208		
+naive (CCR7+ CD45RA+ CD28+ CD27+) CD8+ T cells	"naive thymus-derived cd8-positive, alpha-beta t cell"	CL_0000900	"CCR7+,CD45RA+,CD28+,CD27+"	"PR:000001203,PR:000001015,PR:000001841,PR:000001963"		
