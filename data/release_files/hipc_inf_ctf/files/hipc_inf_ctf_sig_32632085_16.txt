@@ -1,0 +1,3 @@
+CD8-positive, alpha-beta T cell & IL17A+
+CD8-positive, alpha-beta T cell & IL2+
+CD8-positive, alpha-beta T cell & CD107a+

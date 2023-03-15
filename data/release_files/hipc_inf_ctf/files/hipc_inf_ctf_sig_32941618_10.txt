@@ -1,2 +1,7 @@
+plasmacytoid dendritic cell, human & CD11c-,HLADRA+,CD123+
+monocyte & CD4+,CD14+, medium side scatter
+lymphocyte
 natural killer cell & NKG2D+,NKP46+
-natural killer cell & CD16+,CD56+,CD3+-, undefined
+lymphocyte & CD3-,CD56-
+natural killer cell & CD16+,CD56+,CD3+-
+basophil & CRTH2+, low side scatter

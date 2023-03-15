@@ -1,5 +1,5 @@
 naive regulatory t cell & CD4+
-activated cd4-positive, alpha-beta t cell, human & CD4+, central memory CD4+ T regulatory cells
+activated cd4-positive, alpha-beta t cell, human
 effector memory cd4-positive, alpha-beta t cell & PD1+
-activated cd4-positive, alpha-beta t cell, human & PD1+,HLADRA+,CD38+, central memory CD4+ T cells
+activated cd4-positive, alpha-beta t cell, human & PD1+,HLADRA+,CD38+, central memory, regulatory
 central memory cd4-positive, alpha-beta t cell & CD38+

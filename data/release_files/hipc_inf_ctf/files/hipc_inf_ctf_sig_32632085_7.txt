@@ -1,1 +1,2 @@
 cd4-positive, alpha-beta t cell & CXCR4+
+CD4-positive, alpha-beta T cell & CCR4+

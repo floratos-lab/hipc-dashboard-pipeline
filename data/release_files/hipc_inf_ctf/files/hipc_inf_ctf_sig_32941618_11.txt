@@ -1,1 +1,5 @@
-natural killer cell & CD56+,CD3-,PDL1+, undefined
+granulocyte & CD15+, high side scatter
+basophil & CRTH2-,PDL1+, low side scatter
+neutrophil & CD16+,CD15+, high side scatter
+granulocyte & CD16+, high side scatter
+natural killer cell & CD56+,CD3-,PDL1+

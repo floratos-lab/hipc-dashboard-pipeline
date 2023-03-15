@@ -1,2 +1,3 @@
 cd4-positive, alpha-beta t cell & TNF+,IFNG+,CD107A+
 cd4-positive, alpha-beta t cell & TNF+
+CD4-positive, alpha-beta T cell & IL2+,IL17+

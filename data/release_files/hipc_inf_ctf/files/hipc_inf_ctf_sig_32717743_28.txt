@@ -1,1 +1,2 @@
 activated cd4-positive, alpha-beta t cell
+cd4-positive, alpha-beta memory t cell & IL17+

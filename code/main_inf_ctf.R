@@ -232,6 +232,8 @@ ctf_match <- match(df2$response_component_original, ctf_fixes$original_annotatio
 
 failed_matches <- df2$response_component_original[is.na(ctf_match)]
 message("unique response_component not in the ctf mapping file ", length(unique(failed_matches)))
+print("not matched annotations:")
+print(unique(failed_matches))
 successful_matches <- df2$response_component_original[!is.na(ctf_match)]
 message("number of rows with response_component in the ctd mapping file ", length(successful_matches))
 

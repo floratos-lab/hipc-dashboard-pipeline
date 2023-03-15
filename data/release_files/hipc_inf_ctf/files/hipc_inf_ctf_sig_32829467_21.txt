@@ -1,1 +1,2 @@
-natural killer cell
+cd14-positive, cd16-positive monocyte
+non-classical monocyte & CD14-,CD16+
