@@ -1,2 +1,2 @@
-mucosal invariant t cell & TNFA+, identified via MR1 5-OP-RU BV421-labeled tetramer staining
-mucosal invariant t cell & GZMB+, identified via MR1 5-OP-RU BV421-labeled tetramer staining
+mucosal invariant t cell (identified via MR1 5-OP-RU BV421-labeled tetramer staining and TNFA+)
+mucosal invariant t cell (identified via MR1 5-OP-RU BV421-labeled tetramer staining and GZMB+)

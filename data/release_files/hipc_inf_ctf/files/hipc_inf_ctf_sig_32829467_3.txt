@@ -1,2 +1,2 @@
-effector memory CD4-positive, alpha-beta T cell & CCR7-,CD45RA-
-effector memory cd8-positive, alpha-beta t cell & CCR7-,CD45RA-
+effector memory CD4-positive, alpha-beta T cell (CCR7-,CD45RA-)
+effector memory cd8-positive, alpha-beta t cell (CCR7-,CD45RA-)

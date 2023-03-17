@@ -1,3 +1,2 @@
-natural killer cell & CD14-, CD20-, CD3-
-natural killer cell & CD14-, CD20-, CD3-, NKGA2+
-natural killer cell & CD14-, CD20-, CD3-, NKG2-A/B-activating NK receptor+
+natural killer cell (CD14-, CD20-, CD3-)
+natural killer cell (CD14-, CD20-, CD3-, NKG2A+)

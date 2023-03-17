@@ -1,2 +1,2 @@
 monocyte
-monocyte & CD16-positive, inflammatory
+monocyte (inflammatory and CD16-positive)

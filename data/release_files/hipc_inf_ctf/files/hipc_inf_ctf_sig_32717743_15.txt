@@ -1,4 +1,4 @@
 intermediate monocyte
 non-classical monocyte
-neutrophil & CD16++
-neutrophil & CD16+
+neutrophil (CD16++)
+neutrophil (CD16+)

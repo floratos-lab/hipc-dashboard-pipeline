@@ -1,1 +1,1 @@
-cd4-positive, alpha-beta t cell & TNFA+,IL2+,IFNG+
+cd4-positive, alpha-beta t cell (TNFA+,IL2+,IFNG+)

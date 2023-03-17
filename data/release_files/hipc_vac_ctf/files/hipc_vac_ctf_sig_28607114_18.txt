@@ -1,1 +1,1 @@
-CD8-positive, alpha-beta cytotoxic T cell & CD107a+, IFNg+, VZV-specific
+CD8-positive, alpha-beta cytotoxic T cell (VZV-specific and CD107a+, IFNg+)

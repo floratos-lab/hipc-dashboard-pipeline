@@ -1,9 +1,9 @@
-CD8-positive, alpha-beta T cell & HLA-DR+
-CD8-positive, alpha-beta T cell & CD69+
-CD8-positive, alpha-beta T cell & CXCR4+
-B cell & CD19+, CD69+
-CD4-positive, alpha-beta T cell & HLA-DR+
-CD4-positive, alpha-beta T cell & CD69+
-CD4-positive, alpha-beta T cell & CXCR4+
-CD4-positive, alpha-beta T cell & CCR3+
-natural killer cell & CD16+, CD56+, CD3+
+CD8-positive, alpha-beta T cell (HLA-DR+)
+CD8-positive, alpha-beta T cell (CD69+)
+CD8-positive, alpha-beta T cell (CXCR4+)
+B cell (CD19+, CD69+)
+CD4-positive, alpha-beta T cell (HLA-DR+)
+CD4-positive, alpha-beta T cell (CD69+)
+CD4-positive, alpha-beta T cell (CXCR4+)
+CD4-positive, alpha-beta T cell (CCR3+)
+natural killer cell (CD16+, CD56+, CD3+)

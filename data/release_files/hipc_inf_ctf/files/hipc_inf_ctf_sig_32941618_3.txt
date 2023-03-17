@@ -1,4 +1,4 @@
-lymphocyte & CD3-,CD56-
-basophil & CRTH2+, low side scatter
-monocyte & CD4+,CD14+, medium side scatter
-natural killer cell & NKG2D+,NKP46+
+lymphocyte (CD3-,CD56-)
+basophil (low side scatter and CRTH2+)
+monocyte (medium side scatter and CD4+,CD14+)
+natural killer cell (NKG2D+,NKP46+)

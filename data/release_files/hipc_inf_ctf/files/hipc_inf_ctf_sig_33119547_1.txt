@@ -1,5 +1,5 @@
 CD8-positive, alpha-beta T cell
-monocyte & CD16+
-monocyte & CD14+
-natural killer cell & CD56+,CD16-
-natural killer cell & CD56+,CD16+
+monocyte (CD16+)
+monocyte (CD14+)
+natural killer cell (CD56+,CD16-)
+natural killer cell (CD56+,CD16+)

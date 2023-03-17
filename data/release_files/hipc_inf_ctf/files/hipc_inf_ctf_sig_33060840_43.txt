@@ -1,2 +1,2 @@
-classical monocyte & IL8+
-non-classical monocyte & IL8+
+classical monocyte (IL8+)
+non-classical monocyte (IL8+)

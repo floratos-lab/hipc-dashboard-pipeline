@@ -1,1 +1,1 @@
-monocyte
+monocyte (large-size, as determined by forward scatter)

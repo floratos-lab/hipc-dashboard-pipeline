@@ -1,1 +1,1 @@
-CD4-positive, alpha-beta T cell & CD3+, CD56-, CD19-, CD4+, CD25low, CD127hi, CD45RA+, CD62L-
+CD4-positive, alpha-beta T cell (CD3+, CD56-, CD19-, CD4+, CD25low, CD127hi, CD45RA+, CD62L-)

@@ -1,2 +1,2 @@
-exhausted t cell & CD4+,PD1+
-exhausted t cell & CD8+,PD1+
+exhausted t cell (CD4+,PD1+)
+exhausted t cell (CD8+,PD1+)

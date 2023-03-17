@@ -1,1 +1,1 @@
-CD8-positive, alpha-beta T cell & CD69+, PD-1+, VZV-specific
+CD8-positive, alpha-beta T cell (VZV-specific and CD69+, PD-1+)

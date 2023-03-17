@@ -1,2 +1,2 @@
-myeloid dendritic cell & CD86-positive
-monocyte & CD86+
+myeloid dendritic cell (CD86-positive )
+monocyte (CD86+)

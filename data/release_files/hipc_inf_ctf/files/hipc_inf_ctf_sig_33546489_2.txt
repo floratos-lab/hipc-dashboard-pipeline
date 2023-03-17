@@ -1,1 +1,1 @@
-cd4-positive, cd25-positive, alpha-beta regulatory t cell & CD25+,CD127-
+cd4-positive, cd25-positive, alpha-beta regulatory t cell (CD25+,CD127-)

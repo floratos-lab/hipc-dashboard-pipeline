@@ -1,2 +1,2 @@
-mucosal invariant t cell & HLADRA+,CD161+, Valpha7.2+
-mucosal invariant t cell & CD161+,CTLA4+, Valpha7.2+
+mucosal invariant t cell (Valpha7.2+ and HLADRA+,CD161+)
+mucosal invariant t cell (Valpha7.2+ and CD161+,CTLA4+)

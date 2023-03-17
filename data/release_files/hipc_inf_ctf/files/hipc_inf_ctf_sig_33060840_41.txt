@@ -1,2 +1,2 @@
-classical monocyte & IL6+
-intermediate monocyte & IL6+
+classical monocyte (IL6+)
+intermediate monocyte (IL6+)

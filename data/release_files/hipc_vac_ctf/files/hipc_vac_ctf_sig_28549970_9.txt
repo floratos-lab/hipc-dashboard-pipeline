@@ -1,9 +1,9 @@
-CD14-positive, CD16-positive monocyte & HLA-DR++
-CD14-positive monocyte & CD64+
-CD4-positive, alpha-beta T cell & CD69+
-CD4-positive, alpha-beta T cell & CD54+
-CD4-positive, alpha-beta T cell & CCR5+
-CD4-positive, alpha-beta T cell & CXCR3+
-CD8-positive, alpha-beta T cell & CD69+
+CD14-positive, CD16-positive monocyte (HLA-DR++)
+CD14-positive monocyte (CD64+)
+CD4-positive, alpha-beta T cell (CD69+)
+CD4-positive, alpha-beta T cell (CD54+)
+CD4-positive, alpha-beta T cell (CCR5+)
+CD4-positive, alpha-beta T cell (CXCR3+)
+CD8-positive, alpha-beta T cell (CD69+)
 CD8-positive, CD25-positive, alpha-beta regulatory T cell
-CD8-positive, alpha-beta T cell & CCR3+
+CD8-positive, alpha-beta T cell (CCR3+)

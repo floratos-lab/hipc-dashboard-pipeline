@@ -1,8 +1,8 @@
-CD14-positive, CD16-positive monocyte & HLA-DR++
-CD14-positive monocyte & CCR2+
-natural killer cell & CD16+, CD56+, CD3+
-CD4-positive, alpha-beta T cell & CD69+
-CD4-positive, CD25-positive, alpha-beta regulatory T cell & CD25-hi
-CD4-positive, alpha-beta T cell & HLA-DR+
-CD8-positive, alpha-beta T cell & HLA-DR+
-CD8-positive, alpha-beta T cell & CD38+
+CD14-positive, CD16-positive monocyte (HLA-DR++)
+CD14-positive monocyte (CCR2+)
+natural killer cell (CD16+, CD56+, CD3+)
+CD4-positive, alpha-beta T cell (CD69+)
+CD4-positive, CD25-positive, alpha-beta regulatory T cell (CD25-hi)
+CD4-positive, alpha-beta T cell (HLA-DR+)
+CD8-positive, alpha-beta T cell (HLA-DR+)
+CD8-positive, alpha-beta T cell (CD38+)

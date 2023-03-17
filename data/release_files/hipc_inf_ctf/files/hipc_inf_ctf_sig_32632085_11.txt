@@ -1,5 +1,5 @@
-effector CD8-positive, alpha-beta T cell & CD38+, terminally differentiated
-effector memory CD8-positive, alpha-beta T cell & CD38+,CD57+
-effector memory CD8-positive, alpha-beta T cell & PD1+, activated
-effector memory CD8-positive, alpha-beta T cell & CD57+
-effector CD8-positive, alpha-beta T cell & CD57+, terminally differentiated
+effector CD8-positive, alpha-beta T cell (terminally differentiated and CD38+)
+effector memory CD8-positive, alpha-beta T cell (CD38+,CD57+)
+effector memory CD8-positive, alpha-beta T cell (activated and PD1+)
+effector memory CD8-positive, alpha-beta T cell (CD57+)
+effector CD8-positive, alpha-beta T cell (terminally differentiated and CD57+)

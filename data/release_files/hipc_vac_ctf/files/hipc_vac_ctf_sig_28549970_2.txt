@@ -1,4 +1,4 @@
-natural killer cell & CD56+, CD16+
-natural killer cell & CD16+, CD56+, CD3+
-CD4-positive, alpha-beta T cell & HLA-DR+
-CD8-positive, alpha-beta T cell & HLA-DR+
+natural killer cell (CD56+, CD16+)
+natural killer cell (CD16+, CD56+, CD3+)
+CD4-positive, alpha-beta T cell (HLA-DR+)
+CD8-positive, alpha-beta T cell (HLA-DR+)

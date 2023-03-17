@@ -1,4 +1,4 @@
-activated cd4-positive, alpha-beta t cell & HLADRA+,CD38+
-exhausted t cell & CD57+,PD1+
-cd4-positive, alpha-beta t cell & PD1+
-cd4-positive, cd25-positive, alpha-beta regulatory t cell & CD127-,CD25+
+activated cd4-positive, alpha-beta t cell (HLADRA+,CD38+)
+exhausted t cell (CD57+,PD1+)
+cd4-positive, alpha-beta t cell (PD1+)
+cd4-positive, cd25-positive, alpha-beta regulatory t cell (CD127-,CD25+)

@@ -1,5 +1,5 @@
-CD4-positive, alpha-beta T cell & IFNG+
-cd4-positive, alpha-beta t cell & TNF+
-CD4-positive, alpha-beta T cell & IL17A+
-cd4-positive, alpha-beta t cell & IL2+
-CD4-positive, alpha-beta T cell & CD107a+
+CD4-positive, alpha-beta T cell (IFNG+)
+cd4-positive, alpha-beta t cell (TNF+)
+CD4-positive, alpha-beta T cell (IL17A+)
+cd4-positive, alpha-beta t cell (IL2+)
+CD4-positive, alpha-beta T cell (CD107a+)

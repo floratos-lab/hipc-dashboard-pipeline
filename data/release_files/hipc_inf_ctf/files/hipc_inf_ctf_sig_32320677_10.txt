@@ -1,2 +1,2 @@
-natural killer cell & CD3+,CD4+,CD45+
-natural killer cell & CD3+,CD8+,CD45+
+natural killer cell (CD3+,CD4+,CD45+)
+natural killer cell (CD3+,CD8+,CD45+)

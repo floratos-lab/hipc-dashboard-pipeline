@@ -1,6 +1,6 @@
-granulocyte & CD15+, high side scatter
-neutrophil & CD16+,CD15+, high side scatter
-granulocyte & CD16+, high side scatter
-natural killer cell & CD56+,CD3-,PD1+
-natural killer cell & CD56+,CD3-,PDL1+
-CD4-positive, alpha-beta T cell & CCR7+,PD1+
+granulocyte (high side scatter and CD15+)
+neutrophil (high side scatter and CD16+,CD15+)
+granulocyte (high side scatter and CD16+)
+natural killer cell (CD56+,CD3-,PD1+)
+natural killer cell (CD56+,CD3-,PDL1+)
+CD4-positive, alpha-beta T cell (CCR7+,PD1+)

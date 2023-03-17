@@ -1,4 +1,4 @@
-naive thymus-derived cd8-positive, alpha-beta t cell & CD45RA+,CD27+,CD28+,CD95-
-effector memory cd8-positive, alpha-beta t cell & CD45RA-,CD27+,CD28+,CCR7-
-central memory cd8-positive, alpha-beta t cell & CD45RA-,CD27+,CD28+,CCR7+
-cd8-positive, alpha-beta memory t cell & CD45RA+,CD27+,CD28+,CD95+
+naive thymus-derived cd8-positive, alpha-beta t cell (CD45RA+,CD27+,CD28+,CD95-)
+effector memory cd8-positive, alpha-beta t cell (CD45RA-,CD27+,CD28+,CCR7-)
+central memory cd8-positive, alpha-beta t cell (CD45RA-,CD27+,CD28+,CCR7+)
+cd8-positive, alpha-beta memory t cell (CD45RA+,CD27+,CD28+,CD95+)
