@@ -34,13 +34,13 @@ generate_observation_summary <- function(sheet_type,
   } else if (sheet_type == "CELLTYPE_FREQUENCY") {
     # FIXME - the responses may not be just frequency.  There can also be activation state.
     #         This could be implemented using <response_behavior_type> to specify actual.
-    obs_summary     <- paste0(obs_summary,", <response_component_id> <proterm_and_extra> frequency")
+    obs_summary     <- paste0(obs_summary,", the frequency of cell type <response_component_id> <proterm_and_extra>")
   }
   obs_summary   <- paste(obs_summary, "was <response_behavior>")
-  obs_summary   <- paste(obs_summary, "at <time_point> <time_point_units> from <baseline_time_event>")
+  obs_summary   <- paste(obs_summary, "at <time_point> <time_point_units> from <baseline_time_event>,")
   obs_summary   <- paste(obs_summary, joining_preposition)
-  obs_summary   <- paste(obs_summary, "<comparison> in")
-  obs_summary   <- paste(obs_summary, "cohort", "<cohort>", age_string)
+  obs_summary   <- paste(obs_summary, "<comparison>, in")
+  obs_summary   <- paste0(obs_summary, " cohort <cohort> ", age_string, ",")
   obs_summary <- paste(obs_summary, "after exposure to")
   obs_summary <- paste(obs_summary, gen_phrase(exposure_cnt, "exposure_material_id"))
   # Note - pathogen_cnt is set to zero when don't want to display pathogens

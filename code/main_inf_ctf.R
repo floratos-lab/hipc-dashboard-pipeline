@@ -242,8 +242,9 @@ proterm <- ctf_fixes$PRO_term_w_intensity[ctf_match]
 extra <- ctf_fixes$extra[ctf_match]
 df2$response_component <- ctf_fixes$CL_term[ctf_match]
 df2$response_component_id   <- ctf_fixes$CL_ID[ctf_match]
-df2$proterm_and_extra  <- ifelse(proterm!="" & extra!="", paste0("& ", proterm, ", ", extra), 
-    ifelse(proterm!="", paste("&", proterm), "")
+df2$proterm_and_extra  <- ifelse(proterm!="" & extra!="", paste0("(", extra, " and ", proterm, ")"),
+    ifelse(proterm!="", paste0("(", proterm, ")"),
+      ifelse(extra!="", paste0("(", extra, ")"), ""))
 )
 df2$pro_ontology_id    <- ctf_fixes$PRO_ID[ctf_match]
 df2$fully_qualified_response_component <- ""
