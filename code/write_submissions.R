@@ -5,6 +5,7 @@ generate_observation_summary <- function(sheet_type,
                                          tissue_cnt,
                                          exposure_cnt,
                                          pathogen_cnt_os,
+                                         at_time_point_phrase = "at <time_point> <time_point_units> from <baseline_time_event>, ",
                                          use_additional = FALSE) {
   # generate a wild-card template, add index if multiple to match new columns in data
   gen_phrase <- function(cnt, phrase) {
@@ -24,8 +25,7 @@ generate_observation_summary <- function(sheet_type,
     obs_summary <- paste0(obs_summary, ", the frequency of cell type <response_component_id> <proterm_and_extra>")
   }
   obs_summary <- paste0(
-    obs_summary, " was <response_behavior> ",
-    "at <time_point> <time_point_units> from <baseline_time_event>, ",
+    obs_summary, " was <response_behavior> ", at_time_point_phrase,
     joining_preposition, " <comparison>, in cohort <cohort> ", age_string,
     ", after exposure to ", gen_phrase(exposure_cnt, "exposure_material_id")
   )
@@ -277,6 +277,21 @@ write_submission_template <- function(df2_cpy, header_rows, release_files, csv_f
       }
     }
 
+    at_time_point_phrase <-
+      "at <time_point> <time_point_units> from <baseline_time_event>, "
+
+    # dtmp is expected to be a data.frame of multiple rows
+    # starting row 7 (actual data), many thins are supposed to be the same,
+    # at least for time_point and baseline_time_event
+    if (trimws(dftmp$baseline_time_event[7]) == "") {
+      at_time_point_phrase <- ", "
+    } else {
+      time_point <- trimws(dftmp$time_point[7])
+      if (time_point == "" || time_point == "0") {
+        at_time_point_phrase <- "at <baseline_time_event>, "
+      }
+    }
+
     observation_summary <- generate_observation_summary(
       sheet_type,
       exposure_type,
@@ -285,6 +300,7 @@ write_submission_template <- function(df2_cpy, header_rows, release_files, csv_f
       tissue_cnt,
       exposure_cnt,
       pathogen_cnt_os,
+      at_time_point_phrase,
       exposure_type == "VACCINE" && dftmp$additional_exposure_material[1] != ""
     )
 
