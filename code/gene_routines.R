@@ -369,6 +369,18 @@ check_against_ncbi_synonyms <- function(failed_symbols, source_data_dir, log_fil
   # m_lines will contain a list of vectors of matching row numbers
   # sapply keeps list item names, lapply apparently does not
   m_lines <- sapply(failed_symbols[m], function(x) {grep(x, ncbi_genes$Synonyms)})
+  # the code here is apparently vulnerable:
+  # for the latest data,
+  # it breaks simply because there is only one failed_symbols (instead of more)
+  message("m_lines is supposed to be a list")
+  print(class(m_lines))
+  if (!is.list(m_lines)) {
+    m_lines <- list(m_lines)
+    names(m_lines) <- failed_symbols[m]
+  }
+  if (names(m_lines) != failed_symbols[m]) {
+    stop("names do not match")
+  }
 
   # process each item in a list of vectors of varying length
   if(length(m_lines) > 0) {
