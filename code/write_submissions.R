@@ -51,8 +51,10 @@ choose_joining_preposition <- function(response_behavior) {
     return("with")
   } else if (grepl("predictive", response_behavior, ignore.case = TRUE)) {
     return("of")
+  } else if (response_behavior == "differentially expressed") {
+    return("for")
   } else {
-    print(paste("choose_joining_preposition(): unexpected response_behavior:", response_behavior))
+    warning("choose_joining_preposition(): unexpected response_behavior:", response_behavior)
     return("for")
   }
 }
