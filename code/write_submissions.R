@@ -26,7 +26,7 @@ generate_observation_summary <- function(sheet_type,
   }
   obs_summary <- paste0(
     obs_summary, " was <response_behavior> ", at_time_point_phrase,
-    joining_preposition, " <comparison>, in cohort <cohort> ", age_string,
+    joining_preposition, " <comparison>, in cohort <cohort>", age_string,
     ", after exposure to ", gen_phrase(exposure_cnt, "exposure_material_id")
   )
   # Note - pathogen_cnt_os is set to zero when don't want to display pathogens
@@ -266,14 +266,7 @@ write_submission_template <- function(df2_cpy, header_rows, release_files, csv_f
       age_string <- paste0("<=", age_max)
     }
     if (age_string != "") {
-      if (age_units != "") {
-        age_units_rewritten <- ifelse(age_units == "years", "yo",
-          ifelse(age_units == "months", "mo",
-            ifelse(age_units == "weeks", "wo", age_units)
-          )
-        )
-        age_string <- paste(age_string, age_units_rewritten)
-      }
+      age_string <- paste(", for age group", age_string, age_units, "old")
       if (dftmp$cohort[1] != "") {
         age_string <- paste0(age_string, ",")
       }
