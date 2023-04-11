@@ -1,2 +1,4 @@
+cytotoxic t cell
 monocyte
-lymphocyte
+myeloid dendritic cell
+neutrophil

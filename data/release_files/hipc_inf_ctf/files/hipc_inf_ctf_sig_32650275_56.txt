@@ -1,4 +1,0 @@
-natural killer cell
-mature nk t cell
-mature gamma-delta T cell
-CD8-positive, alpha-beta T cell

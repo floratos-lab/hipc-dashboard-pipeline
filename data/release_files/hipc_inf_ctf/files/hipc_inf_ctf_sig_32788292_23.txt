@@ -1,5 +1,1 @@
-monocyte (IL1B+)
-monocyte (TNFA+)
-monocyte (IL6+)
-monocyte (IL6+,TNFA+)
-monocyte (MCP1+)
+plasmacytoid dendritic cell, human

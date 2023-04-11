@@ -1,2 +1,4 @@
-monocyte
-lymphocyte
+t cell
+cd8-positive, alpha-beta t cell
+natural killer cell
+lymphocyte of b lineage

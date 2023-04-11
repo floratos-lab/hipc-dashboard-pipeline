@@ -1,2 +1,0 @@
-t cell
-cd8-positive, alpha-beta t cell

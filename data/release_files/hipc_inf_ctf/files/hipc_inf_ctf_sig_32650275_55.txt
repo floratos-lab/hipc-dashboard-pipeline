@@ -1,8 +1,0 @@
-b cell
-natural killer cell
-mature nk t cell
-mature gamma-delta T cell
-gamma-delta T cell (Vgamma9-)
-CD8-positive, alpha-beta T cell
-CD4-positive, alpha-beta T cell
-regulatory T cell
