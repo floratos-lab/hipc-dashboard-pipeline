@@ -1,3 +1,3 @@
-mature gamma-delta T cell & CD3+, CD45RA-, CD62L-
-mature gamma-delta T cell & CD3+, CD45RA-, CD62L+
-mature gamma-delta T cell & CD3+, CD45RA+, CD62L-
+mature gamma-delta T cell (CD3+, CD45RA-, CD62L-)
+mature gamma-delta T cell (CD3+, CD45RA-, CD62L+)
+mature gamma-delta T cell (CD3+, CD45RA+, CD62L-)

@@ -1,0 +1,6 @@
+cd8-positive, alpha-beta cytotoxic t cell
+cd4-positive, alpha-beta memory t cell
+plasmacytoid dendritic cell, human
+conventional dendritic cell (type 1)
+conventional dendritic cell (type 2)
+mature nk t cell

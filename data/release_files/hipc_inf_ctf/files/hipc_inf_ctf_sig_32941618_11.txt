@@ -1,0 +1,5 @@
+granulocyte (high side scatter and CD15+)
+basophil (low side scatter and CRTH2-,PDL1+)
+neutrophil (high side scatter and CD16+,CD15+)
+granulocyte (high side scatter and CD16+)
+natural killer cell (CD56+,CD3-,PDL1+)

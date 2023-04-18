@@ -1,3 +1,4 @@
+dev/*
 logfiles/*
 src/.Rhistory
 submissions/.Rhistory

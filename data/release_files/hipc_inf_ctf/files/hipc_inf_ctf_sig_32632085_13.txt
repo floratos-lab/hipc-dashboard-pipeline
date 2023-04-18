@@ -1,0 +1,3 @@
+CD8-positive, alpha-beta T cell (CCR4+)
+CD8-positive, alpha-beta T cell (CXCR4+)
+CD8-positive, alpha-beta T cell (GATA3+)

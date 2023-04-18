@@ -1,8 +1,8 @@
-plasmablast & CD27-hi, CD38-hi, CD20-
-IgD-negative memory B cell & CD27+, CD38+
-B cell & CD20+, CD86+
-CD4-positive, alpha-beta T cell & CD38+
-naive B cell & CD86+
-CD4-positive, alpha-beta T cell & IL-4+
-CD8-positive, alpha-beta T cell & CD39+
-IgD-negative memory B cell & CD86+, CD27-
+plasmablast (CD27-hi, CD38-hi, CD20-)
+IgD-negative memory B cell (CD27+, CD38+)
+B cell (CD20+, CD86+)
+CD4-positive, alpha-beta T cell (CD38+)
+naive B cell (CD86+)
+CD4-positive, alpha-beta T cell (IL-4+)
+CD8-positive, alpha-beta T cell (CD39+)
+IgD-negative memory B cell (CD86+, CD27-)

@@ -1,0 +1,5 @@
+cd4-positive, cd25-positive, alpha-beta regulatory t cell (CD25+,CD127-)
+effector memory cd4-positive, alpha-beta t cell (CD45RA-,CD27-,CD28-,CCR7-)
+effector memory cd4-positive, alpha-beta t cell (CD45RA-,CD27-,CD28+,CCR7-)
+effector memory cd4-positive, alpha-beta t cell (CD45RA-,CD27-,CD28+,CCR7+)
+effector memory cd4-positive, alpha-beta t cell (CD45RA-,CD27+,CD28+,CCR7-)

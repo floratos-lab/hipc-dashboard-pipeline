@@ -7,6 +7,7 @@
 
 library(xml2)
 library(easyPubMed)
+library(stringi)
 
 ### DATA ###
 # Special cases for consortia as first author:
@@ -66,103 +67,31 @@ use_consortium$use <- as.logical(use_consortium$use)
 # Dropped support for PubDate and medline.
 # Will just use "pubmed" now.
 pmid_to_title_easy <- function(pmid, print_pub_year) {
-#  pmid_to_title_easy <- function(pmid, date_type) {
-# print(paste(pmid, date_type))
-  # test: pmid <- "16571413"
-  # test: pmid <- "21357945"
-    # test: pmid <- "23844129"
-    # test: pmid <- "22617845"
-    # test: pmid <- "29868000"
-    # test: pmid <- "28137280"
-    # test: pmid <- "19155521" # has name Garcia with special characters
-    # test: pmid <- "33033248"
-    # test: pmid <- "32826343"
   pmids_thing <-  get_pubmed_ids(pmid)
 
   article <- fetch_pubmed_data(pmids_thing, format = "xml")
 
   # Get real publication year and month the hard way
   x <- read_xml(article)  # returns "xml_document" "xml_node"
-  # FIXME - "article" has the correct special UTF-8 characters for e.g. accented names.
-  #         They are lost here.
-  x <- iconv(x)  # returns character
-  # At each newline, a new list item is added.  Example of a date entry (hours and minutes removed):
-  # <PubMedPubDate PubStatus=\"pubmed\">\n <Year>2013</Year>\n <Month>5</Month>\n <Day>10</Day>\n </PubMedPubDate>\n
-  x <- strsplit(x, split = "\n", fixed = TRUE)  # returns list
-
-  # x is a list of length 1 of N character vectors
-  # We can get rid of the top level list
-  x <- x[[1]]
-  x <- lapply(x, trimws)
-
-
-    # returns matrix[n,1], change to vector, though not necessary
-  # date_type must be enclosed in escaped quotes
-
-  s <- as.vector(sapply(x, function(x) {grepl(paste0("PubStatus=\"", "pubmed", "\">"), x)}))
-
-  w <- which(s)
-  custom_grep(x[w+1], tag = "Year", format = "character")
-  pubYear <- custom_grep(x[w+1], tag = "Year", format = "character")
-  pubMonth <- custom_grep(x[w+2], tag = "Month", format = "character")
+  pub_dates <- xml_find_all(x, ".//PubMedPubDate")
+  pubmed_date <- pub_dates[xml_attr(pub_dates, "PubStatus")=="pubmed"]
+  pubYear <- xml_text(xml_child(pubmed_date, "Year"))
+  pubMonth <- xml_text(xml_child(pubmed_date, "Month"))
+  pubDay <- xml_text(xml_child(pubmed_date, "Day"))
 
   if(pubMonth %in% 0:9) {
     pubMonth <- paste0("0", pubMonth)
   }
 
-  pubDay <- custom_grep(x[w+3], tag = "Day", format = "character")
   if(pubDay %in% 0:9) {
     pubDay <- paste0("0", pubDay)
   }
 
-  # Note - table_articles_byAuth() failed for article with PMID 28842433,
-  # which has a collectiveName value. No problem with other such articles.
-  s <- as.vector(sapply(x, function(y) {grepl("<CollectiveName>", y)}))
-  w <- which(s)  # note that only first value in list x[w] used.
-  if(length(w) > 0) {
-    collective_name <- custom_grep(x[w], tag = "CollectiveName", format = "character")
-    if(!(pmid %in% use_consortium$pmid)) {
-      print(paste("New collective name found for PMID", pmid, collective_name))
-    }
-  } else {
-    collective_name <- NULL
-  }
-  # if wanted all collective names
-  #sapply(x[w], custom_grep, tag = "CollectiveName", format = "character")
-
-  # Text retrieved using table_articles_byAuth() handles special characters properly.
-  # But if it fails to return a value, then use direct parse method.
-  epm <- table_articles_byAuth(pubmed_data = article)
-
-  if(length(epm$lastname[1]) == 0) {
-    print(paste("table_articles_byAuth() did not find author name; instead using direct parse"))
-
-    s <- as.vector(sapply(x, function(y) {grepl("<LastName>", y)}))
-    w <- which(s)[1]  # note that only first value in list x[w] used anyway.
-    author_lname <- custom_grep(x[w], tag = "LastName", format = "character")
-    if (length(s) > 1) {
-      author_lname <- paste(author_lname, "et al.")  # each author's last name is in successive entries, just take first.
-    }
-  } else {
-    author_lname <-  epm$lastname[1]
-    if (length(epm$lastname) > 1) {
-      author_lname <- paste(author_lname, "et al.")  # each author's last name is in successive entries, just take first.
-    }
-  }
-
-  s <- as.vector(sapply(x, function(y) {grepl("<ISOAbbreviation>", y)}))
-  w <- which(s)  # note that only first value in list x[w] used.
-  journal_abb <- custom_grep(x[w], tag = "ISOAbbreviation", format = "character")
-
-  if(length(epm$title) == 0) {
-    print(paste("table_articles_byAuth() did not find title, using direct parse"))
-
-    s <- as.vector(sapply(x, function(y) {grepl("<ArticleTitle>", y)}))
-    w <- which(s)  # note that only first value in list x[w] used.
-    article_title <- custom_grep(x[w], tag = "ArticleTitle", format = "character")
-  } else {
-    article_title <- epm$title[1]
-  }
+  collective_name <- xml_text(xml_find_first(x, ".//CollectiveName"))
+  lastnames <- xml_find_all(x, ".//LastName")
+  author_lname <- paste0(xml_text(lastnames[[1]]), ifelse(length(lastnames)>1, " et al.", ""))
+  journal_abb <- xml_text(xml_find_first(x, ".//ISOAbbreviation"))
+  article_title <- xml_text(xml_find_first(x, ".//ArticleTitle"))
 
   aname <- author_lname # default
   if(pmid %in% use_consortium$pmid) {
@@ -173,37 +102,10 @@ pmid_to_title_easy <- function(pmid, print_pub_year) {
     }
   }
   # Use externally supplied print_pub_year instead of pubmed pubYear value obtained from NCBI.
-  auth_ref <- paste0(aname,  " (", print_pub_year, ")")  # replace epm$year[1] with pubYear
+  auth_ref <- paste0(aname,  " (", print_pub_year, ")")
   pubmed_ref <- paste0("PMID: <a href = 'https://www.ncbi.nlm.nih.gov/pubmed/?term=", pmid, "' target='_blank'>", pmid, "</a>")
   dashboard_title <- paste(auth_ref, article_title, paste0(journal_abb, "."), pubmed_ref)
 
   date <- paste(pubYear, pubMonth, pubDay, sep = ".")
-  abstract <- ""
-  return(data.frame(pmid, author = aname, article_title, dashboard_title, date, abstract, stringsAsFactors = FALSE))
+  return(data.frame(pmid, dashboard_title, date, stringsAsFactors = FALSE))
 }
-
-get_titles_and_dates <- function(df2, renew_pmids, pmid_file, log_files, pmid_logfile_basename) {
-  pmids_uniq <- unique(df2$publication_reference_id)
-  
-  summary_df <- add_to_summary(summary_df, "Unique PMIDs", length(pmids_uniq))
-  # Get user-entered year for each pmid
-  # FIXME - need to catch if user did not enter year.
-  print_pub_year <- df2$publication_date[match(pmids_uniq, df2$publication_reference_id)]
-  # FIXME - need to check date format valid
-  print_pub_year <- stri_sub(print_pub_year, 1, 4)
-  
-  if (renew_pmids || !file.exists(pmid_file)) {
-    td <- mapply(pmid_to_title_easy, pmids_uniq, print_pub_year, SIMPLIFY = FALSE)
-    titles_and_dates_df <- as.data.frame(rbindlist(td))
-    save(titles_and_dates_df, file = pmid_file)
-    write.table(titles_and_dates_df,
-                file = paste(log_files,
-                             paste(pmid_logfile_basename, "titles_and_dates_df.tsv", sep = "-"),
-                             sep = "/"), 
-                row.names = FALSE, col.names = TRUE, sep = "\t")
-  } else {
-    load(file = pmid_file)
-  }
-  return(titles_and_dates_df)
-}
-

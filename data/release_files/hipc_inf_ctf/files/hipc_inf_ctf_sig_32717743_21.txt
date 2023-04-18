@@ -1,0 +1,2 @@
+effector cd4-positive, alpha-beta t cell (regulatory)
+t follicular helper cell (CD4+)

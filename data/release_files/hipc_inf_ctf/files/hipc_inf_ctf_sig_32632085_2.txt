@@ -1,0 +1,4 @@
+CD4-positive, alpha-beta T cell
+naive thymus-derived cd4-positive, alpha-beta t cell (CCR7+,CD45RA+,CD28+,CD27+)
+central memory cd4-positive, alpha-beta t cell (CCR7-,CD45RA+,CD28+,CD27+-)
+effector memory cd4-positive, alpha-beta t cell (CCR7-,CD45RA-,CD28+-,CD27+-)

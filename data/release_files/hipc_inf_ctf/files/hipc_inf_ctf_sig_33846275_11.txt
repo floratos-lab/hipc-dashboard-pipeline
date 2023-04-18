@@ -1,0 +1,3 @@
+effector memory cd8-positive, alpha-beta t cell (CD45RA-,CD27-,CD28-,CCR7-)
+effector memory cd8-positive, alpha-beta t cell (CD45RA-,CD27-,CD28+,CCR7-)
+effector memory cd8-positive, alpha-beta t cell (CD45RA-,CD27+,CD28+,CCR7-)

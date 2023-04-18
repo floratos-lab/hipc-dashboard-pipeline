@@ -1,2 +1,2 @@
-CD4-positive, alpha-beta T cell & CD3+, pKI-67+
-CD8-positive, alpha-beta T cell & CD3+, pKI-67+
+CD4-positive, alpha-beta T cell (CD3+, pKI-67+)
+CD8-positive, alpha-beta T cell (CD3+, pKI-67+)

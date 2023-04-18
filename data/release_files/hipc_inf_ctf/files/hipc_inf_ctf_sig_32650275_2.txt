@@ -1,4 +1,4 @@
-natural killer cell & CD45+, CD19-, CD56-, CD3+
-mature NK T cell & CD45+, CD19-, CD56-, CD3+
-mature gamma-delta T cell & CD3+, CD45RA+
-CD8-positive, alpha-beta T cell & CD45+, CD19-, CD56-, CD3+
+natural killer cell (CD45+, CD19-, CD56-, CD3+)
+mature NK T cell (CD45+, CD19-, CD56-, CD3+)
+mature gamma-delta T cell (CD3+, CD45RA+)
+CD8-positive, alpha-beta T cell (CD45+, CD19-, CD56-, CD3+)

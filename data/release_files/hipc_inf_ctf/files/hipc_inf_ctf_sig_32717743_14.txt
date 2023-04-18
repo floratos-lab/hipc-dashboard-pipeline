@@ -1,0 +1,2 @@
+cd8-positive, alpha-beta cytotoxic t cell
+plasmacytoid dendritic cell, human

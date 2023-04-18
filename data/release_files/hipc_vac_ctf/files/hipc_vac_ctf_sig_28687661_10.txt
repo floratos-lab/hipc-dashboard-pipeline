@@ -1,4 +1,4 @@
-B cell & CD3-, CD19+, CD20+
-IgM memory B cell & CD3-, CD19+, CD20+, CD27+
-B cell & CD3-, CD19+, CD20+, CD27+, IgD-, IgM-
-CD4-positive, alpha-beta T cell & CD14-, CD3+, IL2+, NS1
+B cell (CD3-, CD19+, CD20+)
+IgM memory B cell (CD3-, CD19+, CD20+, CD27+)
+B cell (IgD-, IgM- and CD3-, CD19+, CD20+, CD27+)
+CD4-positive, alpha-beta T cell (NS1 and CD14-, CD3+, IL2+)

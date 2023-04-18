@@ -1,0 +1,7 @@
+conventional dendritic cell (type 1)
+conventional dendritic cell (type 2)
+plasmacytoid dendritic cell, human
+CD8-positive, alpha-beta T cell
+CD4-positive, alpha-beta T cell
+mature nk t cell
+natural killer cell

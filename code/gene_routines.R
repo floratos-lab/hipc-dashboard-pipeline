@@ -1,7 +1,7 @@
 # depends on "source("hipc_utils.R")"  having been called in main routine
 library(HGNChelper)
 library(org.Hs.eg.db)
-library(limma)
+library(limma) # for alias2Symbol . see http://web.mit.edu/~r/current/arch/i386_linux26/lib/R/library/limma/html/alias2Symbol.html
 library(annotate)
 library(RCurl)
 
@@ -140,16 +140,11 @@ update_symbols_ncbi <- function(genes, source_data_dir, log_files, base_filename
   return(list(genes_map = genes_map, failed_symbols = failed_symbols, summary = summary_df))
 }
 
-update_symbols_using_hgnc_helper <- function(genes_map, source_data_dir, log_files, base_filename, download_new_hgnc) {
+update_symbols_using_hgnc_helper <- function(genes_map, source_data_dir, log_files, base_filename) {
   summary_df <- data.frame()  # initialize summary log
   hgnc_file_path <- paste(source_data_dir, hgnc_file, sep = "/")
-  if (download_new_hgnc) {
-    # Data source is "ftp://ftp.ebi.ac.uk/pub/databases/genenames/new/tsv/hgnc_complete_set.txt"
-    new.hgnc.table <- getCurrentHumanMap()
-    save(new.hgnc.table, file = hgnc_file_path, compress="bzip2")
-  }
   if(file.exists(hgnc_file_path)) {
-    load(hgnc_file_path)  # assumes it was previously downloaded
+    load(hgnc_file_path)  # load new.hgnc.table
     genes.retried <- checkGeneSymbols(genes_map$alias, map=new.hgnc.table, species="human")
   } else {
     # HGNChelper includes its own internal data if no file provided.
@@ -374,6 +369,18 @@ check_against_ncbi_synonyms <- function(failed_symbols, source_data_dir, log_fil
   # m_lines will contain a list of vectors of matching row numbers
   # sapply keeps list item names, lapply apparently does not
   m_lines <- sapply(failed_symbols[m], function(x) {grep(x, ncbi_genes$Synonyms)})
+  # the code here is apparently vulnerable:
+  # for the latest data,
+  # it breaks simply because there is only one failed_symbols (instead of more)
+  message("m_lines is supposed to be a list")
+  print(class(m_lines))
+  if (!is.list(m_lines)) {
+    m_lines <- list(m_lines)
+    names(m_lines) <- failed_symbols[m]
+  }
+  if (names(m_lines) != failed_symbols[m]) {
+    stop("names do not match")
+  }
 
   # process each item in a list of vectors of varying length
   if(length(m_lines) > 0) {
@@ -417,7 +424,7 @@ log_no_valid_symbol_vs_pmid <- function(noValidSymbols_df, log_files, base_filen
 }
 
 # Run all symbol updates
-update_gene_symbols <- function(genes, log_files, base_filename, source_data_dir, download_new_hgnc) {
+update_gene_symbols <- function(genes, log_files, base_filename, source_data_dir, download_new_hgnc=FALSE) {
   summary_df <- data.frame()  # initialize summary log
 
   genes <- gsub("[()]", "", genes)
@@ -435,8 +442,7 @@ update_gene_symbols <- function(genes, log_files, base_filename, source_data_dir
   #  x contains non-approved gene symbols
 
   # See how many NAs can be fixed
-  rvl            <- update_symbols_using_hgnc_helper(genes_map, source_data_dir, log_files, base_filename,
-                                                     download_new_hgnc)
+  rvl            <- update_symbols_using_hgnc_helper(genes_map, source_data_dir, log_files, base_filename)
   genes_map      <- rvl$genes_map
   failed_symbols <- rvl$failed_symbols
   summary_df     <- rbind(summary_df, rvl$summary)

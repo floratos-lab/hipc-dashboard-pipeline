@@ -1,0 +1,4 @@
+activated CD8-positive, alpha-beta T cell (HLADRA+,CD38+)
+exhausted t cell (CD8+,PD1+,CD57+)
+CD8-positive, alpha-beta T cell (CD57+)
+cd8-positive, alpha-beta t cell (PD1+)

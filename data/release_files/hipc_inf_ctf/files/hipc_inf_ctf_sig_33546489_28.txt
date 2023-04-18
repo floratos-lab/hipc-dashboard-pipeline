@@ -1,0 +1,3 @@
+mucosal invariant t cell (Valpha7.2+ and CD38+,CD161+)
+mucosal invariant t cell (Valpha7.2+ and CD69+,CD161+)
+mucosal invariant t cell (Valpha7.2+ and CD161+,CTLA4+)

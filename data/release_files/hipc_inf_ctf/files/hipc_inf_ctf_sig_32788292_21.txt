@@ -1,0 +1,4 @@
+monocyte (IL1B+)
+monocyte (TNFA+)
+monocyte (IL6+)
+monocyte (IL6+,TNFA+)

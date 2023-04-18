@@ -1,0 +1,6 @@
+CD8-positive, alpha-beta T cell (TBET+)
+CD8-positive, alpha-beta T cell (CXCR3+)
+CD8-positive, alpha-beta T cell (CXCR3+,TBET+)
+CD8-positive, alpha-beta T cell (CCR6+)
+CD8-positive, alpha-beta T cell (CD161++)
+CD8-positive, alpha-beta T cell (CCR6+,CD161+)

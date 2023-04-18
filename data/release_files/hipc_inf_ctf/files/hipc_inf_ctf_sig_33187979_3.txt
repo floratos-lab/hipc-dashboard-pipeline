@@ -1,0 +1,3 @@
+classical monocyte (CD45+,CD3-,CD19-,CD14++,CD16-)
+intermediate monocyte (CD45+,CD3-,CD19-,CD14++,CD16+)
+non-classical monocyte (CD45+,CD3-,CD19-,CD14+,CD16+)

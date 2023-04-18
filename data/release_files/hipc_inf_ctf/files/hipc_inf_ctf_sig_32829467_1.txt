@@ -1,0 +1,2 @@
+naive thymus-derived cd4-positive, alpha-beta t cell (CD45RA+,CCR7+)
+naive thymus-derived cd8-positive, alpha-beta t cell (CD45RA+,CCR7+)

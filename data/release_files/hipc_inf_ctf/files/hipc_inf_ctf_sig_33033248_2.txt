@@ -1,0 +1,4 @@
+alpha-beta t cell (CD3+)
+monocyte (CD68+)
+monocyte (CD163+)
+CD8-positive, alpha-beta T cell

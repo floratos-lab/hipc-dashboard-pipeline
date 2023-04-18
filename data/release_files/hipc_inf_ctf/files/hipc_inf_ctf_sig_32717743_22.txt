@@ -1,0 +1,2 @@
+naive thymus-derived CD8-positive, alpha-beta T cell
+effector memory cd8-positive, alpha-beta t cell
