@@ -7,10 +7,12 @@ Changes in version 1.5.0
     to create all output.
 -- Many small errors and corner cases are fixed. Some of the issues showed up only with new data.
 -- Text encoding handling is corrected.
-- Add processing Hancock lab covid-19 (covid_v2) curations.
 - Move PMID lookup handling to separate routine to support different scenarios.
 - No longer accept space as a valid separator character for gene symbols.
 - Allow to complete cell-type runs even if some cell-types not mapped.
+- Modify the observation summary template for cell-type frequency signatures, to improve 
+    readability. 
+
 
 Changes in version 1.4.0
 - Add splitting on tissue_type_term_id (split 4).
