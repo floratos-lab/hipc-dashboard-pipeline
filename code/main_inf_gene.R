@@ -262,8 +262,8 @@ rm(rvl)
 # to add them back to complete signatures later
 unmatched_symbols_map <- cbind(genes_map, sig_row_id = df2$sig_row_id)
 unmatched_symbols_map <- unmatched_symbols_map[is.na(unmatched_symbols_map$Symbol), ]
-message("unmatched gene symbols:")
-print(unique(unmatched_symbols_map$alias))
+message("unmatched gene symbols saved in a log file.")
+write(unique(unmatched_symbols_map$alias), "../logfiles/unmatched-gene-symbols.txt")
 
 # copy the fixed symbols back to the main data structure df2
 df2$response_component <- genes_map$Symbol
