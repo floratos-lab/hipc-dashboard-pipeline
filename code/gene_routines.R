@@ -378,7 +378,7 @@ check_against_ncbi_synonyms <- function(failed_symbols, source_data_dir, log_fil
     m_lines <- list(m_lines)
     names(m_lines) <- failed_symbols[m]
   }
-  if (names(m_lines) != failed_symbols[m]) {
+  if (!identical(names(m_lines), failed_symbols[m])) {
     stop("names do not match")
   }
 
