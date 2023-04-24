@@ -1,0 +1,497 @@
+32788292_1_10	PMID 32788292 cell-type frequency 1	plasmablast (CD3-, CD20-, CD56-, CD14-, CD16-, CD11c-, CD123-, CD19-lo, CD27-hi, CD38-hi, HLA-DR+)	effector CD8-positive, alpha-beta T cell (CD3+, CD38-hi, HLA-DR++)
+32788292_2_11	PMID 32788292 cell-type frequency 2	plasmablast (CD3-, CD20-, CD56-, CD14-, CD16-, CD11c-, CD123-, CD19-lo, CD27-hi, CD38-hi, HLA-DR+)	effector CD8-positive, alpha-beta T cell (CD3+, CD38-hi, HLA-DR++)
+32788292_3_12	PMID 32788292 cell-type frequency 3	plasmacytoid dendritic cell (CD3-, CD20-, CD56-, CD14-, CD16-, CD11c-, CD123+, HLA-DR+)
+32788292_4_13	PMID 32788292 cell-type frequency 4	plasmacytoid dendritic cell (CD3-, CD20-, CD56-, CD14-, CD16-, CD11c-, CD123+, HLA-DR+)
+32650275_1_84	PMID 32650275 cell-type frequency 1	lymphocyte
+32650275_2_85	PMID 32650275 cell-type frequency 2	natural killer cell (CD45+, CD19-, CD56-, CD3+)	mature NK T cell (CD45+, CD19-, CD56-, CD3+)	mature gamma-delta T cell (CD3+, CD45RA+)	CD8-positive, alpha-beta T cell (CD45+, CD19-, CD56-, CD3+)
+32650275_3_86	PMID 32650275 cell-type frequency 3	B cell, CD19-positive (CD45+, CD3-)	natural killer cell (CD45+, CD19-, CD56-, CD3+)	mature NK T cell (CD45+, CD19-, CD56-, CD3+)	mature gamma-delta T cell (CD3+, CD45RA+)	CD8-positive, alpha-beta T cell (CD45+, CD19-, CD56-, CD3+)	CD4-positive, alpha-beta T cell (CD45+, CD19-, CD3+)	CD4-positive, CD25-positive, alpha-beta regulatory T cell (CD45+, CD19-, CD3+, CD4+, CD25+, CD127low)
+32650275_4_87	PMID 32650275 cell-type frequency 4	B cell, CD19-positive (CD45+, CD3-)	CD4-positive, CD25-positive, alpha-beta regulatory T cell (CD45+, CD19-, CD3+, CD4+, CD25+, CD127low)
+32650275_5_88	PMID 32650275 cell-type frequency 5	effector memory CD4-positive, alpha-beta T cell (CD3+, CD56-, CD19-, CD4+, CD25low, CD127hi, CD45RA-, CD62L-)
+32650275_6_89	PMID 32650275 cell-type frequency 6	CD4-positive, alpha-beta T cell (CD3+, CD56-, CD19-, CD4+, CD25low, CD127hi, CD45RA+, CD62L-)
+32650275_7_90	PMID 32650275 cell-type frequency 7	CD4-positive, alpha-beta T cell (CD3+, CD56-, CD19-, CD4+, CD25low, CD127hi, CD45RA+, CD62L-)	central memory CD4-positive, alpha-beta T cell (CD3+, CD56-, CD19-, CD4+, CD25low, CD127hi, CD45RA-, CD62L+)
+32650275_8_91	PMID 32650275 cell-type frequency 8	naive T cell (CD3+, CD56-, CD19-, CD8+, CD45RA+, CD62L+)	effector memory CD8-positive, alpha-beta T cell (CD3+, CD56-, CD19-, CD45RA+, CD62L+)
+32650275_9_92	PMID 32650275 cell-type frequency 9	CD8-positive, alpha-beta T cell (CD3+, CD56-, CD19-, CD8+, CD45RA+, CD62L+)	central memory CD8-positive, alpha-beta T cell
+32650275_10_93	PMID 32650275 cell-type frequency 10	effector memory CD8-positive, alpha-beta T cell (CD3+, CD56-, CD19-, CD45RA+, CD62L+)
+32650275_11_94	PMID 32650275 cell-type frequency 11	naive T cell (CD3+, CD56-, CD19-, CD8+, CD45RA+, CD62L+)
+32650275_12_95	PMID 32650275 cell-type frequency 12	naive T cell (CD3+, CD56-, CD19-, CD8+, CD45RA+, CD62L+)
+32650275_13_96	PMID 32650275 cell-type frequency 13	effector memory CD8-positive, alpha-beta T cell (CD3+, CD56-, CD19-, CD45RA+, CD62L+)
+32650275_14_97	PMID 32650275 cell-type frequency 14	mature gamma-delta T cell (CD3+, CD45RA+, CD62L+)
+32650275_15_98	PMID 32650275 cell-type frequency 15	mature gamma-delta T cell (CD3+, CD45RA-, CD62L-)	mature gamma-delta T cell (CD3+, CD45RA-, CD62L+)	mature gamma-delta T cell (CD3+, CD45RA+, CD62L-)
+32650275_16_99	PMID 32650275 cell-type frequency 16	mature gamma-delta T cell (CD3+, CD45RA-, CD62L-)
+32650275_17_100	PMID 32650275 cell-type frequency 17	mature gamma-delta T cell (CD3+, CD45RA-, CD62L+)
+32650275_18_101	PMID 32650275 cell-type frequency 18	naive T cell (CD3+, CD56-, CD19-, CD4+, CD25low, CD127hi, CD45RA+, CD62L-)
+32650275_19_102	PMID 32650275 cell-type frequency 19	effector memory CD4-positive, alpha-beta T cell (CD3+, CD56-, CD19-, CD4+, CD25low, CD127hi, CD45RA-, CD62L-)	central memory CD4-positive, alpha-beta T cell (CD3+, CD56-, CD19-, CD4+, CD25low, CD127hi, CD45RA-, CD62L+)
+32650275_20_103	PMID 32650275 cell-type frequency 20	naive T cell (CD3+, CD56-, CD19-, CD8+, CD45RA+, CD62L+)
+32650275_21_104	PMID 32650275 cell-type frequency 21	effector memory CD8-positive, alpha-beta T cell (CD3+, CD56-, CD19-, CD45RA+, CD62L+)	central memory CD8-positive, alpha-beta T cell
+32826343_1_105	PMID 32826343 cell-type frequency 1	natural killer cell	natural killer cell (CD56+-)
+32826343_2_106	PMID 32826343 cell-type frequency 2	natural killer cell	natural killer cell (CD56++)	natural killer cell (CD56+-)
+32826343_3_120	PMID 32826343 cell-type frequency 3	natural killer cell (NKG2C+,CD57+,CD56+-)
+32826343_4_121	PMID 32826343 cell-type frequency 4	natural killer cell (NKG2C-,CD57-,CD56+-)
+32826343_5_122	PMID 32826343 cell-type frequency 5	natural killer cell (NKG2C-,CD57-,CD56+-)
+32826343_6_127	PMID 32826343 cell-type frequency 6	natural killer cell (CD56+-,NKG2C+,CD57+)
+32826343_7_128	PMID 32826343 cell-type frequency 7	natural killer cell (CD56+-,NKG2C+,CD57+)
+32826343_8_133	PMID 32826343 cell-type frequency 8	natural killer cell (CD56++)
+32826343_9_148	PMID 32826343 cell-type frequency 9	natural killer cell (CD25+,CD56++)	natural killer cell (CD56++,PRF1+)	natural killer cell (CD56+-,PRF1+)	natural killer cell (GZMB+,CD56++)
+32826343_10_149	PMID 32826343 cell-type frequency 10	natural killer cell (TIGIT+,CD56+-)
+32826343_11_150	PMID 32826343 cell-type frequency 11	natural killer cell (GZMB+,CD56+-)	natural killer cell (CD25+,CD56+)	natural killer cell (GZMB+,CD56++)	natural killer cell (CD25+,CD56++)	natural killer cell (KSP37+,CD56++)
+33033248_1_163	PMID 33033248 cell-type frequency 1	alpha-beta t cell (CD3+)	monocyte (CD68+)	monocyte (CD163+)
+33033248_2_164	PMID 33033248 cell-type frequency 2	alpha-beta t cell (CD3+)	monocyte (CD68+)	monocyte (CD163+)	CD8-positive, alpha-beta T cell
+33033248_3_165	PMID 33033248 cell-type frequency 3	CD4-positive, alpha-beta T cell	b cell (CD20+)	cd8-positive, alpha-beta t cell (PD1+)
+32788292_5_172	PMID 32788292 cell-type frequency 5	plasmablast	effector cd8-positive, alpha-beta t cell
+32788292_6_173	PMID 32788292 cell-type frequency 6	plasmacytoid dendritic cell, human
+32788292_7_206	PMID 32788292 cell-type frequency 7	plasmablast	effector cd8-positive, alpha-beta t cell
+32788292_8_207	PMID 32788292 cell-type frequency 8	plasmablast	effector cd8-positive, alpha-beta t cell
+32788292_9_208	PMID 32788292 cell-type frequency 9	plasmablast	effector cd8-positive, alpha-beta t cell
+32788292_10_209	PMID 32788292 cell-type frequency 10	plasmablast	effector cd8-positive, alpha-beta t cell
+32788292_11_210	PMID 32788292 cell-type frequency 11	plasmablast	effector cd8-positive, alpha-beta t cell
+32788292_12_211	PMID 32788292 cell-type frequency 12	plasmablast	effector cd8-positive, alpha-beta t cell
+32788292_13_212	PMID 32788292 cell-type frequency 13	effector cd8-positive, alpha-beta t cell
+32788292_14_213	PMID 32788292 cell-type frequency 14	plasmablast	effector cd8-positive, alpha-beta t cell
+32788292_15_214	PMID 32788292 cell-type frequency 15	plasmacytoid dendritic cell, human
+32788292_16_215	PMID 32788292 cell-type frequency 16	plasmacytoid dendritic cell, human
+32788292_17_216	PMID 32788292 cell-type frequency 17	plasmacytoid dendritic cell, human
+32788292_18_217	PMID 32788292 cell-type frequency 18	plasmacytoid dendritic cell, human
+32788292_19_218	PMID 32788292 cell-type frequency 19	plasmacytoid dendritic cell, human
+32788292_21_233	PMID 32788292 cell-type frequency 21	monocyte (IL1B+)	monocyte (TNFA+)	monocyte (IL6+)	monocyte (IL6+,TNFA+)
+32788292_22_234	PMID 32788292 cell-type frequency 22	monocyte (IL1B+)	monocyte (TNFA+)	monocyte (IL6+)	monocyte (IL6+,TNFA+)	monocyte (MCP1+)
+32788292_23_301	PMID 32788292 cell-type frequency 23	plasmacytoid dendritic cell, human
+32788292_24_302	PMID 32788292 cell-type frequency 24	plasmablast	effector cd8-positive, alpha-beta t cell
+33187979_1_326	PMID 33187979 cell-type frequency 1	plasmablast (CD19+,IGD-,CD38+,CD20-,CD71+)
+33187979_2_327	PMID 33187979 cell-type frequency 2	cd8-positive, alpha-beta t cell (CD45+,CD3+)	cd4-positive, alpha-beta memory t cell (CD45+,CD3+)	classical monocyte (CD45+,CD3-,CD19-,CD14++,CD16-)	intermediate monocyte (CD45+,CD3-,CD19-,CD14++,CD16+)	non-classical monocyte (CD45+,CD3-,CD19-,CD14+,CD16+)
+33187979_3_329	PMID 33187979 cell-type frequency 3	classical monocyte (CD45+,CD3-,CD19-,CD14++,CD16-)	intermediate monocyte (CD45+,CD3-,CD19-,CD14++,CD16+)	non-classical monocyte (CD45+,CD3-,CD19-,CD14+,CD16+)
+33119547_1_343	PMID 33119547 cell-type frequency 1	CD8-positive, alpha-beta T cell	monocyte (CD16+)	monocyte (CD14+)	natural killer cell (CD56+,CD16-)	natural killer cell (CD56+,CD16+)
+33119547_2_344	PMID 33119547 cell-type frequency 2	b cell
+33119547_3_345	PMID 33119547 cell-type frequency 3	b cell	dendritic cell
+33119547_4_346	PMID 33119547 cell-type frequency 4	CD14-positive, CD16-positive monocyte
+33119547_5_347	PMID 33119547 cell-type frequency 5	natural killer cell (CD56+,CD16+)	monocyte (CD14+)	dendritic cell
+33119547_6_351	PMID 33119547 cell-type frequency 6	cd4-positive, alpha-beta memory t cell (CD38+)
+32514047_1_385	PMID 32514047 cell-type frequency 1	lymphocyte
+32514047_2_386	PMID 32514047 cell-type frequency 2	neutrophil
+32514047_3_387	PMID 32514047 cell-type frequency 3	myeloid suppressor cell (polymorphonuclear)
+32514047_4_388	PMID 32514047 cell-type frequency 4	myeloid suppressor cell (polymorphonuclear)
+32514047_5_389	PMID 32514047 cell-type frequency 5	myeloid suppressor cell (polymorphonuclear)
+32717743_1_390	PMID 32717743 cell-type frequency 1	eosinophil	non-classical monocyte	neutrophil	classical monocyte	intermediate monocyte	b cell
+32717743_2_391	PMID 32717743 cell-type frequency 2	conventional dendritic cell (type 1)	conventional dendritic cell (type 2)	plasmacytoid dendritic cell, human	CD8-positive, alpha-beta T cell	CD4-positive, alpha-beta T cell	mature nk t cell	natural killer cell
+32717743_3_392	PMID 32717743 cell-type frequency 3	eosinophil
+32717743_4_393	PMID 32717743 cell-type frequency 4	monocyte	neutrophil
+32717743_5_394	PMID 32717743 cell-type frequency 5	t cell
+32717743_6_395	PMID 32717743 cell-type frequency 6	t cell
+32717743_7_396	PMID 32717743 cell-type frequency 7	neutrophil	eosinophil
+32717743_8_397	PMID 32717743 cell-type frequency 8	monocyte
+32717743_9_398	PMID 32717743 cell-type frequency 9	monocyte	neutrophil	eosinophil
+32717743_10_399	PMID 32717743 cell-type frequency 10	t cell
+32717743_11_407	PMID 32717743 cell-type frequency 11	monocyte
+32717743_12_408	PMID 32717743 cell-type frequency 12	eosinophil
+32717743_13_419	PMID 32717743 cell-type frequency 13	non-classical monocyte	neutrophil (CD16++)	neutrophil (CD16+)
+32717743_14_420	PMID 32717743 cell-type frequency 14	cd8-positive, alpha-beta cytotoxic t cell	plasmacytoid dendritic cell, human
+32717743_15_421	PMID 32717743 cell-type frequency 15	intermediate monocyte	non-classical monocyte	neutrophil (CD16++)	neutrophil (CD16+)
+32717743_16_422	PMID 32717743 cell-type frequency 16	cd8-positive, alpha-beta cytotoxic t cell	cd4-positive, alpha-beta memory t cell	plasmacytoid dendritic cell, human	conventional dendritic cell (type 1)	conventional dendritic cell (type 2)	mature nk t cell
+32717743_17_423	PMID 32717743 cell-type frequency 17	natural killer cell
+32717743_18_424	PMID 32717743 cell-type frequency 18	naive thymus-derived cd4-positive, alpha-beta t cell
+32717743_19_425	PMID 32717743 cell-type frequency 19	central memory cd4-positive, alpha-beta t cell	t follicular helper cell (CD4+)
+32717743_20_426	PMID 32717743 cell-type frequency 20	central memory CD8-positive, alpha-beta T cell	effector memory cd8-positive, alpha-beta t cell
+32717743_21_427	PMID 32717743 cell-type frequency 21	effector cd4-positive, alpha-beta t cell (regulatory)	t follicular helper cell (CD4+)
+32717743_22_428	PMID 32717743 cell-type frequency 22	naive thymus-derived CD8-positive, alpha-beta T cell	effector memory cd8-positive, alpha-beta t cell
+32717743_23_429	PMID 32717743 cell-type frequency 23	effector cd4-positive, alpha-beta t cell (regulatory)
+32717743_24_430	PMID 32717743 cell-type frequency 24	central memory CD8-positive, alpha-beta T cell	effector memory cd8-positive, alpha-beta t cell
+32717743_26_432	PMID 32717743 cell-type frequency 26	activated cd4-positive, alpha-beta t cell
+32717743_27_433	PMID 32717743 cell-type frequency 27	CD4-positive, alpha-beta T cell (IFNG+)
+32717743_28_435	PMID 32717743 cell-type frequency 28	activated cd4-positive, alpha-beta t cell	cd4-positive, alpha-beta memory t cell (IL17+)
+32717743_29_436	PMID 32717743 cell-type frequency 29	cd8-positive, alpha-beta cytotoxic t cell	activated cd8-positive, alpha-beta t cell
+32717743_30_439	PMID 32717743 cell-type frequency 30	CD4-positive, alpha-beta T cell (IFNG+)
+32829467_1_453	PMID 32829467 cell-type frequency 1	naive thymus-derived cd4-positive, alpha-beta t cell (CD45RA+,CCR7+)	naive thymus-derived cd8-positive, alpha-beta t cell (CD45RA+,CCR7+)
+32829467_2_454	PMID 32829467 cell-type frequency 2	naive thymus-derived cd4-positive, alpha-beta t cell (CD45RA+,CCR7+)	naive thymus-derived cd8-positive, alpha-beta t cell (CD45RA+,CCR7+)
+32829467_3_455	PMID 32829467 cell-type frequency 3	effector memory CD4-positive, alpha-beta T cell (CCR7-,CD45RA-)	effector memory cd8-positive, alpha-beta t cell (CCR7-,CD45RA-)
+32829467_4_456	PMID 32829467 cell-type frequency 4	effector memory CD4-positive, alpha-beta T cell (CCR7-,CD45RA-)	effector memory cd8-positive, alpha-beta t cell (CCR7-,CD45RA-)
+32829467_5_457	PMID 32829467 cell-type frequency 5	activated cd8-positive, alpha-beta t cell
+32829467_6_458	PMID 32829467 cell-type frequency 6	exhausted t cell (CD4+,PD1+,CD57+)	exhausted t cell (CD8+,PD1+,CD57+)
+32829467_7_459	PMID 32829467 cell-type frequency 7	exhausted t cell (CD4+,PD1+,CD57+)
+32829467_8_460	PMID 32829467 cell-type frequency 8	exhausted t cell (CD8+,PD1+,CD57+)
+32829467_9_461	PMID 32829467 cell-type frequency 9	gamma-delta t cell
+32829467_10_462	PMID 32829467 cell-type frequency 10	gamma-delta t cell
+32829467_11_463	PMID 32829467 cell-type frequency 11	gamma-delta t cell
+32829467_12_466	PMID 32829467 cell-type frequency 12	memory b cell (activated and CD19+,CD27+,CD21-)	plasmablast (CD19+,CD38+,CD27+)	b cell (exchausted and CD19+,CD27-,CD21-)
+32829467_13_467	PMID 32829467 cell-type frequency 13	natural killer cell
+32829467_14_468	PMID 32829467 cell-type frequency 14	natural killer cell
+32829467_15_469	PMID 32829467 cell-type frequency 15	natural killer cell
+32829467_16_470	PMID 32829467 cell-type frequency 16	natural killer cell
+32829467_17_471	PMID 32829467 cell-type frequency 17	natural killer cell
+32829467_18_472	PMID 32829467 cell-type frequency 18	cd14-positive, cd16-negative classical monocyte
+32829467_19_473	PMID 32829467 cell-type frequency 19	cd14-positive, cd16-negative classical monocyte
+32829467_20_474	PMID 32829467 cell-type frequency 20	cd14-positive, cd16-negative classical monocyte
+32829467_21_475	PMID 32829467 cell-type frequency 21	cd14-positive, cd16-positive monocyte	non-classical monocyte (CD14-,CD16+)
+32794454_1_513	PMID 32794454 cell-type frequency 1	blood cell (WBCs)	monocyte	neutrophil
+32794454_2_514	PMID 32794454 cell-type frequency 2	platelet
+32794454_3_517	PMID 32794454 cell-type frequency 3	neutrophil
+32794454_4_518	PMID 32794454 cell-type frequency 4	platelet
+32816392_1_566	PMID 32816392 cell-type frequency 1	monocyte	cd14-positive, cd16-negative classical monocyte
+32816392_2_569	PMID 32816392 cell-type frequency 2	monocyte (large-size, as determined by forward scatter)
+32816392_3_571	PMID 32816392 cell-type frequency 3	cd14-positive, cd16-positive monocyte
+32816392_4_582	PMID 32816392 cell-type frequency 4	monocyte
+32816392_5_583	PMID 32816392 cell-type frequency 5	monocyte (CD8+)	cd14-positive, cd16-negative classical monocyte
+32816392_6_584	PMID 32816392 cell-type frequency 6	CD14-positive monocyte	cd8-positive, alpha-beta t cell
+32816392_7_585	PMID 32816392 cell-type frequency 7	monocyte
+32816392_8_586	PMID 32816392 cell-type frequency 8	CD14-positive monocyte	cd14-positive, cd16-negative classical monocyte
+32816392_9_587	PMID 32816392 cell-type frequency 9	lymphocyte	b cell	cd8-positive, alpha-beta t cell	cd4-positive, alpha-beta t cell	double-positive, alpha-beta thymocyte (CD4+,CD8+)	t cell (CD4-,CD8-)
+32816392_10_588	PMID 32816392 cell-type frequency 10	granulocyte
+32816392_11_589	PMID 32816392 cell-type frequency 11	lymphocyte	monocyte	b cell	cd8-positive, alpha-beta t cell	cd4-positive, alpha-beta t cell	double-positive, alpha-beta thymocyte (CD4+,CD8+)	t cell (CD4-,CD8-)
+32816392_12_590	PMID 32816392 cell-type frequency 12	granulocyte
+33239683_1_632	PMID 33239683 cell-type frequency 1	lymphocyte	basophil	eosinophil
+33239683_2_633	PMID 33239683 cell-type frequency 2	neutrophil
+33239683_3_634	PMID 33239683 cell-type frequency 3	neutrophil	blood cell
+33239683_4_635	PMID 33239683 cell-type frequency 4	basophil	lymphocyte
+33239683_5_636	PMID 33239683 cell-type frequency 5	neutrophil
+33239683_6_637	PMID 33239683 cell-type frequency 6	blood cell
+33239683_7_638	PMID 33239683 cell-type frequency 7	basophil	eosinophil
+33239683_8_639	PMID 33239683 cell-type frequency 8	basophil
+33013872_1_736	PMID 33013872 cell-type frequency 1	neutrophil	leukocyte
+33013872_2_737	PMID 33013872 cell-type frequency 2	monocyte	lymphocyte
+33013872_3_741	PMID 33013872 cell-type frequency 3	neutrophil
+33013872_4_742	PMID 33013872 cell-type frequency 4	neutrophil
+33013872_5_743	PMID 33013872 cell-type frequency 5	monocyte	lymphocyte
+33013872_6_744	PMID 33013872 cell-type frequency 6	monocyte	lymphocyte
+33013872_7_760	PMID 33013872 cell-type frequency 7	cytotoxic t cell	monocyte	myeloid dendritic cell	neutrophil
+33013872_8_761	PMID 33013872 cell-type frequency 8	t cell	cd8-positive, alpha-beta t cell	natural killer cell	lymphocyte of b lineage
+33013872_9_762	PMID 33013872 cell-type frequency 9	cytotoxic t cell	lymphocyte of b lineage	monocyte	myeloid dendritic cell	neutrophil
+33013872_10_763	PMID 33013872 cell-type frequency 10	t cell	cd8-positive, alpha-beta t cell
+33937096_1_765	PMID 33937096 cell-type frequency 1	lymphocyte
+33937096_2_766	PMID 33937096 cell-type frequency 2	lymphocyte
+33937096_3_767	PMID 33937096 cell-type frequency 3	lymphocyte
+33937096_4_768	PMID 33937096 cell-type frequency 4	lymphocyte
+33937096_14_778	PMID 33937096 cell-type frequency 14	t cell	cd8-positive, alpha-beta t cell
+33937096_15_779	PMID 33937096 cell-type frequency 15	t cell	cd8-positive, alpha-beta t cell	b cell, cd19-positive
+33937096_16_780	PMID 33937096 cell-type frequency 16	t cell	cd4-positive, alpha-beta t cell	cd8-positive, alpha-beta t cell	b cell, cd19-positive
+33937096_17_781	PMID 33937096 cell-type frequency 17	t cell	cd8-positive, alpha-beta t cell	b cell, cd19-positive
+33937096_18_782	PMID 33937096 cell-type frequency 18	t cell	cd8-positive, alpha-beta t cell	b cell, cd19-positive
+33937096_19_783	PMID 33937096 cell-type frequency 19	t cell	cd4-positive, alpha-beta t cell
+33937096_20_784	PMID 33937096 cell-type frequency 20	exhausted t cell (CD4+,PD1+)	exhausted t cell (CD8+,PD1+)
+33937096_21_785	PMID 33937096 cell-type frequency 21	exhausted t cell (CD4+,TIM3+)	exhausted t cell (CD8+,TIM3+)	cd8-positive, alpha-beta t cell (CD38+)
+33937096_22_786	PMID 33937096 cell-type frequency 22	activated cd8-positive, alpha-beta t cell (CD38+,HLADRA+)
+33937096_23_787	PMID 33937096 cell-type frequency 23	cd8-positive, alpha-beta t cell (CD38+)
+33846275_1_788	PMID 33846275 cell-type frequency 1	t cell
+33846275_2_789	PMID 33846275 cell-type frequency 2	monocyte
+33846275_3_790	PMID 33846275 cell-type frequency 3	b cell
+33846275_4_791	PMID 33846275 cell-type frequency 4	conventional dendritic cell
+33846275_5_792	PMID 33846275 cell-type frequency 5	intermediate monocyte
+33846275_6_799	PMID 33846275 cell-type frequency 6	naive thymus-derived cd4-positive, alpha-beta t cell (CD45RA+,CD27+,CD28+,CD95-)	effector memory cd4-positive, alpha-beta t cell (CD45RA-,CD27+,CD28+,CCR7-)
+33846275_7_800	PMID 33846275 cell-type frequency 7	cd4-positive, cd25-positive, alpha-beta regulatory t cell (CD25+,CD127-)	effector memory cd4-positive, alpha-beta t cell (CD45RA-,CD27-,CD28-,CCR7-)	effector memory cd4-positive, alpha-beta t cell (CD45RA-,CD27-,CD28+,CCR7-)	effector memory cd4-positive, alpha-beta t cell (CD45RA-,CD27-,CD28+,CCR7+)	effector memory cd4-positive, alpha-beta t cell (CD45RA-,CD27+,CD28+,CCR7-)
+33846275_8_801	PMID 33846275 cell-type frequency 8	effector memory cd4-positive, alpha-beta t cell (CD45RA-,CD27-,CD28-,CCR7-)	effector memory cd4-positive, alpha-beta t cell (CD45RA-,CD27-,CD28+,CCR7-)	effector memory cd4-positive, alpha-beta t cell (CD45RA-,CD27-,CD28+,CCR7+)
+33846275_9_802	PMID 33846275 cell-type frequency 9	naive thymus-derived cd4-positive, alpha-beta t cell (CD45RA+,CD27+,CD28+,CD95-)	effector memory cd4-positive, alpha-beta t cell (CD45RA-,CD27+,CD28+,CCR7-)	central memory cd4-positive, alpha-beta t cell (CD45RA-,CD27+,CD28+,CCR7+)	cd4-positive, alpha-beta memory t cell (CD45RA+,CD27+,CD28+,CD95+)
+33846275_10_814	PMID 33846275 cell-type frequency 10	naive thymus-derived cd8-positive, alpha-beta t cell (CD45RA+,CD27+,CD28+,CD95-)	cd8-positive, alpha-beta memory t cell (CD45RA+,CD27+,CD28+,CD95+)	central memory cd8-positive, alpha-beta t cell (CD45RA-,CD27+,CD28+,CCR7+)
+33846275_11_815	PMID 33846275 cell-type frequency 11	effector memory cd8-positive, alpha-beta t cell (CD45RA-,CD27-,CD28-,CCR7-)	effector memory cd8-positive, alpha-beta t cell (CD45RA-,CD27-,CD28+,CCR7-)	effector memory cd8-positive, alpha-beta t cell (CD45RA-,CD27+,CD28+,CCR7-)
+33846275_12_816	PMID 33846275 cell-type frequency 12	effector memory cd8-positive, alpha-beta t cell (CD45RA-,CD27-,CD28-,CCR7-)	effector memory cd8-positive, alpha-beta t cell (CD45RA-,CD27-,CD28+,CCR7+)
+33846275_13_817	PMID 33846275 cell-type frequency 13	naive thymus-derived cd8-positive, alpha-beta t cell (CD45RA+,CD27+,CD28+,CD95-)	effector memory cd8-positive, alpha-beta t cell (CD45RA-,CD27+,CD28+,CCR7-)	central memory cd8-positive, alpha-beta t cell (CD45RA-,CD27+,CD28+,CCR7+)	cd8-positive, alpha-beta memory t cell (CD45RA+,CD27+,CD28+,CD95+)
+33846275_15_821	PMID 33846275 cell-type frequency 15	cd4-positive, cd25-positive, alpha-beta regulatory t cell (CD127-,CD25+)
+33208459_1_827	PMID 33208459 cell-type frequency 1	cd4-positive, alpha-beta t cell (TNFA+)
+33208459_2_828	PMID 33208459 cell-type frequency 2	cd4-positive, alpha-beta t cell (IL2+)
+33208459_3_829	PMID 33208459 cell-type frequency 3	effector cd4-positive, alpha-beta t cell (IL2+)
+33208459_4_830	PMID 33208459 cell-type frequency 4	cd4-positive, alpha-beta t cell (TNFA+,IL2+,IFNG+)
+33208459_6_832	PMID 33208459 cell-type frequency 6	effector cd4-positive, alpha-beta t cell (TNFA+)
+33208459_7_833	PMID 33208459 cell-type frequency 7	activated CD4-positive, alpha-beta T cell (HLADRA+,4-1BB+)
+33208459_8_847	PMID 33208459 cell-type frequency 8	cd4-positive, alpha-beta t cell (IFNG+,GZMB+)
+33546489_1_848	PMID 33546489 cell-type frequency 1	cd4-positive, cd25-positive, alpha-beta regulatory t cell (CD25+,CD127-)
+33546489_2_849	PMID 33546489 cell-type frequency 2	cd4-positive, cd25-positive, alpha-beta regulatory t cell (CD25+,CD127-)
+33546489_3_850	PMID 33546489 cell-type frequency 3	naive thymus-derived cd4-positive, alpha-beta t cell (CD62L++,CD45RO+-)
+33546489_4_851	PMID 33546489 cell-type frequency 4	naive thymus-derived cd4-positive, alpha-beta t cell (CD62L++,CD45RO+-)
+33546489_5_852	PMID 33546489 cell-type frequency 5	effector memory cd4-positive, alpha-beta t cell (CD62L+-,CD45RO++)
+33546489_6_853	PMID 33546489 cell-type frequency 6	effector memory cd4-positive, alpha-beta t cell (CD62L+-,CD45RO++)
+33546489_7_854	PMID 33546489 cell-type frequency 7	naive thymus-derived cd8-positive, alpha-beta t cell (CD62L++,CD45RO+-)
+33546489_8_855	PMID 33546489 cell-type frequency 8	naive thymus-derived cd8-positive, alpha-beta t cell (CD62L++,CD45RO+-)
+33546489_9_856	PMID 33546489 cell-type frequency 9	effector memory cd8-positive, alpha-beta t cell (CD62L+-,CD45RO++)
+33546489_10_857	PMID 33546489 cell-type frequency 10	effector memory cd8-positive, alpha-beta t cell (CD62L+-,CD45RO++)
+33546489_11_858	PMID 33546489 cell-type frequency 11	gamma-delta T cell (gammadelta2 and CD3+)
+33546489_12_859	PMID 33546489 cell-type frequency 12	gamma-delta T cell (gammadelta2 and CD3+)
+33546489_13_860	PMID 33546489 cell-type frequency 13	mucosal invariant t cell (identified via MR1 5-OP-RU BV421-labeled tetramer staining)
+33546489_14_861	PMID 33546489 cell-type frequency 14	mucosal invariant t cell (identified via MR1 5-OP-RU BV421-labeled tetramer staining)
+33546489_15_862	PMID 33546489 cell-type frequency 15	mucosal invariant t cell (identified via MR1 5-OP-RU BV421-labeled tetramer staining)
+33546489_16_863	PMID 33546489 cell-type frequency 16	mucosal invariant t cell (identified via MR1 5-OP-RU BV421-labeled tetramer staining)
+33546489_17_864	PMID 33546489 cell-type frequency 17	mucosal invariant t cell (identified via MR1 5-OP-RU BV421-labeled tetramer staining)
+33546489_18_865	PMID 33546489 cell-type frequency 18	mucosal invariant t cell (identified via MR1 5-OP-RU BV421-labeled tetramer staining and CD8+)
+33546489_19_866	PMID 33546489 cell-type frequency 19	mucosal invariant t cell (Valpha7.2+ and CD8+,CD161+)
+33546489_20_867	PMID 33546489 cell-type frequency 20	mucosal invariant t cell (identified via MR1 5-OP-RU BV421-labeled tetramer staining and CD8+)
+33546489_21_868	PMID 33546489 cell-type frequency 21	mucosal invariant t cell (Valpha7.2+ and CD8+,CD161+)
+33546489_22_869	PMID 33546489 cell-type frequency 22	mucosal invariant t cell (Valpha7.2+ and CD8+,CD161+)
+33546489_23_870	PMID 33546489 cell-type frequency 23	mucosal invariant t cell (identified via MR1 5-OP-RU BV421-labeled tetramer staining and IL12R+)	mucosal invariant t cell (identified via MR1 5-OP-RU BV421-labeled tetramer staining and IL18R1+)
+33546489_24_871	PMID 33546489 cell-type frequency 24	mucosal invariant t cell (Valpha7.2+ and CD38+,CD161+)
+33546489_25_872	PMID 33546489 cell-type frequency 25	mucosal invariant t cell (Valpha7.2+ and CD69+,CD161+)
+33546489_26_873	PMID 33546489 cell-type frequency 26	mucosal invariant t cell (Valpha7.2+ and HLADRA+,CD161+)	mucosal invariant t cell (Valpha7.2+ and CD161+,CTLA4+)
+33546489_27_875	PMID 33546489 cell-type frequency 27	mucosal invariant t cell (Valpha7.2+ and CD38+,CD161+)	mucosal invariant t cell (Valpha7.2+ and CD69+,CD161+)
+33546489_28_876	PMID 33546489 cell-type frequency 28	mucosal invariant t cell (Valpha7.2+ and CD38+,CD161+)	mucosal invariant t cell (Valpha7.2+ and CD69+,CD161+)	mucosal invariant t cell (Valpha7.2+ and CD161+,CTLA4+)
+33546489_29_878	PMID 33546489 cell-type frequency 29	mucosal invariant t cell (Valpha7.2+ and CD38+,CD161+)	mucosal invariant t cell (Valpha7.2+ and CD69+,CD161+)
+33546489_30_879	PMID 33546489 cell-type frequency 30	mucosal invariant t cell (Valpha7.2+ and CD161+,CTLA4+)
+33546489_31_880	PMID 33546489 cell-type frequency 31	mucosal invariant t cell (Valpha7.2+ and HLADRA+,CD161+)
+33546489_32_881	PMID 33546489 cell-type frequency 32	mucosal invariant t cell (identified via MR1 5-OP-RU BV421-labeled tetramer staining and IL17A+)
+33546489_33_882	PMID 33546489 cell-type frequency 33	mucosal invariant t cell (identified via MR1 5-OP-RU BV421-labeled tetramer staining and TNFA+)	mucosal invariant t cell (identified via MR1 5-OP-RU BV421-labeled tetramer staining and GZMB+)
+33546489_34_883	PMID 33546489 cell-type frequency 34	mucosal invariant t cell (identified via MR1 5-OP-RU BV421-labeled tetramer staining and TNFA+)	mucosal invariant t cell (identified via MR1 5-OP-RU BV421-labeled tetramer staining and GZMB+)
+33546489_35_884	PMID 33546489 cell-type frequency 35	mucosal invariant t cell (identified via MR1 5-OP-RU BV421-labeled tetramer staining and GZMB+)	mucosal invariant t cell (identified via MR1 5-OP-RU BV421-labeled tetramer staining and PRF1+)
+33546489_36_885	PMID 33546489 cell-type frequency 36	mucosal invariant t cell (identified via MR1 5-OP-RU BV421-labeled tetramer staining and PRF1+)
+33546489_37_886	PMID 33546489 cell-type frequency 37	mucosal invariant t cell (identified via MR1 5-OP-RU BV421-labeled tetramer staining and IFNG+)
+33546489_38_887	PMID 33546489 cell-type frequency 38	mucosal invariant t cell (identified via MR1 5-OP-RU BV421-labeled tetramer staining and IFNG+)
+33546489_39_888	PMID 33546489 cell-type frequency 39	mucosal invariant t cell (identified via MR1 5-OP-RU BV421-labeled tetramer staining and PRF1+)
+33546489_40_889	PMID 33546489 cell-type frequency 40	mucosal invariant t cell (identified via MR1 5-OP-RU BV421-labeled tetramer staining and IFNG+)
+33546489_41_890	PMID 33546489 cell-type frequency 41	mucosal invariant t cell (identified via MR1 5-OP-RU BV421-labeled tetramer staining and GZMB+)
+33546489_42_891	PMID 33546489 cell-type frequency 42	mucosal invariant t cell (identified via MR1 5-OP-RU BV421-labeled tetramer staining and GZMB+)
+32632085_1_892	PMID 32632085 cell-type frequency 1	lymphocyte
+32632085_2_893	PMID 32632085 cell-type frequency 2	CD4-positive, alpha-beta T cell	naive thymus-derived cd4-positive, alpha-beta t cell (CCR7+,CD45RA+,CD28+,CD27+)	central memory cd4-positive, alpha-beta t cell (CCR7-,CD45RA+,CD28+,CD27+-)	effector memory cd4-positive, alpha-beta t cell (CCR7-,CD45RA-,CD28+-,CD27+-)
+32632085_3_894	PMID 32632085 cell-type frequency 3	effector memory cd4-positive, alpha-beta t cell, terminally differentiated (CCR7-,CD45RA+,CD28-,CD27+-)
+32632085_4_895	PMID 32632085 cell-type frequency 4	activated cd4-positive, alpha-beta t cell (HLADRA+,CD38+)	exhausted t cell (CD57+,PD1+)	cd4-positive, alpha-beta t cell (PD1+)	cd4-positive, cd25-positive, alpha-beta regulatory t cell (CD127-,CD25+)
+32632085_5_896	PMID 32632085 cell-type frequency 5	naive regulatory t cell (CD4+)	activated cd4-positive, alpha-beta t cell, human (central memory, regulatory)	effector memory cd4-positive, alpha-beta t cell (PD1+)	activated cd4-positive, alpha-beta t cell, human (central memory, regulatory and PD1+,HLADRA+,CD38+)	central memory cd4-positive, alpha-beta t cell (CD38+)
+32632085_6_897	PMID 32632085 cell-type frequency 6	cd4-positive, alpha-beta t cell (CCR6+)	cd4-positive, alpha-beta t cell (CXCR3+)	cd4-positive, alpha-beta t cell (CD161+,CCR6+)
+32632085_7_898	PMID 32632085 cell-type frequency 7	cd4-positive, alpha-beta t cell (CXCR4+)	CD4-positive, alpha-beta T cell (CCR4+)
+32632085_8_899	PMID 32632085 cell-type frequency 8	CD8-positive, alpha-beta T cell	naive thymus-derived cd8-positive, alpha-beta t cell (CCR7+,CD45RA+,CD28+,CD27+)	central memory CD8-positive, alpha-beta T cell (CCR7-,CD28+,CD27+-,CD45RA+)
+32632085_9_900	PMID 32632085 cell-type frequency 9	effector memory CD8-positive, alpha-beta T cell, terminally differentiated (CCR7-,CD28-,CD27+-,CD45RA+)
+32632085_10_901	PMID 32632085 cell-type frequency 10	activated CD8-positive, alpha-beta T cell (HLADRA+,CD38+)	exhausted t cell (CD8+,PD1+,CD57+)	CD8-positive, alpha-beta T cell (CD57+)	cd8-positive, alpha-beta t cell (PD1+)
+32632085_11_902	PMID 32632085 cell-type frequency 11	effector CD8-positive, alpha-beta T cell (terminally differentiated and CD38+)	effector memory CD8-positive, alpha-beta T cell (CD38+,CD57+)	effector memory CD8-positive, alpha-beta T cell (activated and PD1+)	effector memory CD8-positive, alpha-beta T cell (CD57+)	effector CD8-positive, alpha-beta T cell (terminally differentiated and CD57+)
+32632085_12_903	PMID 32632085 cell-type frequency 12	central memory CD8-positive, alpha-beta T cell	naive thymus-derived CD8-positive, alpha-beta T cell
+32632085_13_904	PMID 32632085 cell-type frequency 13	CD8-positive, alpha-beta T cell (CCR4+)	CD8-positive, alpha-beta T cell (CXCR4+)	CD8-positive, alpha-beta T cell (GATA3+)
+32632085_14_905	PMID 32632085 cell-type frequency 14	CD8-positive, alpha-beta T cell (TBET+)	CD8-positive, alpha-beta T cell (CXCR3+)	CD8-positive, alpha-beta T cell (CXCR3+,TBET+)	CD8-positive, alpha-beta T cell (CCR6+)	CD8-positive, alpha-beta T cell (CD161++)	CD8-positive, alpha-beta T cell (CCR6+,CD161+)
+32632085_15_907	PMID 32632085 cell-type frequency 15	CD4-positive, alpha-beta T cell (IFNG+)	cd4-positive, alpha-beta t cell (TNF+)	CD4-positive, alpha-beta T cell (IL17A+)	cd4-positive, alpha-beta t cell (IL2+)	CD4-positive, alpha-beta T cell (CD107a+)
+32632085_16_908	PMID 32632085 cell-type frequency 16	CD8-positive, alpha-beta T cell (IL17A+)	CD8-positive, alpha-beta T cell (IL2+)	CD8-positive, alpha-beta T cell (CD107a+)
+32632085_17_909	PMID 32632085 cell-type frequency 17	cd4-positive, alpha-beta t cell (TNF+,IFNG+,CD107A+)	cd4-positive, alpha-beta t cell (TNF+)	CD4-positive, alpha-beta T cell (IL2+,IL17+)
+32307550_1_913	PMID 32307550 cell-type frequency 1	neutrophil
+32307550_2_933	PMID 32307550 cell-type frequency 2	t cell	CD4-positive, alpha-beta T cell	CD8-positive, alpha-beta T cell
+32307550_3_934	PMID 32307550 cell-type frequency 3	t cell	CD8-positive, alpha-beta T cell
+32307550_4_935	PMID 32307550 cell-type frequency 4	t cell	CD8-positive, alpha-beta T cell
+34099652_1_939	PMID 34099652 cell-type frequency 1	monocyte
+32217835_1_968	PMID 32217835 cell-type frequency 1	leukocyte	neutrophil
+32217835_2_969	PMID 32217835 cell-type frequency 2	lymphocyte
+32217835_3_973	PMID 32217835 cell-type frequency 3	T cell	CD4-positive, alpha-beta T cell	CD8-positive, alpha-beta T cell
+32217835_4_974	PMID 32217835 cell-type frequency 4	T cell
+32217835_5_975	PMID 32217835 cell-type frequency 5	B cell
+32217835_6_976	PMID 32217835 cell-type frequency 6	regulatory T cell (CD45RA+)
+32320677_1_977	PMID 32320677 cell-type frequency 1	leukocyte
+32320677_2_978	PMID 32320677 cell-type frequency 2	leukocyte
+32320677_3_993	PMID 32320677 cell-type frequency 3	neutrophil
+32320677_4_994	PMID 32320677 cell-type frequency 4	monocyte
+32320677_5_995	PMID 32320677 cell-type frequency 5	monocyte
+32320677_6_996	PMID 32320677 cell-type frequency 6	natural killer cell (CD3+,CD4+,CD45+)
+32320677_7_997	PMID 32320677 cell-type frequency 7	natural killer cell (CD3+,CD8+,CD45+)
+32320677_8_998	PMID 32320677 cell-type frequency 8	natural killer cell (CD19+,CD45+)
+32320677_9_999	PMID 32320677 cell-type frequency 9	natural killer cell (CD3-,CD16+,CD56+,CD45+)
+32320677_10_1000	PMID 32320677 cell-type frequency 10	natural killer cell (CD3+,CD4+,CD45+)	natural killer cell (CD3+,CD8+,CD45+)
+32320677_11_1001	PMID 32320677 cell-type frequency 11	natural killer cell (CD3+,CD4+,CD45+)
+32320677_12_1002	PMID 32320677 cell-type frequency 12	natural killer cell (CD3+,CD8+,CD45+)
+32320677_13_1003	PMID 32320677 cell-type frequency 13	natural killer cell (CD19+,CD45+)
+32320677_14_1004	PMID 32320677 cell-type frequency 14	natural killer cell (CD3-,CD16+,CD56+,CD45+)
+32320677_15_1005	PMID 32320677 cell-type frequency 15	natural killer cell (CD19+,CD45+)
+32320677_16_1006	PMID 32320677 cell-type frequency 16	natural killer cell (CD3+,CD4+,CD45+)
+32320677_17_1007	PMID 32320677 cell-type frequency 17	natural killer cell (CD3+,CD8+,CD45+)
+32320677_18_1008	PMID 32320677 cell-type frequency 18	natural killer cell (CD3-,CD16+,CD56+,CD45+)
+32320677_19_1009	PMID 32320677 cell-type frequency 19	natural killer cell (CD19+,CD45+)
+32320677_20_1010	PMID 32320677 cell-type frequency 20	natural killer cell (CD3+,CD4+,CD45+)
+32320677_21_1011	PMID 32320677 cell-type frequency 21	natural killer cell (CD3+,CD4+,CD45+)
+32320677_22_1012	PMID 32320677 cell-type frequency 22	natural killer cell (CD3+,CD8+,CD45+)
+32320677_23_1013	PMID 32320677 cell-type frequency 23	natural killer cell (CD3+,CD8+,CD45+)
+32320677_24_1014	PMID 32320677 cell-type frequency 24	natural killer cell (CD3-,CD16+,CD56+,CD45+)
+32320677_25_1015	PMID 32320677 cell-type frequency 25	natural killer cell (CD3-,CD16+,CD56+,CD45+)
+32320677_26_1016	PMID 32320677 cell-type frequency 26	natural killer cell (CD3-,CD16+,CD56+,CD45+)
+32320677_27_1017	PMID 32320677 cell-type frequency 27	natural killer cell (CD19+,CD45+)
+32320677_28_1018	PMID 32320677 cell-type frequency 28	natural killer cell (CD19+,CD45+)
+32320677_29_1019	PMID 32320677 cell-type frequency 29	natural killer cell (CD3+,CD4+,CD45+)
+32320677_30_1020	PMID 32320677 cell-type frequency 30	natural killer cell (CD3-,CD16+,CD56+,CD45+)
+32320677_31_1021	PMID 32320677 cell-type frequency 31	natural killer cell (CD19+,CD45+)
+32320677_32_1039	PMID 32320677 cell-type frequency 32	lymphocyte
+32320677_34_1044	PMID 32320677 cell-type frequency 34	lymphocyte
+32320677_35_1045	PMID 32320677 cell-type frequency 35	lymphocyte
+32320677_36_1046	PMID 32320677 cell-type frequency 36	lymphocyte
+33785765_1_1047	PMID 33785765 cell-type frequency 1	plasma cell (CD27++,CD38++)
+33785765_2_1048	PMID 33785765 cell-type frequency 2	plasma cell (CD27++,CD38++,IGA2+)
+33785765_3_1050	PMID 33785765 cell-type frequency 3	plasmablast (IgA2+,CD27+,CD38+)
+33478949_1_1051	PMID 33478949 cell-type frequency 1	CD8-positive, alpha-beta memory T cell
+32650275_22_1052	PMID 32650275 cell-type frequency 22	lymphocyte
+32650275_23_1053	PMID 32650275 cell-type frequency 23	lymphocyte
+32650275_24_1054	PMID 32650275 cell-type frequency 24	lymphocyte
+32650275_25_1055	PMID 32650275 cell-type frequency 25	b cell	natural killer cell	mature nk t cell	mature gamma-delta T cell	gamma-delta T cell (Vgamma9-)	gamma-delta T cell (Vgamma9+)	CD8-positive, alpha-beta T cell	CD4-positive, alpha-beta T cell	regulatory T cell
+32650275_26_1056	PMID 32650275 cell-type frequency 26	natural killer cell	mature nk t cell	mature gamma-delta T cell	CD8-positive, alpha-beta T cell
+32650275_27_1057	PMID 32650275 cell-type frequency 27	b cell	regulatory T cell
+32650275_28_1058	PMID 32650275 cell-type frequency 28	effector memory CD4-positive, alpha-beta T cell (CD45RA-,CD62L-)
+32650275_29_1059	PMID 32650275 cell-type frequency 29	effector memory CD4-positive, alpha-beta T cell, terminally differentiated (CD45RA+,CD62L-)
+32650275_30_1060	PMID 32650275 cell-type frequency 30	effector memory CD4-positive, alpha-beta T cell (CD45RA-,CD62L-)
+32650275_31_1061	PMID 32650275 cell-type frequency 31	effector memory CD4-positive, alpha-beta T cell (CD45RA-,CD62L-)
+32650275_32_1062	PMID 32650275 cell-type frequency 32	effector memory CD4-positive, alpha-beta T cell, terminally differentiated (CD45RA+,CD62L-)	central memory CD4-positive, alpha-beta T cell (CD45RA-,CD62L+)
+32650275_33_1063	PMID 32650275 cell-type frequency 33	naive thymus-derived CD8-positive, alpha-beta T cell	effector memory CD8-positive, alpha-beta T cell
+32650275_34_1064	PMID 32650275 cell-type frequency 34	central memory CD8-positive, alpha-beta T cell
+32650275_35_1065	PMID 32650275 cell-type frequency 35	effector memory CD8-positive, alpha-beta T cell, terminally differentiated
+32650275_36_1066	PMID 32650275 cell-type frequency 36	effector memory CD8-positive, alpha-beta T cell, terminally differentiated
+32650275_37_1067	PMID 32650275 cell-type frequency 37	naive thymus-derived CD8-positive, alpha-beta T cell
+32650275_38_1068	PMID 32650275 cell-type frequency 38	effector memory CD8-positive, alpha-beta T cell
+32650275_39_1069	PMID 32650275 cell-type frequency 39	naive thymus-derived CD8-positive, alpha-beta T cell
+32650275_40_1070	PMID 32650275 cell-type frequency 40	effector memory CD8-positive, alpha-beta T cell
+32650275_41_1071	PMID 32650275 cell-type frequency 41	immature gamma-delta T cell (CD45RA+,CD62L+)
+32650275_42_1072	PMID 32650275 cell-type frequency 42	immature gamma-delta T cell (CD45RA+,CD62L+)
+32650275_43_1073	PMID 32650275 cell-type frequency 43	mature gamma-delta T cell (CD45RA-,CD62L-)
+32650275_44_1074	PMID 32650275 cell-type frequency 44	mature gamma-delta T cell (CD45RA-,CD62L-)
+32650275_45_1075	PMID 32650275 cell-type frequency 45	gamma-delta T cell (central memory-like  and CD45RA-,CD62L+)
+32650275_46_1076	PMID 32650275 cell-type frequency 46	gamma-delta T cell (terminally differentiated-like and CD45RA+,CD62L-)
+32650275_47_1077	PMID 32650275 cell-type frequency 47	gamma-delta T cell (central memory-like  and CD45RA-,CD62L+)
+32650275_48_1078	PMID 32650275 cell-type frequency 48	naive thymus-derived CD4-positive, alpha-beta T cell (CD45RA+,CD62L+)
+32650275_49_1079	PMID 32650275 cell-type frequency 49	effector memory CD4-positive, alpha-beta T cell (CD45RA-,CD62L-)	central memory CD4-positive, alpha-beta T cell (CD45RA-,CD62L+)
+32650275_50_1080	PMID 32650275 cell-type frequency 50	naive thymus-derived CD8-positive, alpha-beta T cell
+32650275_51_1081	PMID 32650275 cell-type frequency 51	effector memory CD8-positive, alpha-beta T cell	central memory CD8-positive, alpha-beta T cell
+32958614_1_1086	PMID 32958614 cell-type frequency 1	lymphocyte
+32958614_2_1097	PMID 32958614 cell-type frequency 2	CD4-positive, alpha-beta T cell (IFNG+)
+32958614_3_1098	PMID 32958614 cell-type frequency 3	CD4-positive, alpha-beta T cell (CD25+)
+32941618_1_1103	PMID 32941618 cell-type frequency 1	eosinophil	monocyte
+32941618_2_1104	PMID 32941618 cell-type frequency 2	granulocyte (high side scatter and CD15+)	neutrophil (high side scatter and CD16+,CD15+)	granulocyte (high side scatter and CD16+)	natural killer cell (CD56+,CD3-,PD1+)	natural killer cell (CD56+,CD3-,PDL1+)	CD4-positive, alpha-beta T cell (CCR7+,PD1+)
+32941618_3_1105	PMID 32941618 cell-type frequency 3	lymphocyte (CD3-,CD56-)	basophil (low side scatter and CRTH2+)	monocyte (medium side scatter and CD4+,CD14+)	natural killer cell (NKG2D+,NKP46+)
+32941618_4_1106	PMID 32941618 cell-type frequency 4	alpha-beta t cell (CD3+)
+32941618_5_1107	PMID 32941618 cell-type frequency 5	CD4-positive, alpha-beta T cell
+32941618_6_1108	PMID 32941618 cell-type frequency 6	plasmacytoid dendritic cell, human (CD11c-,HLADRA+,CD123+)
+32941618_7_1109	PMID 32941618 cell-type frequency 7	CD8-positive, alpha-beta T cell
+32941618_8_1121	PMID 32941618 cell-type frequency 8	basophil
+32941618_10_1123	PMID 32941618 cell-type frequency 10	plasmacytoid dendritic cell, human (CD11c-,HLADRA+,CD123+)	monocyte (medium side scatter and CD4+,CD14+)	lymphocyte	natural killer cell (NKG2D+,NKP46+)	lymphocyte (CD3-,CD56-)	natural killer cell (CD16+,CD56+,CD3+-)	basophil (low side scatter and CRTH2+)
+32941618_11_1124	PMID 32941618 cell-type frequency 11	granulocyte (high side scatter and CD15+)	basophil (low side scatter and CRTH2-,PDL1+)	neutrophil (high side scatter and CD16+,CD15+)	granulocyte (high side scatter and CD16+)	natural killer cell (CD56+,CD3-,PDL1+)
+32941618_12_1125	PMID 32941618 cell-type frequency 12	natural killer cell (PDL1+)
+33060840_1_1144	PMID 33060840 cell-type frequency 1	natural killer cell (CD3-,CD56+)
+33060840_2_1145	PMID 33060840 cell-type frequency 2	immature natural killer cell (CD56++)
+33060840_3_1146	PMID 33060840 cell-type frequency 3	immature natural killer cell (CD56++)
+33060840_4_1147	PMID 33060840 cell-type frequency 4	mature natural killer cell (CD57+)
+33060840_5_1148	PMID 33060840 cell-type frequency 5	mature natural killer cell (CD57+,CD56+-)
+33060840_6_1149	PMID 33060840 cell-type frequency 6	natural killer cell
+33060840_7_1150	PMID 33060840 cell-type frequency 7	natural killer cell (CD69+)
+33060840_8_1151	PMID 33060840 cell-type frequency 8	natural killer cell (TIM3+)
+33060840_9_1152	PMID 33060840 cell-type frequency 9	natural killer cell (PD1+)
+33060840_10_1153	PMID 33060840 cell-type frequency 10	natural killer cell (NKG2D+)
+33060840_11_1154	PMID 33060840 cell-type frequency 11	natural killer cell (SIGLEC7+)
+33060840_12_1155	PMID 33060840 cell-type frequency 12	natural killer cell (DNAM1+)
+33060840_13_1156	PMID 33060840 cell-type frequency 13	natural killer cell (CXCR6+)
+33060840_14_1158	PMID 33060840 cell-type frequency 14	natural killer cell (IFNG+)
+33060840_15_1159	PMID 33060840 cell-type frequency 15	natural killer cell (IFNG+)
+33060840_16_1160	PMID 33060840 cell-type frequency 16	natural killer cell (CD56++,CD107a+)
+33060840_17_1161	PMID 33060840 cell-type frequency 17	natural killer cell (CD56-++,IFNG+)
+33060840_18_1162	PMID 33060840 cell-type frequency 18	natural killer cell	natural killer cell (IFNG+)
+33060840_19_1163	PMID 33060840 cell-type frequency 19	CD4-positive, alpha-beta memory T cell (CD3-)
+33060840_20_1164	PMID 33060840 cell-type frequency 20	CD8-positive, alpha-beta T cell (CD3-)
+33060840_21_1165	PMID 33060840 cell-type frequency 21	CD8-positive, alpha-beta T cell (CD3-)
+33060840_22_1166	PMID 33060840 cell-type frequency 22	activated CD8-positive, alpha-beta T cell (CD69+)
+33060840_23_1167	PMID 33060840 cell-type frequency 23	activated CD8-positive, alpha-beta T cell (CD69+)
+33060840_24_1168	PMID 33060840 cell-type frequency 24	activated CD4-positive, alpha-beta T cell (CD69+)
+33060840_25_1169	PMID 33060840 cell-type frequency 25	activated CD4-positive, alpha-beta T cell (CD69+)
+33060840_26_1170	PMID 33060840 cell-type frequency 26	exhausted T cell (CD8+,TIM3+)
+33060840_27_1171	PMID 33060840 cell-type frequency 27	exhausted T cell (TIM3+,CD4+)
+33060840_28_1172	PMID 33060840 cell-type frequency 28	CD8-positive, alpha-beta T cell (CXCR6+)
+33060840_29_1174	PMID 33060840 cell-type frequency 29	CD8-positive, alpha-beta T cell
+33060840_30_1175	PMID 33060840 cell-type frequency 30	natural killer cell (TIM3+)
+33060840_31_1177	PMID 33060840 cell-type frequency 31	exhausted T cell (CD8+,TIM3+)
+33060840_32_1178	PMID 33060840 cell-type frequency 32	natural killer cell (CD69+)
+33060840_33_1180	PMID 33060840 cell-type frequency 33	activated CD8-positive, alpha-beta T cell (CD69+)
+33060840_34_1181	PMID 33060840 cell-type frequency 34	activated CD4-positive, alpha-beta T cell (CD69+)
+33060840_35_1194	PMID 33060840 cell-type frequency 35	monocyte (IL6+)
+33060840_36_1195	PMID 33060840 cell-type frequency 36	monocyte (IL6+)
+33060840_37_1196	PMID 33060840 cell-type frequency 37	monocyte (IL8+)
+33060840_38_1197	PMID 33060840 cell-type frequency 38	monocyte (IL1B+)
+33060840_39_1198	PMID 33060840 cell-type frequency 39	classical monocyte (IL6+)
+33060840_40_1199	PMID 33060840 cell-type frequency 40	classical monocyte (IL6+)	non-classical monocyte (IL6+)
+33060840_41_1200	PMID 33060840 cell-type frequency 41	classical monocyte (IL6+)	intermediate monocyte (IL6+)
+33060840_42_1201	PMID 33060840 cell-type frequency 42	non-classical monocyte (IL6+)
+33060840_43_1202	PMID 33060840 cell-type frequency 43	classical monocyte (IL8+)	non-classical monocyte (IL8+)
+33060840_44_1203	PMID 33060840 cell-type frequency 44	intermediate monocyte (IL8+)	non-classical monocyte (IL8+)
+33060840_45_1204	PMID 33060840 cell-type frequency 45	intermediate monocyte (IL8+)	non-classical monocyte (IL8+)
+33060840_46_1205	PMID 33060840 cell-type frequency 46	classical monocyte (IL1B+)	intermediate monocyte (IL1B+)	non-classical monocyte (IL1B+)
+33060840_47_1206	PMID 33060840 cell-type frequency 47	intermediate monocyte (IL1B+)
+33060840_48_1207	PMID 33060840 cell-type frequency 48	non-classical monocyte (IL1B+)
+33028979_1_1208	PMID 33028979 cell-type frequency 1	peripheral blood mononuclear cell
+33028979_2_1209	PMID 33028979 cell-type frequency 2	b cell
+33028979_3_1210	PMID 33028979 cell-type frequency 3	antibody secreting cell (CD138+)
+33028979_4_1211	PMID 33028979 cell-type frequency 4	transitional stage b cell (CD21+-)
+33028979_5_1212	PMID 33028979 cell-type frequency 5	double negative memory b cell (CXCR5-,CD21-)
+33028979_6_1213	PMID 33028979 cell-type frequency 6	unswitched memory b cell
+33028979_7_1214	PMID 33028979 cell-type frequency 7	naive b cell (activated)
+33028979_8_1215	PMID 33028979 cell-type frequency 8	naive b cell (activated)
+33028979_9_1216	PMID 33028979 cell-type frequency 9	double negative memory b cell (CXCR5-,CD21-)
+33028979_10_1217	PMID 33028979 cell-type frequency 10	double negative memory b cell (CXCR5-,CD21-)
+33028979_11_1220	PMID 33028979 cell-type frequency 11	antibody secreting cell
+33028979_12_1221	PMID 33028979 cell-type frequency 12	antibody secreting cell
+33028979_13_1222	PMID 33028979 cell-type frequency 13	antibody secreting cell (CD138+)
+33028979_14_1223	PMID 33028979 cell-type frequency 14	antibody secreting cell (CD138+)
+33028979_15_1224	PMID 33028979 cell-type frequency 15	antibody secreting cell (CD138+)
+33028979_16_1225	PMID 33028979 cell-type frequency 16	antibody secreting cell (CD138+)
+33028979_17_1226	PMID 33028979 cell-type frequency 17	transitional stage b cell
+33028979_18_1227	PMID 33028979 cell-type frequency 18	transitional stage b cell
+33028979_19_1228	PMID 33028979 cell-type frequency 19	transitional stage b cell (CD21+-)
+33028979_20_1229	PMID 33028979 cell-type frequency 20	transitional stage b cell (CD21+-)
+33028979_21_1233	PMID 33028979 cell-type frequency 21	double negative memory b cell (CD21-,CD11C-)
+33028979_22_1234	PMID 33028979 cell-type frequency 22	double negative memory b cell (CD21+,CD11C-)
+33028979_23_1235	PMID 33028979 cell-type frequency 23	double negative memory b cell (CXCR5-,CD21-)
+33028979_27_1239	PMID 33028979 cell-type frequency 27	unswitched memory b cell
+33028979_28_1240	PMID 33028979 cell-type frequency 28	unswitched memory b cell
+33391280_4_1262	PMID 33391280 cell-type frequency 4	natural killer cell (low forward scatter A and CD3-,CD7+)
+33391280_5_1263	PMID 33391280 cell-type frequency 5	monocyte (high forward scatter A and CD3-,CD7-)
+33391280_6_1264	PMID 33391280 cell-type frequency 6	natural killer cell (low forward scatter A and CD3-,CD7+)
+33391280_7_1265	PMID 33391280 cell-type frequency 7	monocyte (high forward scatter A and CD3-,CD7-)
+33391280_8_1266	PMID 33391280 cell-type frequency 8	natural killer cell (low forward scatter A and CD3-,CD7+)
+33391280_9_1267	PMID 33391280 cell-type frequency 9	monocyte (high forward scatter A and CD3-,CD7-)
+33391280_10_1268	PMID 33391280 cell-type frequency 10	natural killer cell (low forward scatter A and CD3-,CD7+)
+33391280_11_1269	PMID 33391280 cell-type frequency 11	monocyte (high forward scatter A and CD3-,CD7-)
+33391280_12_1270	PMID 33391280 cell-type frequency 12	monocyte (high forward scatter A and CD3-,CD7-)
+33391280_13_1271	PMID 33391280 cell-type frequency 13	natural killer cell (low forward scatter A and CD3-,CD7+)
+33391280_14_1272	PMID 33391280 cell-type frequency 14	monocyte (high forward scatter A and CD3-,CD7-)
+33391280_15_1273	PMID 33391280 cell-type frequency 15	natural killer cell (low forward scatter A and CD3-,CD7+)
+33391280_16_1274	PMID 33391280 cell-type frequency 16	monocyte (high forward scatter A and CD3-,CD7-)
+33391280_17_1275	PMID 33391280 cell-type frequency 17	natural killer cell (low forward scatter A and CD3-,CD7+)
+33391280_18_1276	PMID 33391280 cell-type frequency 18	monocyte (high forward scatter A and CD3-,CD7-)
+33391280_19_1277	PMID 33391280 cell-type frequency 19	natural killer cell (low forward scatter A and CD3-,CD7+)
+33391280_20_1278	PMID 33391280 cell-type frequency 20	monocyte (high forward scatter A and CD3-,CD7-)
+33391280_21_1279	PMID 33391280 cell-type frequency 21	natural killer cell (low forward scatter A and CD3-,CD7+)
+33391280_22_1280	PMID 33391280 cell-type frequency 22	monocyte (high forward scatter A and CD3-,CD7-)
+33391280_23_1281	PMID 33391280 cell-type frequency 23	natural killer cell (low forward scatter A and CD3-,CD7+)
+33391280_24_1282	PMID 33391280 cell-type frequency 24	cd14-positive, cd16-positive monocyte
+33391280_25_1283	PMID 33391280 cell-type frequency 25	cd14-positive, cd16-positive monocyte
+33391280_26_1284	PMID 33391280 cell-type frequency 26	cd14-positive, cd16-positive monocyte
+33391280_27_1287	PMID 33391280 cell-type frequency 27	t cell
+33391280_28_1288	PMID 33391280 cell-type frequency 28	t cell
+33391280_29_1289	PMID 33391280 cell-type frequency 29	t cell
+33391280_30_1290	PMID 33391280 cell-type frequency 30	t cell
+33391280_31_1291	PMID 33391280 cell-type frequency 31	t cell
+33391280_32_1292	PMID 33391280 cell-type frequency 32	cd4-positive, alpha-beta t cell
+33391280_33_1293	PMID 33391280 cell-type frequency 33	cd8-positive, alpha-beta t cell
+33391280_34_1294	PMID 33391280 cell-type frequency 34	cd4-positive, alpha-beta t cell
+33391280_35_1295	PMID 33391280 cell-type frequency 35	cd8-positive, alpha-beta t cell
+33391280_36_1296	PMID 33391280 cell-type frequency 36	activated cd4-positive, alpha-beta t cell (HLADRA+)
+33391280_37_1297	PMID 33391280 cell-type frequency 37	activated cd4-positive, alpha-beta t cell (HLADRA+)
+33391280_38_1298	PMID 33391280 cell-type frequency 38	activated cd4-positive, alpha-beta t cell (HLADRA+)
+33391280_39_1299	PMID 33391280 cell-type frequency 39	activated cd4-positive, alpha-beta t cell (HLADRA+)
+33391280_40_1300	PMID 33391280 cell-type frequency 40	activated cd4-positive, alpha-beta t cell (HLADRA+)
+33391280_41_1301	PMID 33391280 cell-type frequency 41	activated cd4-positive, alpha-beta t cell (HLADRA+)
+33391280_42_1302	PMID 33391280 cell-type frequency 42	naive thymus-derived cd4-positive, alpha-beta t cell (CD31+,CD45RA+,CCR7+)
+33391280_43_1303	PMID 33391280 cell-type frequency 43	naive thymus-derived cd4-positive, alpha-beta t cell (CD31-,CD45RA+,CCR7+)
+33391280_44_1304	PMID 33391280 cell-type frequency 44	naive thymus-derived cd4-positive, alpha-beta t cell (CD31+,CD45RA+,CCR7+)	naive thymus-derived cd8-positive, alpha-beta t cell (CD31+,CD45RA+,CCR7+)
+33391280_45_1305	PMID 33391280 cell-type frequency 45	naive thymus-derived cd4-positive, alpha-beta t cell (CD31-,CD45RA+,CCR7+)
+33391280_46_1306	PMID 33391280 cell-type frequency 46	naive thymus-derived cd4-positive, alpha-beta t cell (CD31+,CD45RA+,CCR7+)
+33391280_47_1307	PMID 33391280 cell-type frequency 47	naive thymus-derived cd4-positive, alpha-beta t cell (CD31-,CD45RA+,CCR7+)
+33391280_48_1308	PMID 33391280 cell-type frequency 48	naive thymus-derived cd4-positive, alpha-beta t cell (CD31+,CD45RA+,CCR7+)	naive thymus-derived cd8-positive, alpha-beta t cell (CD31+,CD45RA+,CCR7+)
+33391280_49_1309	PMID 33391280 cell-type frequency 49	naive thymus-derived cd4-positive, alpha-beta t cell (CD31+,CD45RA+,CCR7+)
+33391280_50_1310	PMID 33391280 cell-type frequency 50	naive thymus-derived cd4-positive, alpha-beta t cell (CD31+,CD45RA+,CCR7+)
+33391280_51_1311	PMID 33391280 cell-type frequency 51	naive thymus-derived cd4-positive, alpha-beta t cell (CD31-,CD45RA+,CCR7+)
+33391280_52_1312	PMID 33391280 cell-type frequency 52	naive thymus-derived cd4-positive, alpha-beta t cell (CD31-,CD45RA+,CCR7+)
+33391280_53_1313	PMID 33391280 cell-type frequency 53	naive thymus-derived cd8-positive, alpha-beta t cell (CD31+,CD45RA+,CCR7+)
+33391280_54_1314	PMID 33391280 cell-type frequency 54	naive thymus-derived cd8-positive, alpha-beta t cell (CD31-,CD45RA+,CCR7+)
+33391280_55_1315	PMID 33391280 cell-type frequency 55	naive thymus-derived cd8-positive, alpha-beta t cell (CD31-,CD45RA+,CCR7+)
+33391280_56_1316	PMID 33391280 cell-type frequency 56	naive thymus-derived cd8-positive, alpha-beta t cell (CD31-,CD45RA+,CCR7+)
+33391280_57_1317	PMID 33391280 cell-type frequency 57	effector memory cd4-positive, alpha-beta t cell, terminally differentiated (CD45RA+,CCR7-)
+33391280_58_1318	PMID 33391280 cell-type frequency 58	effector memory cd8-positive, alpha-beta t cell, terminally differentiated (CD45RA+,CCR7-)
+33391280_59_1319	PMID 33391280 cell-type frequency 59	effector memory cd8-positive, alpha-beta t cell, terminally differentiated (CD45RA+,CCR7-)
+33391280_60_1320	PMID 33391280 cell-type frequency 60	effector memory cd8-positive, alpha-beta t cell, terminally differentiated (CD45RA+,CCR7-)
+33391280_61_1321	PMID 33391280 cell-type frequency 61	effector memory cd8-positive, alpha-beta t cell, terminally differentiated (CD45RA+,CCR7-)
+33391280_62_1322	PMID 33391280 cell-type frequency 62	b cell
+33391280_63_1323	PMID 33391280 cell-type frequency 63	plasmablast (CD27++,CD38++,CD24-)
+33391280_64_1324	PMID 33391280 cell-type frequency 64	b cell
+33391280_65_1325	PMID 33391280 cell-type frequency 65	b cell
+33391280_66_1326	PMID 33391280 cell-type frequency 66	memory b cell
+33391280_67_1327	PMID 33391280 cell-type frequency 67	memory b cell
+33391280_68_1328	PMID 33391280 cell-type frequency 68	memory b cell
+33391280_69_1329	PMID 33391280 cell-type frequency 69	plasmablast (CD27++,CD38++,CD24-)
+33391280_70_1330	PMID 33391280 cell-type frequency 70	plasmablast (CD27++,CD38++,CD24-)
+33391280_71_1331	PMID 33391280 cell-type frequency 71	unswitched memory b cell (CD27+,IGM+)
+33391280_72_1332	PMID 33391280 cell-type frequency 72	unswitched memory b cell (CD27+,IGM+)
+33391280_73_1333	PMID 33391280 cell-type frequency 73	class switched memory b cell (CD27+,IGM-)
+33391280_74_1334	PMID 33391280 cell-type frequency 74	unswitched memory b cell (CD27+,IGM+)
+33391280_75_1335	PMID 33391280 cell-type frequency 75	class switched memory b cell (CD27+,IGM-)
+33391280_76_1336	PMID 33391280 cell-type frequency 76	unswitched memory b cell (CD27+,IGM+)
+33391280_77_1337	PMID 33391280 cell-type frequency 77	unswitched memory b cell (CD27+,IGM+)
+33391280_78_1338	PMID 33391280 cell-type frequency 78	class switched memory b cell (CD27+,IGM-)
+33391280_79_1339	PMID 33391280 cell-type frequency 79	class switched memory b cell (IGG+)
+33391280_80_1340	PMID 33391280 cell-type frequency 80	class switched memory b cell (IGG+)
+33391280_81_1341	PMID 33391280 cell-type frequency 81	class switched memory b cell (IGM-,IGG-)
+33391280_82_1342	PMID 33391280 cell-type frequency 82	class switched memory b cell (IGM-,IGG-)
+33391280_83_1343	PMID 33391280 cell-type frequency 83	class switched memory b cell (IGM-,IGG-)

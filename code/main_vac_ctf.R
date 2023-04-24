@@ -338,6 +338,9 @@ df2 <- cSplit(df2, "comparison", sep = ";", direction = "long")
 df2 <- as.data.frame(df2)
 df2$comparison <- trimws(df2$comparison)
 
+source("standardized_and_convenience.R")
+save_standardized_curations(df2, base_filename)
+
 #############################################################
 #### Recreate original spreadsheet with all corrections #####
 #############################################################
@@ -390,3 +393,5 @@ header_rows <- header_rows[!colnames(header_rows) %in% del_cols]
 write_submission_template(df2, header_rows, "../data/release_files", NULL, "hipc_vac_ctf", titles_and_dates_df,
                             resp_components_full_sig, unmatched_symbols_map = NULL,
                             "CELLTYPE_FREQUENCY", "VACCINE", "Immune cell-type frequency response to vaccine exposure")
+
+save_convenience_files(df2, header_rows, base_filename, "VACCINE", "CELLTYPE_FREQUENCY")

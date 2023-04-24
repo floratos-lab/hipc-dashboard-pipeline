@@ -36,6 +36,10 @@ The repository contents are as follows:
       - **./data/source_curations**: source curation spreadsheets, as
         provided by curators.
 
+      - **./data/standardized_curations**: curation spreadsheets in denormalized form, after
+        undergoing processing for quality control and standardization. This is the state from 
+        which all other files are created, i.e. the convenience files and release files. 
+
       - **./data/reference_files**: resources used to support the
         standardization process, including controlled vocabularies from
         external sources and mapping files maintained by the project.
@@ -44,6 +48,9 @@ The repository contents are as follows:
         transformed, partially denormalized spreadsheet files generated from the standardized
         curations. They are formatted as needed for uploading to the
         Dashboard.
+
+      - **./data/convenience_files**: the standardized curations conveniently reformatted to support 
+        human inspection and downstream computational analysis.
 
   - **./docs**: curation templates and column specification.
 
@@ -151,16 +158,22 @@ and are updated with the latest versions prior to a Dashboard release.
 ### Release Preparation
 
 The quality control and standardization process produces new, denormalized versions of
-the curation data.
-These data then undergo further processing to generate the
+the source spreadsheets which are placed under **./data/standardized_curations**. 
+These files then undergo further processing to generate the
 final data release files which will be uploaded to the Dashboard. This
 processing is essentially a straightforward repackaging of the
 spreadsheets into a format appropriate for the upload scripts. It
 involves splitting immune signatures into individual spreadsheet files, one
 signature per file. The final release files are stored under **./data/release_files** and
-have the same columns as the standardized curation data, with some additions
+have the same columns as the standardized curation files, with some additions
 to support the requirements of the Dashboard itself and to preserve
 original curated values for fields updated by the pipeline.
+
+The release preparation process also generates a number of convenience files, i.e., 
+partially re-normalized versions of the standardized curations. These files are available 
+in spreadsheet format, to facilitate human inspection; and in the Broad GMT tab delimited file format, 
+to support downstream computational processing. The files are stored under 
+**./data/convenience_files**
 
 Additional details about the processing pipeline can be found under the
 **./data** directory.
